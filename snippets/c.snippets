@@ -1,0 +1,6 @@
+snippet mpiinit
+	int i_rank, n_rank;
+	MPI_Init(&argc, &argv);
+	MPI_Comm_rank(MPI_COMM_WORLD, &i_${1:rank});
+	MPI_Comm_size(MPI_COMM_WORLD, &n_$1);
+
