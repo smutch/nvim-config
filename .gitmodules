@@ -146,3 +146,7 @@
 	path = bundle/vitality
 	url = https://github.com/sjl/vitality.vim.git
     ignore = dirty
+[submodule "bundle/minibufexplr"]
+	path = bundle/minibufexplr
+	url = https://github.com/fholgado/minibufexpl.vim.git
+    ignore = dirty
