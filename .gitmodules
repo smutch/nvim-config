@@ -110,10 +110,6 @@
 	path = bundle/command-t
 	url = https://github.com/vim-scripts/Command-T.git
     ignore = dirty
-[submodule "bundle/pyflakes"]
-	path = bundle/pyflakes
-	url = https://github.com/georgexsh/pyflakes-vim.git
-    ignore = dirty
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
