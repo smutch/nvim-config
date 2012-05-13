@@ -155,6 +155,7 @@ let NERDTreeShowHidden=1
 " " MiniBufExplorer options
 " let g:miniBufExplMapCTabSwitchBufs = 1
 " let g:miniBufExplUseSingleClick = 1
+let g:miniBufExplorerMoreThanOne=4
 
 " Set the list of tags to search for in tasklist
 let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'DEBUG', 'TEMPORARY']
