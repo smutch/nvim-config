@@ -166,7 +166,7 @@ match Warning /WARNING/
 
 " Highlight continue here comments
 highlight ContHere ctermbg=164 ctermfg=white
-2match ContHere /Cont here.../
+2match ContHere /CONT HERE/
 
 " Set showmarks bundle to off by default
 let g:showmarks_enable = 0
