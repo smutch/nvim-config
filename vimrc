@@ -161,11 +161,11 @@ let g:miniBufExplorerMoreThanOne=4
 let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'DEBUG', 'TEMPORARY']
 
 " Highlight warning comments
-highlight Warning ctermbg=red ctermfg=white
+highlight Warning guibg=red ctermbg=red guifg=white ctermfg=white
 match Warning /WARNING/
 
 " Highlight continue here comments
-highlight ContHere ctermbg=164 ctermfg=white
+highlight ContHere guibg=purple ctermbg=164 guifg=white ctermfg=white
 2match ContHere /CONT HERE/
 
 " Set showmarks bundle to off by default
