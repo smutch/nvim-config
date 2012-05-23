@@ -146,3 +146,7 @@
 	path = bundle/minibufexplr
 	url = https://github.com/fholgado/minibufexpl.vim.git
     ignore = dirty
+[submodule "bundle/space"]
+	path = bundle/space
+	url = https://github.com/spiiph/vim-space.git
+    ignore = dirty
