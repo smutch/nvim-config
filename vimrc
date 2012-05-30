@@ -122,9 +122,9 @@ nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 " Bring up marks list
 nnoremap ,m :marks<CR>
 " Bring up tabs list
-nnoremap ,t :tabs<CR>
+" nnoremap ,t :tabs<CR>
 " Bring up buffers list
-nnoremap ,b :ls<CR>
+" nnoremap ,b :ls<CR>
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual mode
 " and after yanking full lines with capital Y in normal mode.
@@ -265,7 +265,11 @@ nmap ,r <Esc>:RainbowParenthesesToggle<CR>
 map <leader>g :GundoToggle<CR>
 
 " Map keys for command-T
-nnoremap <silent> <Leader>t :CommandT<CR>
+nnoremap <silent> ,t :CommandT<CR>
+nnoremap <silent> ,b :CommandTBuffer<CR>
+
+" Repeat last : command
+nnoremap ;; @:
 
 " Let us see the current git branch we are on
 " set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
