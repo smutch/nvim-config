@@ -368,10 +368,10 @@ autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)"
 autocmd FileType markdown let b:surround_115 = "~~\r~~"
 nnoremap ,m :MyGrep 
 
-" Reset some keybindings
-noremap <script> <silent> ,be :BufExplorer<CR>
-noremap <script> <silent> ,bs :BufExplorerHorizontalSplit<CR>
-noremap <script> <silent> ,bv :BufExplorerVerticalSplit<CR>
+" " Reset some keybindings
+" noremap <script> <silent> \be :BufExplorer<CR>
+" noremap <script> <silent> \bs :BufExplorerHorizontalSplit<CR>
+" noremap <script> <silent> \bv :BufExplorerVerticalSplit<CR>
 
 " Move lines up or down
 nnoremap <A-j> :m+<CR>==
