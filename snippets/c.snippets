@@ -4,3 +4,5 @@ snippet mpiinit
 	MPI_Comm_rank(MPI_COMM_WORLD, &i_${1:rank});
 	MPI_Comm_size(MPI_COMM_WORLD, &n_$1);
 
+snippet sidlog
+	SID_log("${1:mesg}", ${2:SID_LOG_COMMENT}${3});${4}

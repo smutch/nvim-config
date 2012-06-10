@@ -280,6 +280,11 @@ else
 endif
 set laststatus=2
 
+" Useful shortcut for git commands
+nnoremap git :Git 
+nnoremap gca :Gcommit -a
+nnoremap gst :Gstatus
+
 " Use f5 or TextMate equivalent to open NERDTree
 nmap <silent> <F5> :NERDTreeToggle<CR>
 let NERDTreeHijackNetrw = 1

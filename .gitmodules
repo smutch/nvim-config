@@ -146,3 +146,7 @@
 	path = bundle/minibufexplr
 	url = https://github.com/fholgado/minibufexpl.vim.git
     ignore = dirty
+[submodule "bundle/python_match"]
+	path = bundle/python_match
+	url = https://github.com/vim-scripts/python_match.vim.git
+    ignore = dirty
