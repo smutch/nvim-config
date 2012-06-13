@@ -162,11 +162,11 @@ let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'DEBUG', 'TEMPORARY']
 
 " Highlight warning comments
 highlight Warning guibg=red ctermbg=red guifg=white ctermfg=white
-match Warning /WARNING/
+autocmd BufEnter * match Warning /WARNING/
 
 " Highlight continue here comments
 highlight ContHere guibg=purple ctermbg=164 guifg=white ctermfg=white
-2match ContHere /CONT HERE/
+autocmd BufEnter * 2match ContHere /CONT HERE/
 
 " Set showmarks bundle to off by default
 let g:showmarks_enable = 0
@@ -282,8 +282,8 @@ set laststatus=2
 
 " Useful shortcut for git commands
 nnoremap git :Git 
-nnoremap gca :Gcommit -a
-nnoremap gst :Gstatus
+nnoremap gca :Gcommit -a<CR>
+nnoremap gst :Gstatus<CR>
 
 " Use f5 or TextMate equivalent to open NERDTree
 nmap <silent> <F5> :NERDTreeToggle<CR>
@@ -364,6 +364,7 @@ map <leader><leader> <plug>NERDCommenterToggle
 
 " Scons files
 au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
+set makeprg=scons
 
 " Markdown files
 nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
