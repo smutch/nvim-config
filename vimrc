@@ -168,6 +168,10 @@ autocmd BufEnter * match Warning /WARNING/
 highlight ContHere guibg=purple ctermbg=164 guifg=white ctermfg=white
 autocmd BufEnter * 2match ContHere /CONT HERE/
 
+" Highlight lines
+highlight LineHighlight guibg=green ctermbg=green guifg=white ctermfg=white
+autocmd BufEnter * 3match LineHighlight /\!\$\$\_.\{-}\$\$\!/
+
 " Set showmarks bundle to off by default
 let g:showmarks_enable = 0
 
