@@ -253,6 +253,9 @@ nnoremap <silent><C-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 " Tlist options
 let Tlist_Auto_Update = 1
+let Tlist_Auto_Highlight_Tag = 0
+let Tlist_Display_Prototype = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
 
 " Map <leader>h to turn off highlighting
 nmap <leader>h <Esc>:noh<CR>
@@ -291,6 +294,7 @@ nnoremap gst :Gstatus<CR>
 
 " Use f5 or TextMate equivalent to open NERDTree
 nmap <silent> <F5> :NERDTreeToggle<CR>
+nmap <silent> <leader>n :NERDTreeToggle<CR>
 let NERDTreeHijackNetrw = 1
 
 " Use f4 for the taglist
@@ -384,12 +388,23 @@ nnoremap ,m :MyGrep
 " noremap <script> <silent> \bv :BufExplorerVerticalSplit<CR>
 
 " Move lines up or down
-nnoremap <A-j> :m+<CR>==
-nnoremap <A-k> :m-2<CR>==
-inoremap <A-j> <Esc>:m+<CR>==gi
-inoremap <A-k> <Esc>:m-2<CR>==gi
-vnoremap <A-j> :m'>+<CR>gv=gv
-vnoremap <A-k> :m-2<CR>gv=gv
+set <M-j>=j
+set <M-k>=k
+nnoremap <M-j> :m+<CR>==
+nnoremap <M-k> :m-2<CR>==
+inoremap <M-j> <Esc>:m+<CR>==gi
+inoremap <M-k> <Esc>:m-2<CR>==gi
+vnoremap <M-j> :m'>+<CR>gv=gv
+vnoremap <M-k> :m-2<CR>gv=gv
+
+" copy and paste to temp file
+" copy to buffer
+set <M-c>=c
+set <M-v>=v
+vmap <M-c> :w! ~/.vimbuffer<CR>
+nmap <M-c> :.w! ~/.vimbuffer<CR>
+" paste from buffer
+nmap <M-v> :r ~/.vimbuffer<CR>
 
 " mapping to make movements operate on 1 screen line in wrap mode
 function! ScreenMovement(movement)
