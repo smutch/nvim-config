@@ -1,6 +1,8 @@
 " Vim config file
 runtime bundle/pathogen/autoload/pathogen.vim
 set nocompatible
+filetype off
+let g:pathogen_disabled = []
 
 " Remap task list key (must be done before loading plugin)
 map <leader>T <Plug>TaskList
@@ -10,11 +12,15 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['python', 'tex'],
                            \ 'passive_filetypes': [] }
 
+" Deal with gnu screen
+if match($TERM, "screen")!=-1
+      set term=xterm-256color
+      call add(g:pathogen_disabled, 'vitality')
+endif
+
 "------------------
 "---- Pathogen ----
 "------------------
-filetype off
-let g:pathogen_disabled = []
 " If we called vim using quickload then only enable some bundles
 if exists('quick_load')
     call add(g:pathogen_disabled, 'fugitive')
@@ -34,12 +40,8 @@ call pathogen#infect()
 let os = substitute(system('uname'), "\n", "", "")
 if os == "Darwin"
     let Tlist_Ctags_Cmd="/opt/local/bin/ctags"
+    set clipboard=unnamed
 end
-
-" Deal with gnu screen
-if match($TERM, "screen")!=-1
-      set term=xterm-256color
-endif
 
 " Use an interactive shell to allow command line aliases to work
 " set shellcmdflag=-ic
