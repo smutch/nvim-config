@@ -389,9 +389,7 @@ nnoremap ,m :MyGrep
 " noremap <script> <silent> \bs :BufExplorerHorizontalSplit<CR>
 " noremap <script> <silent> \bv :BufExplorerVerticalSplit<CR>
 
-" Move lines up or down
-set <M-j>=j
-set <M-k>=k
+" Move lines up or down (doesn't work in ssh terminal)
 nnoremap <M-j> :m+<CR>==
 nnoremap <M-k> :m-2<CR>==
 inoremap <M-j> <Esc>:m+<CR>==gi
@@ -401,12 +399,10 @@ vnoremap <M-k> :m-2<CR>gv=gv
 
 " copy and paste to temp file
 " copy to buffer
-set <M-c>=c
-set <M-v>=v
-vmap <M-c> :w! ~/.vimbuffer<CR>
-nmap <M-c> :.w! ~/.vimbuffer<CR>
+vmap <C-c> :w! ~/.vimbuffer<CR>
+nmap <C-c> :.w! ~/.vimbuffer<CR>
 " paste from buffer
-nmap <M-v> :r ~/.vimbuffer<CR>
+nmap <C-C> :r ~/.vimbuffer<CR>
 
 " mapping to make movements operate on 1 screen line in wrap mode
 function! ScreenMovement(movement)
