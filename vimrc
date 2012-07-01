@@ -8,9 +8,9 @@ let g:pathogen_disabled = []
 map <leader>T <Plug>TaskList
 
 " Syntastic options
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['python', 'tex'],
-                           \ 'passive_filetypes': [] }
+let g:syntastic_mode_map = { 'mode': 'passive'} ",
+                           " \ 'active_filetypes': ['python', 'tex'],
+                           " \ 'passive_filetypes': [] }
 
 " Deal with gnu screen
 if match($TERM, "screen")!=-1

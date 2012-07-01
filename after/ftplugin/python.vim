@@ -7,3 +7,7 @@ setlocal shiftwidth=4
 setlocal autoindent
 " setlocal colorcolumn=80
 setlocal number
+
+" Set some useful keybindings
+nmap \s :w<CR>:SyntasticCheck<CR>
+nmap \p :w<CR>:!python %<CR>
