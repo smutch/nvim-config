@@ -24,7 +24,7 @@ let b:wrapToggleFlag=1
 " nnoremap ,w :call HardWrapSentences()<CR>
 
 " Save then compile
-nmap <leader>s :w<CR><leader>ll
+nmap <buffer> <leader>s :w<CR><leader>ll
 
 " Wrap between lines when scrolling
 set whichwrap+=<,>,h,l,[,]
@@ -33,4 +33,4 @@ set whichwrap+=<,>,h,l,[,]
 setlocal scrolloff=5
 
 " Maps FormatPar function to Ctrl-l
-noremap! <C-l>@  <ESC>:silent call FormatLatexPar(0)<CR>i
+noremap! <buffer> <C-l>@  <ESC>:silent call FormatLatexPar(0)<CR>i

@@ -9,5 +9,5 @@ setlocal autoindent
 setlocal number
 
 " Set some useful keybindings
-nmap \s :w<CR>:SyntasticCheck<CR>
-nmap \p :w<CR>:!python %<CR>
+nmap <buffer> \s :w<CR>:SyntasticCheck<CR>
+nmap <buffer> \p :w<CR>:!python %<CR>
