@@ -47,7 +47,8 @@ end
 " set shellcmdflag=-ic
 
 if has("gui_macvim")
-  set guifont=Bitstream\ Vera\ Sans\ Mono:h12
+  " set guifont=Bitstream\ Vera\ Sans\ Mono:h12
+  set guifont=Inconsolata:h16
   set guioptions-=T  " remove toolbar
   set stal=2 " turn on tabs by default
   set anti 	
