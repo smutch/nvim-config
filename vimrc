@@ -304,6 +304,11 @@ let NERDTreeHijackNetrw = 1
 nmap <silent> <F4> :TlistToggle<CR>
 
 " Vimux bindings
+ruby << EOF
+class Object
+  def flush; end unless Object.new.respond_to?(:flush)
+  end
+EOF
 let VimuxHeight = "20"
 let VimuxOrientation = "v"
 map <Leader>rp :PromptVimTmuxCommand<CR>
