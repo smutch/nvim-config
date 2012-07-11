@@ -9,7 +9,7 @@ map <leader>T <Plug>TaskList
 
 " Syntastic options
 let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': [], 
+                           \ 'active_filetypes': [],
                            \ 'passive_filetypes': [] }
 
 " Deal with gnu screen
@@ -51,7 +51,7 @@ if has("gui_macvim")
   set guifont=Inconsolata:h16
   set guioptions-=T  " remove toolbar
   set stal=2 " turn on tabs by default
-  set anti 	
+  set anti
   set linespace=3 "Increase the space between lines for better readability
   " In order for the ropevim quick keybindings to work (i.e. 'M-/')
   " we must allow MacVim to interpret the option key as Meta...
@@ -196,6 +196,9 @@ let g:pyflakes_use_quickfix = 0
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 
+" Shortcut function for removing trailing whitespace
+command! TrimWhitespace execute ':%s/\s\+$//'
+
 " Use my virtualenv for python
 py << EOF
 import os.path
@@ -264,7 +267,7 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 nmap <leader>h <Esc>:noh<CR>
 
 " Map keys for Ack
-nmap <leader>A <Esc>:Ack! 
+nmap <leader>A <Esc>:Ack!
 " Ack for current word under cursor
 nmap <leader>w yiw<Esc>:Ack! <C-r>"<CR>
 
@@ -291,7 +294,7 @@ endif
 set laststatus=2
 
 " Useful shortcut for git commands
-nnoremap git :Git 
+nnoremap git :Git
 nnoremap gca :Gcommit -a<CR>
 nnoremap gst :Gstatus<CR>
 
@@ -376,7 +379,7 @@ endfunc
 
 " NERDCommenter
 let NERDSpaceDelims=1
-map <leader><leader> <plug>NERDCommenterToggle 
+map <leader><leader> <plug>NERDCommenterToggle
 
 " Scons files
 au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
@@ -388,7 +391,7 @@ au BufRead,BufNewFile *.md set filetype=markdown
 command! -nargs=+ MyGrep execute 'silent vimgrep <args> %' | copen 10
 autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)"
 autocmd FileType markdown let b:surround_115 = "~~\r~~"
-nnoremap ,m :MyGrep 
+nnoremap ,m :MyGrep
 
 " " Reset some keybindings
 " noremap <script> <silent> \be :BufExplorer<CR>
