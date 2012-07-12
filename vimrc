@@ -27,7 +27,6 @@ if exists('quick_load')
     call add(g:pathogen_disabled, 'gist')
     call add(g:pathogen_disabled, 'pyflakes')
     call add(g:pathogen_disabled, 'ropevim')
-    call add(g:pathogen_disabled, 'calendar')
     call add(g:pathogen_disabled, 'gundo')
     call add(g:pathogen_disabled, 'conque')
     call add(g:pathogen_disabled, 'voom')
@@ -424,15 +423,8 @@ function! ScreenMovement(movement)
     return a:movement
   endif
 endfunction
-onoremap <silent> <expr> j ScreenMovement("j")
-onoremap <silent> <expr> k ScreenMovement("k")
-onoremap <silent> <expr> 0 ScreenMovement("0")
-onoremap <silent> <expr> ^ ScreenMovement("^")
-onoremap <silent> <expr> $ ScreenMovement("$")
-onoremap <silent> <expr> <Up> ScreenMovement("k")
-onoremap <silent> <expr> <Down> ScreenMovement("j")
-nnoremap <silent> <expr> <Up> ScreenMovement("k")
-nnoremap <silent> <expr> <Down> ScreenMovement("j")
+nnoremap <silent> <expr> k ScreenMovement("k")
+nnoremap <silent> <expr> j ScreenMovement("j")
 function! TYShowBreak()
   if &showbreak == ''
     set showbreak=>
@@ -444,8 +436,12 @@ let b:gmove = "yes"
 function! TYToggleBreakMove()
   if exists("b:gmove") && b:gmove == "yes"
     let b:gmove = "no"
+    inoremap <buffer> <Up> <Up>
+    inoremap <buffer> <Down> <Down>
   else
     let b:gmove = "yes"
+    inoremap <buffer> <Up> <C-O>gk
+    inoremap <buffer> <Down> <C-O>gj
   endif
 endfunction
 
