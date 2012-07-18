@@ -30,7 +30,6 @@ if exists('quick_load')
     call add(g:pathogen_disabled, 'gundo')
     call add(g:pathogen_disabled, 'conque')
     call add(g:pathogen_disabled, 'voom')
-    call add(g:pathogen_disabled, 'vim-latex')
 endif
 call pathogen#infect()
 "------------------
@@ -325,28 +324,19 @@ inoremap <C-e>      <End>
 inoremap <silent> <C-k> <C-r>=<SID>KillLine()<CR>
 inoremap <silent> <C-y> <C-o>:call <SID>ResetKillRing()<CR><C-r><C-o>"
 
-" Latex stuff
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-filetype plugin on
-
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
+" Grep will sometimes skip displaying the file name if you
+" search in a singe file. Set grep
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
 
-" OPTIONAL: This enables automatic indentation as you type.
 filetype indent on
-"
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
 
-let g:Tex_CompileRule_pdf = 'rubber -o natbib --pdf -d $*'
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_ViewRule_pdf = 'Skim'
-let g:Imap_UsePlaceHolders = 0 " Turn off the f-ing placeholders...
-let g:Tex_AutoFolding = 0
+" Latex options
+let g:tex_flavor='latex'
+let g:LatexBox_Folding=0
+let g:LatexBox_viewer = "open -a Skim"
+" map <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline
+"         \ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
 
 function! <SID>KillLine()
   if col('.') > strlen(getline('.'))
@@ -425,6 +415,8 @@ function! ScreenMovement(movement)
 endfunction
 nnoremap <silent> <expr> k ScreenMovement("k")
 nnoremap <silent> <expr> j ScreenMovement("j")
+inoremap <buffer> <Up> <C-O>gk
+inoremap <buffer> <Down> <C-O>gj
 function! TYShowBreak()
   if &showbreak == ''
     set showbreak=>

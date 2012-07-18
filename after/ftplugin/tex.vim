@@ -1,7 +1,7 @@
 " colorscheme colorful
 set background=light
 let g:solarized_contrast="normal"
-let g:solarized_visibility="low"
+let g:solarized_visibility="normal"
 
 set spell 
 
@@ -11,23 +11,25 @@ set spell
 setlocal iskeyword+=:
 setlocal iskeyword-=_
 
-setlocal tw=80 fo=cqt wm=0 colorcolumn=80
-let b:wrapToggleFlag=1
+set softtabstop=2
+set shiftwidth=2
+" setlocal tw=80 fo=cqt wm=0 colorcolumn=80
+" let b:wrapToggleFlag=1
 
-" imap <Space><Space> <CR>
-" function! HardWrapSentences()
-    " let s = getline('.')
-    " let lineparts = split(s, '\.\@<=\s*')
-    " call append('.', lineparts)
-    " delete
-" endfunction
-" nnoremap ,w :call HardWrapSentences()<CR>
+imap <Space><Space> <CR>
+function! HardWrapSentences()
+    let s = getline('.')
+    let lineparts = split(s, '\.\@<=\s*')
+    call append('.', lineparts)
+    delete
+endfunction
+nnoremap ,w :call HardWrapSentences()<CR>
 
 " Save then compile
 nmap <buffer> <leader>s :w<CR><leader>ll
 
 " Wrap between lines when scrolling
-set whichwrap+=<,>,h,l,[,]
+" set whichwrap+=<,>,h,l,[,]
 
 " Keep minimum 5 lines above or below the cursor at all times
 setlocal scrolloff=5
