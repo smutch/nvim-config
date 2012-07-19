@@ -329,6 +329,7 @@ inoremap <silent> <C-y> <C-o>:call <SID>ResetKillRing()<CR><C-r><C-o>"
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
 
+filetype plugin on
 filetype indent on
 
 " Latex options
