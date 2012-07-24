@@ -403,10 +403,12 @@ vnoremap <M-k> :m-2<CR>gv=gv
 
 " copy and paste to temp file
 " copy to buffer
-vmap <C-c> :w! ~/.vimbuffer<CR>
-nmap <C-c> :.w! ~/.vimbuffer<CR>
+set cpoptions-=A
+vmap <C-x> :w! ~/.vimbuffer
+nmap <C-x> :.w! ~/.vimbuffer
 " paste from buffer
-nmap <C-i> :r ~/.vimbuffer<CR>
+set cpoptions-=a
+imap <C-i> :r ~/.vimbuffer<CR>
 
 " mapping to make movements operate on 1 screen line in wrap mode
 function! ScreenMovement(movement)

@@ -9,14 +9,14 @@ set spell
 " type in \ref{fig: and press <C-n> you will automatically cycle through
 " all the figure labels. Very useful!
 setlocal iskeyword+=:
-setlocal iskeyword-=_
+" setlocal iskeyword-=_
 
 set softtabstop=2
 set shiftwidth=2
 " setlocal tw=80 fo=cqt wm=0 colorcolumn=80
 " let b:wrapToggleFlag=1
 
-imap <Space><Space> <CR>
+" imap <Space><Space> <CR>
 function! HardWrapSentences()
     let s = getline('.')
     let lineparts = split(s, '\.\@<=\s*')
@@ -27,6 +27,9 @@ nnoremap ,w :call HardWrapSentences()<CR>
 
 " Save then compile
 nmap <buffer> <leader>s :w<CR><leader>ll
+
+" Quick map for adding a new item to an itemize environment list
+imap <buffer>  <CR>\item 
 
 " Wrap between lines when scrolling
 " set whichwrap+=<,>,h,l,[,]
