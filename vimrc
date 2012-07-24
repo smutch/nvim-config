@@ -139,6 +139,10 @@ au FileType python set omnifunc=pythoncomplete#Complete
 " Pydoc
 if has("gui_macvim")
     let g:pydoc_cmd = "/opt/local/bin/pydoc"
+elseif has("mac")
+    let g:pydoc_cmd = "/opt/local/bin/pydoc"
+elseif has("unix")
+    let g:pydoc_cmd = "/usr/local/python-2.7.1/bin/pydoc"
 endif
 
 " " Set cwd to that of current file
@@ -370,6 +374,7 @@ endfunc
 " NERDCommenter
 let NERDSpaceDelims=1
 map <leader><leader> <plug>NERDCommenterToggle
+let NERD_c_alt_style=1 " This doesn't seem to do anything but it should!?!
 
 " Scons files
 au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
