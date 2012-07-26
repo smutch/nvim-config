@@ -180,6 +180,9 @@ autocmd BufEnter * 3match LineHighlight /\!\$\$\_.\{-}\$\$\!/
 " Set showmarks bundle to off by default
 let g:showmarks_enable = 0
 
+" Make gists private by default
+let g:gist_show_privates = 1
+
 " Turn off annoying backups!
 set nobackup
 set nowb
@@ -405,11 +408,11 @@ vnoremap <M-k> :m-2<CR>gv=gv
 " copy and paste to temp file
 " copy to buffer
 set cpoptions-=A
-vmap <C-x> :w! ~/.vimbuffer
-nmap <C-x> :.w! ~/.vimbuffer
+vmap <C-x> :w! ~/.vimbuffer<CR>
+nmap <C-x> :.w! ~/.vimbuffer<CR>
 " paste from buffer
 set cpoptions-=a
-imap <C-i> :r ~/.vimbuffer<CR>
+nmap <C-i> :r ~/.vimbuffer<CR>
 
 " mapping to make movements operate on 1 screen line in wrap mode
 function! ScreenMovement(movement)

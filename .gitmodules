@@ -150,3 +150,6 @@
 	path = bundle/latex-box
 	url = https://github.com/LaTeX-Box-Team/LaTeX-Box.git
     ignore = dirty
+[submodule "bundle/angry"]
+	path = bundle/angry
+	url = https://github.com/b4winckler/vim-angry.git
