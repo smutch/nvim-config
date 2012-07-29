@@ -79,7 +79,7 @@ syntax on " Use syntax highlighting
 " -------------------
 
 set autoindent
-set smartindent
+set nosmartindent  " Turning this off as messes with python comment indents.
 set tabstop=4
 set shiftwidth=4
 set showmatch
