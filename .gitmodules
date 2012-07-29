@@ -153,3 +153,4 @@
 [submodule "bundle/angry"]
 	path = bundle/angry
 	url = https://github.com/b4winckler/vim-angry.git
+    ignore = dirty
