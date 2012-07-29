@@ -13,8 +13,8 @@ setlocal iskeyword+=:
 
 set softtabstop=2
 set shiftwidth=2
-" setlocal tw=80 fo=cqt wm=0 colorcolumn=80
-" let b:wrapToggleFlag=1
+setlocal tw=80 fo=cqt wm=0 colorcolumn=80
+let b:wrapToggleFlag=1
 
 " imap <Space><Space> <CR>
 function! HardWrapSentences()
@@ -37,5 +37,9 @@ imap <buffer>  <CR>\item
 " Keep minimum 5 lines above or below the cursor at all times
 setlocal scrolloff=5
 
+" Allow the wrapping to mess with existing lines
+setlocal formatoptions-=l
+
 " Maps FormatPar function to Ctrl-l
 noremap! <buffer> <C-l>@  <ESC>:silent call FormatLatexPar(0)<CR>i
+
