@@ -114,9 +114,8 @@ set autoread
 nnoremap \s :w<CR>
 
 " Cycle through buffers quickly
-" Buffers - next/previous: F12, Shift-F12.
-nnoremap <silent> <F12> :bn<CR>
-nnoremap <silent> <S-F12> :bp<CR>
+nnoremap <silent> ,x :bn<CR>
+nnoremap <silent> ,z :bp<CR>
 
 " Quick switch to directory of current file
 nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
@@ -250,11 +249,11 @@ let g:ConqueTerm_CWInsert      = 1
 nnoremap <silent><leader>C <Esc>:ConqueTermSplit zsh<CR><Esc>:set wfh<CR>i
 
 
-" Alt-j/k deletes blank line below/above, and Crtl-j/k inserts.
-" nnoremap <silent><A-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
-" nnoremap <silent><A-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
-nnoremap <silent><C-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent><C-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+" ,-J/K deletes blank line below/above, and ,-j/k inserts.
+nnoremap <silent>,J m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
+nnoremap <silent>,K m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
+nnoremap <silent>,j :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 " Ctrl-j/k/h/l selects windows
 " nnoremap <silent><C-j> <Esc><C-w>j
@@ -273,12 +272,12 @@ let Tlist_File_Fold_Auto_Close = 1
 nmap <leader>h <Esc>:noh<CR>
 
 " Map keys for Ack
-nmap <leader>A <Esc>:Ack!
+nmap <leader>a <Esc>:Ack!
 " Ack for current word under cursor
 nmap <leader>w yiw<Esc>:Ack! <C-r>"<CR>
 
 " Map keys for rainbow_parenthesis
-nmap ,r <Esc>:RainbowParenthesesToggle<CR>
+nmap ,sr <Esc>:RainbowParenthesesToggle<CR>
 
 " Map keys for Gundo
 map <leader>g :GundoToggle<CR>
@@ -286,9 +285,10 @@ map <leader>g :GundoToggle<CR>
 " Map keys for command-T
 nnoremap <silent> ,t :CommandT<CR>
 nnoremap <silent> ,b :CommandTBuffer<CR>
+let g:CommandTMatchWindowAtTop = 0
 
 " Repeat last : command
-nnoremap ;; @:
+nnoremap ,: @:
 
 " Let us see the current git branch we are on
 " set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
@@ -390,7 +390,7 @@ au BufRead,BufNewFile *.md set filetype=markdown
 command! -nargs=+ MyGrep execute 'silent vimgrep <args> %' | copen 10
 autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)"
 autocmd FileType markdown let b:surround_115 = "~~\r~~"
-nnoremap ,m :MyGrep
+nnoremap ,g :MyGrep
 
 " " Reset some keybindings
 " noremap <script> <silent> \be :BufExplorer<CR>
@@ -408,11 +408,11 @@ vnoremap <M-k> :m-2<CR>gv=gv
 " copy and paste to temp file
 " copy to buffer
 set cpoptions-=A
-vmap <C-x> :w! ~/.vimbuffer<CR>
-nmap <C-x> :.w! ~/.vimbuffer<CR>
+vmap ,c :w! ~/.vimbuffer<CR>
+nmap ,c :.w! ~/.vimbuffer<CR>
 " paste from buffer
 set cpoptions-=a
-nmap <C-i> :r ~/.vimbuffer<CR>
+nmap ,v :r ~/.vimbuffer<CR>
 
 " mapping to make movements operate on 1 screen line in wrap mode
 function! ScreenMovement(movement)
@@ -474,5 +474,5 @@ function! WrapToggle()
         let b:wrapToggleFlag=1
     endif
 endfun
-map ,w :call WrapToggle()<CR>
+map ,sw :call WrapToggle()<CR>
 
