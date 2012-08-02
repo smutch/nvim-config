@@ -9,7 +9,7 @@ set spell
 " type in \ref{fig: and press <C-n> you will automatically cycle through
 " all the figure labels. Very useful!
 setlocal iskeyword+=:
-" setlocal iskeyword-=_
+setlocal iskeyword-=_
 
 set softtabstop=2
 set shiftwidth=2
@@ -32,7 +32,7 @@ nmap <buffer> <leader>s :w<CR><leader>ll
 imap <buffer>  <CR>\item 
 
 " Wrap between lines when scrolling
-" set whichwrap+=<,>,h,l,[,]
+set whichwrap+=<,>,h,l,[,]
 
 " Keep minimum 5 lines above or below the cursor at all times
 setlocal scrolloff=5
