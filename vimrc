@@ -272,7 +272,7 @@ let Tlist_File_Fold_Auto_Close = 1
 nmap <leader>h <Esc>:noh<CR>
 
 " Map keys for Ack
-nmap <leader>a <Esc>:Ack!
+nmap <leader>A <Esc>:Ack!
 " Ack for current word under cursor
 nmap <leader>w yiw<Esc>:Ack! <C-r>"<CR>
 
