@@ -158,3 +158,15 @@
 	path = bundle/vimoutliner
 	url = https://github.com/vimoutliner/vimoutliner.git
     ignore = dirty
+[submodule "bundle/gf-user"]
+	path = bundle/gf-user
+	url = http://github.com/kana/vim-gf-user
+    ignore = dirty
+[submodule "bundle/gf-diff"]
+	path = bundle/gf-diff
+	url = https://github.com/kana/vim-gf-diff.git
+    ignore = dirty
+[submodule "bundle/scratch"]
+	path = bundle/scratch
+	url = https://github.com/kana/vim-scratch.git
+    ignore = dirty
