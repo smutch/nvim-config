@@ -249,9 +249,7 @@ let g:ConqueTerm_CWInsert      = 1
 nnoremap <silent><leader>C <Esc>:ConqueTermSplit zsh<CR><Esc>:set wfh<CR>i
 
 
-" ,-J/K deletes blank line below/above, and ,-j/k inserts.
-nnoremap <silent>,J m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
-nnoremap <silent>,K m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
+" ,j ,k inserts blank line below/above.
 nnoremap <silent>,j :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
@@ -397,13 +395,13 @@ nnoremap ,g :MyGrep
 " noremap <script> <silent> \bs :BufExplorerHorizontalSplit<CR>
 " noremap <script> <silent> \bv :BufExplorerVerticalSplit<CR>
 
-" Move lines up or down (doesn't work in ssh terminal)
-nnoremap <M-j> :m+<CR>==
-nnoremap <M-k> :m-2<CR>==
-inoremap <M-j> <Esc>:m+<CR>==gi
-inoremap <M-k> <Esc>:m-2<CR>==gi
-vnoremap <M-j> :m'>+<CR>gv=gv
-vnoremap <M-k> :m-2<CR>gv=gv
+" Move lines up or down
+nnoremap <C-j> :m+<CR>==
+nnoremap <C-k> :m-2<CR>==
+" inoremap <C-j> <Esc>:m+<CR>==gi
+" inoremap <C-k> <Esc>:m-2<CR>==gi
+vnoremap <C-j> :m'>+<CR>gv=gv
+vnoremap <C-k> :m-2<CR>gv=gv
 
 " copy and paste to temp file
 " copy to buffer
