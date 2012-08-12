@@ -374,9 +374,13 @@ function! <SID>SynStack()
 endfunc
 
 " NERDCommenter
-let NERDSpaceDelims=1
-map <leader><leader> <plug>NERDCommenterToggle
 let NERD_c_alt_style=1 " This doesn't seem to do anything but it should!?!
+let NERDSpaceDelims=1
+map ;; <plug>NERDCommenterToggle
+map ;s <plug>NERDCommenterSexy
+map ;A <plug>NERDCommenterAppend
+map ;a <plug>NERDCommenterAltDelim
+
 
 " Scons files
 au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
