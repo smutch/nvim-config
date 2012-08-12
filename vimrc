@@ -387,7 +387,7 @@ au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
 set makeprg=scons
 
 " Markdown files
-autocmd! filetypedetect BufNewFile,BufRead *.md setfiletype markdown
+au BufNewFile,BufRead *.md set filetype=markdown
 nnoremap <buffer> <leader>m :silent !open -a Marked.app '%:p'<cr>
 command! -nargs=+ MyGrep execute 'silent vimgrep <args> %' | copen 10
 autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)"
