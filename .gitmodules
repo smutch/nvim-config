@@ -170,3 +170,6 @@
 	path = bundle/gf-diff
 	url = https://github.com/smutch/vim-gf-diff.git
     ignore = dirty
+[submodule "bundle/pandoc"]
+	path = bundle/pandoc
+	url = https://github.com/vim-pandoc/vim-pandoc
