@@ -189,6 +189,10 @@ set noswapfile
 
 set hlsearch
 
+" Disable increment number up / down - *way* too dangerous...
+nmap <C-a> <Nop>
+nmap <C-x> <Nop>
+
 " Python syntax highlighting
 let python_highlight_all = 1
 let python_highlight_space_errors = 0
