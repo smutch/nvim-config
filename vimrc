@@ -135,6 +135,9 @@ vnoremap y y`>
 " capital D does.
 nnoremap Y y$
 
+" Easy on the fingers save binding
+nnoremap ;' :w<CR>
+
 " Use omnicompletion!
 set ofu=syntaxcomplete#Complete
 au FileType python set omnifunc=pythoncomplete#Complete
