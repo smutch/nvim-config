@@ -127,9 +127,13 @@ nnoremap ,m :marks<CR>
 " nnoremap ,b :ls<CR>
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual mode
-" and after yanking full lines with capital Y in normal mode.
+" (disabled) and after yanking full lines with capital Y in normal mode. (disabled)
 vnoremap y y`>
-nnoremap Y Y`]
+" nnoremap Y Y`]
+
+" Capital Y yank in normal mode yanks from cursor to end of line, just like
+" capital D does.
+nnoremap Y y$
 
 " Use omnicompletion!
 set ofu=syntaxcomplete#Complete
