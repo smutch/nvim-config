@@ -22,7 +22,7 @@ function! HardWrapSentences()
     call append('.', lineparts)
     delete
 endfunction
-nnoremap ,w :call HardWrapSentences()<CR>
+nnoremap ,W :call HardWrapSentences()<CR>
 
 " Save then compile
 nmap <buffer> <leader>s :w<CR><leader>ll

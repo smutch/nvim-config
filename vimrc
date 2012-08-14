@@ -138,6 +138,9 @@ nnoremap Y y$
 " Easy on the fingers save binding
 nnoremap ;' :w<CR>
 
+" Another easier on the fingers binding
+nmap ,w <C-w>
+
 " Use omnicompletion!
 set ofu=syntaxcomplete#Complete
 au FileType python set omnifunc=pythoncomplete#Complete
