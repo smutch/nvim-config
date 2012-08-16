@@ -393,7 +393,7 @@ let NERDSpaceDelims=1
 map ;; <plug>NERDCommenterToggle
 map ;s <plug>NERDCommenterSexy
 map ;A <plug>NERDCommenterAppend
-map ;a <plug>NERDCommenterAltDelim
+map ;a <plug>NERDCommenterAltDelims
 map ;y <plug>NERDCommenterYank
 map ;e <plug>NERDCommenterToEOL
 map ;u <plug>NERDCommenterUncomment
