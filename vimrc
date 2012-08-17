@@ -275,10 +275,11 @@ nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 " Tlist options
 let Tlist_Auto_Update = 1
-let Tlist_Auto_Highlight_Tag = 0
+let Tlist_Auto_Highlight_Tag = 1
 let Tlist_Display_Prototype = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_File_Fold_Auto_Close = 1
+nnoremap ,T :TlistToggle<CR>
 
 " Map <leader>h to turn off highlighting
 nmap <leader>h <Esc>:noh<CR>
