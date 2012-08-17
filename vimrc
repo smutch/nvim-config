@@ -136,10 +136,13 @@ vnoremap y y`>
 nnoremap Y y$
 
 " Easy on the fingers save binding
-nnoremap ;' :w<CR>
+nnoremap ,, :w<CR>
 
 " Another easier on the fingers binding
 nmap ,w <C-w>
+
+" Quick binding to quick switch back to alternate file 
+nmap ;' <C-S-^>
 
 " Use omnicompletion!
 set ofu=syntaxcomplete#Complete
