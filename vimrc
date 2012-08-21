@@ -423,6 +423,9 @@ autocmd FileType markdown let b:surround_115 = "~~\r~~"
 
 nnoremap ,g :MyGrep
 
+" Abbreviations
+ab redhsift redshift
+
 " " Reset some keybindings
 " noremap <script> <silent> \be :BufExplorer<CR>
 " noremap <script> <silent> \bs :BufExplorerHorizontalSplit<CR>

@@ -1,11 +1,15 @@
-" set textwidth=80
-" set colorcolumn=80 
+setlocal tw=80 fo=cqt wm=0 colorcolumn=80
+let b:wrapToggleFlag=1
+
 let g:solarized_contrast="normal"
 let g:solarized_visibility="low"
-set wrap
-set lbr
+
+" set lbr
 set spell 
 if has("gui_macvim")
     set background=light
     " colorscheme colorful
 end
+
+" Allow the wrapping to mess with existing lines
+setlocal formatoptions-=l

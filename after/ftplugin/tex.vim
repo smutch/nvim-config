@@ -2,11 +2,9 @@ set background=light
 let g:solarized_contrast="normal"
 let g:solarized_visibility="normal"
 
-set spell 
+set spell
+setlocal nofoldenable
 
-" TIP: if you write your \label's as \label{fig:something}, then if you
-" type in \ref{fig: and press <C-n> you will automatically cycle through
-" all the figure labels. Very useful!
 setlocal iskeyword+=:
 setlocal iskeyword-=_
 
@@ -14,6 +12,8 @@ set softtabstop=2
 set shiftwidth=2
 setlocal tw=80 fo=cqt wm=0 colorcolumn=80
 let b:wrapToggleFlag=1
+
+nmap ,T :LatexTOC<CR>
 
 " imap <Space><Space> <CR>
 function! HardWrapSentences()
