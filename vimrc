@@ -458,25 +458,13 @@ function! ScreenMovement(movement)
 endfunction
 nnoremap <silent> <expr> k ScreenMovement("k")
 nnoremap <silent> <expr> j ScreenMovement("j")
-inoremap <buffer> <Up> <C-O>gk
-inoremap <buffer> <Down> <C-O>gj
+" inoremap <buffer> <Up> <C-O>gk
+" inoremap <buffer> <Down> <C-O>gj
 function! TYShowBreak()
   if &showbreak == ''
     set showbreak=>
   else
     set showbreak=
-  endif
-endfunction
-let b:gmove = "yes"
-function! TYToggleBreakMove()
-  if exists("b:gmove") && b:gmove == "yes"
-    let b:gmove = "no"
-    inoremap <buffer> <Up> <Up>
-    inoremap <buffer> <Down> <Down>
-  else
-    let b:gmove = "yes"
-    inoremap <buffer> <Up> <C-O>gk
-    inoremap <buffer> <Down> <C-O>gj
   endif
 endfunction
 
