@@ -13,3 +13,6 @@ end
 
 " Allow the wrapping to mess with existing lines
 setlocal formatoptions-=l
+
+nnoremap <buffer> <leader>m :silent !open -a Marked.app '%:p'<cr>
+nnoremap <buffer> <leader>M :silent !paver -f $HOME/Scripts/pavement.py pandoc_github '%:p'<cr>

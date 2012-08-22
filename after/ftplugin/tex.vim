@@ -8,8 +8,8 @@ setlocal nofoldenable
 setlocal iskeyword+=:
 setlocal iskeyword-=_
 
-set softtabstop=2
-set shiftwidth=2
+setlocal softtabstop=2
+setlocal shiftwidth=2
 setlocal tw=80 fo=cqt wm=0 colorcolumn=80
 let b:wrapToggleFlag=1
 
