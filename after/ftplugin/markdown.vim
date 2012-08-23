@@ -15,4 +15,4 @@ end
 setlocal formatoptions-=l
 
 nnoremap <buffer> <leader>m :silent !open -a Marked.app '%:p'<cr>
-nnoremap <buffer> <leader>M :silent !paver -f $HOME/Scripts/pavement.py pandoc_github '%:p'<cr>
+nnoremap <buffer> <leader>M :silent !paver -f $HOME/bin/pavement.py pandoc_github '%:p'<cr>
