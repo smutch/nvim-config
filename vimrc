@@ -18,6 +18,11 @@ if match($TERM, "screen")!=-1
       call add(g:pathogen_disabled, 'vitality')
 endif
 
+" Powerline options
+set encoding=utf-8
+let g:Powerline_symbols = 'fancy'
+" let g:Powerline_colorscheme = 'skwp'
+
 "------------------
 "---- Pathogen ----
 "------------------
@@ -46,7 +51,7 @@ end
 
 if has("gui_macvim")
   " set guifont=Bitstream\ Vera\ Sans\ Mono:h12
-  set guifont=Inconsolata:h16
+  set guifont=Inconsolata-dz\ for\ Pow:h14
   set guioptions-=T  " remove toolbar
   set stal=2 " turn on tabs by default
   set anti
@@ -308,11 +313,11 @@ nnoremap ,: @:
 
 " Let us see the current git branch we are on
 " set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-if exists('quick_load')
-    set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
-else
-    set statusline=%<\ %n:%f\ %{fugitive#statusline()}\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
-endif
+" if exists('quick_load')
+"     set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
+" else
+"     set statusline=%<\ %n:%f\ %{fugitive#statusline()}\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
+" endif
 set laststatus=2
 
 " Useful shortcut for git commands
