@@ -21,7 +21,7 @@ endif
 " Powerline options
 set encoding=utf-8
 let g:Powerline_symbols = 'fancy'
-" let g:Powerline_colorscheme = 'skwp'
+let g:Powerline_colorscheme = 'solarizedDark'
 
 "------------------
 "---- Pathogen ----

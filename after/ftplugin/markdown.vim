@@ -8,6 +8,7 @@ let g:solarized_visibility="low"
 set spell 
 if has("gui_macvim")
     set background=light
+    let g:Powerline_colorscheme = "solarizedLight"
     call Pl#ReloadColorscheme()
     " colorscheme colorful
 end

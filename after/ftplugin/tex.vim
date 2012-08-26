@@ -1,6 +1,7 @@
 set background=light
 let g:solarized_contrast="normal"
 let g:solarized_visibility="normal"
+let g:Powerline_colorscheme = "solarizedLight"
 call Pl#ReloadColorscheme()
 
 set spell
