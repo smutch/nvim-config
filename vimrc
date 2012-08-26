@@ -51,11 +51,12 @@ end
 
 if has("gui_macvim")
   " set guifont=Bitstream\ Vera\ Sans\ Mono:h12
-  set guifont=Inconsolata-dz\ for\ Pow:h14
+  set guifont=Inconsolata-dz\ for\ Powerline:h14
+  " set guifont=Menlo\ for\ Powerline:h14
   set guioptions-=T  " remove toolbar
   set stal=2 " turn on tabs by default
   set anti
-  set linespace=3 "Increase the space between lines for better readability
+  " set linespace=3 "Increase the space between lines for better readability
   " In order for the ropevim quick keybindings to work (i.e. 'M-/')
   " we must allow MacVim to interpret the option key as Meta...
   set invmmta
