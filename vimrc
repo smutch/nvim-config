@@ -54,7 +54,7 @@ if has("gui_macvim")
   set guifont=Inconsolata-dz\ for\ Powerline:h14
   " set guifont=Menlo\ for\ Powerline:h14
   set guioptions-=T  " remove toolbar
-  set stal=2 " turn on tabs by default
+  " set stal=2 " turn on tabs by default
   set anti
   " set linespace=3 "Increase the space between lines for better readability
   " In order for the ropevim quick keybindings to work (i.e. 'M-/')
@@ -290,8 +290,8 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_File_Fold_Auto_Close = 1
 nnoremap ,T :TlistToggle<CR>
 
-" Map <leader>h to turn off highlighting
-nmap <leader>h <Esc>:noh<CR>
+" Map ,h to turn off highlighting
+nmap ,h <Esc>:noh<CR>
 
 " Map keys for Ack
 nmap <leader>A <Esc>:Ack!
