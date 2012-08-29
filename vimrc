@@ -476,8 +476,8 @@ function! MoveLineOrVisualUpOrDown(move_arg)
 endfunction
 nnoremap <silent> <C-k> :<C-u>call MoveLineUp()<CR>
 nnoremap <silent> <C-j> :<C-u>call MoveLineDown()<CR>
-inoremap <silent> <C-k> <C-o>:call MoveLineUp()<CR>
-inoremap <silent> <C-j> <C-o>:call MoveLineDown()<CR>
+"inoremap <silent> <C-k> <C-o>:call MoveLineUp()<CR>
+"inoremap <silent> <C-j> <C-o>:call MoveLineDown()<CR>
 "vnoremap <silent> <C-k> :<C-u>call MoveVisualUp()<CR>
 "vnoremap <silent> <C-j> :<C-u>call MoveVisualDown()<CR>
 xnoremap <silent> <C-k> :<C-u>call MoveVisualUp()<CR>
