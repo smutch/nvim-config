@@ -303,8 +303,6 @@ function! FormatLatexPar(lvl)
 	exe ':'.next
 endfunction
 
-nnoremap  ,l  :silent call FormatLatexPar(0)<CR>
-
 " ******************************************************
 function! ToggleComment() range
 	if &filetype == "html" || &filetype == "xml"

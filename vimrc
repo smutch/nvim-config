@@ -119,6 +119,9 @@ set autoread
 " Quick bind for saving a file
 nnoremap \s :w<CR>
 
+" Reformat paragraph
+nnoremap ,l gqip
+
 " Cycle through buffers quickly
 nnoremap <silent> ,x :bn<CR>
 nnoremap <silent> ,z :bp<CR>

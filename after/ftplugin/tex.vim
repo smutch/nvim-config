@@ -41,6 +41,6 @@ setlocal scrolloff=5
 " Allow the wrapping to mess with existing lines
 setlocal formatoptions-=l
 
-" Maps FormatPar function to Ctrl-l
-noremap! <buffer> <C-l>@  <ESC>:silent call FormatLatexPar(0)<CR>i
+" Maps FormatPar function to ,l
+nnoremap  <buffer> ,l  :silent call FormatLatexPar(0)<CR>
 
