@@ -429,10 +429,6 @@ command! -nargs=+ MyGrep execute 'silent vimgrep <args> %' | copen 10
 
 nnoremap ,g :MyGrep
 
-" Abbreviations (to correct dumb-ass typos)
-ab redhsift redshift
-ab redhsifts redshifts
-
 " " Reset some keybindings
 " noremap <script> <silent> \be :BufExplorer<CR>
 " noremap <script> <silent> \bs :BufExplorerHorizontalSplit<CR>
