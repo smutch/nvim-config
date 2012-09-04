@@ -44,3 +44,5 @@ setlocal formatoptions-=l
 " Maps FormatPar function to ,l
 nnoremap  <buffer> ,l  :silent call FormatLatexPar(0)<CR>
 
+" Tex only abbreviations
+ab <buffer> ... \ldots
