@@ -308,9 +308,9 @@ nmap ,sr <Esc>:RainbowParenthesesToggle<CR>
 map <leader>g :GundoToggle<CR>
 
 " Map keys for command-T
-nnoremap <silent> ,t :CommandT<CR>
-nnoremap <silent> ,b :CommandTBuffer<CR>
-let g:CommandTMatchWindowAtTop = 0
+" nnoremap <silent> ,t :CommandT<CR>
+" nnoremap <silent> ,b :CommandTBuffer<CR>
+" let g:CommandTMatchWindowAtTop = 0
 
 " Repeat last : command
 nnoremap ,: @:
