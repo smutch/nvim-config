@@ -102,10 +102,6 @@
 	path = bundle/rainbowparen
 	url = https://github.com/kien/rainbow_parentheses.vim.git
     ignore = dirty
-[submodule "bundle/command-t"]
-	path = bundle/command-t
-	url = https://github.com/vim-scripts/Command-T.git
-    ignore = dirty
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
@@ -137,10 +133,6 @@
 [submodule "bundle/vitality"]
 	path = bundle/vitality
 	url = https://github.com/sjl/vitality.vim.git
-    ignore = dirty
-[submodule "bundle/minibufexplr"]
-	path = bundle/minibufexplr
-	url = https://github.com/fholgado/minibufexpl.vim.git
     ignore = dirty
 [submodule "bundle/python_match"]
 	path = bundle/python_match

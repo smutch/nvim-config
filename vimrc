@@ -112,9 +112,15 @@ set smartcase					" case sensitive when uc present
 set wildmenu					" show list instead of just completing
 set gdefault                    " g flag on sed subs automatically
 set hidden
+set hlsearch
 
 set wildignore+=*.o,*.obj,.git,*.pyc,*.pdf,*.ps,*.png,*.jpg,*.aux
 set autoread
+
+" Turn off annoying backups!
+set nobackup
+set nowb
+set noswapfile
 
 " Quick bind for saving a file
 nnoremap \s :w<CR>
@@ -157,34 +163,12 @@ nmap ,, <C-S-^>
 set ofu=syntaxcomplete#Complete
 au FileType python set omnifunc=pythoncomplete#Complete
 
-" Pydoc
-if has("gui_macvim")
-    let g:pydoc_cmd = "/opt/local/bin/pydoc"
-elseif has("mac")
-    let g:pydoc_cmd = "/opt/local/bin/pydoc"
-elseif has("unix")
-    let g:pydoc_cmd = "/usr/local/python-2.7.1/bin/pydoc"
-endif
-
 " " Set cwd to that of current file
 " if exists('+autochdir')
 "     set autochdir
 " else
 "     autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
 " endif
-
-" Let NERDTree ignore certain filetypes
-let NERDTreeIgnore=['\.o$', '\~$', '^_', '\.tmproj$', '^\..*']
-let NERDTreeQuitOnOpen=1
-let NERDTreeShowHidden=1
-
-" " MiniBufExplorer options
-" let g:miniBufExplMapCTabSwitchBufs = 1
-" let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplorerMoreThanOne=100
-
-" Set the list of tags to search for in tasklist
-let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'TEMPORARY']
 
 " Highlight warning comments
 highlight Warning guibg=red ctermbg=red guifg=white ctermfg=white
@@ -198,18 +182,6 @@ autocmd BufEnter * 2match ContHere /CONT HERE/
 highlight LineHighlight guibg=green ctermbg=green guifg=white ctermfg=white
 autocmd BufEnter * 3match LineHighlight /\!\$\$\_.\{-}\$\$\!/
 
-" Set showmarks bundle to off by default
-let g:showmarks_enable = 0
-
-" Make gists private by default
-let g:gist_show_privates = 1
-
-" Turn off annoying backups!
-set nobackup
-set nowb
-set noswapfile
-
-set hlsearch
 
 " Disable increment number up / down - *way* too dangerous...
 nmap <C-a> <Nop>
@@ -218,10 +190,6 @@ nmap <C-x> <Nop>
 " Python syntax highlighting
 let python_highlight_all = 1
 let python_highlight_space_errors = 0
-
-" Pyflakes options
-let g:pyflakes_autostart = 1
-let g:pyflakes_use_quickfix = 0
 
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
@@ -244,36 +212,6 @@ EOF
 " Supertab options
 let g:SuperTabDefaultCompletionType = "context"
 " au FileType Python let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-
-" Rope settings
-let ropevim_vim_completion = 1
-let ropevim_enable_shortcuts = 1
-let ropevim_enable_autoimport = 1
-let ropevim_goto_def_newwin = 1
-let ropevim_extended_complete = 1
-
-" ConqueTerm settings
-augroup MyConqueTerm
-  autocmd!
-  " start Insert mode on BufEnter
-  autocmd BufEnter *
-        \ if &l:filetype ==# 'conque_term' |
-        \   startinsert! |
-        \ endif
-  autocmd BufLeave *
-        \ if &l:filetype ==# 'conque_term' |
-        \   stopinsert! |
-        \ endif
-augroup END
-
-let g:ConqueTerm_Color         = 1
-let g:ConqueTerm_TERM          = 'xterm-256color'
-let g:ConqueTerm_Syntax        = 'conque'
-let g:ConqueTerm_ReadUnfocused = 1
-let g:ConqueTerm_CWInsert      = 1
-
-nnoremap <silent><leader>C <Esc>:ConqueTermSplit zsh<CR><Esc>:set wfh<CR>i
-
 
 " ,j ,k inserts blank line below/above.
 nnoremap <silent>,j :set paste<CR>m`o<Esc>``:set nopaste<CR>

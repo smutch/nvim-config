@@ -54,8 +54,8 @@ call Pl#Hi#Allocate({
 
 let g:Powerline#Colorschemes#solarizedLight#colorscheme = Pl#Colorscheme#Init([
     \ Pl#Hi#Segments(['SPLIT'], {
-        \ 'n': ['b65', 'b97'],
-        \ 'N': ['b65', 'b97'],
+        \ 'n': ['b65', 'b60'],
+        \ 'N': ['b65', 'b60'],
         \ 'i': ['b20', 'b92'],
         \ }),
     \
