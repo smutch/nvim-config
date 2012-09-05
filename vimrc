@@ -209,10 +209,6 @@ if 'VIRTUAL_ENV' in os.environ:
     execfile(activate_this, dict(__file__=activate_this))
 EOF
 
-" Supertab options
-let g:SuperTabDefaultCompletionType = "context"
-" au FileType Python let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-
 " ,j ,k inserts blank line below/above.
 nnoremap <silent>,j :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
@@ -223,32 +219,14 @@ nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
 " nnoremap <silent><C-h> <Esc><C-w>h
 " nnoremap <silent><C-l> <Esc><C-w>l
 
-" Tlist options
-let Tlist_Auto_Update = 1
-let Tlist_Auto_Highlight_Tag = 1
-let Tlist_Display_Prototype = 1
-let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_File_Fold_Auto_Close = 1
-nnoremap ,T :TlistToggle<CR>
-
 " Map ,h to turn off highlighting
 nmap ,h <Esc>:noh<CR>
-
-" Map keys for Ack
-nmap <leader>A <Esc>:Ack!
-" Ack for current word under cursor
-nmap <leader>w yiw<Esc>:Ack! <C-r>"<CR>
 
 " Map keys for rainbow_parenthesis
 nmap ,sr <Esc>:RainbowParenthesesToggle<CR>
 
 " Map keys for Gundo
 map <leader>g :GundoToggle<CR>
-
-" Map keys for command-T
-" nnoremap <silent> ,t :CommandT<CR>
-" nnoremap <silent> ,b :CommandTBuffer<CR>
-" let g:CommandTMatchWindowAtTop = 0
 
 " Repeat last : command
 nnoremap ,: @:
@@ -267,13 +245,12 @@ nnoremap git :Git
 nnoremap gca :Gcommit -a<CR>
 nnoremap gst :Gstatus<CR>
 
-" Use f5 or TextMate equivalent to open NERDTree
-nmap <silent> <F5> :NERDTreeToggle<CR>
+" NERDTree
 nmap <silent> <leader>n :NERDTreeToggle<CR>
 let NERDTreeHijackNetrw = 1
 
 " Use f4 for the taglist
-nmap <silent> <F4> :TlistToggle<CR>
+nmap <silent> ,@ :TlistToggle<CR>
 
 " Vimux bindings
 ruby << EOF
