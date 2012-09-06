@@ -59,7 +59,7 @@ call Pl#Hi#Allocate({
 let g:Powerline#Colorschemes#solarizedDark#colorscheme = Pl#Colorscheme#Init([
     \ Pl#Hi#Segments(['SPLIT'], {
         \ 'n': ['b65', 'b20'],
-        \ 'N': ['b65', 'b15'],
+        \ 'N': ['b65', 'b20'],
         \ 'i': ['b65', 'b45'],
         \ }),
     \
