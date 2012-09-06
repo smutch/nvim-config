@@ -174,3 +174,7 @@
 	path = bundle/splitjoin
 	url = https://github.com/AndrewRadev/splitjoin.vim.git
     ignore = dirty
+[submodule "bundle/conque"]
+	path = bundle/conque
+	url = https://github.com/skwp/vim-conque
+    ignore = dirty
