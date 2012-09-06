@@ -82,10 +82,6 @@
 	path = bundle/scons
 	url = https://github.com/vim-scripts/scons.vim.git
     ignore = dirty
-[submodule "bundle/conque"]
-	path = bundle/conque
-	url = https://github.com/rson/vim-conque.git
-    ignore = dirty
 [submodule "bundle/zoomwin"]
 	path = bundle/zoomwin
 	url = https://github.com/vim-scripts/ZoomWin.git
