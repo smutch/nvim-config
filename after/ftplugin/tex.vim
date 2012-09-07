@@ -13,6 +13,7 @@ setlocal iskeyword-=_
 setlocal softtabstop=2
 setlocal shiftwidth=2
 setlocal tw=80 fo=cqt wm=0 colorcolumn=80
+setlocal cursorline
 let b:wrapToggleFlag=1
 
 nmap ,T :LatexTOC<CR>

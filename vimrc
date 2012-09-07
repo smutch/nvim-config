@@ -14,8 +14,11 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 
 " Deal with gnu screen
 if match($TERM, "screen")!=-1
-      set term=xterm-256color
-      call add(g:pathogen_disabled, 'vitality')
+    set term=xterm-256color
+    call add(g:pathogen_disabled, 'vitality')
+endif
+if has("gui_macvim")
+    call add(g:pathogen_disabled, 'vitality')
 endif
 
 " Powerline options
@@ -171,16 +174,16 @@ au FileType python set omnifunc=pythoncomplete#Complete
 " endif
 
 " Highlight warning comments
-highlight Warning guibg=red ctermbg=red guifg=white ctermfg=white
-autocmd BufEnter * match Warning /WARNING/
+" highlight Warning guibg=red ctermbg=red guifg=white ctermfg=white
+" autocmd BufEnter * match Warning /WARNING/
 
 " Highlight continue here comments
-highlight ContHere guibg=purple ctermbg=164 guifg=white ctermfg=white
-autocmd BufEnter * 2match ContHere /CONT HERE/
+" highlight ContHere guibg=purple ctermbg=164 guifg=white ctermfg=white
+" autocmd BufEnter * 2match ContHere /CONT HERE/
 
 " Highlight lines
-highlight LineHighlight guibg=green ctermbg=green guifg=white ctermfg=white
-autocmd BufEnter * 3match LineHighlight /\!\$\$\_.\{-}\$\$\!/
+" highlight LineHighlight guibg=green ctermbg=green guifg=white ctermfg=white
+" autocmd BufEnter * 3match LineHighlight /\!\$\$\_.\{-}\$\$\!/
 
 
 " Disable increment number up / down - *way* too dangerous...
