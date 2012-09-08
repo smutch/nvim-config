@@ -158,6 +158,7 @@ nnoremap ;' :w<CR>
 
 " Another easier on the fingers binding
 nmap ,w <C-w>
+nmap ,. <C-w>w
 
 " Quick binding to quick switch back to alternate file 
 nmap ,, <C-S-^>
