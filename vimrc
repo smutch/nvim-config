@@ -163,6 +163,10 @@ nmap ,. <C-w>w
 " Quick binding to quick switch back to alternate file 
 nmap ,, <C-S-^>
 
+" Next and previous quickfix entries
+nnoremap ,cn :cn<CR>
+nnoremap ,cp :cp<CR>
+
 " Use omnicompletion!
 set ofu=syntaxcomplete#Complete
 au FileType python set omnifunc=pythoncomplete#Complete
