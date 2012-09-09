@@ -6,6 +6,7 @@ call Pl#ReloadColorscheme()
 
 set spell
 setlocal nofoldenable
+setlocal formatprg=par\ -w80\ -g
 
 setlocal iskeyword+=:
 setlocal iskeyword-=_
@@ -42,8 +43,8 @@ setlocal scrolloff=5
 " Allow the wrapping to mess with existing lines
 setlocal formatoptions-=l
 
-" Maps FormatPar function to ,l
-nnoremap  <buffer> ,l  :silent call FormatLatexPar(0)<CR>
+" Maps FormatPar function to ,L
+nnoremap  <buffer> ,L  :silent call FormatLatexPar(0)<CR>
 
 " Tex only abbreviations
 ab <buffer> ... \ldots
