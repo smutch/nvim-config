@@ -130,6 +130,7 @@ nnoremap \s :w<CR>
 
 " Reformat paragraph
 nnoremap ,l gqip
+vnoremap ,l gq
 
 " Cycle through buffers quickly
 nnoremap <silent> ,x :bn<CR>
