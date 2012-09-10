@@ -46,5 +46,9 @@ setlocal formatoptions-=l
 " Maps FormatPar function to ,L
 nnoremap  <buffer> ,L  :silent call FormatLatexPar(0)<CR>
 
+" Jump to position in pdf
+map <buffer> <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline
+    \ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
+
 " Tex only abbreviations
 ab <buffer> ... \ldots
