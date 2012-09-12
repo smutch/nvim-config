@@ -82,10 +82,6 @@
 	path = bundle/scons
 	url = https://github.com/vim-scripts/scons.vim.git
     ignore = dirty
-[submodule "bundle/zoomwin"]
-	path = bundle/zoomwin
-	url = https://github.com/vim-scripts/ZoomWin.git
-    ignore = dirty
 [submodule "bundle/python-indent"]
 	path = bundle/python-indent
 	url = https://github.com/gg/python.vim.git
