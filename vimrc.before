@@ -1,0 +1,2 @@
+" Remap task list key (must be done before loading plugin)
+map <leader>T <Plug>TaskList

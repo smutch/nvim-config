@@ -1,11 +1,9 @@
 " Vim config file
-runtime bundle/pathogen/autoload/pathogen.vim
 set nocompatible
-filetype off
-let g:pathogen_disabled = []
 
-" Remap task list key (must be done before loading plugin)
-map <leader>T <Plug>TaskList
+if filereadable(expand("~/.vimrc.before"))
+  source ~/.vimrc.before
+endif
 
 " Syntastic options
 let g:syntastic_mode_map = { 'mode': 'passive',
@@ -13,6 +11,7 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'passive_filetypes': [] }
 
 " Deal with gnu screen
+let g:pathogen_disabled = []
 if match($TERM, "screen")!=-1
     set term=xterm-256color
     call add(g:pathogen_disabled, 'vitality')
@@ -26,10 +25,13 @@ set encoding=utf-8
 let g:Powerline_symbols = 'fancy'
 let g:Powerline_colorscheme = 'solarizedDark'
 
+
 "------------------
 "---- Pathogen ----
 "------------------
 " If we called vim using quickload then only enable some bundles
+runtime bundle/pathogen/autoload/pathogen.vim
+filetype off
 if exists('quick_load')
     call add(g:pathogen_disabled, 'fugitive')
     call add(g:pathogen_disabled, 'gist')
@@ -172,33 +174,9 @@ nnoremap ,cp :cp<CR>
 set ofu=syntaxcomplete#Complete
 au FileType python set omnifunc=pythoncomplete#Complete
 
-" " Set cwd to that of current file
-" if exists('+autochdir')
-"     set autochdir
-" else
-"     autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-" endif
-
-" Highlight warning comments
-" highlight Warning guibg=red ctermbg=red guifg=white ctermfg=white
-" autocmd BufEnter * match Warning /WARNING/
-
-" Highlight continue here comments
-" highlight ContHere guibg=purple ctermbg=164 guifg=white ctermfg=white
-" autocmd BufEnter * 2match ContHere /CONT HERE/
-
-" Highlight lines
-" highlight LineHighlight guibg=green ctermbg=green guifg=white ctermfg=white
-" autocmd BufEnter * 3match LineHighlight /\!\$\$\_.\{-}\$\$\!/
-
-
 " Disable increment number up / down - *way* too dangerous...
 nmap <C-a> <Nop>
 nmap <C-x> <Nop>
-
-" Python syntax highlighting
-let python_highlight_all = 1
-let python_highlight_space_errors = 0
 
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
@@ -206,7 +184,7 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 " Shortcut function for removing trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$//'
 
-" Use my virtualenv for python
+" Use virtualenv for python
 py << EOF
 import os.path
 import sys
@@ -222,20 +200,8 @@ EOF
 nnoremap <silent>,j :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
-" Ctrl-j/k/h/l selects windows
-" nnoremap <silent><C-j> <Esc><C-w>j
-" nnoremap <silent><C-k> <Esc><C-w>k
-" nnoremap <silent><C-h> <Esc><C-w>h
-" nnoremap <silent><C-l> <Esc><C-w>l
-
 " Map ,h to turn off highlighting
 nmap ,h <Esc>:noh<CR>
-
-" Map keys for rainbow_parenthesis
-nmap ,sr <Esc>:RainbowParenthesesToggle<CR>
-
-" Map keys for Gundo
-map <leader>g :GundoToggle<CR>
 
 " Repeat last : command
 nnoremap ,: @:
@@ -249,31 +215,8 @@ nnoremap ,: @:
 " endif
 set laststatus=2
 
-" Useful shortcut for git commands
-nnoremap git :Git
-nnoremap gca :Gcommit -a<CR>
-nnoremap gst :Gstatus<CR>
-
-" NERDTree
-nmap <silent> <leader>n :NERDTreeToggle<CR>
-let NERDTreeHijackNetrw = 1
-
 " Use f4 for the taglist
 nmap <silent> ,@ :TlistToggle<CR>
-
-" Vimux bindings
-ruby << EOF
-class Object
-  def flush; end unless Object.new.respond_to?(:flush)
-  end
-EOF
-let VimuxHeight = "20"
-let VimuxOrientation = "v"
-map <Leader>rp :PromptVimTmuxCommand<CR>
-map <Leader>rl :RunLastVimTmuxCommand<CR>
-map <Leader>ri :InspectVimTmuxRunner<CR>
-map <Leader>rx :CloseVimTmuxPanes<CR>
-map <Leader>rs :InterruptVimTmuxRunner<CR>
 
 " Bash like keys for the command line
 inoremap <C-a>      <Home>
@@ -288,13 +231,6 @@ set grepprg=grep\ -nH\ $*
 
 filetype plugin on
 filetype indent on
-
-" Latex options
-let g:tex_flavor='latex'
-let g:LatexBox_Folding=0
-let g:LatexBox_viewer = "open -a Skim"
-" map <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline
-"         \ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
 
 function! <SID>KillLine()
   if col('.') > strlen(getline('.'))
@@ -324,25 +260,6 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" NERDCommenter
-let NERD_c_alt_style=1 " This doesn't seem to do anything but it should!?!
-let NERDSpaceDelims=1
-map ;; <plug>NERDCommenterToggle
-map ;s <plug>NERDCommenterSexy
-map ;A <plug>NERDCommenterAppend
-map ;a <plug>NERDCommenterAltDelims
-map ;y <plug>NERDCommenterYank
-map ;e <plug>NERDCommenterToEOL
-map ;u <plug>NERDCommenterUncomment
-map ;n <plug>NERDCommenterNest
-map ;m <plug>NERDCommenterMinimal
-map ;i <plug>NERDCommenterInvert
-map ;l <plug>NERDCommenterAlignLeft
-map ;b <plug>NERDCommenterAlignBoth
-map ;c <plug>NERDCommenterComment
-map ;p ;y`]p
-
-
 " Scons files
 au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
 set makeprg=scons
@@ -353,58 +270,6 @@ command! -nargs=+ MyGrep execute 'silent vimgrep <args> %' | copen 10
 
 nnoremap ,g :MyGrep
 
-" " Reset some keybindings
-" noremap <script> <silent> \be :BufExplorer<CR>
-" noremap <script> <silent> \bs :BufExplorerHorizontalSplit<CR>
-" noremap <script> <silent> \bv :BufExplorerVerticalSplit<CR>
-
-" Move lines up or down
-function! MoveLineUp()
-  call MoveLineOrVisualUp(".", "")
-endfunction
-function! MoveLineDown()
-  call MoveLineOrVisualDown(".", "")
-endfunction
-function! MoveVisualUp()
-  call MoveLineOrVisualUp("'<", "'<,'>")
-  normal gv
-endfunction
-function! MoveVisualDown()
-  call MoveLineOrVisualDown("'>", "'<,'>")
-  normal gv
-endfunction
-function! MoveLineOrVisualUp(line_getter, range)
-  let l_num = line(a:line_getter)
-  if l_num - v:count1 - 1 < 0
-    let move_arg = "0"
-  else
-    let move_arg = a:line_getter." -".(v:count1 + 1)
-  endif
-  call MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
-endfunction
-function! MoveLineOrVisualDown(line_getter, range)
-  let l_num = line(a:line_getter)
-  if l_num + v:count1 > line("$")
-    let move_arg = "$"
-  else
-    let move_arg = a:line_getter." +".v:count1
-  endif
-  call MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
-endfunction
-function! MoveLineOrVisualUpOrDown(move_arg)
-  let col_num = virtcol(".")
-  execute "silent! ".a:move_arg
-  execute "normal! ".col_num."|"
-endfunction
-nnoremap <silent> <C-k> :<C-u>call MoveLineUp()<CR>
-nnoremap <silent> <C-j> :<C-u>call MoveLineDown()<CR>
-"inoremap <silent> <C-k> <C-o>:call MoveLineUp()<CR>
-"inoremap <silent> <C-j> <C-o>:call MoveLineDown()<CR>
-"vnoremap <silent> <C-k> :<C-u>call MoveVisualUp()<CR>
-"vnoremap <silent> <C-j> :<C-u>call MoveVisualDown()<CR>
-xnoremap <silent> <C-k> :<C-u>call MoveVisualUp()<CR>
-xnoremap <silent> <C-j> :<C-u>call MoveVisualDown()<CR>
-
 " copy and paste to temp file
 " copy to buffer
 set cpoptions-=A
@@ -413,44 +278,6 @@ nmap ,c :.w! ~/.vimbuffer<CR>
 " paste from buffer
 set cpoptions-=a
 nmap ,v :r ~/.vimbuffer<CR>
-
-" mapping to make movements operate on 1 screen line in wrap mode
-function! ScreenMovement(movement)
-  if !exists("b:gmove")
-    let b:gmove = "yes"
-  endif
-  if &wrap && b:gmove == 'yes'
-    return "g" . a:movement
-  else
-    return a:movement
-  endif
-endfunction
-nnoremap <silent> <expr> k ScreenMovement("k")
-nnoremap <silent> <expr> j ScreenMovement("j")
-" inoremap <buffer> <Up> <C-O>gk
-" inoremap <buffer> <Down> <C-O>gj
-function! TYShowBreak()
-  if &showbreak == ''
-    set showbreak=>
-  else
-    set showbreak=
-  endif
-endfunction
-
-" Ranger function
-function! Ranger()
-  if $VIRTUAL_ENV!=""
-    silent !$VIRTUAL_ENV/bin/python $VIRTUAL_ENV/bin/ranger --choosefile=/tmp/chosen
-  else
-    silent !ranger --choosefile=/tmp/chosen
-  endif
-  if filereadable('/tmp/chosen')
-    exec 'edit ' . system('cat /tmp/chosen')
-    call system('rm /tmp/chosen')
-  endif
-  redraw!
-endfun
-map <leader>r :call Ranger()<CR>
 
 " Useful wrapping functions
 function! WrapToggle()
