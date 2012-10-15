@@ -30,19 +30,17 @@ imap <C-k>             <Plug>(neocomplcache_snippets_expand)
 smap <C-k>             <Plug>(neocomplcache_snippets_expand)
 inoremap <expr><C-g>   neocomplcache#undo_completion()
 inoremap <expr><C-l>   neocomplcache#complete_common_string()
-inoremap <expr><CR>    neocomplcache#complete_common_string()
 
 " SuperTab like snippets behavior.
-imap <silent><expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-l>" : "\<tab>")
-smap  <tab>  <right><plug>(neocomplcache_snippets_jump) 
+" imap <expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-n>" : "\<tab>")
 let g:neocomplcache_snippets_dir='~/.vim/bundle/snipmate-snippets/snippets'
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+" inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><s-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><s-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -50,14 +48,20 @@ inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " AutoComplPop like behavior.
-let g:neocomplcache_enable_auto_select = 0
+" let g:neocomplcache_enable_auto_select = 0
 
 " Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
-"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+set completeopt+=longest
+let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_disable_auto_complete = 1
+inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
+inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>"
+function! s:check_back_space()"{{{
+let col = col('.') - 1
+return !col || getline('.')[col - 1] =~ '\s'
+endfunction"}}
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
