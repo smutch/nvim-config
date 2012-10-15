@@ -26,14 +26,14 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+imap <C-k>             <Plug>(neocomplcache_snippets_expand)
+smap <C-k>             <Plug>(neocomplcache_snippets_expand)
+inoremap <expr><C-g>   neocomplcache#undo_completion()
+inoremap <expr><C-l>   neocomplcache#complete_common_string()
 inoremap <expr><CR>    neocomplcache#complete_common_string()
 
 " SuperTab like snippets behavior.
-imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <silent><expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-l>" : "\<tab>")
 smap  <tab>  <right><plug>(neocomplcache_snippets_jump) 
 let g:neocomplcache_snippets_dir='~/.vim/bundle/snipmate-snippets/snippets'
 
@@ -50,7 +50,7 @@ inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_enable_auto_select = 0
 
 " Shell like behavior(not recommended).
 "set completeopt+=longest
