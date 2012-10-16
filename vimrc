@@ -22,7 +22,7 @@ endif
 
 " Powerline options
 set encoding=utf-8
-let g:Powerline_symbols = 'unicode'
+" let g:Powerline_symbols = 'unicode'
 let g:Powerline_colorscheme = 'solarizedDark'
 
 
