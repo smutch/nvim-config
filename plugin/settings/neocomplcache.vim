@@ -32,15 +32,15 @@ inoremap <expr><C-g>   neocomplcache#undo_completion()
 inoremap <expr><C-l>   neocomplcache#complete_common_string()
 
 " SuperTab like snippets behavior.
-" imap <expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-n>" : "\<tab>")
+imap <expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-n>" : "\<tab>")
 let g:neocomplcache_snippets_dir='~/.vim/bundle/snipmate-snippets/snippets'
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-" inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" inoremap <expr><s-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
+inoremap <expr><s-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -51,11 +51,11 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 " let g:neocomplcache_enable_auto_select = 0
 
 " Shell like behavior(not recommended).
-set completeopt+=longest
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_disable_auto_complete = 1
-inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+" set completeopt+=longest
+" let g:neocomplcache_enable_auto_select = 1
+" let g:neocomplcache_disable_auto_complete = 1
+" inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
+" inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>"
 function! s:check_back_space()"{{{
