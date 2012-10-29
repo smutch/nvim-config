@@ -174,3 +174,18 @@
 	path = bundle/conque
 	url = https://github.com/skwp/vim-conque
     ignore = dirty
+[submodule "bundle/neocomplcache"]
+	path = bundle/neocomplcache
+	url = https://github.com/Shougo/neocomplcache.git
+    ignore = dirty
+[submodule "bundle/snipmate-snippets"]
+	path = bundle/snipmate-snippets
+	url = https://github.com/spf13/snipmate-snippets.git
+    ignore = dirty
+[submodule "bundle/switch"]
+	path = bundle/switch
+	url = https://github.com/AndrewRadev/switch.vim.git
+    ignore = dirty
+[submodule "bundle/neosnippet"]
+	path = bundle/neosnippet
+	url = https://github.com/Shougo/neosnippet
