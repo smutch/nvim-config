@@ -189,3 +189,8 @@
 [submodule "bundle/neosnippet"]
 	path = bundle/neosnippet
 	url = https://github.com/Shougo/neosnippet
+    ignore = dirty
+[submodule "bundle/creole-syntax"]
+	path = bundle/creole-syntax
+	url = https://github.com/vim-scripts/vim-creole.git
+    ignore = dirty
