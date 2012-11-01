@@ -57,7 +57,7 @@ end
 if has("gui_macvim")
   " set guifont=Bitstream\ Vera\ Sans\ Mono:h12
   " set guifont=Inconsolata-dz\ for\ Powerline:h14
-  set guifont=Menlo:h14
+  set guifont=Menlo:h12
   set guioptions-=T  " remove toolbar
   " set stal=2 " turn on tabs by default
   set anti
@@ -65,7 +65,7 @@ if has("gui_macvim")
   " In order for the ropevim quick keybindings to work (i.e. 'M-/')
   " we must allow MacVim to interpret the option key as Meta...
   set invmmta
-  set transparency=5
+  " set transparency=5
 else
   " Remap meta-keys to work with ropevim.
   set <M-/>=/
