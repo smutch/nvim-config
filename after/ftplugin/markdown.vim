@@ -6,12 +6,12 @@ let g:solarized_visibility="low"
 
 " set lbr
 setlocal spell 
-if has("gui_macvim")
-    setlocal background=light
-    let g:Powerline_colorscheme = "solarizedLight"
-    call Pl#ReloadColorscheme()
+" if has("gui_macvim")
+    " setlocal background=light
+    " let g:Powerline_colorscheme = "solarizedLight"
+    " call Pl#ReloadColorscheme()
     " colorscheme colorful
-end
+" end
 
 " Allow the wrapping to mess with existing lines
 setlocal formatoptions-=l

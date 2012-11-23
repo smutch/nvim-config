@@ -194,3 +194,7 @@
 	path = bundle/creole-syntax
 	url = https://github.com/vim-scripts/vim-creole.git
     ignore = dirty
+[submodule "bundle/evervim"]
+	path = bundle/evervim
+	url = https://github.com/kakkyz81/evervim.git
+    ignore = dirty
