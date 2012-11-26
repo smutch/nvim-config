@@ -1,2 +1,7 @@
 " Remap task list key (must be done before loading plugin)
 map <leader>T <Plug>TaskList
+
+" Custom NERDCommenter mappings
+let g:NERDCustomDelimiters = {
+            \ 'c': { 'leftAlt': '/*', 'rightAlt': '*/', 'left': '//' },
+            \ }

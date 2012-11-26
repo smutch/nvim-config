@@ -1,5 +1,5 @@
 " NERDCommenter
-let NERD_c_alt_style=1 " This doesn't seem to do anything but it should!?!
+" Also see .vimrc.before for custom filetype mappings
 let NERDSpaceDelims=1
 map ;; <plug>NERDCommenterToggle
 map ;s <plug>NERDCommenterSexy

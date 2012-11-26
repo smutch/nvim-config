@@ -58,10 +58,6 @@
 	path = bundle/yankring
 	url = https://github.com/vim-scripts/YankRing.vim.git
     ignore = dirty
-[submodule "bundle/nerdcommenter"]
-	path = bundle/nerdcommenter
-	url = https://github.com/vim-scripts/The-NERD-Commenter.git
-    ignore = dirty
 [submodule "bundle/gist"]
 	path = bundle/gist
 	url = https://github.com/mattn/gist-vim.git
