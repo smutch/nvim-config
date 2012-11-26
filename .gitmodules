@@ -194,3 +194,7 @@
 	path = bundle/evervim
 	url = https://github.com/kakkyz81/evervim.git
     ignore = dirty
+[submodule "bundle/nerdcommenter"]
+	path = bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
+    ignore = dirty
