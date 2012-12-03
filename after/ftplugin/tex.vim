@@ -7,6 +7,7 @@ call Pl#ReloadColorscheme()
 set spell
 setlocal nofoldenable
 setlocal formatprg=par\ -w80\ -g
+set conceallevel=0  "Prevent rendering of latex symbols (tres annoying!)
 
 setlocal iskeyword+=:
 setlocal iskeyword-=_
