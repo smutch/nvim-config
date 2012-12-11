@@ -172,7 +172,6 @@ nnoremap ,cp :cp<CR>
 
 " Use omnicompletion!
 set ofu=syntaxcomplete#Complete
-au FileType python set omnifunc=pythoncomplete#Complete
 
 " Disable increment number up / down - *way* too dangerous...
 nmap <C-a> <Nop>

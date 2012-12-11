@@ -202,3 +202,7 @@
 	path = bundle/todo.txt
 	url = https://github.com/freitass/todo.txt-vim.git
     ignore = dirty
+[submodule "bundle/jedi"]
+	path = bundle/jedi
+	url = https://github.com/davidhalter/jedi-vim.git
+    ignore = dirty
