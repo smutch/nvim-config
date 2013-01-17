@@ -41,6 +41,7 @@ if exists('quick_load')
     call add(g:pathogen_disabled, 'conque')
     call add(g:pathogen_disabled, 'voom')
 endif
+    call add(g:pathogen_disabled, 'tagbar')  "Possibly conflicting with powerline to cause slowdown...
 call pathogen#infect()
 "------------------
 
@@ -61,7 +62,7 @@ if has("gui_macvim")
   set guioptions-=T  " remove toolbar
   " set stal=2 " turn on tabs by default
   set anti
-  set linespace=3 "Increase the space between lines for better readability
+  set linespace=2 "Increase the space between lines for better readability
   " In order for the ropevim quick keybindings to work (i.e. 'M-/')
   " we must allow MacVim to interpret the option key as Meta...
   set invmmta

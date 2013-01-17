@@ -7,7 +7,7 @@ call Pl#ReloadColorscheme()
 set spell
 setlocal nofoldenable
 setlocal formatprg=par\ -w80\ -g
-set conceallevel=0  "Prevent rendering of latex symbols (tres annoying!)
+setlocal conceallevel=0  "Prevent rendering of latex symbols (tres annoying!)
 
 setlocal iskeyword+=:
 setlocal iskeyword-=_
@@ -15,7 +15,7 @@ setlocal iskeyword-=_
 setlocal softtabstop=2
 setlocal shiftwidth=2
 setlocal tw=80 fo=cqt wm=0 colorcolumn=80
-setlocal cursorline
+" setlocal cursorline  "This is very slow for large files
 let b:wrapToggleFlag=1
 
 nmap ,T :LatexTOC<CR>
