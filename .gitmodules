@@ -118,10 +118,6 @@
 	path = bundle/webapi
 	url = https://github.com/mattn/webapi-vim.git
     ignore = dirty
-[submodule "bundle/vitality"]
-	path = bundle/vitality
-	url = https://github.com/sjl/vitality.vim.git
-    ignore = dirty
 [submodule "bundle/python_match"]
 	path = bundle/python_match
 	url = https://github.com/vim-scripts/python_match.vim.git
