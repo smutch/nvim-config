@@ -92,6 +92,6 @@ let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
 " For snippet_complete marker.
-if has('conceal')
-    set conceallevel=2 concealcursor=i
-endif
+" if has('conceal')
+    " set conceallevel=2 concealcursor=i
+" endif
