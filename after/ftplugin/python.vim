@@ -11,3 +11,6 @@ setlocal number
 " Set some useful keybindings
 nmap <buffer> \s :w<CR>:SyntasticCheck<CR>
 nmap <buffer> \p :w<CR>:!python %<CR>
+
+" Load indentline plugin
+let g:loaded_indentLine = 1

@@ -1,8 +1,10 @@
 " Let NERDTree ignore certain filetypes
-let NERDTreeIgnore=['\.o$', '\~$', '^_', '\.tmproj$', '^\..*']
+let NERDTreeIgnore=['\.o$', '\~$', '^_', '\.tmproj$', '^\..*', '\.bbl$', 
+            \'\.blg$', '\.fdb*$', '\.fls$', '\.synctex*$', '\.latexmain$',
+            \'\.bst$']
 
-let NERDTreeQuitOnOpen=1
+let NERDTreeQuitOnOpen=0
 let NERDTreeShowHidden=1
 let NERDTreeHijackNetrw = 1
 
-nmap <silent> <leader>n :NERDTreeToggle<CR>
+nmap <silent> <leader>N :NERDTreeToggle<CR>
