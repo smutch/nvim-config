@@ -61,7 +61,7 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>
 function! s:check_back_space()"{{{
 let col = col('.') - 1
 return !col || getline('.')[col - 1] =~ '\s'
-endfunction"}}
+endfunction"}}}
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
