@@ -14,16 +14,14 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 let g:pathogen_disabled = []
 if match($TERM, "screen")!=-1
     set term=xterm-256color
-    call add(g:pathogen_disabled, 'vitality')
 endif
-if has("gui_macvim")
-    call add(g:pathogen_disabled, 'vitality')
+if !has("gui_macvim")
+    let g:Powerline_colorscheme = 'solarizedDark'
 endif
 
 " Powerline options
 set encoding=utf-8
 " let g:Powerline_symbols = 'unicode'
-let g:Powerline_colorscheme = 'solarizedDark'
 
 
 "------------------
@@ -58,7 +56,7 @@ end
 if has("gui_macvim")
   " set guifont=Bitstream\ Vera\ Sans\ Mono:h12
   " set guifont=Inconsolata-dz\ for\ Powerline:h14
-  set guifont=Menlo:h12
+  set guifont=Menlo:h14
   set guioptions-=T  " remove toolbar
   " set stal=2 " turn on tabs by default
   set anti
@@ -81,7 +79,8 @@ end
 set background=dark
 if has("gui_running")
     set background=dark
-    colorscheme solarized
+    " colorscheme solarized
+    colorscheme Monokai
 elseif &t_Co >= 256
     colorscheme solarized
 else
@@ -123,10 +122,9 @@ set hlsearch
 set wildignore+=*.o,*.obj,.git,*.pyc,*.pdf,*.ps,*.png,*.jpg,*.aux
 set autoread
 
-" Turn off annoying backups!
-set nobackup
-set nowb
-set noswapfile
+" Backup and swapfile locations
+set backupdir=~/.vim_backup
+set directory=~/.vim_backup
 
 " Quick bind for saving a file
 nnoremap \s :w<CR>
