@@ -1,13 +1,13 @@
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
-" Use neocomplcache.
+" Use neocomplcache
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-let g:neocomplcache_enable_underbar_completion = 1
+" Don't use camel case completion (too slow)
+let g:neocomplcache_enable_camel_case_completion = 0
+" Don't use underbar completion (too slow).
+let g:neocomplcache_enable_underbar_completion = 0
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
@@ -30,6 +30,7 @@ imap <C-k>             <Plug>(neocomplcache_snippets_expand)
 smap <C-k>             <Plug>(neocomplcache_snippets_expand)
 inoremap <expr><C-g>   neocomplcache#undo_completion()
 inoremap <expr><C-l>   neocomplcache#complete_common_string()
+nnoremap ,C            :NeoComplCacheToggle<CR>
 
 " SuperTab like snippets behavior.
 imap <expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-n>" : "\<tab>")
@@ -67,8 +68,7 @@ endfunction"}}}
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType python setlocal omnifunc=jedi#complete
+" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 
