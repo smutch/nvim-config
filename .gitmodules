@@ -204,5 +204,5 @@
     ignore = dirty
 [submodule "bundle/monokai"]
 	path = bundle/monokai
-	url = https://github.com/sickill/vim-monokai.git
+	url = git@github.com:smutch/vim-monokai.git
     ignore = dirty
