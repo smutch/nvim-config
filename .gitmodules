@@ -42,10 +42,6 @@
 	path = bundle/taglist
 	url = https://github.com/vim-scripts/taglist.vim.git
     ignore = dirty
-[submodule "bundle/delimitmate"]
-	path = bundle/delimitmate
-	url = https://github.com/vim-scripts/delimitMate.vim.git
-    ignore = dirty
 [submodule "bundle/align"]
 	path = bundle/align
 	url = https://github.com/vim-scripts/Align.git
@@ -197,4 +193,8 @@
 [submodule "bundle/monokai"]
 	path = bundle/monokai
 	url = git@github.com:smutch/vim-monokai.git
+    ignore = dirty
+[submodule "bundle/vimpanel"]
+	path = bundle/vimpanel
+	url = https://github.com/mihaifm/vimpanel.git
     ignore = dirty

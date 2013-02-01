@@ -78,7 +78,7 @@ end
 " -------------------
 set background=dark
 if has("gui_running")
-    set background=dark
+    " set background=dark
     " colorscheme solarized
     colorscheme Monokai
 elseif &t_Co >= 256
@@ -119,12 +119,15 @@ set gdefault                    " g flag on sed subs automatically
 set hidden
 set hlsearch
 
-set wildignore+=*.o,*.obj,.git,*.pyc,*.pdf,*.ps,*.png,*.jpg,*.aux
+set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
+            \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store
 set autoread
 
 " Backup and swapfile locations
 set backupdir=~/.vim_backup
 set directory=~/.vim_backup
+set undodir=~/.vim/.vim_backup/undo  " where to save undo histories
+set undofile                         " Save undo's after file closes
 
 " Quick bind for saving a file
 nnoremap \s :w<CR>
