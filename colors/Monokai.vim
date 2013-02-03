@@ -110,4 +110,4 @@ hi cssBraces ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
 " General
 hi Structure ctermfg=81 ctermbg=NONE cterm=NONE guifg=#66d9ef guibg=NONE gui=italic
 " c
-hi cType ctermfg=154 ctermbg=NONE cterm=NONE guifg=#afff00 guibg=NONE gui=italic
+hi cType ctermfg=154 ctermbg=NONE cterm=NONE guifg=#afff00 guibg=NONE gui=NONE
