@@ -3,7 +3,7 @@ colorscheme solarized
 let g:solarized_contrast="normal"
 let g:solarized_visibility="normal"
 " let g:Powerline_colorscheme = "solarizedLight"
-" call Pl#ReloadColorscheme()
+call Pl#ReloadColorscheme()
 
 set spell
 setlocal nofoldenable
