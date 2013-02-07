@@ -56,19 +56,18 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 " let g:neocomplcache_enable_auto_select = 1
 " let g:neocomplcache_disable_auto_complete = 1
 " inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
-" inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>"
-function! s:check_back_space()"{{{
-let col = col('.') - 1
-return !col || getline('.')[col - 1] =~ '\s'
-endfunction"}}}
+" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>"
+" function! s:check_back_space()"{{{
+" let col = col('.') - 1
+" return !col || getline('.')[col - 1] =~ '\s'
+" endfunction"}}}
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 

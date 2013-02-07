@@ -190,7 +190,3 @@
 	path = bundle/latex-box
 	url = git@github.com:smutch/LaTeX-Box.git
     ignore = dirty
-[submodule "bundle/vimpanel"]
-	path = bundle/vimpanel
-	url = https://github.com/mihaifm/vimpanel.git
-    ignore = dirty

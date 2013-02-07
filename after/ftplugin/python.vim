@@ -10,7 +10,11 @@ setlocal number
 
 " Set some useful keybindings
 nmap <buffer> \s :w<CR>:SyntasticCheck<CR>
-nmap <buffer> \p :w<CR>:!python %<CR>
+if has("gui_macvim")
+    nmap <buffer> \p :w<CR>:!/usr/local/bin/python %<CR>
+else
+    nmap <buffer> \p :w<CR>:!python %<CR>
+endif
 
 " " Load indentline plugin
 " let g:loaded_indentLine = 1

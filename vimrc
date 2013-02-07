@@ -123,6 +123,9 @@ set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store
 set autoread
 
+" mksession options
+set sessionoptions=blank,buffers,sesdir,folds,globals,help,localoptions,options,resize,tabpages,winsize
+
 " Backup and swapfile locations
 set backupdir=~/.vim_backup
 set directory=~/.vim_backup
