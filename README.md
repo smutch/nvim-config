@@ -17,10 +17,5 @@ Next, soft-link vimrc to ~/.vimrc:
     cd ~
     ln -s .vim/vimrc .vimrc
 
-Finally, go into ~/.vim/bundle/command-t/ruby/command-t and issue the command:
-
-    ruby extconf.rb
-    make
-
 Now your good to go!...
 
