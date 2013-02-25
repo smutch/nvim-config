@@ -298,4 +298,3 @@ function! WrapToggle()
     endif
 endfun
 map ,sw :call WrapToggle()<CR>
-

@@ -1,3 +1,5 @@
+setlocal spell 
+"
 " Allow the wrapping to mess with existing lines
 setlocal formatoptions-=l
 

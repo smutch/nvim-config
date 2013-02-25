@@ -190,3 +190,7 @@
 	path = bundle/latex-box
 	url = git@github.com:smutch/LaTeX-Box.git
     ignore = dirty
+[submodule "bundle/rst-tables"]
+	path = bundle/rst-tables
+	url = https://github.com/vim-scripts/RST-Tables.git
+    ignore = dirty
