@@ -96,4 +96,4 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " endif
 
 " Toggle on/off
-nnoremap ,n :NeoComplCacheToggle<CR>
+nnoremap ,sn :NeoComplCacheToggle<CR>
