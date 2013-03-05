@@ -94,3 +94,6 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " if has('conceal')
     " set conceallevel=2 concealcursor=i
 " endif
+
+" Toggle on/off
+nnoremap ,n :NeoComplCacheToggle<CR>
