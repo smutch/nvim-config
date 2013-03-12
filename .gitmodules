@@ -194,3 +194,9 @@
 	path = bundle/rst-tables
 	url = https://github.com/vim-scripts/RST-Tables.git
     ignore = dirty
+[submodule "bundle/coffee-script"]
+	path = bundle/coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "bundle/gitgutter"]
+	path = bundle/gitgutter
+	url = git://github.com/airblade/vim-gitgutter.git
