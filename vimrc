@@ -1,8 +1,9 @@
 " Vim config file
 set nocompatible
 
-if filereadable(expand("~/.vimrc.before"))
-  source ~/.vimrc.before
+if filereadable(expand("~/.vim/vimrc.before"))
+  source ~/.vim/vimrc.before
+  source ~/.vim/vimrc.bundles
 endif
 
 " Syntastic options
@@ -23,25 +24,6 @@ endif
 set encoding=utf-8
 " let g:Powerline_symbols = 'unicode'
 
-
-"------------------
-"---- Pathogen ----
-"------------------
-" If we called vim using quickload then only enable some bundles
-runtime bundle/pathogen/autoload/pathogen.vim
-filetype off
-if exists('quick_load')
-    call add(g:pathogen_disabled, 'fugitive')
-    call add(g:pathogen_disabled, 'gist')
-    call add(g:pathogen_disabled, 'pyflakes')
-    call add(g:pathogen_disabled, 'ropevim')
-    call add(g:pathogen_disabled, 'gundo')
-    call add(g:pathogen_disabled, 'conque')
-    call add(g:pathogen_disabled, 'voom')
-endif
-    call add(g:pathogen_disabled, 'tagbar')  "Possibly conflicting with powerline to cause slowdown...
-call pathogen#infect()
-"------------------
 
 " Do system specific settings
 let os = substitute(system('uname'), "\n", "", "")
@@ -236,9 +218,6 @@ inoremap <silent> <C-y> <C-o>:call <SID>ResetKillRing()<CR><C-r><C-o>"
 " search in a singe file. Set grep
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
-
-filetype plugin on
-filetype indent on
 
 function! <SID>KillLine()
   if col('.') > strlen(getline('.'))
