@@ -14,9 +14,12 @@ snippet header
 	
 	import numpy as np
 	import matplotlib.pyplot as plt
+    from docopt import docopt
 	
 	__author__ = "Simon Mutch"
 	__date__   = "`strftime('%d %b %Y')`"
+
+    args = docpot(__doc__)
 
 snippet Agg
 	import matplotlib
