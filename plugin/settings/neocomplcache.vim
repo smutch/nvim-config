@@ -30,10 +30,9 @@ imap <C-k>             <Plug>(neocomplcache_snippets_expand)
 smap <C-k>             <Plug>(neocomplcache_snippets_expand)
 inoremap <expr><C-g>   neocomplcache#undo_completion()
 inoremap <expr><C-l>   neocomplcache#complete_common_string()
-nnoremap ,C            :NeoComplCacheToggle<CR>
 
 " SuperTab like snippets behavior.
-imap <expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-n>" : "\<tab>")
+" imap <expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-n>" : "\<tab>")
 let g:neocomplcache_snippets_dir='~/.vim/bundle/snipmate-snippets/snippets'
 
 " Recommended key-mappings.

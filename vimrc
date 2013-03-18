@@ -3,7 +3,6 @@ set nocompatible
 
 if filereadable(expand("~/.vim/vimrc.before"))
   source ~/.vim/vimrc.before
-  source ~/.vim/vimrc.bundles
 endif
 
 " Syntastic options
@@ -12,7 +11,6 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'passive_filetypes': [] }
 
 " Deal with gnu screen
-let g:pathogen_disabled = []
 if match($TERM, "screen")!=-1
     set term=xterm-256color
 endif
@@ -24,6 +22,11 @@ endif
 set encoding=utf-8
 " let g:Powerline_symbols = 'unicode'
 
+if filereadable(expand("~/.vim/vimrc.bundles"))
+  source ~/.vim/vimrc.bundles
+endif
+
+runtime! plugin/settings/*.vim
 
 " Do system specific settings
 let os = substitute(system('uname'), "\n", "", "")
@@ -174,18 +177,6 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 " Shortcut function for removing trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$//'
 
-" Use virtualenv for python
-py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-
 " ,j ,k inserts blank line below/above.
 nnoremap <silent>,j :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
@@ -218,6 +209,9 @@ inoremap <silent> <C-y> <C-o>:call <SID>ResetKillRing()<CR><C-r><C-o>"
 " search in a singe file. Set grep
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
+
+filetype plugin on
+filetype indent on
 
 function! <SID>KillLine()
   if col('.') > strlen(getline('.'))
