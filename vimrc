@@ -103,7 +103,6 @@ set wildmenu					" show list instead of just completing
 set gdefault                    " g flag on sed subs automatically
 set hidden
 set hlsearch
-set completeopt-=preview        " turn of completion preview window by default
 
 set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store
