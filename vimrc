@@ -247,7 +247,7 @@ set makeprg=scons
 
 " Markdown files
 au BufNewFile,BufRead *.md set filetype=markdown
-command! -nargs=+ MyGrep execute 'silent vimgrep <args> %' | copen 10
+command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
 
 nnoremap ,g :MyGrep
 
