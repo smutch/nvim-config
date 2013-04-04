@@ -5,28 +5,16 @@ if filereadable(expand("~/.vim/vimrc.before"))
   source ~/.vim/vimrc.before
 endif
 
-" Syntastic options
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': [],
-                           \ 'passive_filetypes': [] }
-
-" Deal with gnu screen
-if match($TERM, "screen")!=-1
-    set term=xterm-256color
-endif
-if !has("gui_macvim")
-    let g:Powerline_colorscheme = 'solarizedDark'
-endif
-
-" Powerline options
-set encoding=utf-8
-" let g:Powerline_symbols = 'unicode'
-
+" Load all plugins
 if filereadable(expand("~/.vim/vimrc.bundles"))
   source ~/.vim/vimrc.bundles
 endif
 
+" Source plugin specific settings
 runtime! plugin/settings/*.vim
+
+filetype plugin on
+filetype indent on
 
 " Do system specific settings
 let os = substitute(system('uname'), "\n", "", "")
@@ -35,21 +23,14 @@ if os == "Darwin"
     set clipboard=unnamed
 end
 
-" Use an interactive shell to allow command line aliases to work
-" set shellcmdflag=-ic
-
 if has("gui_macvim")
-  " set guifont=Bitstream\ Vera\ Sans\ Mono:h12
-  " set guifont=Inconsolata-dz\ for\ Powerline:h14
   set guifont=Menlo:h14
   set guioptions-=T  " remove toolbar
-  " set stal=2 " turn on tabs by default
   set anti
   set linespace=2 "Increase the space between lines for better readability
   " In order for the ropevim quick keybindings to work (i.e. 'M-/')
   " we must allow MacVim to interpret the option key as Meta...
   set invmmta
-  " set transparency=5
 else
   " Remap meta-keys to work with ropevim.
   set <M-/>=/
@@ -58,13 +39,11 @@ else
   set ttymouse=xterm2
 end
 
-" -------------------
-" --- Colorscheme ---
-" -------------------
+" -----------
+" Colorscheme 
+" -----------
 set background=dark
 if has("gui_running")
-    " set background=dark
-    " colorscheme solarized
     colorscheme Monokai
 elseif &t_Co >= 256
     colorscheme solarized
@@ -72,41 +51,50 @@ else
     colorscheme ir_black
 end
 syntax on " Use syntax highlighting
-" -------------------
 
-set autoindent
-set nosmartindent  " Turning this off as messes with python comment indents.
-set tabstop=4
-set shiftwidth=4
-set showmatch
-set vb t_vb=
-set ruler
-set incsearch
+" highlight the 80th column
+" In Vim >= 7.3, also highlight columns 120+
+if exists('+colorcolumn')
+  let &colorcolumn="80,".join(range(120,320),",")
+else
+  " fallback for Vim < v7.3
+  autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
 
-set wrap "Wrap lines
-set linebreak "Wrap at breaks
-set textwidth=0
-set wrapmargin=0
+
+"  --------------
+"  Basic settings
+"  --------------
+set autoindent                       " Autoindent
+set nosmartindent                    " Turning this off as messes with python comment indents.
+set incsearch                        " Highlight matches as you type
+set hlsearch                         " Highlight matches
+set showmatch                        " Show matching paren
+set laststatus=2
+
+set vb t_vb=                         " Turn off visual beep
+set mouse=a                          " enable mouse for all modes settings
+set cmdheight=1                      " Command line height
+set history=1000                     " Store a ton of history (default is 20)
+
+set wrap                             " Wrap lines
+set linebreak                        " Wrap at breaks
+set textwidth=0 wrapmargin=0
 set display=lastline
-set formatoptions+=l "Dont mess with the wrapping of existing lines
+set formatoptions+=l                 " Dont mess with the wrapping of existing lines
 
-set expandtab
-set backspace=indent,eol,start
-set cmdheight=1
+set expandtab tabstop=4 shiftwidth=4 " 4 spaces for tabs
+set backspace=indent,eol,start       " Sane backspace
 
-" set virtualedit=onemore 	   	" allow for cursor beyond last character
-set history=1000  				" Store a ton of history (default is 20)
+set ignorecase                       " case insensitive search
+set smartcase                        " case sensitive when uc present
+set wildmenu                         " show list instead of just completing
+set gdefault                         " g flag on sed subs automatically
+set hidden                           " Don't unload a buffer when abandoning it
 
-set ignorecase					" case insensitive search
-set smartcase					" case sensitive when uc present
-set wildmenu					" show list instead of just completing
-set gdefault                    " g flag on sed subs automatically
-set hidden
-set hlsearch
-
+set autoread                         " Automatically re-read changed files
 set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store
-set autoread
 
 " mksession options
 set sessionoptions=blank,buffers,sesdir,folds,globals,help,localoptions,options,resize,tabpages,winsize
@@ -116,6 +104,19 @@ set backupdir=~/.vim_backup
 set directory=~/.vim_backup
 set undodir=~/.vim/.vim_backup/undo  " where to save undo histories
 set undofile                         " Save undo's after file closes
+
+" Use an interactive shell to allow command line aliases to work
+" set shellcmdflag=-ic
+
+" Grep will sometimes skip displaying the file name if you
+" search in a singe file. Set grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+
+"  --------------------------------------
+"  Personal bindings and simple functions
+"  --------------------------------------
 
 " Quick bind for saving a file
 nnoremap \s :w<CR>
@@ -132,50 +133,23 @@ nnoremap <silent> ,z :bp<CR>
 nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 " Bring up marks list
 nnoremap ,m :marks<CR>
-" Bring up tabs list
-" nnoremap ,t :tabs<CR>
-" Bring up buffers list
-" nnoremap ,b :ls<CR>
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual mode
 " (disabled) and after yanking full lines with capital Y in normal mode. (disabled)
 vnoremap y y`>
 " nnoremap Y Y`]
 
-" Capital Y yank in normal mode yanks from cursor to end of line, just like
-" capital D does.
-nnoremap Y y$
-
-" Easy on the fingers save binding
+" Easy on the fingers save and window manipulation bindings
 nnoremap ;' :w<CR>
-
-" Another easier on the fingers binding
-nmap ,w <C-w>
-nmap ,. <C-w>p
+nnoremap ,w <C-w>
+nnoremap ,. <C-w>p
 
 " Quick binding to quick switch back to alternate file 
 nnoremap ,, <C-S-^>
 
-" Next and previous quickfix entries
-nnoremap ,cn :cn<CR>
-nnoremap ,cp :cp<CR>
-
-" Use omnicompletion!
-set ofu=syntaxcomplete#Complete
-
 " Disable increment number up / down - *way* too dangerous...
 nmap <C-a> <Nop>
 nmap <C-x> <Nop>
-
-" Python syntax highlighting
-let python_highlight_all = 1
-let python_highlight_space_errors = 0
-
-" Trim trailing whitespace when saving python file
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
-
-" Shortcut function for removing trailing whitespace
-command! TrimWhitespace execute ':%s/\s\+$//'
 
 " ,j ,k inserts blank line below/above.
 nnoremap <silent>,j :set paste<CR>m`o<Esc>``:set nopaste<CR>
@@ -184,81 +158,25 @@ nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
 " Map ,h to turn off highlighting
 nmap ,h <Esc>:noh<CR>
 
-" Repeat last : command
-nnoremap ,: @:
-
-" Let us see the current git branch we are on
-" set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-" if exists('quick_load')
-"     set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
-" else
-"     set statusline=%<\ %n:%f\ %{fugitive#statusline()}\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
-" endif
-set laststatus=2
-
-" Use f4 for the taglist
-nmap <silent> ,@ :TlistToggle<CR>
-
-" Bash like keys for the command line
-inoremap <C-a>      <Home>
-inoremap <C-e>      <End>
-inoremap <silent> <C-k> <C-r>=<SID>KillLine()<CR>
-inoremap <silent> <C-y> <C-o>:call <SID>ResetKillRing()<CR><C-r><C-o>"
-
-" Grep will sometimes skip displaying the file name if you
-" search in a singe file. Set grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-filetype plugin on
-filetype indent on
-
-function! <SID>KillLine()
-  if col('.') > strlen(getline('.'))
-      " At EOL; join with next line
-      return "\<Del>"
-  else
-      " Not at EOL; kill until end of line
-      return "\<C-o>d$"
-  endif
-endfunction
-
-function! <SID>ResetKillRing()
-  let s:kill_ring_position = 3
-endfunction
-
 " Can use this to paste without auto indent
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 
 " Show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+nmap ,csp :call <SID>SynStack()<CR>
 
-" Scons files
-au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
-set makeprg=scons
-
-" Markdown files
-au BufNewFile,BufRead *.md set filetype=markdown
 command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
-
 nnoremap ,g :MyGrep
 
-" copy and paste to temp file
-" copy to buffer
-set cpoptions-=A
-vmap ,c :w! ~/.vimbuffer<CR>
-nmap ,c :.w! ~/.vimbuffer<CR>
-" paste from buffer
-set cpoptions-=a
-nmap ,v :r ~/.vimbuffer<CR>
+" Shortcut function for removing trailing whitespace
+command! TrimWhitespace execute ':%s/\s\+$//'
 
 " Useful wrapping functions
 function! WrapToggle()
@@ -270,4 +188,33 @@ function! WrapToggle()
         let b:wrapToggleFlag=1
     endif
 endfun
+
 map ,sw :call WrapToggle()<CR>
+" copy and paste to temp file
+" copy to buffer
+set cpoptions-=A
+vmap ,c :w! ~/.vimbuffer<CR>
+nmap ,c :.w! ~/.vimbuffer<CR>
+" paste from buffer
+set cpoptions-=a
+nmap ,v :r ~/.vimbuffer<CR>
+
+
+"  ------------------------------
+"  Settings for various filetypes
+"  ------------------------------
+
+" Scons files
+au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
+set makeprg=scons
+
+" Markdown files
+au BufNewFile,BufRead *.md set filetype=markdown
+
+" Python files
+let python_highlight_all = 1
+let python_highlight_space_errors = 0
+
+" Trim trailing whitespace when saving python file
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
+
