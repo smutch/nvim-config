@@ -1,7 +1,7 @@
 " Let NERDTree ignore certain filetypes
 let NERDTreeIgnore=['\.o$', '\~$', '^_', '\.tmproj$', '^\..*', '\.bbl$', 
             \'\.blg$', '\.fdb*$', '\.fls$', '\.synctex*$', '\.latexmain$',
-            \'\.bst$']
+            \'\.bst$', '\.png$', '\.pdf$', '\.jpg$']
 
 let NERDTreeQuitOnOpen=0
 let NERDTreeShowHidden=1

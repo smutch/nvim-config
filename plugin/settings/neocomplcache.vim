@@ -26,21 +26,21 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
-imap <C-k>             <Plug>(neocomplcache_snippets_expand)
-smap <C-k>             <Plug>(neocomplcache_snippets_expand)
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 inoremap <expr><C-g>   neocomplcache#undo_completion()
 inoremap <expr><C-l>   neocomplcache#complete_common_string()
-nnoremap ,C            :NeoComplCacheToggle<CR>
 
 " SuperTab like snippets behavior.
-imap <expr><tab> neocomplcache#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" :  (pumvisible() ? "\<C-n>" : "\<tab>")
+" imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 let g:neocomplcache_snippets_dir='~/.vim/bundle/snipmate-snippets/snippets'
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><s-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
@@ -97,3 +97,5 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
 " Toggle on/off
 nnoremap ,sn :NeoComplCacheToggle<CR>
+
+" set completeopt-=preview        " turn of completion preview window
