@@ -98,4 +98,4 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " Toggle on/off
 nnoremap ,sn :NeoComplCacheToggle<CR>
 
-set completeopt-=preview        " turn of completion preview window
+" set completeopt-=preview        " turn of completion preview window
