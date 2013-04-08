@@ -54,12 +54,12 @@ syntax on " Use syntax highlighting
 
 " highlight the 80th column
 " In Vim >= 7.3, also highlight columns 120+
-if exists('+colorcolumn')
-  let &colorcolumn="80,".join(range(120,320),",")
-else
-  " fallback for Vim < v7.3
-  autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
+" if exists('+colorcolumn')
+"   let &colorcolumn="80,".join(range(120,320),",")
+" else
+"   " fallback for Vim < v7.3
+"   autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" endif
 
 
 "  --------------
@@ -97,7 +97,7 @@ set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store
 
 " mksession options
-set sessionoptions=blank,buffers,sesdir,folds,globals,help,localoptions,options,resize,tabpages,winsize
+" set sessionoptions=blank,buffers,sesdir,folds,globals,help,localoptions,options,resize,tabpages,winsize
 
 " Backup and swapfile locations
 set backupdir=~/.vim_backup
@@ -113,6 +113,8 @@ set undofile                         " Save undo's after file closes
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
 
+" British spelling
+set spelllang=en_gb
 
 "  --------------------------------------
 "  Personal bindings and simple functions
