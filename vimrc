@@ -94,7 +94,8 @@ set hidden                           " Don't unload a buffer when abandoning it
 
 set autoread                         " Automatically re-read changed files
 set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
-            \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store
+            \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
+            \Session.vim,Project.vim,tags
 
 " mksession options
 " set sessionoptions=blank,buffers,sesdir,folds,globals,help,localoptions,options,resize,tabpages,winsize
@@ -190,8 +191,8 @@ function! WrapToggle()
         let b:wrapToggleFlag=1
     endif
 endfun
-
 map ,sw :call WrapToggle()<CR>
+
 " copy and paste to temp file
 " copy to buffer
 set cpoptions-=A
@@ -200,6 +201,27 @@ nmap ,c :.w! ~/.vimbuffer<CR>
 " paste from buffer
 set cpoptions-=a
 nmap ,v :r ~/.vimbuffer<CR>
+
+" Allow us to move to windows by number using the leader key
+let i = 1
+while i <= 9
+    execute 'nnoremap <Leader>' . i . ' :' . i . 'wincmd w<CR>'
+    let i = i + 1
+endwhile
+function! WindowNumber()
+    let str=tabpagewinnr(tabpagenr())
+    return str
+endfunction
+
+" Cags command
+function! GenCtags()
+    let s:cmd = ' -R --fields=+iaS --extra=+q'
+    if exists("g:Tlist_Ctags_Cmd")
+        execute ':!'.g:Tlist_Ctags_Cmd.s:cmd
+    else
+        execute ':! ctags'.s:cmd
+    endif
+endfun
 
 
 "  ------------------------------
