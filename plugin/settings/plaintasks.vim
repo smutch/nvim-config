@@ -1,1 +1,1 @@
-inoremap <buffer>  <CR>t<ESC>+<BS>
+inoremap <buffer> <A-enter> <cr><esc>:call NewTask()<cr>A
