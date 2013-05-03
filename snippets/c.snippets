@@ -6,3 +6,15 @@ snippet mpiinit
 
 snippet sidlog
 	SID_log("${1:mesg}", ${2:SID_LOG_COMMENT}${3});${4}
+
+snippet gdbmpi
+    {
+        int i = 0;
+        char hostname[256];
+        gethostname(hostname, sizeof(hostname));
+        printf("PID %d on %s ready for attach\n", getpid(), hostname);
+        printf("Once connected go up stack to 'sleep(5)' and 'set var i=7'\n", getpid(), hostname);
+        fflush(stdout);
+        while (0 == i)
+          sleep(5);
+    }
