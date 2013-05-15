@@ -1,0 +1,1 @@
+nnoremap ,B :BufExplorerHorizontalSplit<CR>
