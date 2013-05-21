@@ -24,3 +24,6 @@ map ,m :CtrlPBufTag<CR>
 
 "Ctrl-(M)ethod - jump to a method (tag in all files)
 map ,M :CtrlPBufTagAll<CR>
+
+" Show the match window at the top of the screen
+let g:ctrlp_match_window_bottom = 0
