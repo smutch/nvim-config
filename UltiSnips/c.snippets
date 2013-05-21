@@ -6,7 +6,7 @@ MPI_Comm_size(MPI_COMM_WORLD, &n_$1);
 endsnippet
 
 snippet sidlog "SID_log"
-SID_log("${1:mesg}", ${2:SID_LOG_COMMENT}${3});
+SID_log("${1:%s}", ${2:SID_LOG_COMMENT}${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
 endsnippet
 
 snippet gdbmpi "GDB MPI insertion point"
