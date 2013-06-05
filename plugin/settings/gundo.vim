@@ -1,2 +1,2 @@
 " Map keys for Gundo
-map <leader>g :GundoToggle<CR>
+map <leader>G :GundoToggle<CR>
