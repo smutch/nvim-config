@@ -95,7 +95,8 @@ set hidden                           " Don't unload a buffer when abandoning it
 set autoread                         " Automatically re-read changed files
 set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags
+            \Session.vim,Project.vim,tags,*.hdf5
+set suffixes+=,,                     " Prefer files that have an extension
 
 " mksession options
 " set sessionoptions=blank,buffers,sesdir,folds,globals,help,localoptions,options,resize,tabpages,winsize
