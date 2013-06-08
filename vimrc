@@ -24,7 +24,7 @@ if os == "Darwin"
 end
 
 if has("gui_macvim")
-  set guifont=Menlo:h14
+  set guifont=Menlo:h12
   set guioptions-=T  " remove toolbar
   set anti
   set linespace=2 "Increase the space between lines for better readability
