@@ -52,8 +52,8 @@ function! ScreenMovement(movement)
     return a:movement
   endif
 endfunction
-nnoremap <silent> <expr> k ScreenMovement("k")
-nnoremap <silent> <expr> j ScreenMovement("j")
+nnoremap <silent> <expr> <up>   ScreenMovement("k")
+nnoremap <silent> <expr> <down> ScreenMovement("j")
 function! TYShowBreak()
   if &showbreak == ''
     set showbreak=>
