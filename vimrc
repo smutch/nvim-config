@@ -42,6 +42,7 @@ end
 " -----------
 " Colorscheme 
 " -----------
+syntax on " Use syntax highlighting
 set background=dark
 if has("gui_running")
     colorscheme Monokai
@@ -50,7 +51,6 @@ elseif &t_Co >= 256
 else
     colorscheme ir_black
 end
-syntax on " Use syntax highlighting
 
 " highlight the 80th column
 " In Vim >= 7.3, also highlight columns 120+
