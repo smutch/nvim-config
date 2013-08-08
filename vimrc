@@ -43,7 +43,7 @@ end
 " Colorscheme 
 " -----------
 syntax on " Use syntax highlighting
-set background=dark
+" set background=dark
 if has("gui_running")
     colorscheme Monokai
 elseif &t_Co >= 256
