@@ -148,6 +148,11 @@ nnoremap ;' :w<CR>
 nnoremap ,w <C-w>
 nnoremap ,. <C-w>p
 
+" Toggle to last active tab
+let g:lasttab = 1
+nnoremap ,/ :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
 " Quick binding to quick switch back to alternate file 
 nnoremap ,, <C-S-^>
 
