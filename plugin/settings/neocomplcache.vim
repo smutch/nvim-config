@@ -74,7 +74,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 if !exists('g:neocomplcache_omni_functions')
   let g:neocomplcache_omni_functions = {}
 endif
-let g:neocomplcache_omni_functions['python'] = 'jedi#complete'
+let g:neocomplcache_omni_functions['python'] = 'jedi#completions'
 if !exists('g:neocomplcache_force_omni_patterns')
   let g:neocomplcache_force_omni_patterns = {}
 endif
