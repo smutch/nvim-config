@@ -5,4 +5,4 @@ autocmd FileType python let b:did_ftplugin = 1
 
 " Binding to show pydoc
 let g:jedi#goto_definitions_command = "<leader>D"
-nnoremap <leader>d :call jedi#show_pydoc()<CR>
+nnoremap <leader>d :call jedi#show_documentation()<CR>
