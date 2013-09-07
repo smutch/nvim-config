@@ -1,4 +1,8 @@
-let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+" Use cmatcher
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch'}
+
+" Custom ignore paths
+let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|include\/'
 
 " Default to filename searches - so that appctrl will find application
 " controller
