@@ -1,6 +1,3 @@
-" Use cmatcher
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch'}
-
 " Custom ignore paths
 let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|include\/'
 
