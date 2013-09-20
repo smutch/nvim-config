@@ -77,6 +77,7 @@ set vb t_vb=                         " Turn off visual beep
 set mouse=a                          " enable mouse for all modes settings
 set cmdheight=1                      " Command line height
 set history=1000                     " Store a ton of history (default is 20)
+set showcmd                          " Show info for current command
 
 set wrap                             " Wrap lines
 set linebreak                        " Wrap at breaks
