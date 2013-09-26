@@ -1,6 +1,13 @@
 " Vim config file
 set nocompatible
 
+" Do system specific settings
+let os = substitute(system('uname'), "\n", "", "")
+if os == "Darwin"
+    set showcmd                          " Show info for current command
+    let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
+end
+
 if filereadable(expand("~/.vim/vimrc.before"))
   source ~/.vim/vimrc.before
 endif
@@ -15,13 +22,6 @@ runtime! plugin/settings/*.vim
 
 filetype plugin on
 filetype indent on
-
-" Do system specific settings
-let os = substitute(system('uname'), "\n", "", "")
-if os == "Darwin"
-    let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
-    set clipboard=unnamed
-end
 
 if has("gui_macvim")
   set guifont=Menlo:h12
@@ -72,12 +72,12 @@ set incsearch                        " Highlight matches as you type
 set hlsearch                         " Highlight matches
 set showmatch                        " Show matching paren
 set laststatus=2
+set clipboard=unnamed                " To work in tmux
 
 set vb t_vb=                         " Turn off visual beep
 set mouse=a                          " enable mouse for all modes settings
 set cmdheight=1                      " Command line height
 set history=1000                     " Store a ton of history (default is 20)
-set showcmd                          " Show info for current command
 
 set wrap                             " Wrap lines
 set linebreak                        " Wrap at breaks
