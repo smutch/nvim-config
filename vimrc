@@ -43,10 +43,16 @@ end
 " Colorscheme 
 " -----------
 syntax on " Use syntax highlighting
+if exists('$SOLARIZED_THEME')
+    if $SOLARIZED_THEME=="light"
+        set background=light
+    endif
+else
+    set background=dark
+endif
 if has("gui_running")
     colorscheme Monokai
 elseif &t_Co >= 256
-    set background=dark
     colorscheme solarized
 else
     set background=dark
