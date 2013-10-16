@@ -46,6 +46,8 @@ syntax on " Use syntax highlighting
 if exists('$SOLARIZED_THEME')
     if $SOLARIZED_THEME=="light"
         set background=light
+    else
+        set background=dark
     endif
 else
     set background=dark
