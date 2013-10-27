@@ -1,0 +1,13 @@
+snippet basic "basic makefile template"
+CC = ${1:cc}
+CFLAGS = -std=gnu99
+LIBS = 
+
+OBJ = ${2:file.o}
+
+${3:executable}: $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+
+%.o: %.c
+	$(CC) -c -o $@ $< $(CFLAGS)
+endsnippet
