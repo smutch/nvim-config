@@ -37,6 +37,7 @@ else
   imap / <M-/>
   " Set the ttymouse value to allow window resizing with mouse
   set ttymouse=xterm2
+  set gcr=n:blinkon0  "Don't blink the cursor
 end
 
 " -----------
