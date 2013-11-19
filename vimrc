@@ -194,6 +194,10 @@ nmap ,csp :call <SID>SynStack()<CR>
 command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
 nnoremap ,g :MyGrep
 
+" Shortcut for opening & closing quickfix window
+nnoremap ,q :ccl<CR>
+nnoremap ,Q :copen<CR>
+
 " Shortcut function for removing trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$//'
 
