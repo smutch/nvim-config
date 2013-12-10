@@ -67,6 +67,7 @@ Bundle 'moll/vim-bbye'
 Bundle 'Lokaltog/vim-easymotion.git'
 Bundle 'rhysd/clever-f.vim.git'
 Bundle 'tpope/vim-repeat.git'
+Bundle 'rking/ag.vim.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
