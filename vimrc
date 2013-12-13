@@ -55,6 +55,7 @@ else
 endif
 if has("gui_running")
     colorscheme Monokai
+    " colorscheme Tomorrow
 elseif &t_Co >= 256
     colorscheme solarized
 else
