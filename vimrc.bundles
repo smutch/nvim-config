@@ -58,7 +58,6 @@ Bundle 'tpope/vim-obsession.git'
 Bundle 'elentok/plaintasks.vim'
 Bundle 'shemerey/vim-project.git'
 Bundle 'tpope/vim-dispatch.git'
-Bundle 'vim-scripts/bufexplorer.zip.git'
 Bundle 'tpope/vim-tbone.git'
 Bundle 'git@github.com:smutch/vim-tmuxify.git'
 Bundle 'jeffkreeftmeijer/vim-numbertoggle.git'
@@ -69,6 +68,7 @@ Bundle 'rhysd/clever-f.vim.git'
 Bundle 'tpope/vim-repeat.git'
 Bundle 'rking/ag.vim.git'
 Bundle 'morhetz/gruvbox.git'
+Bundle 'szw/vim-ctrlspace.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
