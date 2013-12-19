@@ -69,6 +69,8 @@ Bundle 'tpope/vim-repeat.git'
 Bundle 'rking/ag.vim.git'
 Bundle 'morhetz/gruvbox.git'
 Bundle 'szw/vim-ctrlspace.git'
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rizzatti/dash.vim'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
