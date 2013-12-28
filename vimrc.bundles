@@ -22,7 +22,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'tpope/vim-markdown'
 Bundle 'scrooloose/nerdcommenter.git'
-Bundle 'vim-scripts/The-NERD-tree'
+" Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'fs111/pydoc.vim'
 Bundle 'gg/python.vim'
 Bundle 'vim-scripts/python_match.vim'
@@ -71,6 +71,8 @@ Bundle 'morhetz/gruvbox.git'
 Bundle 'szw/vim-ctrlspace.git'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
+Bundle 'goldfeld/vim-seek.git'
+Bundle 'tpope/vim-vinegar.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"

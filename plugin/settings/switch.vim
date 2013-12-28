@@ -1,1 +1,1 @@
-nnoremap - :Switch<cr>
+nnoremap _ :Switch<cr>

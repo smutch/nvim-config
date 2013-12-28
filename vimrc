@@ -4,7 +4,6 @@ set nocompatible
 " Do system specific settings
 let os = substitute(system('uname'), "\n", "", "")
 if os == "Darwin"
-    set showcmd                          " Show info for current command
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
 end
 
@@ -31,13 +30,13 @@ if has("gui_macvim")
   " In order for the ropevim quick keybindings to work (i.e. 'M-/')
   " we must allow MacVim to interpret the option key as Meta...
   set invmmta
+  set gcr=n:blinkon0  "Don't blink the cursor
 else
   " Remap meta-keys to work with ropevim.
   set <M-/>=/
   imap / <M-/>
   " Set the ttymouse value to allow window resizing with mouse
   set ttymouse=xterm2
-  set gcr=n:blinkon0  "Don't blink the cursor
 end
 
 " -----------
@@ -108,7 +107,7 @@ set autoread                         " Automatically re-read changed files
 set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
             \Session.vim,Project.vim,tags,*.hdf5
-set suffixes+=,,                     " Prefer files that have an extension
+" set suffixes+=,,                     " Prefer files that have an extension
 
 " mksession options
 " set sessionoptions=blank,buffers,sesdir,folds,globals,help,localoptions,options,resize,tabpages,winsize
