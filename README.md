@@ -7,21 +7,21 @@ My vim setup.  A relatively recent version of vim with python support is require
 Usage
 -----
 
-1. Clone this repo into ~/.vim
-2. Clone the Vundle plugin manager:
+- Clone this repo into ~/.vim
+- Clone the Vundle plugin manager:
 
 ``` sh
     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 ```
 
-3. Soft-link vimrc to ~/.vimrc:
+- Soft-link vimrc to ~/.vimrc:
 
 ``` vimscript
     cd ~
     ln -s .vim/vimrc .vimrc
 ```
 
-4. Lastly run the following command in the terminal:
+- Lastly run the following command in the terminal:
 
 ``` sh
     vim +BundleInstall +qall
