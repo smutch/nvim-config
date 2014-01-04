@@ -770,11 +770,6 @@ map <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
 vmap <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
 
 " }}}
-" vimroom {{{
-
-let g:vimroom_sidebar_height=0
-
-" }}}
 " vimux {{{
 
 " Vimux bindings

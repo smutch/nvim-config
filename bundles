@@ -87,6 +87,6 @@ if os == "Darwin"
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'tyru/open-browser.vim'
     Bundle 'davidbeckingsale/writegood.vim'
-    Bundle 'mikewest/vimroom.git'
+    Bundle 'junegunn/goyo.vim.git'
     Bundle 'vim-scripts/JavaScript-Indent.git'
 endif
