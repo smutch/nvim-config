@@ -104,7 +104,10 @@ set grepprg=grep\ -nH\ $*
 
 set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags,*.hdf5
+            \Session.vim,Project.vim,tags,*.hdf5,.sconsign.dblite
+
+" Set suffixes that are ignored with multiple match
+set suffixes=.bak,~,.o,.info,.swp,.obj
 
 " }}}
 " Backup and swap files {{{
@@ -391,6 +394,11 @@ let g:ctrlspace_use_tabline = 1
 let g:ctrlspace_show_key_info = 1
 
 " }}}
+" dash {{{
+
+nmap <silent> <leader>D <Plug>DashSearch
+
+" }}}
 " delimitmate {{{
 
 " Settings for delimitmate
@@ -662,6 +670,12 @@ let ropevim_enable_autoimport = 1
 let ropevim_goto_def_newwin = 1
 let ropevim_extended_complete = 1
 
+
+" }}}
+" seek {{{
+
+" Use the jump motions provided by seek
+let g:seek_enable_jumps = 1
 
 " }}}
 " showmarks {{{

@@ -75,6 +75,7 @@ Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
 Bundle 'goldfeld/vim-seek.git'
 Bundle 'tpope/vim-vinegar.git'
+Bundle 'tmhedberg/SimpylFold.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
