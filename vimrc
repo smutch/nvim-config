@@ -127,12 +127,12 @@ set cmdheight=1                      " Command line height
 if has("gui_macvim")
   set guifont=Menlo:h12
   set guioptions-=T  " remove toolbar
+  set guioptions-=rL " remove right + left scrollbars
   set anti
   set linespace=2 "Increase the space between lines for better readability
   " In order for the ropevim quick keybindings to work (i.e. 'M-/')
   " we must allow MacVim to interpret the option key as Meta...
   set invmmta
-  set gcr=n:blinkon0  "Don't blink the cursor
 else
   " Remap meta-keys to work with ropevim.
   set <M-/>=/
