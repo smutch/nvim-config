@@ -187,10 +187,10 @@ nnoremap ,g :MyGrep
 " Toggle wrapping at 80 col
 function! WrapToggle()
     if exists("b:wrapToggleFlag") && b:wrapToggleFlag==1
-        setlocal tw=0 fo=cq wm=0 colorcolumn=0
+        setlocal tw=0 fo=cq wm=0 colorcolumn=0 formatoptions+=l
         let b:wrapToggleFlag=0
     else
-        setlocal tw=80 fo=cqt wm=0 colorcolumn=80
+        setlocal tw=80 fo=cqt wm=0 colorcolumn=80 formatoptions-=l
         let b:wrapToggleFlag=1
     endif
 endfun
