@@ -169,6 +169,21 @@ end
 
 " }}}
 " }}}
+" Highlighting {{{
+
+highlight CheckWords ctermfg=Yellow cterm=bold guifg=Yellow gui=bold
+
+function MatchCheckWords()
+  match CheckWords /\c\<\(your\|Your\|halos\|Halos\|reionisation\|Reionisation\)\>/
+endfunction
+
+autocmd FileType markdown call MatchCheckWords()
+autocmd BufWinEnter *.md call MatchCheckWords()
+autocmd InsertEnter *.md call MatchCheckWords()
+autocmd InsertLeave *.md call MatchCheckWords()
+autocmd BufWinLeave *.md call clearmatches()
+
+" }}}
 " Custom commands and functions {{{
 
 " Show syntax highlighting groups for word under cursor

@@ -1,8 +1,8 @@
 " setlocal tw=80 fo=cqt wm=0 colorcolumn=80
 " let b:wrapToggleFlag=1
 
-let g:solarized_contrast="normal"
-let g:solarized_visibility="low"
+" let g:solarized_contrast="normal"
+" let g:solarized_visibility="low"
 
 " set lbr
 setlocal spell 
