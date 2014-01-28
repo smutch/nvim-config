@@ -50,7 +50,6 @@ Bundle 'natw/vim-pythontextobj'
 Bundle 'kana/vim-textobj-function'
 Bundle 'kana/vim-textobj-user'
 Bundle 'Yggdroot/indentLine'
-Bundle 'Lokaltog/vim-powerline'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'Shougo/vimproc'
 " Bundle 'vim-scripts/foldsearch'
@@ -77,6 +76,7 @@ Bundle 'goldfeld/vim-seek.git'
 Bundle 'tpope/vim-vinegar.git'
 Bundle 'tmhedberg/SimpylFold.git'
 Bundle 'reedes/vim-colors-pencil.git'
+Bundle 'bling/vim-airline.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"

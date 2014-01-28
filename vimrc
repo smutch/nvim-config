@@ -5,7 +5,7 @@
 " We don't want to mimic vi
 set nocompatible
 
-" Set the encoding (for powerline)
+" Set the encoding
 set encoding=utf-8
 
 " Use virtualenv for python
@@ -37,9 +37,6 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 " Deal with gnu screen
 if match($TERM, "screen")!=-1
     set term=xterm-256color
-endif
-if !has("gui_macvim")
-    let g:Powerline_colorscheme = 'solarizedDark'
 endif
 
 " }}}
@@ -315,7 +312,7 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 if !executable('ag')
 
     " Map keys for Ack
-    nmap <leader>A <Esc>:Ack! 
+    nmap <leader>A <Esc>:Ack!<Space>
 
     " Ack for current word under cursor
     nmap <leader>w yiw<Esc>:Ack! <C-r>"<CR>
@@ -329,12 +326,27 @@ endif
 if executable('ag')
 
     " Map keys for Ag
-    nmap <leader>A <Esc>:Ag! 
+    nmap <leader>A <Esc>:Ag!<Space>
 
     " Ag for current word under cursor
     nmap <leader>w yiw<Esc>:Ag! <C-r>"<CR>
 
 endif
+
+" }}}
+" airline {{{
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+
+call airline#parts#define_function('winnum', 'WindowNumber')
+function! MyPlugin(...)
+    let s:my_part = airline#section#create(['winnum'])
+    let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x)
+    let w:airline_section_x = '[' . s:my_part . '] ' . g:airline_right_sep . get(w:, 'airline_section_x', g:airline_section_x)
+endfunction
+call airline#add_statusline_func('MyPlugin')
 
 " }}}
 " bbye {{{
@@ -631,27 +643,6 @@ vmap go <Plug>(openbrowser-smart-search)
 au BufNewFile,BufRead *.todo inoremap <buffer> ++ <cr><esc>:call NewTask()<cr>A
 
 " }}}
-" powerline {{{
-
-" This causes considerable slowdown on ssh mounted drives.
-let g:Powerline_colorscheme = 'mine'
-if (exists('g:loaded_fugitive') && g:loaded_fugitive == 1)
-    call Pl#Theme#RemoveSegment('fugitive:branch')
-    call Pl#Theme#InsertSegment('winnumber:num', 'after', 'fileencoding') 
-endif
-
-" Get rid of annoying delay when leaving insert mode in terminal
-if ! has('gui_running')
-  set ttimeoutlen=10
-  augroup FastEscape
-    autocmd!
-    au InsertEnter * set timeoutlen=0
-    au InsertLeave * set timeoutlen=1000
-  augroup END
-endif
-
-
-" }}}
 " project {{{
 
 nmap <silent> <Leader>P <Plug>ToggleProject
@@ -761,7 +752,7 @@ nnoremap \td :call todo#ToggleDone()<CR>
 let g:tube_terminal = 'iterm'
 let g:tube_aliases = {}
 
-nmap ,Tc :Tube 
+nmap ,Tc :Tube
 nmap ,Tl :TubeLastCommand<CR>
 
 " }}}
