@@ -209,7 +209,7 @@ endfun
 map ,sw :call WrapToggle()<CR>
 
 " Remove trailing whitespace
-command! TrimWhitespace execute ':%s/\s\+$//'
+command! TrimWhitespace execute ':%s/\s\+$// | :noh'
 
 " Allow us to move to windows by number using the leader key
 let i = 1

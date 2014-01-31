@@ -1,9 +1,5 @@
 set background=light
-colorscheme solarized
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
-" let g:Powerline_colorscheme = "solarizedLight"
-call Pl#ReloadColorscheme()
+colorscheme pencil
 
 set spell
 setlocal nofoldenable
@@ -34,7 +30,7 @@ nnoremap ,W :call HardWrapSentences()<CR>
 nmap <buffer> <leader>s :w<CR><leader>ll
 
 " Quick map for adding a new item to an itemize environment list
-imap <buffer>  <CR>\item 
+imap <buffer>  <CR>\item<Space>
 
 " Wrap between lines when scrolling
 set whichwrap+=<,>,h,l,[,]
