@@ -77,6 +77,7 @@ Bundle 'tpope/vim-vinegar.git'
 Bundle 'tmhedberg/SimpylFold.git'
 Bundle 'reedes/vim-colors-pencil.git'
 Bundle 'bling/vim-airline.git'
+Bundle 'gcmt/wildfire.vim.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
