@@ -759,6 +759,8 @@ nmap ,Tl :TubeLastCommand<CR>
 " ultisnips {{{
 
 let g:UltiSnipsExpandTrigger = '<C-k>'
+let g:UltiSnipsJumpForwardTrigger = '<C-k>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 
 " }}}
 " vim-ipython {{{
