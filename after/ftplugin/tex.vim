@@ -1,5 +1,6 @@
 set background=light
 colorscheme pencil
+AirlineTheme understated
 
 set spell
 setlocal nofoldenable
@@ -27,7 +28,7 @@ endfunction
 nnoremap ,W :call HardWrapSentences()<CR>
 
 " Save then compile
-nmap <buffer> <leader>s :w<CR><leader>ll
+nmap <buffer> <leader>s :w<CR>:silent Latexmk<CR>
 
 " Quick map for adding a new item to an itemize environment list
 imap <buffer>  <CR>\item<Space>
