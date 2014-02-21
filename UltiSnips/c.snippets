@@ -9,6 +9,10 @@ snippet sidlog "SID_log"
 SID_log("${1:%s}", ${2:SID_LOG_COMMENT}${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
 endsnippet
 
+snippet sidbcast "SID_Bcast"
+SID_Bcast(${1:void *buffer}, ${2:int data_size}, ${3:int source_rank}, ${4:SID.COMM_WORLD});
+endsnippet
+
 snippet gdbmpi "GDB MPI insertion point"
 {
     #include <unistd.h>
@@ -41,3 +45,13 @@ snippet header "common c header"
 #include <math.h>
 #include <stdbool.h>
 endsnippet
+
+snippet openfile "fopen with error check"
+FILE *${1:fin};
+if(($1 = fopen(${2:fname}, ${3:"rb"})) == NULL)
+{
+  fprintf(stderr, "Failed to open file: %s\n", $2);
+  ${4:return EXIT_FAILURE};
+}
+endsnippet
+
