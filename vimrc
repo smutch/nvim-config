@@ -511,7 +511,7 @@ let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
 " Don't use camel case completion (too slow)
-let g:neocomplcache_enable_camel_case_completion = 0
+" let g:neocomplcache_enable_camel_case_completion = 0
 " Don't use underbar completion (too slow).
 let g:neocomplcache_enable_underbar_completion = 0
 " Set minimum syntax keyword length.
