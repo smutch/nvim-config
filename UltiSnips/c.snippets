@@ -13,17 +13,21 @@ snippet sidbcast "SID_Bcast"
 SID_Bcast(${1:void *buffer}, ${2:int data_size}, ${3:int source_rank}, ${4:SID.COMM_WORLD});
 endsnippet
 
+snippet sidallreduce "SID_Allreduce"
+SID_Allreduce(${1:void *sendbuf}, ${2:void *recvbuf}, ${3:int count}, ${4:SID_Datatype datatype}, ${5:SID_Op op}, ${6:SID.COMM_WORLD});
+endsnippet
+
 snippet gdbmpi "GDB MPI insertion point"
 {
-    #include <unistd.h>
-    int i = 0;
-    char hostname[256];
-    gethostname(hostname, sizeof(hostname));
-    printf("PID %d on %s ready for attach\n", getpid(), hostname);
-    printf("Once connected go up stack to 'sleep(5)' and 'set var i=7'\n");
-    fflush(stdout);
-    while (0 == i)
-        sleep(5);
+#include <unistd.h>
+int i = 0;
+char hostname[256];
+gethostname(hostname, sizeof(hostname));
+printf("PID %d on %s ready for attach\n", getpid(), hostname);
+printf("Once connected go up stack to 'sleep(5)' and 'set var i=7'\n");
+fflush(stdout);
+while (0 == i)
+	sleep(5);
 }
 endsnippet
 
@@ -55,3 +59,17 @@ if(($1 = fopen(${2:fname}, ${3:"rb"})) == NULL)
 }
 endsnippet
 
+# HDF5 snippets {{{
+snippet h5fopen "H5Fopen call"
+${5:file_id} = H5Fopen(${1:const char *name},${2: H5F_ACC_RDWR}${3: H5F_ACC_RDONLY}, ${4:H5P_DEFAULT});
+endsnippet
+
+snippet h5fcreate "H5Fcreate call"
+${6:file_id} = H5Fcreate(${1:const char *name},${2: H5F_ACC_TRUNC}${3: H5F_ACC_EXCL}, ${4:H5P_DEFAULT}, ${5:H5P_DEFAULT});
+endsnippet
+
+snippet h5lt_make_dataset_int "H5LT_make_dataset_int call"
+${6:status = }H5LTmake_dataset_int(${1:hid_t loc_id}, ${2:const char *dset_name}, ${3:int rank}, ${4:const hsize_t *dims}, ${5:const int *buffer});
+endsnippet
+
+# }}}
