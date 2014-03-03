@@ -269,10 +269,6 @@ nnoremap ,, <C-S-^>
 nmap <C-a> <Nop>
 nmap <C-x> <Nop>
 
-" Insert blank line below/above
-nnoremap <silent>,j :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent>,k :set paste<CR>m`O<Esc>``:set nopaste<CR>
-
 " Turn off highlighting
 nmap ,h <Esc>:noh<CR>
 
