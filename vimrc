@@ -155,7 +155,7 @@ else
     set background=dark
 endif
 if has("gui_running")
-    colorscheme Monokai
+    colorscheme gruvbox
     " colorscheme Tomorrow
 elseif &t_Co >= 256
     colorscheme solarized
