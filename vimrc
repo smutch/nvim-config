@@ -21,7 +21,7 @@ if 'VIRTUAL_ENV' in os.environ:
 EOF
 
 " Remap task list key (must be done before loading plugin)
-map <leader>T <Plug>TaskList
+map <leader>t <Plug>TaskList
 
 " Custom NERDCommenter mappings
 let g:NERDCustomDelimiters = {
@@ -361,7 +361,7 @@ let g:ctrlp_by_filename = 1
 
 " We don't want to use Ctrl-p as the mapping because
 " it interferes with YankRing (paste, then hit ctrl-p)
-let g:ctrlp_map = ',t'
+let g:ctrlp_map = ',T'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
@@ -370,6 +370,9 @@ nnoremap <silent> ,b :CtrlPBuffer<CR>
 " Additional mappting for most recently used files
 nnoremap <silent> ,f :CtrlP<CR>
 nnoremap <silent> ,F :CtrlPMRU<CR>
+
+" Additional mapping for ctags search
+nnoremap <silent> ,t :CtrlPTag<CR>
 
 " Cmd-Shift-P to clear the cache
 " nnoremap <silent> <D-P> :ClearCtrlPCache<cr>
@@ -701,7 +704,7 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_File_Fold_Auto_Close = 1
 
 " Mappings
-nnoremap ,T :TlistToggle<CR>
+nnoremap <leader>T :TlistToggle<CR>
 
 
 " }}}
