@@ -350,32 +350,6 @@ call airline#add_statusline_func('MyPlugin')
 nnoremap Q :Bdelete<CR>
 
 " }}}
-" conque {{{
-
-" ConqueTerm settings
-
-augroup MyConqueTerm
-  autocmd!
-  " start Insert mode on BufEnter
-  autocmd BufEnter *
-        \ if &l:filetype ==# 'conque_term' |
-        \   startinsert! |
-        \ endif
-  autocmd BufLeave *
-        \ if &l:filetype ==# 'conque_term' |
-        \   stopinsert! |
-        \ endif
-augroup END
-
-let g:ConqueTerm_Color         = 1
-let g:ConqueTerm_TERM          = 'xterm-256color'
-let g:ConqueTerm_Syntax        = 'conque'
-let g:ConqueTerm_ReadUnfocused = 1
-let g:ConqueTerm_CWInsert      = 1
-
-nnoremap <silent><leader>C <Esc>:ConqueTermSplit zsh<CR><Esc>:set wfh<CR>i
-
-" }}}
 " ctrlp {{{
 
 " Custom ignore paths
@@ -408,13 +382,6 @@ map ,M :CtrlPBufTagAll<CR>
 
 " Show the match window at the top of the screen
 let g:ctrlp_match_window_bottom = 0
-
-" }}}
-" ctrlspace {{{
-
-let g:ctrlspace_default_mapping_key = ",B"
-let g:ctrlspace_use_tabline = 1
-let g:ctrlspace_show_key_info = 1
 
 " }}}
 " dash {{{
