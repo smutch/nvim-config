@@ -454,7 +454,7 @@ let g:indentLine_char="|"
 
 let g:jedi#auto_initialization = 1
 let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = 1  "May be too slow...
+let g:jedi#show_call_signatures = 0  "May be too slow...
 autocmd FileType python let b:did_ftplugin = 1
 
 " Binding to show pydoc
