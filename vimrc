@@ -36,7 +36,7 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 
 " Deal with gnu screen
 if match($TERM, "screen")!=-1
-    set term=xterm-256color
+    set term=screen-256color
 endif
 
 " }}}
@@ -154,11 +154,11 @@ if exists('$SOLARIZED_THEME')
 else
     set background=dark
 endif
-if has("gui_running")
+if &t_Co >= 256
+    if match($TERM, "screen")!=-1
+        let gruvbox_italic=0
+    endif
     colorscheme gruvbox
-    " colorscheme Tomorrow
-elseif &t_Co >= 256
-    colorscheme solarized
 else
     set background=dark
     colorscheme ir_black
