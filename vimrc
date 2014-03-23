@@ -155,9 +155,9 @@ else
     set background=dark
 endif
 if &t_Co >= 256
-    if match($TERM, "screen")!=-1
-        let gruvbox_italic=0
-    endif
+    " if match($TERM, "screen")!=-1
+    let gruvbox_italic=0
+    " endif
     colorscheme gruvbox
 else
     set background=dark
