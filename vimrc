@@ -154,7 +154,7 @@ if exists('$SOLARIZED_THEME')
 else
     set background=dark
 endif
-if &t_Co >= 256
+if (&t_Co >= 256) || has("gui_macvim")
     " if match($TERM, "screen")!=-1
     let gruvbox_italic=0
     " endif
