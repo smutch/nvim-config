@@ -408,12 +408,6 @@ let g:normal_colorscheme = "Monokai"
 let g:normal_font = "Menlo:h14"
 
 " }}}
-" evervim {{{
-
-" This file should **not** be included in the git repo!!!
-let g:evervim_devtoken='S=s35:U=38b375:E=14283cb1594:C=13b2c19e994:P=1cd:A=en-devtoken:H=eb3acd3dbef662c25c22efd3ec641365'
-
-" }}}
 " fugitive {{{
 
 " Useful shortcut for git commands
