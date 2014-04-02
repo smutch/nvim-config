@@ -718,6 +718,7 @@ nmap ,Tl :TubeLastCommand<CR>
 " }}}
 " ultisnips {{{
 
+let g:UltiSnipsUsePythonVersion = 2
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
