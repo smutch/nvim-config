@@ -222,7 +222,7 @@ function! WindowNumber()
     return str
 endfunction
 
-" Cags command
+" Ctags command
 function! GenCtags()
     let s:cmd = ' -R --fields=+iaS --extra=+q'
     if exists("g:Tlist_Ctags_Cmd")
@@ -231,6 +231,11 @@ function! GenCtags()
         execute ':! ctags'.s:cmd
     endif
 endfun
+
+" Softwrap
+command! -range=% SoftWrap
+            \ <line2>put _ |
+            \ <line1>,<line2>g/.\+/ .;-/^$/ join |normal $x
 
 " }}}
 " Keybindings {{{
