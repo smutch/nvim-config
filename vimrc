@@ -775,9 +775,4 @@ map <Leader>rx :CloseVimTmuxPanes<CR>
 map <Leader>rs :InterruptVimTmuxRunner<CR>
 
 " }}}
-" yankring {{{
-
-nmap \y :YRShow<CR>
-
-" }}}
 " }}}
