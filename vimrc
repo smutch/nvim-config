@@ -257,6 +257,9 @@ nnoremap ,m :marks<CR>
 " Leave cursor at end of yank after yanking text with lowercase y in visual mode
 vnoremap y y`>
 
+" Make Y behave like other capital
+nnoremap Y y$
+
 " Easy on the fingers save and window manipulation bindings
 nnoremap ;' :w<CR>
 nnoremap ,w <C-w>
@@ -304,6 +307,12 @@ au BufNewFile,BufRead *.md set filetype=markdown
 
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
+
+" Automatically reload vimrc when it's saved
+augroup AutoReloadVimRC
+  au!
+  au BufWritePost $MYVIMRC so $MYVIMRC
+augroup END
 
 " }}}
 " Plugin settings {{{
