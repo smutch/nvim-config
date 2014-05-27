@@ -309,10 +309,10 @@ au BufNewFile,BufRead *.md set filetype=markdown
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 
 " Automatically reload vimrc when it's saved
-augroup AutoReloadVimRC
-  au!
-  au BufWritePost $MYVIMRC so $MYVIMRC
-augroup END
+" augroup AutoReloadVimRC
+"   au!
+"   au BufWritePost $MYVIMRC so $MYVIMRC
+" augroup END
 
 " }}}
 " Plugin settings {{{
