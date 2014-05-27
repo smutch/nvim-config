@@ -656,6 +656,7 @@ let ropevim_extended_complete = 1
 
 " Use the jump motions provided by seek
 let g:seek_enable_jumps = 1
+let g:seek_use_vanilla_binds_in_diffmode = 1
 
 " }}}
 " showmarks {{{
