@@ -26,7 +26,7 @@ Bundle 'austintaylor/vim-indentobject'
 Bundle 'scrooloose/nerdcommenter.git'
 " Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'fs111/pydoc.vim'
-Bundle 'gg/python.vim'
+" Bundle 'gg/python.vim'
 Bundle 'vim-scripts/python_match.vim'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'klen/rope-vim'
@@ -79,6 +79,7 @@ Bundle 'bling/vim-airline.git'
 Bundle 'gcmt/wildfire.vim.git'
 Bundle 'tpope/vim-unimpaired.git'
 Bundle 'honza/vim-snippets.git'
+Bundle 'sheerun/vim-polyglot.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
@@ -89,9 +90,9 @@ if os == "Darwin"
     Bundle 'git@github.com:smutch/vim-monokai'
     Bundle 'git@github.com:smutch/RST-Tables.git'
     Bundle 'git@github.com:smutch/LaTeX-Box.git'
-    Bundle 'kchmck/vim-coffee-script'
+    " Bundle 'kchmck/vim-coffee-script'
     Bundle 'tyru/open-browser.vim'
     Bundle 'davidbeckingsale/writegood.vim'
     Bundle 'junegunn/goyo.vim.git'
-    Bundle 'vim-scripts/JavaScript-Indent.git'
+    " Bundle 'vim-scripts/JavaScript-Indent.git'
 endif
