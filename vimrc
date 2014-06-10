@@ -121,7 +121,6 @@ set vb t_vb=                         " Turn off visual beep
 set laststatus=2                     " Always display a status line
 set cmdheight=1                      " Command line height
 set listchars=tab:▸\ ,eol:↵          " Set hidden characters
-set list                             " Show hidden characters
 
 if has("gui_macvim")
   set guifont=Menlo:h12
