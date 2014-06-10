@@ -80,6 +80,7 @@ Bundle 'gcmt/wildfire.vim.git'
 Bundle 'tpope/vim-unimpaired.git'
 Bundle 'honza/vim-snippets.git'
 Bundle 'sheerun/vim-polyglot.git'
+Bundle 'idanarye/vim-merginal.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
