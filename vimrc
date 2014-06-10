@@ -171,7 +171,7 @@ end
 
 highlight CheckWords ctermfg=Yellow cterm=bold guifg=Yellow gui=bold
 
-function MatchCheckWords()
+function! MatchCheckWords()
   match CheckWords /\c\<\(your\|Your\|halos\|Halos\|reionisation\|Reionisation\)\>/
 endfunction
 
@@ -237,6 +237,10 @@ endfun
 command! -range=% SoftWrap
             \ <line2>put _ |
             \ <line1>,<line2>g/.\+/ .;-/^$/ join |normal $x
+
+" Custom switch to light background (mostly used for mardown files)
+command! CSPencil
+            \ colorscheme pencil | set bg=light | e
 
 " }}}
 " Keybindings {{{
