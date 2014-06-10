@@ -120,6 +120,8 @@ set undofile                         " Save undo's after file closes
 set vb t_vb=                         " Turn off visual beep
 set laststatus=2                     " Always display a status line
 set cmdheight=1                      " Command line height
+set listchars=tab:▸\ ,eol:↵          " Set hidden characters
+set list                             " Show hidden characters
 
 if has("gui_macvim")
   set guifont=Menlo:h12
@@ -610,6 +612,11 @@ map ;p ;y`]p
 
 nmap go <Plug>(openbrowser-smart-search)
 vmap go <Plug>(openbrowser-smart-search)
+
+" }}}
+" pantondoc {{{
+
+let g:pandoc#formatting#mode = 'h'
 
 " }}}
 " plaintasks {{{
