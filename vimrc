@@ -121,6 +121,7 @@ set vb t_vb=                         " Turn off visual beep
 set laststatus=2                     " Always display a status line
 set cmdheight=1                      " Command line height
 set listchars=tab:▸\ ,eol:↵          " Set hidden characters
+let g:tex_conceal = ""               " Don't use conceal for latex equations
 
 if has("gui_macvim")
   set guifont=Menlo:h12
