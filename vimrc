@@ -386,6 +386,7 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
 nnoremap <silent> ,b :CtrlPBuffer<CR>
+nnoremap <silent> ,B :CtrlPBookmarkDir<CR>
 
 " Additional mappting for most recently used files
 nnoremap <silent> ,f :CtrlP<CR>
@@ -405,6 +406,9 @@ map ,M :CtrlPBufTagAll<CR>
 
 " Show the match window at the top of the screen
 let g:ctrlp_match_window_bottom = 0
+
+" Search files in runtime path (vimrc etc.)
+map ,V :CtrlPRTS<CR>
 
 " }}}
 " dash {{{
@@ -731,15 +735,6 @@ nnoremap <leader>T :TlistToggle<CR>
 " todo {{{
 
 nnoremap \td :call todo#ToggleDone()<CR>
-
-" }}}
-" tube {{{
-
-let g:tube_terminal = 'iterm'
-let g:tube_aliases = {}
-
-nmap ,Tc :Tube
-nmap ,Tl :TubeLastCommand<CR>
 
 " }}}
 " ultisnips {{{
