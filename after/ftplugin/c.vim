@@ -5,4 +5,4 @@ setlocal tabstop=2
 setlocal number
 
 " Save then compile
-nmap <buffer> <leader>s :w<CR>:make<CR>
+nmap <buffer> <leader>s :w<CR>:Make<CR>

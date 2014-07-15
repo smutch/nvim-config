@@ -1,7 +1,3 @@
-set background=light
-colorscheme pencil
-AirlineTheme understated
-
 set spell
 setlocal nofoldenable
 setlocal formatprg=par\ -w80\ -g
