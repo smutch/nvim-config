@@ -69,6 +69,7 @@ set mouse=a                          " enable mouse for all modes settings
 set clipboard=unnamed                " To work in tmux
 set spelllang=en_gb                  " British spelling
 set showmode                         " Show the current mode
+set list                             " Show newline & tab markers
 
 " Use an interactive shell to allow command line aliases to work
 " set shellcmdflag=-ic
