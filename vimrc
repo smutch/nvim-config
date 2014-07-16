@@ -209,7 +209,7 @@ function! WrapToggle()
         let b:wrapToggleFlag=1
     endif
 endfun
-map ,sw :call WrapToggle()<CR>
+map coW :call WrapToggle()<CR>
 
 " Remove trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$// | :noh'
@@ -591,7 +591,7 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " endif
 
 " Toggle on/off
-nnoremap ,sn :NeoComplCacheToggle<CR>
+nnoremap coe :NeoComplCacheToggle<CR>
 
 " set completeopt-=preview        " turn of completion preview window
 
@@ -651,12 +651,6 @@ elseif has("unix")
 endif
 
 " }}}
-" rainbowparen {{{
-
-" Map keys for rainbow_parenthesis
-nmap ,sr <Esc>:RainbowParenthesesToggle<CR>
-
-" }}}
 " rope {{{
 
 " Rope settings
@@ -680,14 +674,6 @@ let g:seek_use_vanilla_binds_in_diffmode = 1
 " Set showmarks bundle to off by default
 let g:showmarks_enable = 0
 
-
-" }}}
-" splitjoin {{{
-
-" Splitjoin options and bindings
-
-nmap ,sj :SplitjoinSplit<cr>
-nmap ,sJ :SplitjoinJoin<cr>
 
 " }}}
 " supertab {{{
