@@ -376,6 +376,9 @@ nnoremap Q :Bdelete<CR>
 " Custom ignore paths
 let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|include\/'
 
+" Custom root markers
+let g:ctrlp_root_markers = ['.ctrlp_marker']
+
 " Default to filename searches - so that appctrl will find application
 " controller
 let g:ctrlp_by_filename = 1
