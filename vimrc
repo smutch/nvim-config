@@ -674,6 +674,8 @@ let g:seek_use_vanilla_binds_in_diffmode = 1
 " Set showmarks bundle to off by default
 let g:showmarks_enable = 0
 
+" Toggle on/off
+nnoremap com :ShowMarksToggle<CR>
 
 " }}}
 " supertab {{{
