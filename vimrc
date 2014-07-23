@@ -680,6 +680,9 @@ let g:showmarks_enable = 0
 " Toggle on/off
 nnoremap com :ShowMarksToggle<CR>
 
+" Don't show marks which may link to other files
+let g:showmarks_include="abcdefghijklmnopqrstuvwxyz.'`^<>[]{}()\""
+
 " }}}
 " supertab {{{
 
