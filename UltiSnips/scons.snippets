@@ -1,0 +1,22 @@
+snippet standard "standard scons funcs and setup"
+import os
+import glob
+import shutil
+
+def files(pattern, exclude=''):
+    """All files matching a pattern, excluding
+    directories and any specified patterns."""
+    return [file for file in glob.glob(pattern) if (os.path.isfile(file)
+            and file not in glob.glob(exclude))]
+
+def copy_files(file_list, dest):
+    for f in file_list:
+        shutil.copy(f, dest)
+SConsEnvironment.CopyFiles = lambda env, file_list, dest: copy_files(file_list, dest)
+
+vars = Variables()
+vars.AddVariables(
+    BoolVariable('debug', 'Build with debug flags', False),
+)
+env = Environment(variables = vars, ENV = os.environ)
+endsnippet
