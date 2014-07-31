@@ -86,8 +86,6 @@ Bundle 'machakann/vim-textobj-delimited.git'
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
     Bundle 'Glench/Vim-Jinja2-Syntax'
-    Bundle 'vim-pandoc/vim-pantondoc.git'
-    Bundle 'vim-pandoc/vim-pandoc-syntax.git'
     Bundle 'mattn/webapi-vim'
     Bundle 'git@github.com:smutch/vim-monokai'
     Bundle 'git@github.com:smutch/RST-Tables.git'

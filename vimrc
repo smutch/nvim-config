@@ -236,9 +236,7 @@ function! GenCtags()
 endfun
 
 " Softwrap
-command! -range=% SoftWrap
-            \ <line2>put _ |
-            \ <line1>,<line2>g/.\+/ .;-/^$/ join |normal $x
+command! SoftWrap execute ':g/./,-/\n$/j'
 
 " Custom switch to light background (mostly used for mardown files)
 command! CSPencil
@@ -624,11 +622,6 @@ map ;p ;y`]p
 
 nmap go <Plug>(openbrowser-smart-search)
 vmap go <Plug>(openbrowser-smart-search)
-
-" }}}
-" pantondoc {{{
-
-let g:pandoc#formatting#mode = 'h'
 
 " }}}
 " plaintasks {{{
