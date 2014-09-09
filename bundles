@@ -82,6 +82,7 @@ Bundle 'honza/vim-snippets.git'
 Bundle 'sheerun/vim-polyglot.git'
 Bundle 'idanarye/vim-merginal.git'
 Bundle 'machakann/vim-textobj-delimited.git'
+Bundle 'edkolev/tmuxline.vim.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
