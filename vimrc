@@ -373,7 +373,7 @@ nnoremap Q :Bdelete<CR>
 " ctrlp {{{
 
 " Custom ignore paths
-let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|include\/'
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib)|(\.(swp|ico|git|svn))$'
 
 " Custom root markers
 let g:ctrlp_root_markers = ['.ctrlp_marker']
