@@ -354,6 +354,7 @@ endif
 " }}}
 " airline {{{
 
+let g:airline#extensions#tmuxline#enabled = 0
 let g:airline#extensions#tabline#enabled = 0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
@@ -375,7 +376,7 @@ nnoremap Q :Bdelete<CR>
 " ctrlp {{{
 
 " Custom ignore paths
-let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|include\/'
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib)|(\.(swp|ico|git|svn))$'
 
 " Custom root markers
 let g:ctrlp_root_markers = ['.ctrlp_marker']
@@ -567,7 +568,7 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 
