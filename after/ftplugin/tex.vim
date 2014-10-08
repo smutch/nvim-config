@@ -2,6 +2,8 @@ set spell
 setlocal nofoldenable
 setlocal formatprg=par\ -w80\ -g
 setlocal conceallevel=0  "Prevent rendering of latex symbols (tres annoying!)
+setlocal nocursorline
+setlocal smartindent
 
 setlocal iskeyword+=:
 setlocal iskeyword-=_

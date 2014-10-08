@@ -497,7 +497,6 @@ let g:LatexBox_Folding=0
 let g:LatexBox_viewer = "open -a Skim"
 let g:LatexBox_loaded_matchparen = 1  "Too slow!!
 let g:LatexBox_latexmk_async = 0
-set nocursorline
 
 " }}}
 " neocomplcache {{{
