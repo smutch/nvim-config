@@ -303,6 +303,9 @@ nmap ,c :.w! ~/.vimbuffer<CR>
 set cpoptions-=a
 nmap ,v :r ~/.vimbuffer<CR>
 
+" Toggle auto paragraph formatting
+nnoremap coa :set <C-R>=(&formatoptions =~# "a") ? 'formatoptions-=a' : 'formatoptions+=a'<CR><CR>
+
 " }}}
 " Autocommands {{{
 
@@ -493,7 +496,7 @@ let g:tex_flavor='latex'
 let g:LatexBox_Folding=0
 let g:LatexBox_viewer = "open -a Skim"
 let g:LatexBox_loaded_matchparen = 1  "Too slow!!
-let g:LatexBox_latexmk_async = 1
+let g:LatexBox_latexmk_async = 0
 set nocursorline
 
 " }}}
