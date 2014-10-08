@@ -475,6 +475,7 @@ map <leader>G :GundoToggle<CR>
 
 " let g:loaded_indentLine=1
 let g:indentLine_char="|"
+let g:indentLine_fileTypeExclude=["tex"] 
 
 " }}}
 " jedi {{{
