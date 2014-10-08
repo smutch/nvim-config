@@ -71,6 +71,9 @@ set spelllang=en_gb                  " British spelling
 set showmode                         " Show the current mode
 set list                             " Show newline & tab markers
 
+set secure                           " Secure mode for reading vimrc, exrc files etc. in current dir
+set exrc                             " Allow the use of folder dependent settings
+
 " Use an interactive shell to allow command line aliases to work
 " set shellcmdflag=-ic
 
@@ -373,7 +376,7 @@ nnoremap Q :Bdelete<CR>
 " ctrlp {{{
 
 " Custom ignore paths
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
 
 " Custom root markers
 let g:ctrlp_root_markers = ['.ctrlp_marker']
