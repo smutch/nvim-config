@@ -97,6 +97,7 @@ set showmatch                        " Show matching paren
 set ignorecase                       " case insensitive search
 set smartcase                        " case sensitive when uc present
 set gdefault                         " g flag on sed subs automatically
+set tags=./tags;$HOME                " recursively search up dir stack for tags file
 
 " Grep will sometimes skip displaying the file name if you
 " search in a singe file. Set grep
