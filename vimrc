@@ -482,13 +482,11 @@ let g:indentLine_fileTypeExclude=["tex"]
 " jedi {{{
 
 let g:jedi#auto_initialization = 1
+let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 0  "May be too slow...
 autocmd FileType python let b:did_ftplugin = 1
 
-" Binding to show pydoc
-let g:jedi#goto_definitions_command = "<leader>D"
-nnoremap <leader>d :call jedi#show_documentation()<CR>
 
 " }}}
 " latexbox {{{
@@ -572,18 +570,14 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 
-" if !exists('g:neocomplcache_omni_functions')
-"   let g:neocomplcache_omni_functions = {}
-" endif
-" let g:neocomplcache_omni_functions['python'] = 'jedi#completions'
-" if !exists('g:neocomplcache_force_omni_patterns')
-"   let g:neocomplcache_force_omni_patterns = {}
-" endif
-" let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
