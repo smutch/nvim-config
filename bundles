@@ -85,6 +85,7 @@ Bundle 'machakann/vim-textobj-delimited.git'
 Bundle 'edkolev/tmuxline.vim.git'
 Bundle 'kana/vim-textobj-fold.git'
 Bundle 'whatyouhide/vim-gotham.git'
+Bundle 'jonathanfilip/vim-lucius.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
