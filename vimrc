@@ -437,14 +437,6 @@ nmap <silent> <leader>D <Plug>DashSearch
 " let delimitMate_autoclose = 0
 
 " }}}
-" distractionfree {{{
-
-let g:fullscreen_colorscheme = "iawriter"
-let g:fullscreen_font="Courier New:h16"
-let g:normal_colorscheme = "Monokai"
-let g:normal_font = "Menlo:h14"
-
-" }}}
 " fugitive {{{
 
 " Useful shortcut for git commands
@@ -635,11 +627,6 @@ vmap go <Plug>(openbrowser-smart-search)
 au BufNewFile,BufRead *.todo inoremap <buffer> ++ <cr><esc>:call NewTask()<cr>A
 
 " }}}
-" project {{{
-
-nmap <silent> <Leader>P <Plug>ToggleProject
-
-" }}}
 " pydoc {{{
 
 " Pydoc
@@ -651,17 +638,6 @@ elseif has("mac")
 elseif has("unix")
     let g:pydoc_cmd = "/usr/local/python-2.7.1/bin/pydoc"
 endif
-
-" }}}
-" rope {{{
-
-" Rope settings
-let ropevim_vim_completion = 1
-let ropevim_enable_shortcuts = 1
-let ropevim_enable_autoimport = 1
-let ropevim_goto_def_newwin = 1
-let ropevim_extended_complete = 1
-
 
 " }}}
 " seek {{{
@@ -681,15 +657,6 @@ nnoremap com :ShowMarksToggle<CR>
 
 " Don't show marks which may link to other files
 let g:showmarks_include="abcdefghijklmnopqrstuvwxyz.'`^<>[]{}()\""
-
-" }}}
-" supertab {{{
-
-" Supertab options
-
-let g:SuperTabDefaultCompletionType = "context"
-" au FileType Python let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-
 
 " }}}
 " surround {{{
@@ -724,11 +691,6 @@ let Tlist_File_Fold_Auto_Close = 1
 " Mappings
 nnoremap <leader>T :TlistToggle<CR>
 
-
-" }}}
-" todo {{{
-
-nnoremap \td :call todo#ToggleDone()<CR>
 
 " }}}
 " ultisnips {{{
