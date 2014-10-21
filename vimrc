@@ -203,6 +203,8 @@ nmap ,csp :call <SID>SynStack()<CR>
 " My grep
 command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
 nnoremap ,g :MyGrep
+command! -nargs=+ GrepBuffers execute ':call setqflist([]) | :silent bufdo grepadd! <args> % | copen'
+nnoremap ,G :GrepBuffers
 
 " Toggle wrapping at 80 col
 function! WrapToggle()
