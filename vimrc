@@ -127,7 +127,6 @@ set laststatus=2                     " Always display a status line
 set cmdheight=1                      " Command line height
 set listchars=tab:▸\ ,eol:↵          " Set hidden characters
 let g:tex_conceal = ""               " Don't use conceal for latex equations
-set splitbelow                       " New horizontal splits default to below current window
 
 if has("gui_macvim")
   set guifont=Ubuntu\ Mono:h15
