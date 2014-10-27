@@ -308,7 +308,7 @@ set cpoptions-=a
 nmap ,v :r ~/.vimbuffer<CR>
 
 " Toggle auto paragraph formatting
-nnoremap coa :set <C-R>=(&formatoptions =~# "a") ? 'formatoptions-=a' : 'formatoptions+=a'<CR><CR>
+nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>
 
 " }}}
 " Autocommands {{{
