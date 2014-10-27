@@ -219,6 +219,7 @@ map coW :call WrapToggle()<CR>
 
 " Remove trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$// | :noh'
+nmap ,W :TrimWhitespace<CR>:w<CR>
 
 " Allow us to move to windows by number using the leader key
 let i = 1
