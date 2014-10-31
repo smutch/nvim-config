@@ -83,8 +83,8 @@ Bundle 'kana/vim-textobj-fold.git'
 Bundle 'whatyouhide/vim-gotham.git'
 Bundle 'jonathanfilip/vim-lucius.git'
 Bundle 'haya14busa/incsearch.vim.git'
-Bundle 'nice/sweater.git'
 Bundle 'FelikZ/ctrlp-py-matcher.git'
+Bundle 'DAddYE/soda.vim.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
