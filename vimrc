@@ -694,6 +694,25 @@ autocmd FileType markdown let b:surround_105 = "_\r_" "italics
 nnoremap _ :Switch<cr>
 
 " }}}
+" tinykeymap {{{
+
+call tinykeymap#Load('windows')
+
+call tinykeymap#Map('windows', '>', 'wincmd >')
+call tinykeymap#Map('windows', 'L', 'wincmd >')
+call tinykeymap#Map('windows', '<', 'wincmd <')
+call tinykeymap#Map('windows', 'H', 'wincmd <')
+call tinykeymap#Map('windows', '<up>', 'wincmd +')
+call tinykeymap#Map('windows', 'K', 'wincmd +')
+call tinykeymap#Map('windows', '<down>', 'wincmd -')
+call tinykeymap#Map('windows', 'J', 'wincmd -')
+
+call tinykeymap#Map('windows', 'l', 'wincmd l')
+call tinykeymap#Map('windows', 'h', 'wincmd h')
+call tinykeymap#Map('windows', 'j', 'wincmd j')
+call tinykeymap#Map('windows', 'k', 'wincmd k')
+
+" }}}
 " tlist {{{
 
 " Tlist options
