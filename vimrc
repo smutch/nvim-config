@@ -638,11 +638,6 @@ nmap go <Plug>(openbrowser-smart-search)
 vmap go <Plug>(openbrowser-smart-search)
 
 " }}}
-" plaintasks {{{
-
-au BufNewFile,BufRead *.todo inoremap <buffer> ++ <cr><esc>:call NewTask()<cr>A
-
-" }}}
 " pydoc {{{
 
 " Pydoc
