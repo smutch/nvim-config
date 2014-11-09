@@ -22,3 +22,12 @@ nnoremap <buffer> <leader>M :silent !paver -f $HOME/bin/pavement.py pandoc_githu
 setlocal conceallevel=0 "Prevents annoyances when using $$ style (pandoc) math
 
 syn match markdownIgnore "\$\+.\{-}\n*.\{-}\$\+" "Don't use italics with underscore in math
+
+" If writing a list, pressing enter will start new bullet
+setlocal comments-=fb:-
+setlocal comments+=nb:-\ [\ ]
+setlocal comments+=nb:-
+setlocal fo+=ro
+
+" set tabs to 2 spaces
+set expandtab tabstop=2 shiftwidth=2
