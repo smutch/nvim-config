@@ -247,7 +247,7 @@ endfun
 " Softwrap
 command! SoftWrap execute ':g/./,-/\n$/j'
 
-" Custom switch to light background (mostly used for mardown files)
+" Custom switch to light background (mostly used for markdown files)
 command! CSPencil
             \ colorscheme pencil | set bg=light | e
 
@@ -318,9 +318,6 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " Scons files
 au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
 set makeprg=scons
-
-" Markdown files
-au BufNewFile,BufRead *.md set filetype=markdown
 
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
