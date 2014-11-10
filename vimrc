@@ -33,6 +33,8 @@ let g:NERDCustomDelimiters = {
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': [],
                            \ 'passive_filetypes': [] }
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
 
 " Deal with gnu screen
 if match($TERM, "screen")!=-1
@@ -70,6 +72,7 @@ set clipboard=unnamed                " To work in tmux
 set spelllang=en_gb                  " British spelling
 set showmode                         " Show the current mode
 set list                             " Show newline & tab markers
+set showcmd                          " Show partial command in bottom right
 
 set secure                           " Secure mode for reading vimrc, exrc files etc. in current dir
 set exrc                             " Allow the use of folder dependent settings
@@ -210,10 +213,10 @@ nnoremap ,G :GrepBuffers
 " Toggle wrapping at 80 col
 function! WrapToggle()
     if exists("b:wrapToggleFlag") && b:wrapToggleFlag==1
-        setlocal tw=0 fo=cq wm=0 colorcolumn=0 formatoptions+=l
+        setlocal tw=0 fo-=t fo+=l wm=0 colorcolumn=0
         let b:wrapToggleFlag=0
     else
-        setlocal tw=80 fo=cqt wm=0 colorcolumn=80 formatoptions-=l
+        setlocal tw=80 fo+=t wm=0 fo-=l colorcolumn=80
         let b:wrapToggleFlag=1
     endif
 endfun
@@ -246,10 +249,6 @@ endfun
 
 " Softwrap
 command! SoftWrap execute ':g/./,-/\n$/j'
-
-" Custom switch to light background (mostly used for markdown files)
-command! CSPencil
-            \ colorscheme pencil | set bg=light | e
 
 " }}}
 " Keybindings {{{
@@ -321,6 +320,9 @@ set makeprg=scons
 
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
+
+" enable spell checking on certain files
+autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 
 " Automatically reload vimrc when it's saved
 " augroup AutoReloadVimRC
