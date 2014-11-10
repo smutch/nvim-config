@@ -28,6 +28,3 @@ setlocal comments-=fb:-
 setlocal comments+=nb:-\ [\ ]
 setlocal comments+=nb:-
 setlocal fo+=ro
-
-" set tabs to 2 spaces
-set expandtab tabstop=2 shiftwidth=2
