@@ -683,11 +683,6 @@ autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "_\r_" "italics
 
 " }}}
-" switch {{{
-
-nnoremap _ :Switch<cr>
-
-" }}}
 " tinykeymap {{{
 
 call tinykeymap#Load('windows')
