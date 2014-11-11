@@ -27,4 +27,5 @@ syn match markdownIgnore "\$\+.\{-}\n*.\{-}\$\+" "Don't use italics with undersc
 setlocal comments-=fb:-
 setlocal comments+=nb:-\ [\ ]
 setlocal comments+=nb:-
-setlocal fo+=ro
+setlocal fo-=c
+setlocal fo+=ron
