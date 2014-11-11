@@ -19,9 +19,9 @@ setlocal formatoptions-=l
 nnoremap <buffer> <leader>m :silent !open -a Marked\ 2.app '%:p'<cr>
 nnoremap <buffer> <leader>M :silent !paver -f $HOME/bin/pavement.py pandoc_github '%:p'<cr>
 
-setlocal conceallevel=0 "Prevents annoyances when using $$ style (pandoc) math
+au BufWinEnter *.md setlocal conceallevel=0  "Prevents annoyances when using $$ style (pandoc) math
 
-syn match markdownIgnore "\$\+.\{-}\n*.\{-}\$\+" "Don't use italics with underscore in math
+au BufWinEnter *.md syn match markdownIgnore "\$\+.\{-}\n*.\{-}\$\+" "Don't use italics with underscore in math
 
 " If writing a list, pressing enter will start new bullet
 setlocal comments-=fb:-
