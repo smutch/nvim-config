@@ -309,9 +309,6 @@ nmap ,v :r ~/.vimbuffer<CR>
 " Toggle auto paragraph formatting
 nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>
 
-" Select 'chunks'
-vnoremap ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>k
-omap ac :normal Vac<CR>:noh<CR>
 " }}}
 " Autocommands {{{
 

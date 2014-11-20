@@ -49,3 +49,9 @@ map <buffer> <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/Shared
 
 " Tex only abbreviations
 ab <buffer> ... \ldots
+
+" Select 'chunks'
+vnoremap ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k
+vnoremap ic ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k
+omap ac :normal Vac<CR>:noh<CR>
+omap ic :normal Vic<CR>:noh<CR>

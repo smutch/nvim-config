@@ -29,3 +29,9 @@ setlocal comments+=nb:-\ [\ ]
 setlocal comments+=nb:-
 setlocal fo-=c
 setlocal fo+=ron
+
+" Select 'chunks'
+vnoremap ac l?\(^ *-\)<CR><Esc>V/\(^ *-\)\\|\(^ *$\)<CR>k
+vnoremap ic l?\(^ *-\)<CR><Esc>V/\(^ *-\)\\|\(^ *$\)<CR>k
+omap ac :normal Vac<CR>:noh<CR>
+omap ic :normal Vic<CR>:noh<CR>
