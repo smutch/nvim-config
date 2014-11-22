@@ -183,7 +183,7 @@ end
 highlight link CheckWords DiffText
 
 function! MatchCheckWords()
-  match CheckWords /\c\<\(your\|Your\|it's\|halos\|Halos\|reionisation\|Reionisation\)\>/
+  match CheckWords /\c\<\(your\|Your\|it's\|they're\|halos\|Halos\|reionisation\|Reionisation\)\>/
 endfunction
 
 autocmd FileType markdown,tex call MatchCheckWords()
