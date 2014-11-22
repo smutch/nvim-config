@@ -251,6 +251,9 @@ command! SoftWrap execute ':g/./,-/\n$/j'
 " }}}
 " Keybindings {{{
 
+" Command mode
+nnoremap <space> :
+
 " Reformat paragraph
 nnoremap ,l gqip
 vnoremap ,l gq
