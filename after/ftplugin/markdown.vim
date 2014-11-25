@@ -35,3 +35,18 @@ vnoremap ac l?\(^ *-\)\\|\(^ *$\)<CR><Esc>V/<CR>k
 vnoremap ic l?\(^ *-\)\\|\(^ *$\)<CR>j<Esc>V/<CR>k
 omap ac :normal Vac<CR>:noh<CR>
 omap ic :normal Vic<CR>:noh<CR>
+
+" toggle tasks as complete
+function! ToggleComplete()
+  let line = getline('.')
+  if line =~ "^ *- \\[x\\]"
+    s/^\( *\)- \[x\]/\1- \[ \]/
+    s/ *\*\*done\*\*.*$//
+  elseif line =~ "^ *- \\[ \\]"
+    s/^\( *\)- \[ \]/\1- \[x\]/
+    let text = " **done** (*" . strftime("%Y-%m-%d %H:%M") ."*)"
+    exec "normal! A" . text
+    normal! _
+  endif
+endfunc
+nnoremap <buffer> = :call ToggleComplete()<cr>
