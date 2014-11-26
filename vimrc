@@ -254,9 +254,9 @@ command! SoftWrap execute ':g/./,-/\n$/j'
 " Command mode
 nnoremap <space> :
 
-" Reformat paragraph
-nnoremap ,l gqip
-vnoremap ,l gq
+" Reformat
+nnoremap ,l gwac
+vnoremap ,l gw
 
 " Cycle through buffers quickly
 nnoremap <silent> ,x :bn<CR>
@@ -635,6 +635,23 @@ map ;c <plug>NERDCommenterComment
 map ;p ;y`]p
 
 " }}}
+" obvious-resize {{{
+
+function! s:try_wincmd(cmd, default)
+  if exists(':' . a:cmd)
+    let cmd = v:count ? join([a:cmd, v:count]) : a:cmd
+    execute cmd
+  else
+    execute join([v:count, 'wincmd', a:default])
+  endif
+endfunction
+
+nnoremap <silent> ,w+ :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
+nnoremap <silent> ,w- :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
+nnoremap <silent> ,w< :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
+nnoremap <silent> ,w> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
+
+" }}}
 " open-browser {{{
 
 nmap go <Plug>(openbrowser-smart-search)
@@ -682,29 +699,6 @@ autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math
 autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout
 autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "_\r_" "italics
-
-" }}}
-" tinykeymap {{{
-
-call tinykeymap#Load('windows')
-
-call tinykeymap#Map('windows', '>', 'wincmd >')
-call tinykeymap#Map('windows', '<right>', 'wincmd >')
-call tinykeymap#Map('windows', '<S-l>', 'wincmd >')
-call tinykeymap#Map('windows', '<', 'wincmd <')
-call tinykeymap#Map('windows', '<left>', 'wincmd <')
-call tinykeymap#Map('windows', '<S-h>', 'wincmd <')
-call tinykeymap#Map('windows', '+', 'wincmd +')
-call tinykeymap#Map('windows', '<up>', 'wincmd +')
-call tinykeymap#Map('windows', '<S-k>', 'wincmd +')
-call tinykeymap#Map('windows', '-', 'wincmd -')
-call tinykeymap#Map('windows', '<down>', 'wincmd -')
-call tinykeymap#Map('windows', '<S-j>', 'wincmd -')
-
-call tinykeymap#Map('windows', 'l', 'wincmd l')
-call tinykeymap#Map('windows', 'h', 'wincmd h')
-call tinykeymap#Map('windows', 'j', 'wincmd j')
-call tinykeymap#Map('windows', 'k', 'wincmd k')
 
 " }}}
 " tlist {{{
