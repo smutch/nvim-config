@@ -31,10 +31,10 @@ setlocal fo-=c
 setlocal fo+=ron
 
 " Select 'chunks'
-vnoremap ac l?\(^ *-\)\\|\(^ *$\)<CR><Esc>V/<CR>k
-vnoremap ic l?\(^ *-\)\\|\(^ *$\)<CR>j<Esc>V/<CR>k
-omap ac :normal Vac<CR>:noh<CR>
-omap ic :normal Vic<CR>:noh<CR>
+vnoremap <buffer> ac l?\(^ *-\)\\|\(^ *$\)<CR><Esc>V/<CR>k
+vnoremap <buffer> ic l?\(^ *-\)\\|\(^ *$\)<CR>j<Esc>V/<CR>k
+omap <buffer> ac :normal Vac<CR>:noh<CR>
+omap <buffer> ic :normal Vic<CR>:noh<CR>
 
 " toggle tasks as complete
 function! ToggleComplete()

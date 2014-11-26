@@ -51,7 +51,7 @@ map <buffer> <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/Shared
 ab <buffer> ... \ldots
 
 " Select 'chunks'
-vnoremap ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR><Esc>V/<CR>k
-vnoremap ic ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k
-omap ac :normal Vac<CR>:noh<CR>
-omap ic :normal Vic<CR>:noh<CR>
+vnoremap <buffer> ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR><Esc>V/<CR>k
+vnoremap <buffer> ic ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k
+omap <buffer> ac :normal Vac<CR>:noh<CR>
+omap <buffer> ic :normal Vic<CR>:noh<CR>
