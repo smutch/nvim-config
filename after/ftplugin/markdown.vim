@@ -26,7 +26,7 @@ au BufWinEnter *.md syn match markdownIgnore "\$\+.\{-}\n*.\{-}\$\+" "Don't use 
 " If writing a list, pressing enter will start new bullet
 setlocal comments-=fb:-
 setlocal comments+=nb:-\ [\ ]
-setlocal comments+=nb:-
+setlocal comments+=fb:-
 setlocal fo-=c
 setlocal fo+=ron
 
