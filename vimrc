@@ -254,6 +254,9 @@ command! SoftWrap execute ':g/./,-/\n$/j'
 " Command mode
 nnoremap <space> :
 
+" Escape from insert mode
+inoremap kj <esc>
+
 " Reformat
 nnoremap ,l gwac
 vnoremap ,l gw
