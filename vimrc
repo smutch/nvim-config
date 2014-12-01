@@ -626,6 +626,12 @@ map ;c <plug>NERDCommenterComment
 map ;p ;y`]p
 
 " }}}
+" notes-system {{{
+
+autocmd FileType markdown nnoremap <buffer> ,nn :NewNote 
+autocmd FileType markdown nnoremap <buffer> ,ni :InsertImage 
+
+" }}}
 " obvious-resize {{{
 
 function! s:try_wincmd(cmd, default)
