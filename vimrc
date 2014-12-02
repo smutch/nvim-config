@@ -495,10 +495,13 @@ let g:indentLine_fileTypeExclude=["tex"]
 " }}}
 " jedi {{{
 
-let g:jedi#auto_initialization = 1
+" These two are requireed for neocomplete
+let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
+
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 0  "May be too slow...
+let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 
 
@@ -523,6 +526,9 @@ let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Don't auto close the preview window
+let g:neocomplete#enable_auto_close_preview = 0
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
@@ -595,14 +601,15 @@ let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " jedi completions
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
 if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.python =
 \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 " alternative pattern: '\h\w*\|[^. \t]\.\w*'
+
+" mapping to toggle neocomplete on and off
+nnoremap coe :NeoCompleteToggle<CR>
 
 " }}}
 " nerd_commenter {{{
