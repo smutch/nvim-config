@@ -132,7 +132,7 @@ set listchars=tab:▸\ ,eol:↵          " Set hidden characters
 let g:tex_conceal = ""               " Don't use conceal for latex equations
 
 if has("gui_macvim")
-  set guifont=Ubuntu\ Mono:h15
+  set guifont=Ubuntu\ Mono:h18
   set guioptions-=T  " remove toolbar
   set guioptions-=rL " remove right + left scrollbars
   set anti
