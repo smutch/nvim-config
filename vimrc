@@ -254,6 +254,14 @@ command! SoftWrap execute ':g/./,-/\n$/j'
 " Command mode
 nnoremap <space> :
 
+" ctrl-space does omnicomplete or keyword complete if menu not already visible
+inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
+            \ "\<lt>C-n>" :
+            \ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
+            \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
+            \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
+imap <C-@> <C-Space>
+
 " Reformat
 nnoremap ,l gwac
 vnoremap ,l gw
