@@ -320,6 +320,10 @@ nmap ,v :r ~/.vimbuffer<CR>
 " Toggle auto paragraph formatting
 nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>
 
+" Reformat chunks (chunks are defined per filetype basis in after/ftplugin)
+nmap ,; gwic
+nmap ,: gwac
+
 " }}}
 " Autocommands {{{
 
