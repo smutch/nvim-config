@@ -73,6 +73,7 @@ Bundle 'haya14busa/incsearch.vim.git'
 Bundle 'FelikZ/ctrlp-py-matcher.git'
 Bundle 'Konfekt/FastFold.git'
 Bundle 'talek/obvious-resize.git'
+Bundle 'git@github.com:smutch/note-system.git'
 
 " colorschemes
 " Bundle 'freeo/vim-kalisi.git'

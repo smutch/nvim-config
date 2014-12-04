@@ -495,7 +495,7 @@ let g:indentLine_fileTypeExclude=["tex"]
 " }}}
 " jedi {{{
 
-" These two are requireed for neocomplete
+" These two are required for neocomplete
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 
@@ -635,8 +635,7 @@ map ;p ;y`]p
 " }}}
 " notes-system {{{
 
-autocmd FileType markdown nnoremap <buffer> ,nn :NewNote 
-autocmd FileType markdown nnoremap <buffer> ,ni :InsertImage 
+let g:notes_dir = "/Users/smutch/Dropbox/Notes"
 
 " }}}
 " obvious-resize {{{
