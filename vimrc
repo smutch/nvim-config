@@ -539,8 +539,11 @@ let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
+" Disable auto completion (must call manually)
+let g:neocomplete#disable_auto_complete = 1
+
 " Don't auto close the preview window
-let g:neocomplete#enable_auto_close_preview = 0
+" let g:neocomplete#enable_auto_close_preview = 0
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
@@ -685,6 +688,12 @@ elseif has("mac")
 elseif has("unix")
     let g:pydoc_cmd = "/usr/local/python-2.7.1/bin/pydoc"
 endif
+
+" }}}
+" scratch {{{
+
+let g:scratch_autohide = 0
+let g:scratch_insert_autohide = 0
 
 " }}}
 " seek {{{
