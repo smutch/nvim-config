@@ -77,18 +77,18 @@ Bundle 'git@github.com:smutch/note-system.git'
 
 " colorschemes
 " Bundle 'freeo/vim-kalisi.git'
-Bundle 'jonathanfilip/vim-lucius.git'
 " Bundle 'DAddYE/soda.vim.git'
 " Bundle 'whatyouhide/vim-gotham.git'
-Bundle 'reedes/vim-colors-pencil.git'
 Bundle 'morhetz/gruvbox.git'
 Bundle 'chriskempson/base16-vim.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
+    Bundle 'reedes/vim-colors-pencil.git'
+    Bundle 'jonathanfilip/vim-lucius.git'
+    Bundle 'git@github.com:smutch/vim-monokai'
     Bundle 'Glench/Vim-Jinja2-Syntax'
     Bundle 'mattn/webapi-vim'
-    Bundle 'git@github.com:smutch/vim-monokai'
     Bundle 'git@github.com:smutch/RST-Tables.git'
     Bundle 'git@github.com:smutch/LaTeX-Box.git'
     " Bundle 'kchmck/vim-coffee-script'

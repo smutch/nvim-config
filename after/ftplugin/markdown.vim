@@ -48,3 +48,6 @@ function! ToggleComplete()
   endif
 endfunc
 nnoremap <buffer> = :call ToggleComplete()<cr>
+
+" convert address to link
+nmap <buffer> ,L yiWysiW]f]a(<ESC>pa)<ESC>
