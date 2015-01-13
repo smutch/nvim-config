@@ -518,16 +518,6 @@ autocmd FileType python let b:did_ftplugin = 1
 
 
 " }}}
-" latexbox {{{
-
-" Latex options
-let g:tex_flavor='latex'
-let g:LatexBox_Folding=0
-let g:LatexBox_viewer = "open -a Skim"
-let g:LatexBox_loaded_matchparen = 1  "Too slow!!
-let g:LatexBox_latexmk_async = 0
-
-" }}}
 " neocomplete {{{
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -779,6 +769,16 @@ map <silent> <M-c> I#<ESC>
 vmap <silent> <M-c> I#<ESC>
 map <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
 vmap <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
+
+" }}}
+" vim-latex {{{
+
+" Latex options
+let g:latex_build_dir = './build'
+let g:latex_latexmk_continuous = 0
+let g:latex_latexmk_background = 1
+let g:latex_view_general_viewer = 'open'
+let g:latex_view_general_options = '-a Skim'
 
 " }}}
 " vimux {{{
