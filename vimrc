@@ -132,18 +132,12 @@ set listchars=tab:▸\ ,eol:↵          " Set hidden characters
 let g:tex_conceal = ""               " Don't use conceal for latex equations
 
 if has("gui_macvim")
-  set guifont=Ubuntu\ Mono:h18
+  set guifont=Ubuntu\ Mono:h17
   set guioptions-=T  " remove toolbar
   set guioptions-=rL " remove right + left scrollbars
   set anti
-  set linespace=2 "Increase the space between lines for better readability
-  " In order for the ropevim quick keybindings to work (i.e. 'M-/')
-  " we must allow MacVim to interpret the option key as Meta...
-  set invmmta
+  set linespace=3 "Increase the space between lines for better readability
 else
-  " Remap meta-keys to work with ropevim.
-  set <M-/>=/
-  imap / <M-/>
   " Set the ttymouse value to allow window resizing with mouse
   set ttymouse=xterm2
 end
