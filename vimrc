@@ -512,6 +512,12 @@ autocmd FileType python let b:did_ftplugin = 1
 
 
 " }}}
+" limelight {{{
+
+" toggle on and off
+nnoremap coL :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
+
+" }}}
 " nerd_commenter {{{
 
 " NERDCommenter
