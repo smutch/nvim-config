@@ -445,6 +445,12 @@ nmap <silent> <leader>D <Plug>DashSearch
 " let delimitMate_autoclose = 0
 
 " }}}
+" dispatch {{{
+
+" Use octodown as default build command for Markdown files
+autocmd FileType markdown let b:dispatch = 'octodown %'
+
+" }}}
 " fugitive {{{
 
 " Useful shortcut for git commands
@@ -683,6 +689,7 @@ let g:latex_view_general_options = '-a Skim'
 " }}}
 " vimcompletesme {{{
 
+autocmd FileType tex let b:vcm_tab_complete = "omni"
 
 " }}}
 " vimux {{{
