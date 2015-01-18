@@ -51,3 +51,6 @@ nnoremap <buffer> = :call ToggleComplete()<cr>
 
 " convert address to link
 nmap <buffer> ,L yiWysiW]f]a(<ESC>pa)<ESC>
+
+" Quick map for adding a new item to a list at the same level
+imap <buffer>  <CR>-<Space><C-d>
