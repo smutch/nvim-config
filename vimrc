@@ -689,7 +689,7 @@ let g:latex_view_general_options = '-a Skim'
 " }}}
 " vimcompletesme {{{
 
-autocmd FileType tex let b:vcm_tab_complete = "omni"
+autocmd FileType tex,python let b:vcm_tab_complete = "omni"
 
 " }}}
 " vimux {{{
