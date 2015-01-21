@@ -54,8 +54,8 @@ end
 " Vundle {{{
 
 " Load all plugins
-if filereadable(expand("~/.vim/bundles"))
-  source ~/.vim/bundles
+if filereadable(expand("~/.vim/plugins.vim"))
+  source ~/.vim/plugins.vim
 endif
 
 filetype plugin on
@@ -241,6 +241,9 @@ endfun
 
 " Softwrap
 command! SoftWrap execute ':g/./,-/\n$/j'
+
+" Edit vimrc
+command! Erc execute ':e ~/.vim/vimrc'
 
 " }}}
 " Keybindings {{{
