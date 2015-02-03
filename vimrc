@@ -149,25 +149,18 @@ let python_highlight_space_errors = 0
 " Colorscheme {{{
 
 syntax on " Use syntax highlighting
-if exists('$SOLARIZED_THEME')
-    if $SOLARIZED_THEME=="light"
-        set background=light
-    else
-        set background=dark
+if (&t_Co >= 256) && !has("gui_running")
+    set background=dark
+    if !has("gui_running")
+        let g:gruvbox_italic=0
     endif
-else
-    set background=dark
-endif
-if !has("gui_running")
-    let g:gruvbox_italic=0
-endif
-if (&t_Co >= 256) || has("gui_running")
-    " if match($TERM, "screen")!=-1
-    " endif
     colorscheme gruvbox
+elseif has("gui_running")
+    set background=light
+    colorscheme solarized
 else
     set background=dark
-    colorscheme ir_black
+    colorscheme base16-default
 end
 
 " }}}
@@ -205,10 +198,11 @@ nnoremap ,G :GrepBuffers
 " Toggle wrapping at 80 col
 function! WrapToggle()
     if exists("b:wrapToggleFlag") && b:wrapToggleFlag==1
-        setlocal tw=0 fo-=t fo+=l wm=0 colorcolumn=0
+        setlocal tw=0 fo-=awt fo+=l wm=0 colorcolumn=0
         let b:wrapToggleFlag=0
     else
-        setlocal tw=80 fo+=t wm=0 fo-=l colorcolumn=80
+        setlocal tw=80 fo+=awt wm=0 fo-=l
+        execute "setlocal colorcolumn=" . join(range(81,335), ',')
         let b:wrapToggleFlag=1
     endif
 endfun
@@ -476,6 +470,11 @@ autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
 nnoremap ghn :GitGutterNextHunk<CR>
 nnoremap ghp :GitGutterPrevHunk<CR>
 let g:gitgutter_realtime = 0
+
+" }}}
+" goyo {{{
+
+let g:goyo_width = 82
 
 " }}}
 " gundo {{{

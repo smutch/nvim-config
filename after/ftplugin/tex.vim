@@ -10,7 +10,9 @@ setlocal iskeyword-=_
 
 setlocal softtabstop=2
 setlocal shiftwidth=2
-setlocal tw=80 fo=cqt wm=0 colorcolumn=80
+setlocal tw=80 fo=awtqron wm=0
+execute "set colorcolumn=" . join(range(81,335), ',')
+
 " setlocal cursorline  "This is very slow for large files
 let b:wrapToggleFlag=1
 
