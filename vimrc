@@ -201,7 +201,7 @@ function! WrapToggle()
         setlocal tw=0 fo-=awt fo+=l wm=0 colorcolumn=0
         let b:wrapToggleFlag=0
     else
-        setlocal tw=80 fo+=awt wm=0 fo-=l
+        setlocal tw=80 fo+=awtn wm=0 fo-=l
         execute "setlocal colorcolumn=" . join(range(81,335), ',')
         let b:wrapToggleFlag=1
     endif

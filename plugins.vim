@@ -65,10 +65,11 @@ Plug 'talek/obvious-resize'
 " Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
 Plug 'sjl/clam.vim'
+Plug 'junegunn/vim-peekaboo'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'altercation/vim-colors-solarized'
+Plug 'git@github.com:smutch/vim-colors-solarized.git'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
