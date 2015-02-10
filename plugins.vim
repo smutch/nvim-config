@@ -65,7 +65,7 @@ Plug 'talek/obvious-resize'
 " Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
 Plug 'sjl/clam.vim'
-Plug 'junegunn/vim-peekaboo'
+Plug 'git@github.com:smutch/vim-peekaboo.git', { 'branch': 'scroll_buffer'}
 
 " colorschemes
 Plug 'morhetz/gruvbox'
