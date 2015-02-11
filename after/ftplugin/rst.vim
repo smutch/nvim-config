@@ -17,6 +17,8 @@ nnoremap <buffer> <leader>S :w<CR>:make clean; make html<CR>
 nnoremap <buffer> <leader>m :silent !open -a Marked\ 2 '%:p'<cr>
 
 setlocal comments+=fb:-
-"
+
 " Quick map for adding a new item to a list at the same level
 imap <buffer>  <CR>-<Space><C-d>
+
+setlocal nolist
