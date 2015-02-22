@@ -51,7 +51,7 @@ if os == "Darwin"
 end
 
 " }}}
-" Vundle {{{
+" vim-plug {{{
 
 " Load all plugins
 if filereadable(expand("~/.vim/plugins.vim"))
@@ -76,6 +76,8 @@ set showcmd                          " Show partial command in bottom right
 
 set secure                           " Secure mode for reading vimrc, exrc files etc. in current dir
 set exrc                             " Allow the use of folder dependent settings
+
+let g:netrw_altfile = 1              " Prev buffer command excludes netrw buffers
 
 " Use an interactive shell to allow command line aliases to work
 " set shellcmdflag=-ic
@@ -133,6 +135,7 @@ let g:tex_conceal = ""               " Don't use conceal for latex equations
 
 if has("gui_macvim")
   set guifont=Ubuntu\ Mono:h17
+  " set guifont=Bitstream\ Vera\ Sans\ Mono:h17
   set guioptions-=T  " remove toolbar
   set guioptions-=rL " remove right + left scrollbars
   set anti
@@ -242,9 +245,6 @@ command! Erc execute ':e ~/.vim/vimrc'
 " }}}
 " Keybindings {{{
 
-" Command mode
-nnoremap <space> :
-
 " ctrl-space does omnicomplete or keyword complete if menu not already visible
 " inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
 "             \ "\<lt>C-n>" :
@@ -264,8 +264,8 @@ nnoremap <silent> ,z :bp<CR>
 " Quick switch to directory of current file
 nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 
-" Bring up marks list
-nnoremap ,m :marks<CR>
+" Toggle folds
+nnoremap <space><space> za
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual mode
 vnoremap y y`>
@@ -448,6 +448,11 @@ nmap <silent> <leader>D <Plug>DashSearch
 autocmd FileType markdown let b:dispatch = 'octodown %'
 
 " }}}
+" easymotion {{{
+
+map <space> <plug>(easymotion-prefix)
+
+"}}}
 " fugitive {{{
 
 " Useful shortcut for git commands
@@ -668,7 +673,7 @@ map  <buffer> <silent> <Leader>pr   <Plug>(IPython-RunLineAsTopLevel)
 " vim-latex {{{
 
 " Latex options
-let g:latex_build_dir = './build'
+let g:latex_latexmk_build_dir = './build'
 let g:latex_latexmk_continuous = 0
 let g:latex_latexmk_background = 1
 let g:latex_view_general_viewer = 'open'
