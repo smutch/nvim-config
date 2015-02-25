@@ -22,3 +22,5 @@ setlocal comments+=fb:-
 imap <buffer>  <CR>-<Space><C-d>
 
 setlocal nolist
+
+inoremap ;- —
