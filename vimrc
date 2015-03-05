@@ -302,10 +302,8 @@ nnoremap <silent> ,z :bp<CR>
 " Quick switch to directory of current file
 nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 
-" Toggle folds
-nnoremap <space><space> za
-
-" Leave cursor at end of yank after yanking text with lowercase y in visual mode
+" Leave cursor at end of yank after yanking text with lowercase y in visual 
+" mode
 vnoremap y y`>
 
 " Make Y behave like other capital
@@ -489,6 +487,7 @@ autocmd FileType markdown let b:dispatch = 'octodown %'
 " easymotion {{{
 
 map <space> <plug>(easymotion-prefix)
+map <space><space> <plug>(easymotion-w)
 
 "}}}
 " fugitive {{{
