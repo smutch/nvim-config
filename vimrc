@@ -37,7 +37,7 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 
 " Deal with gnu screen
-if match($TERM, "screen")!=-1
+if (match($TERM, "screen")!=-1) && !has('nvim')
     set term=screen-256color
 endif
 
