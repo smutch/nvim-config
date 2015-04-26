@@ -42,3 +42,8 @@ endsnippet
 snippet newfig "new matplotlib figure"
 fig, ax = plt.subplots(1, 1)
 endsnippet
+
+snippet axlabel "set matplotlib axis labels"
+ax.set_xlabel(r"${1:$\log_{10}(M_*/{\rm M}_{\odot})$}")
+ax.set_ylabel(r"${2:$\log_{10}(\phi/Mpc^3)$}")
+endsnippet
