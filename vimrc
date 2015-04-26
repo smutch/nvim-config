@@ -158,6 +158,7 @@ if (&t_Co >= 256) && !has("gui_running")
         let g:gruvbox_italic=0
     endif
     colorscheme gruvbox
+    " colorscheme molokai
 elseif has("gui_running")
     set background=light
     colorscheme solarized
@@ -290,6 +291,9 @@ command! -nargs=+ -complete=command Page :call <SID>Page(<q-args>)
 "             \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
 "             \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
 imap <C-@> <C-Space>
+
+" Quick escape from insert mode
+inoremap kj <ESC>
 
 " Reformat
 nnoremap ,l gwac
@@ -556,7 +560,7 @@ let g:indentLine_fileTypeExclude=["tex"]
 " let g:jedi#auto_vim_configuration = 0
 
 let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = 0  "May be too slow...
+let g:jedi#show_call_signatures = 1  "May be too slow...
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 
