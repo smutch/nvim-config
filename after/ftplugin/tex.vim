@@ -1,3 +1,6 @@
+" ensure we are using latex and not plaintex
+let g:tex_flavour='latex'
+
 set spell
 " setlocal nofoldenable
 setlocal formatprg=par\ -w80\ -g
