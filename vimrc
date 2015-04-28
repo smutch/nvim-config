@@ -711,19 +711,19 @@ map  <buffer>          <Leader>pa  <Plug>(IPython-ToggleSendOnSave)
 map  <buffer> <silent> <Leader>pr   <Plug>(IPython-RunLineAsTopLevel)
 
 " }}}
-" vim-latex {{{
-
-" Latex options
-let g:latex_latexmk_build_dir = './build'
-let g:latex_latexmk_continuous = 0
-let g:latex_latexmk_background = 1
-let g:latex_view_general_viewer = 'open'
-let g:latex_view_general_options = '-a Skim'
-
-" }}}
 " vimcompletesme {{{
 
 autocmd FileType tex,python let b:vcm_tab_complete = "omni"
+
+" }}}
+" vimtex {{{
+
+" Latex options
+let g:vimtex_latexmk_build_dir = './build'
+let g:vimtex_latexmk_continuous = 0
+let g:vimtex_latexmk_background = 1
+let g:vimtex_view_general_viewer = 'open'
+let g:vimtex_view_general_options = '-a Skim'
 
 " }}}
 " }}}
