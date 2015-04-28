@@ -5,7 +5,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'mileszs/ack.vim'
 Plug 'vim-scripts/Align'
 Plug 'b4winckler/vim-angry'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-scripts/delimitMate.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'git@github.com:smutch/vim-gf-diff.git'
@@ -66,6 +66,7 @@ Plug 'talek/obvious-resize'
 Plug 'ajh17/VimCompletesMe'
 Plug 'sjl/clam.vim'
 Plug 'junegunn/vim-peekaboo'
+Plug 'd11wtq/ctrlp_bdelete.vim'
 
 " colorschemes
 Plug 'morhetz/gruvbox'

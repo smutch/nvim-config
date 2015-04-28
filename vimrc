@@ -427,6 +427,9 @@ nnoremap Q :Bdelete<CR>
 " }}}
 " ctrlp {{{
 
+" Include the bdelete plugin
+call ctrlp_bdelete#init()
+
 " Custom ignore paths
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
 
