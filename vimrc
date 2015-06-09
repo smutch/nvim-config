@@ -1,5 +1,22 @@
 " vim:fdm=marker
 
+" Mnemonics {{{
+
+" f : file / format
+" w : windows
+" h : highlight
+" p : project
+" : : cmd
+" d : doc
+" g : git
+" u : undo
+" t : tasks
+" s : search
+" q : quickfix
+" l : location
+" y : yank
+
+" }}}
 " Initialisation {{{
 
 " We don't want to mimic vi
@@ -19,22 +36,6 @@ if 'VIRTUAL_ENV' in os.environ:
     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
     execfile(activate_this, dict(__file__=activate_this))
 EOF
-
-" Remap task list key (must be done before loading plugin)
-map <leader>t <Plug>TaskList
-
-" Custom NERDCommenter mappings
-let g:NERDCustomDelimiters = {
-            \ 'c': { 'leftAlt': '/*', 'rightAlt': '*/', 'left': '//' },
-            \ 'scons': { 'left': '#' },
-            \ }
-
-" Syntastic options
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': [],
-                           \ 'passive_filetypes': [] }
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
 
 " Deal with gnu screen
 if (match($TERM, "screen")!=-1) && !has('nvim')
@@ -63,6 +64,9 @@ filetype indent on
 
 " }}}
 " Basic settings {{{
+let mapleader=' '
+let localleader='\'
+
 set history=1000                     " Store a ton of history (default is 20)
 set wildmenu                         " show list instead of just completing
 set autoread                         " Automatically re-read changed files
@@ -140,14 +144,14 @@ if has("gui_macvim")
   set guioptions-=rL " remove right + left scrollbars
   set anti
   set linespace=3 "Increase the space between lines for better readability
-else
+elseif !has('nvim')
   " Set the ttymouse value to allow window resizing with mouse
   set ttymouse=xterm2
 end
 
 " Python files
 let python_highlight_all = 1
-let python_highlight_space_errors = 0
+let python_highlight_space_errors = 1
 
 " Colorscheme {{{
 
@@ -174,15 +178,18 @@ end
 highlight link CheckWords DiffText
 
 function! MatchCheckWords()
-  match CheckWords /\c\<\(your\|Your\|it's\|they're\|halos\|Halos\|reionisation\|Reionisation\)\>/
+  match CheckWords /\c\<\(your\|Your\|it's\|they're\|halos\|Halos\|reionization\|Reionization\)\>/
 endfunction
 
-autocmd FileType markdown,tex call MatchCheckWords()
-autocmd BufWinEnter *.md,*.tex call MatchCheckWords()
-autocmd BufWinLeave *.md,*.tex call clearmatches()
+autocmd FileType markdown,tex,rst call MatchCheckWords()
+autocmd BufWinEnter *.md,*.tex,*.rst call MatchCheckWords()
+autocmd BufWinLeave *.md,*.tex,*.rst call clearmatches()
 
 " }}}
 " Custom commands and functions {{{
+
+" Edit g2 file locally
+command! -nargs=1 G2 execute ':e scp://g2/<args>'
 
 " Show syntax highlighting groups for word under cursor
 function! <SID>SynStack()
@@ -191,13 +198,13 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-nmap ,csp :call <SID>SynStack()<CR>
 
 " My grep
 command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
-nnoremap ,g :MyGrep
+nnoremap <leader>sg :MyGrep
 command! -nargs=+ GrepBuffers execute ':call setqflist([]) | :silent bufdo grepadd! <args> % | copen'
-nnoremap ,G :GrepBuffers
+nnoremap <leader>sb :GrepBuffers
+nnoremap <leader>sh :help <C-r><C-w><CR>
 
 " Toggle wrapping at 80 col
 function! WrapToggle()
@@ -214,7 +221,7 @@ map coW :call WrapToggle()<CR>
 
 " Remove trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$// | :noh'
-nmap ,W :TrimWhitespace<CR>:w<CR>
+nmap <leader>fw :TrimWhitespace<CR>:w<CR>
 
 " Allow us to move to windows by number using the leader key
 let i = 1
@@ -242,6 +249,7 @@ command! SoftWrap execute ':g/./,-/\n$/j'
 
 " Edit vimrc
 command! Erc execute ':e ~/.vim/vimrc'
+command! Eplug execute ':e ~/.vim/plugins.vim'
 
 " Capture output from a vim command (like :version or :messages) into a split
 " scratch buffer. (credit: ctechols,
@@ -271,7 +279,7 @@ function! s:Scratch()
    return bufnr("%")
 endfunction
 
-"Put the output of acommand into a scratch buffer.
+"Put the output of a command into a scratch buffer.
 function! s:Page(command)
    let output = s:Redir(a:command)
    call s:Scratch()
@@ -295,16 +303,12 @@ imap <C-@> <C-Space>
 " Quick escape from insert mode
 inoremap kj <ESC>
 
-" Reformat
-nnoremap ,l gwac
-vnoremap ,l gw
-
 " Cycle through buffers quickly
-nnoremap <silent> ,x :bn<CR>
-nnoremap <silent> ,z :bp<CR>
+nnoremap <silent> <leader>bn :bn<CR>
+nnoremap <silent> <leader>bp :bp<CR>
 
 " Quick switch to directory of current file
-nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
+nnoremap <leader>fd :lcd %:p:h<CR>:pwd<CR>
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual 
 " mode
@@ -315,7 +319,9 @@ nnoremap Y y$
 
 " Easy on the fingers save and window manipulation bindings
 nnoremap ;' :w<CR>
+nnoremap <leader>fs :w<CR>
 nnoremap ,w <C-w>
+nnoremap <leader>w <C-w>
 nnoremap ,. <C-w>p
 
 " Toggle to last active tab
@@ -325,35 +331,48 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 " Switch back to alternate file
 nnoremap ,, <C-S-^>
+nnoremap <leader>bb <C-S-^>
 
 " Disable increment number up / down - *way* too dangerous...
 nmap <C-a> <Nop>
 nmap <C-x> <Nop>
 
 " Turn off highlighting
-nmap ,h <Esc>:noh<CR>
+nmap <leader>h <Esc>:noh<CR>
 
 " Paste without auto indent
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 
-" Opening & closing quickfix window
-nnoremap ,q :ccl<CR>
-nnoremap ,Q :copen<CR>
-
 " copy and paste to temp file
 set cpoptions-=A
-vmap ,c :w! ~/.vimbuffer<CR>
-nmap ,c :.w! ~/.vimbuffer<CR>
+vmap <leader>yy :w! ~/.vimbuffer<CR>
+nmap <leader>yy :.w! ~/.vimbuffer<CR>
 set cpoptions-=a
-nmap ,v :r ~/.vimbuffer<CR>
+nmap <leader>yp :r ~/.vimbuffer<CR>
 
 " Toggle auto paragraph formatting
 nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>
 
 " Reformat chunks (chunks are defined per filetype basis in after/ftplugin)
-nmap ,; gwic
-nmap ,: gwac
+" nmap ,; gwic
+" nmap ,: gwac
+
+" Neovim terminal mappings
+if has('nvim')
+    autocmd BufWinEnter,WinEnter term://* startinsert
+    tnoremap kj <C-\><C-n>
+    tnoremap <C-w> <C-\><C-n><C-w>
+    tnoremap <A-h> <C-\><C-n><C-w>h
+    tnoremap <A-j> <C-\><C-n><C-w>j
+    tnoremap <A-k> <C-\><C-n><C-w>k
+    tnoremap <A-l> <C-\><C-n><C-w>l
+    nnoremap <A-h> <C-w>h
+    nnoremap <A-j> <C-w>j
+    nnoremap <A-k> <C-w>k
+    nnoremap <A-l> <C-w>l
+endif
+
 
 " }}}
 " Autocommands {{{
@@ -382,10 +401,10 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 if !executable('ag')
 
     " Map keys for Ack
-    nmap <leader>A <Esc>:Ack!<Space>
+    nnoremap <leader>sa <Esc>:Ack!<Space>
 
     " Ack for current word under cursor
-    nmap <leader>w yiw<Esc>:Ack! <C-r>"<CR>
+    nnoremap <leader>sw yiw<Esc>:Ack! <C-r>"<CR>
 
 endif
 
@@ -396,10 +415,10 @@ endif
 if executable('ag')
 
     " Map keys for Ag
-    nmap <leader>A <Esc>:Ag!<Space>
+    nnoremap <leader>sa <Esc>:Ag!<Space>
 
     " Ag for current word under cursor
-    nmap <leader>w yiw<Esc>:Ag! <C-r>"<CR>
+    nnoremap <leader>sw yiw<Esc>:Ag! <C-r>"<CR>
 
 endif
 
@@ -442,39 +461,48 @@ let g:ctrlp_by_filename = 1
 
 " We don't want to use Ctrl-p as the mapping because
 " it interferes with YankRing (paste, then hit ctrl-p)
-let g:ctrlp_map = ',T'
+let g:ctrlp_map = '<leader>pp'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
-nnoremap <silent> ,b :CtrlPBuffer<CR>
-nnoremap <silent> ,B :CtrlPBookmarkDir<CR>
+nnoremap <silent> <leader>pb :CtrlPBuffer<CR>
+nnoremap <silent> <leader>pj :CtrlPBookmarkDir<CR>
 
 " Additional mappting for most recently used files
-nnoremap <silent> ,f :CtrlP<CR>
-nnoremap <silent> ,F :CtrlPMRU<CR>
+nnoremap <silent> <leader>pf :CtrlP<CR>
+nnoremap <silent> <leader>pr :CtrlPMRU<CR>
 
 " Additional mapping for ctags search
-nnoremap <silent> ,t :CtrlPTag<CR>
-
-" Cmd-Shift-P to clear the cache
-" nnoremap <silent> <D-P> :ClearCtrlPCache<cr>
+nnoremap <silent> <leader>pt :CtrlPTag<CR>
 
 "Cmd-(m)ethod - jump to a method (tag in current file)
-map ,m :CtrlPBufTag<CR>
+nnoremap <leader>pm :CtrlPBufTag<CR>
 
 "Ctrl-(M)ethod - jump to a method (tag in all files)
-map ,M :CtrlPBufTagAll<CR>
+nnoremap <leader>pM :CtrlPBufTagAll<CR>
+
+" quickfix
+nnoremap <leader>pq :CtrlPQuickfix<CR>
+
+" directories
+nnoremap <leader>pd :CtrlPDir<CR>
+
+" Search files in runtime path (vimrc etc.)
+nnoremap <leader>pv :CtrlPRTS<CR>
+
+" lines
+nnoremap <leader>pl :CtrlPLine<CR>
+
+" commands
+nnoremap <leader>: :CtrlPCmdPalette<CR>
 
 " Show the match window at the top of the screen
 let g:ctrlp_match_window_bottom = 0
 
-" Search files in runtime path (vimrc etc.)
-map ,V :CtrlPRTS<CR>
-
 " }}}
 " dash {{{
 
-nmap <silent> <leader>D <Plug>DashSearch
+nmap <silent> <leader>d <Plug>DashSearch
 
 " }}}
 " delimitmate {{{
@@ -491,19 +519,22 @@ nmap <silent> <leader>D <Plug>DashSearch
 autocmd FileType markdown let b:dispatch = 'octodown %'
 
 " }}}
-" easymotion {{{
-
-map <space> <plug>(easymotion-prefix)
-map <space><space> <plug>(easymotion-w)
-
-"}}}
 " fugitive {{{
 
 " Useful shortcut for git commands
 nnoremap git :Git
-nnoremap gca :Gcommit -a<CR>
-nnoremap gst :Gstatus<CR>
-nnoremap gD  :Gdiff<CR>
+nnoremap <leader>ga :Gcommit -a<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gm :Gmerge<CR>
+nnoremap <leader>gp :Gpull<CR>
+nnoremap <leader>gP :Gpush<CR>
+nnoremap <leader>gf :Gfetch<CR>
+nnoremap <leader>gg :Ggrep<CR>
+nnoremap <leader>gl :Glog<CR>
+nnoremap <leader>gw :Gwrite<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gb :Gblame<CR>
 
 " }}}
 " gist {{{
@@ -529,7 +560,7 @@ let g:goyo_width = 82
 " gundo {{{
 
 " Map keys for Gundo
-map <leader>G :GundoToggle<CR>
+map <leader>u :Gundo<CR>
 
 " }}}
 " incsearch {{{
@@ -553,7 +584,7 @@ let g:incsearch#consistent_n_direction = 1
 
 " let g:loaded_indentLine=1
 let g:indentLine_char="|"
-let g:indentLine_fileTypeExclude=["tex"] 
+let g:indentLine_fileTypeExclude=["tex", "Help"] 
 
 " }}}
 " jedi {{{
@@ -575,10 +606,19 @@ autocmd FileType python let b:did_ftplugin = 1
 nnoremap coL :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
 
 " }}}
+" narrowregion {{{
+
+let g:nrrw_rgn_nohl = 1
+
+" }}}
 " nerd_commenter {{{
 
-" NERDCommenter
-" Also see .vimrc.before for custom filetype mappings
+" Custom NERDCommenter mappings
+let g:NERDCustomDelimiters = {
+            \ 'c': { 'leftAlt': '/*', 'rightAlt': '*/', 'left': '//' },
+            \ 'scons': { 'left': '#' },
+            \ }
+
 let NERDSpaceDelims=1
 map ;; <plug>NERDCommenterToggle
 map ;s <plug>NERDCommenterSexy
@@ -612,10 +652,10 @@ function! s:try_wincmd(cmd, default)
   endif
 endfunction
 
-nnoremap <silent> ,w+ :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
-nnoremap <silent> ,w- :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
-nnoremap <silent> ,w< :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
-nnoremap <silent> ,w> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
+nnoremap <silent> <leader>w+ :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
+nnoremap <silent> <leader>w- :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
+nnoremap <silent> <leader>w< :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
+nnoremap <silent> <leader>w> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
 
 " }}}
 " open-browser {{{
@@ -673,6 +713,15 @@ autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
 
 " }}}
+" syntastic {{{
+
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': [],
+                           \ 'passive_filetypes': [] }
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+
+" }}}
 " tlist {{{
 
 " Tlist options
@@ -687,7 +736,7 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_File_Fold_Auto_Close = 1
 
 " Mappings
-nnoremap <leader>T :TlistToggle<CR>
+nnoremap <leader>t :TlistToggle<CR>
 
 
 " }}}
@@ -704,14 +753,14 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 let g:ipy_perform_mappings = 0
 let g:ipy_completefunc = 'local'  "IPython completion for local buffer only
 
-map  <buffer> <silent> <Leader>pf         <Plug>(IPython-RunFile)
-map  <buffer> <silent> <Leader>p<Return>  <Plug>(IPython-RunLine)
-map  <buffer> <silent> <Leader>pl  <Plug>(IPython-RunLines)
-map  <buffer> <silent> <Leader>pd  <Plug>(IPython-OpenPyDoc)
-map  <buffer> <silent> <Leader>ps  <Plug>(IPython-UpdateShell)
+map  <buffer> <silent> <LocalLeader>pf         <Plug>(IPython-RunFile)
+map  <buffer> <silent> <LocalLeader>p<Return>  <Plug>(IPython-RunLine)
+map  <buffer> <silent> <LocalLeader>pl  <Plug>(IPython-RunLines)
+map  <buffer> <silent> <LocalLeader>pd  <Plug>(IPython-OpenPyDoc)
+map  <buffer> <silent> <LocalLeader>ps  <Plug>(IPython-UpdateShell)
 map  <buffer> <silent> <S-F9>      <Plug>(IPython-ToggleReselect)
-map  <buffer>          <Leader>pa  <Plug>(IPython-ToggleSendOnSave)
-map  <buffer> <silent> <Leader>pr   <Plug>(IPython-RunLineAsTopLevel)
+map  <buffer>          <LocalLeader>pa  <Plug>(IPython-ToggleSendOnSave)
+map  <buffer> <silent> <LocalLeader>pr   <Plug>(IPython-RunLineAsTopLevel)
 
 " }}}
 " vimcompletesme {{{
@@ -727,6 +776,13 @@ let g:vimtex_latexmk_continuous = 0
 let g:vimtex_latexmk_background = 1
 let g:vimtex_view_general_viewer = 'open'
 let g:vimtex_view_general_options = '-a Skim'
+
+" }}}
+" vim-togglelist {{{
+
+let g:toggle_list_no_mappings = 1
+nnoremap <leader>l :call ToggleLocationList()<CR>
+nnoremap <leader>q :call ToggleQuickfixList()<CR>
 
 " }}}
 " }}}

@@ -23,7 +23,12 @@ Plug 'vim-scripts/scons.vim'
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/syntastic'
+if has("nvim")
+    Plug 'benekastah/neomake'
+else
+    Plug 'scrooloose/syntastic'
+    Plug 'tpope/vim-dispatch'
+endif
 Plug 'vim-scripts/taglist.vim'
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 " Plug 'benmills/vimux'
@@ -38,7 +43,6 @@ Plug 'Shougo/vimproc'
 Plug 'ivanov/vim-ipython', { 'on': 'Ipython' }
 Plug 'tpope/vim-obsession', { 'on': 'Obsession' }
 Plug 'smutch/gfplaintasks.vim'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-tbone'
 Plug 'git@github.com:smutch/vim-tmuxify.git'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
@@ -67,6 +71,9 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'sjl/clam.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'chrisbra/NrrwRgn'
+Plug 'fisadev/vim-ctrlp-cmdpalette'
+Plug 'milkypostman/vim-togglelist'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
@@ -97,6 +104,7 @@ if os == "Darwin"
     Plug 'chriskempson/base16-vim'
     Plug 'chankaward/vim-railscasts-theme'
     Plug 'junegunn/limelight.vim'
+    Plug 'NLKNguyen/papercolor-theme'
 endif
 
 call plug#end()
