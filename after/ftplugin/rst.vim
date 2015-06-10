@@ -11,10 +11,10 @@ let b:wrapToggleFlag=0
 call WrapToggle()
 
 setlocal makeprg=make
-nnoremap <buffer> <leader>s :w<CR>:make html<CR>
-nnoremap <buffer> <leader>S :w<CR>:make clean; make html<CR>
+nnoremap <buffer> <localleader>s :w<CR>:make html<CR>
+nnoremap <buffer> <localleader>S :w<CR>:make clean; make html<CR>
 
-nnoremap <buffer> <leader>m :silent !open -a Marked\ 2 '%:p'<cr>
+nnoremap <buffer> <localleader>m :silent !open -a Marked\ 2 '%:p'<cr>
 
 setlocal comments+=fb:-
 

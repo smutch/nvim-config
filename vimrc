@@ -64,7 +64,7 @@ filetype indent on
 
 " }}}
 " Basic settings {{{
-let mapleader=' '
+let mapleader="\<Space>"
 let localleader='\'
 
 set history=1000                     " Store a ton of history (default is 20)
