@@ -527,8 +527,8 @@ nnoremap <leader>ga :Gcommit -a<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gm :Gmerge<CR>
-nnoremap <leader>gp :Gpull<CR>
-nnoremap <leader>gP :Gpush<CR>
+nnoremap <leader>gP :Gpull<CR>
+nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gg :Ggrep<CR>
 nnoremap <leader>gl :Glog<CR>
