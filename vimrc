@@ -531,7 +531,7 @@ nnoremap <leader>gP :Gpull<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gg :Ggrep<CR>
-nnoremap <leader>gl :Glog<CR>
+" nnoremap <leader>gl :Glog<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gb :Gblame<CR>
@@ -550,6 +550,12 @@ autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
 nnoremap ghn :GitGutterNextHunk<CR>
 nnoremap ghp :GitGutterPrevHunk<CR>
 let g:gitgutter_realtime = 0
+
+" }}}
+" gitv {{{
+
+nnoremap <leader>gl :Gitv<CR>
+nnoremap <leader>gv :Gitv!<CR>
 
 " }}}
 " goyo {{{
