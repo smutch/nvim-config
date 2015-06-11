@@ -74,6 +74,8 @@ Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'chrisbra/NrrwRgn'
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'milkypostman/vim-togglelist'
+Plug 'godlygeek/tabular'  " N.B. This must come BEFORE vim-markdown
+Plug 'plasticboy/vim-markdown'
 
 " colorschemes
 Plug 'morhetz/gruvbox'

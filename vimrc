@@ -465,12 +465,12 @@ let g:ctrlp_map = '<leader>pp'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
-nnoremap <silent> <leader>pb :CtrlPBuffer<CR>
-nnoremap <silent> <leader>pj :CtrlPBookmarkDir<CR>
+nnoremap <silent> <leader>bs :CtrlPBuffer<CR>
+nnoremap <silent> <leader>pb :CtrlPBookmarkDir<CR>
 
 " Additional mappting for most recently used files
 nnoremap <silent> <leader>pf :CtrlP<CR>
-nnoremap <silent> <leader>pr :CtrlPMRU<CR>
+nnoremap <silent> <leader>fr :CtrlPMRU<CR>
 
 " Additional mapping for ctags search
 nnoremap <silent> <leader>pt :CtrlPTag<CR>
