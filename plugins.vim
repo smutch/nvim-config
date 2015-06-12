@@ -77,6 +77,8 @@ Plug 'milkypostman/vim-togglelist'
 Plug 'godlygeek/tabular'  " N.B. This must come BEFORE vim-markdown
 Plug 'plasticboy/vim-markdown'
 " Plug 'neilagabriel/vim-geeknote'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'lukaszkorecki/workflowish'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
