@@ -6,7 +6,7 @@ function! s:vimgrepkw(e)
     exec "normal! :lvimgrep /" . a:e . "/ %\<CR>:lopen\<CR>"
 endfunction
 
-function! NarrowKWFolds(type, ...)
+function! ShowKWs(type, ...)
     let word = expand("<cWORD>")
     let grep_flag = 0
     if a:0 > 0
@@ -37,10 +37,10 @@ function! NarrowKWFolds(type, ...)
     endif
 endfunction
 
-nnoremap <buffer><silent> <Localleader>nt :call NarrowKWFolds('t')<CR>
-nnoremap <buffer><silent> <Localleader>nc :call NarrowKWFolds('c')<CR>
-nnoremap <buffer><silent> <Localleader>nT :call NarrowKWFolds('t', 1)<CR>
-nnoremap <buffer><silent> <Localleader>nC :call NarrowKWFolds('c', 1)<CR>
+nnoremap <buffer><silent> <Localleader>nt :call ShowKWs('t')<CR>
+nnoremap <buffer><silent> <Localleader>nc :call ShowKWs('c')<CR>
+nnoremap <buffer><silent> <Localleader>nT :call ShowKWs('t', 1)<CR>
+nnoremap <buffer><silent> <Localleader>nC :call ShowKWs('c', 1)<CR>
 
 function! ToggleDone()
     let marker = matchstr(getline("."), "^\\W*[#*-]")
