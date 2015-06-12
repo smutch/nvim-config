@@ -75,7 +75,7 @@ set mouse=a                          " enable mouse for all modes settings
 set clipboard=unnamed                " To work in tmux
 set spelllang=en_gb                  " British spelling
 set showmode                         " Show the current mode
-set list                             " Show newline & tab markers
+" set list                             " Show newline & tab markers
 set showcmd                          " Show partial command in bottom right
 
 set secure                           " Secure mode for reading vimrc, exrc files etc. in current dir
