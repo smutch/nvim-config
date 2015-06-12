@@ -28,7 +28,7 @@ function! ShowKWs(type, ...)
     endif
 
     if word =~ regexp
-        call <SID>opensearchfolds(word)
+        exec 'call '.sink.'(word)'
     else
         call fzf#run({
                     \   'source':  'grep --line-buffered --color=never -roh "' . regexp . '" ' . fnameescape(@%) . ' | uniq',
