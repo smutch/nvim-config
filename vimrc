@@ -576,12 +576,12 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+map n  <Plug>(incsearch-nohl-n) zv
+map N  <Plug>(incsearch-nohl-N) zv
+map *  <Plug>(incsearch-nohl-*) zv
+map #  <Plug>(incsearch-nohl-#) zv
+map g* <Plug>(incsearch-nohl-g*) zv
+map g# <Plug>(incsearch-nohl-g#) zv
 
 let g:incsearch#consistent_n_direction = 1
 

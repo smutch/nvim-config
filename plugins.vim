@@ -76,6 +76,7 @@ Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'milkypostman/vim-togglelist'
 Plug 'godlygeek/tabular'  " N.B. This must come BEFORE vim-markdown
 Plug 'plasticboy/vim-markdown'
+" Plug 'neilagabriel/vim-geeknote'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
