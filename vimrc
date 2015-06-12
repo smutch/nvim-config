@@ -589,8 +589,10 @@ let g:incsearch#consistent_n_direction = 1
 " indentline {{{
 
 " let g:loaded_indentLine=1
-let g:indentLine_char="|"
+" let g:indentLine_char="|"
+let g:indentLine_char = '┊'
 let g:indentLine_fileTypeExclude=["tex", "Help"] 
+nnoremap coI :IndentLinesToggle<CR>
 
 " }}}
 " jedi {{{
