@@ -2,8 +2,16 @@ function! s:opensearchfolds(e)
     exec "normal! mqggzM:g/". a:e . "/normal! zv\<CR>`q"
 endfunction
 
-function! NarrowKWFolds(type)
+function! s:vimgrepkw(e)
+    exec "normal! :lvimgrep /" . a:e . "/ %\<CR>:lopen\<CR>"
+endfunction
+
+function! NarrowKWFolds(type, ...)
     let word = expand("<cWORD>")
+    let grep_flag = 0
+    if a:0 > 0
+        let grep_flag = 1
+    endif
 
     if a:type == 't'
         let regexp = '@\w\+'
@@ -14,18 +22,25 @@ function! NarrowKWFolds(type)
         return
     endif
 
+    let sink = '<SID>opensearchfolds'
+    if grep_flag == 1
+        let sink = '<SID>vimgrepkw'
+    endif
+
     if word =~ regexp
         call <SID>opensearchfolds(word)
     else
         call fzf#run({
                     \   'source':  'grep --line-buffered --color=never -roh "' . regexp . '" ' . fnameescape(@%) . ' | uniq',
-                    \   'sink': function('<SID>opensearchfolds')
+                    \   'sink': function(sink)
                     \ })
     endif
 endfunction
 
 nnoremap <buffer><silent> <Localleader>nt :call NarrowKWFolds('t')<CR>
 nnoremap <buffer><silent> <Localleader>nc :call NarrowKWFolds('c')<CR>
+nnoremap <buffer><silent> <Localleader>nT :call NarrowKWFolds('t', 1)<CR>
+nnoremap <buffer><silent> <Localleader>nC :call NarrowKWFolds('c', 1)<CR>
 
 function! ToggleDone()
     let marker = matchstr(getline("."), "^\\W*[#*-]")
