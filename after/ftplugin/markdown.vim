@@ -16,8 +16,8 @@ setlocal spell
 " Allow the wrapping to mess with existing lines
 setlocal formatoptions-=l
 
-nnoremap <buffer> <leader>m :silent !open -a Marked\ 2.app '%:p'<cr>
-nnoremap <buffer> <leader>M :silent !paver -f $HOME/bin/pavement.py pandoc_github '%:p'<cr>
+nnoremap <buffer> <localleader>m :silent !open -a Marked\ 2.app '%:p'<cr>
+" nnoremap <buffer> <leader>M :silent !paver -f $HOME/bin/pavement.py pandoc_github '%:p'<cr>
 
 au BufWinEnter *.md setlocal conceallevel=0  "Prevents annoyances when using $$ style (pandoc) math
 
