@@ -17,7 +17,7 @@ Plug 'sjl/gundo.vim', { 'on': 'Gundo' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
 " Plug 'fs111/pydoc.vim'
-Plug 'vim-scripts/python_match.vim'
+Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
 " Plug 'kien/rainbow_parentheses.vim'
 Plug 'vim-scripts/scons.vim'
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
@@ -29,12 +29,12 @@ else
     Plug 'scrooloose/syntastic'
     Plug 'tpope/vim-dispatch'
 endif
-Plug 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/taglist.vim', { 'on': 'Tlist' }
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 " Plug 'benmills/vimux'
 Plug 'SirVer/ultisnips'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'natw/vim-pythontextobj'
+Plug 'natw/vim-pythontextobj', { 'for': 'python' }
 Plug 'kana/vim-textobj-function'
 Plug 'kana/vim-textobj-user'
 Plug 'Yggdroot/indentLine'
@@ -53,14 +53,14 @@ Plug 'tpope/vim-repeat'
 Plug 'rking/ag.vim'
 Plug 'goldfeld/vim-seek'
 Plug 'tpope/vim-vinegar'
-Plug 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'bling/vim-airline'
 " Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
 Plug 'machakann/vim-textobj-delimited'
-Plug 'edkolev/tmuxline.vim'
+Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
 Plug 'haya14busa/incsearch.vim'
 Plug 'FelikZ/ctrlp-py-matcher'

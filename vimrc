@@ -202,8 +202,8 @@ endfunc
 " My grep
 command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
 nnoremap <leader>sg :MyGrep
-command! -nargs=+ GrepBuffers execute ':call setqflist([]) | :silent bufdo grepadd! <args> % | copen'
-nnoremap <leader>sb :GrepBuffers
+" command! -nargs=+ GrepBuffers execute ':call setqflist([]) | :silent bufdo grepadd! <args> % | copen'
+" nnoremap <leader>sb :GrepBuffers
 nnoremap <leader>sh :help <C-r><C-w><CR>
 
 " Toggle wrapping at 80 col
@@ -338,7 +338,7 @@ nmap <C-a> <Nop>
 nmap <C-x> <Nop>
 
 " Turn off highlighting
-nmap <leader>h <Esc>:noh<CR>
+nmap ,h <Esc>:noh<CR>
 
 " Paste without auto indent
 nnoremap <F2> :set invpaste paste?<CR>
@@ -523,18 +523,100 @@ autocmd FileType markdown let b:dispatch = 'octodown %'
 
 " Useful shortcut for git commands
 nnoremap git :Git
-nnoremap <leader>ga :Gcommit -a<CR>
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gm :Gmerge<CR>
-nnoremap <leader>gP :Gpull<CR>
-nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gf :Gfetch<CR>
-nnoremap <leader>gg :Ggrep<CR>
-" nnoremap <leader>gl :Glog<CR>
-nnoremap <leader>gw :Gwrite<CR>
-nnoremap <leader>gr :Gread<CR>
-nnoremap <leader>gb :Gblame<CR>
+nnoremap [git] <NOP>
+nnoremap <leader>g [git]
+nnoremap [git]a :Gcommit -a<CR>
+nnoremap [git]s :Gstatus<CR>
+nnoremap [git]d :Gdiff<CR>
+nnoremap [git]m :Gmerge<CR>
+nnoremap [git]P :Gpull<CR>
+nnoremap [git]p :Gpush<CR>
+nnoremap [git]f :Gfetch<CR>
+nnoremap [git]g :Ggrep<CR>
+" nnoremap [git]l :Glog<CR>
+nnoremap [git]w :Gwrite<CR>
+nnoremap [git]r :Gread<CR>
+nnoremap [git]b :Gblame<CR>
+
+" }}}
+" fzf {{{
+
+" colorscheme chooser
+nnoremap <silent> <Leader>cs :call fzf#run({
+            \   'source':
+            \     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
+            \         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
+            \   'sink':    'colo',
+            \   'options': '+m',
+            \   'right':    30
+            \ })<CR>
+
+" search lines in all open buffers
+function! s:line_handler(l)
+    let keys = split(a:l, ':\t')
+    exec 'buf' keys[0]
+    exec keys[1]
+    normal! ^zz
+endfunction
+function! s:buffer_lines()
+    let res = []
+    for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
+        call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
+    endfor
+    return res
+endfunction
+command! FZFLines call fzf#run({
+            \   'source':  <sid>buffer_lines(),
+            \   'sink':    function('<sid>line_handler'),
+            \   'options': '--extended --nth=3..',
+            \   'down':    '60%'
+            \})
+nnoremap <silent> <leader>sb :FZFLines<CR>
+
+" fuzzy commandline completion
+cnoremap <silent> <c-l> <c-\>eGetCompletions()<cr>
+"add an extra <cr> at the end of this line to automatically accept the fzf-selected completions.
+function! Lister()
+    call extend(g:FZF_Cmd_Completion_Pre_List,split(getcmdline(),'\(\\\zs\)\@<!\& '))
+endfunction
+function! CmdLineDirComplete(prefix, options, rawdir)
+    let l:dirprefix = matchstr(a:rawdir,"^.*/")
+    if isdirectory(expand(l:dirprefix))
+        return join(a:prefix + map(fzf#run({
+                    \'options': a:options . ' --select-1  --query=' .
+                    \ a:rawdir[matchend(a:rawdir,"^.*/"):len(a:rawdir)], 
+                    \'dir': expand(l:dirprefix),
+                    \'right': 30,
+                    \}), 
+                    \'"' . escape(l:dirprefix, " ") . '" . escape(v:val, " ")'))
+    else
+        return join(a:prefix + map(fzf#run({
+                    \'options': a:options . ' --query='. a:rawdir }),
+                    \'escape(v:val, " ")')) 
+        "dropped --select-1 to speed things up on a long query
+endfunction
+function! GetCompletions()
+    let g:FZF_Cmd_Completion_Pre_List = []
+    let l:cmdline_list = split(getcmdline(), '\(\\\zs\)\@<!\& ', 1)
+    let l:Prefix = l:cmdline_list[0:-2]
+    execute "silent normal! :" . getcmdline() . "\<c-a>\<c-\>eLister()\<cr>\<c-c>"
+    let l:FZF_Cmd_Completion_List = g:FZF_Cmd_Completion_Pre_List[len(l:Prefix):-1]
+    unlet g:FZF_Cmd_Completion_Pre_List
+    if len(l:Prefix) > 0 && l:Prefix[0] =~
+                \ '^ed\=i\=t\=$\|^spl\=i\=t\=$\|^tabed\=i\=t\=$\|^arged\=i\=t\=$\|^vsp\=l\=i\=t\=$'
+                "single-argument file commands
+        return CmdLineDirComplete(l:Prefix, "",l:cmdline_list[-1])
+    elseif len(l:Prefix) > 0 && l:Prefix[0] =~ 
+                \ '^arg\=s\=$\|^ne\=x\=t\=$\|^sne\=x\=t\=$\|^argad\=d\=$'  
+                "multi-argument file commands
+        return CmdLineDirComplete(l:Prefix, '--multi', l:cmdline_list[-1])
+    else 
+        return join(l:Prefix + fzf#run({
+                    \'source':l:FZF_Cmd_Completion_List, 
+                    \'options': '--select-1 --query='.shellescape(l:cmdline_list[-1])
+                    \})) 
+    endif
+endfunction
 
 " }}}
 " gist {{{
@@ -576,12 +658,12 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n) zv
-map N  <Plug>(incsearch-nohl-N) zv
-map *  <Plug>(incsearch-nohl-*) zv
-map #  <Plug>(incsearch-nohl-#) zv
-map g* <Plug>(incsearch-nohl-g*) zv
-map g# <Plug>(incsearch-nohl-g#) zv
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
 let g:incsearch#consistent_n_direction = 1
 
@@ -743,9 +825,10 @@ let Tlist_Display_Prototype = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_File_Fold_Auto_Close = 1
 
-" Mappings
-nnoremap <leader>t :TlistToggle<CR>
+" }}}
+" tmuxline {{{
 
+let g:tmuxline_powerline_separators = 0
 
 " }}}
 " ultisnips {{{
