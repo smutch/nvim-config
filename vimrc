@@ -1,22 +1,5 @@
 " vim:fdm=marker
 
-" Mnemonics {{{
-
-" f : file / format
-" w : windows
-" h : highlight
-" p : project
-" : : cmd
-" d : doc
-" g : git
-" u : undo
-" t : tasks
-" s : search
-" q : quickfix
-" l : location
-" y : yank
-
-" }}}
 " Initialisation {{{
 
 " We don't want to mimic vi
@@ -66,6 +49,38 @@ filetype indent on
 " Basic settings {{{
 let mapleader="\<Space>"
 let localleader='\'
+
+" mappings
+" f : file / format
+noremap [file/form] <nop>
+map <leader>f [file/form]
+" w : windows
+noremap [window] <nop>
+map <leader>w [window]
+" p : project
+noremap [project] <nop>
+map <leader>p [project]
+" d : doc
+noremap [doc] <nop>
+map <leader>d [doc]
+" g : git
+noremap [git] <nop>
+map <leader>g [git]
+" u : undo
+noremap [undo] <nop>
+map <leader>u [undo]
+" s : search
+noremap [search] <nop>
+map <leader>s [search]
+" q : quickfix
+noremap [quickfix] <nop>
+map <leader>q [quickfix]
+" l : location
+noremap [loclist] <nop>
+map <leader>l [loclist]
+" y : yank
+noremap [yank] <nop>
+map <leader>y [yank]
 
 set history=1000                     " Store a ton of history (default is 20)
 set wildmenu                         " show list instead of just completing
@@ -201,10 +216,10 @@ endfunc
 
 " My grep
 command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
-nnoremap <leader>sg :MyGrep
+nnoremap [search]g :MyGrep
 " command! -nargs=+ GrepBuffers execute ':call setqflist([]) | :silent bufdo grepadd! <args> % | copen'
-" nnoremap <leader>sb :GrepBuffers
-nnoremap <leader>sh :help <C-r><C-w><CR>
+" nnoremap [search]b :GrepBuffers
+nnoremap [search]h :help <C-r><C-w><CR>
 
 " Toggle wrapping at 80 col
 function! WrapToggle()
@@ -221,7 +236,7 @@ map coW :call WrapToggle()<CR>
 
 " Remove trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$// | :noh'
-nmap <leader>fw :TrimWhitespace<CR>:w<CR>
+nmap [file/form]w :TrimWhitespace<CR>:w<CR>
 
 " Allow us to move to windows by number using the leader key
 let i = 1
@@ -308,7 +323,7 @@ nnoremap <silent> <leader>bn :bn<CR>
 nnoremap <silent> <leader>bp :bp<CR>
 
 " Quick switch to directory of current file
-nnoremap <leader>fd :lcd %:p:h<CR>:pwd<CR>
+nnoremap [file/form]d :lcd %:p:h<CR>:pwd<CR>
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual 
 " mode
@@ -319,9 +334,9 @@ nnoremap Y y$
 
 " Easy on the fingers save and window manipulation bindings
 nnoremap ;' :w<CR>
-nnoremap <leader>fs :w<CR>
+nnoremap [file/form]s :w<CR>
 nnoremap ,w <C-w>
-nnoremap <leader>w <C-w>
+nnoremap [window] <C-w>
 nnoremap ,. <C-w>p
 
 " Toggle to last active tab
@@ -346,10 +361,10 @@ set pastetoggle=<F2>
 
 " copy and paste to temp file
 set cpoptions-=A
-vmap <leader>yy :w! ~/.vimbuffer<CR>
-nmap <leader>yy :.w! ~/.vimbuffer<CR>
+vmap [yank]y :w! ~/.vimbuffer<CR>
+nmap [yank]y :.w! ~/.vimbuffer<CR>
 set cpoptions-=a
-nmap <leader>yp :r ~/.vimbuffer<CR>
+nmap [yank]p :r ~/.vimbuffer<CR>
 
 " Toggle auto paragraph formatting
 nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>
@@ -401,10 +416,10 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 if !executable('ag')
 
     " Map keys for Ack
-    nnoremap <leader>sa <Esc>:Ack!<Space>
+    nnoremap [search]a <Esc>:Ack!<Space>
 
     " Ack for current word under cursor
-    nnoremap <leader>sw yiw<Esc>:Ack! <C-r>"<CR>
+    nnoremap [search]w yiw<Esc>:Ack! <C-r>"<CR>
 
 endif
 
@@ -415,10 +430,10 @@ endif
 if executable('ag')
 
     " Map keys for Ag
-    nnoremap <leader>sa <Esc>:Ag!<Space>
+    nnoremap [search]a <Esc>:Ag!<Space>
 
     " Ag for current word under cursor
-    nnoremap <leader>sw yiw<Esc>:Ag! <C-r>"<CR>
+    nnoremap [search]w yiw<Esc>:Ag! <C-r>"<CR>
 
 endif
 
@@ -455,43 +470,49 @@ let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|
 " Custom root markers
 let g:ctrlp_root_markers = ['.ctrlp_marker']
 
+" This is the default value, but is used below...
+let g:ctrlp_working_path_mode = 'ra'
+
 " Default to filename searches - so that appctrl will find application
 " controller
 let g:ctrlp_by_filename = 1
 
 " We don't want to use Ctrl-p as the mapping because
 " it interferes with YankRing (paste, then hit ctrl-p)
-let g:ctrlp_map = '<leader>pp'
+let g:ctrlp_map = '[project]p'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
 nnoremap <silent> <leader>bs :CtrlPBuffer<CR>
-nnoremap <silent> <leader>pb :CtrlPBookmarkDir<CR>
+nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
+
+" Open files
+nnoremap <silent> [project]f :CtrlP<CR>
+nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
 
 " Additional mappting for most recently used files
-nnoremap <silent> <leader>pf :CtrlP<CR>
-nnoremap <silent> <leader>fr :CtrlPMRU<CR>
+nnoremap <silent> [file/form]r :CtrlPMRU<CR>
 
 " Additional mapping for ctags search
-nnoremap <silent> <leader>pt :CtrlPTag<CR>
+nnoremap <silent> [project]t :CtrlPTag<CR>
 
 "Cmd-(m)ethod - jump to a method (tag in current file)
-nnoremap <leader>pm :CtrlPBufTag<CR>
+nnoremap [project]m :CtrlPBufTag<CR>
 
 "Ctrl-(M)ethod - jump to a method (tag in all files)
-nnoremap <leader>pM :CtrlPBufTagAll<CR>
+nnoremap [project]M :CtrlPBufTagAll<CR>
 
 " quickfix
-nnoremap <leader>pq :CtrlPQuickfix<CR>
+nnoremap [project]q :CtrlPQuickfix<CR>
 
 " directories
-nnoremap <leader>pd :CtrlPDir<CR>
+nnoremap [project]d :CtrlPDir<CR>
 
 " Search files in runtime path (vimrc etc.)
-nnoremap <leader>pv :CtrlPRTS<CR>
+nnoremap [project]v :CtrlPRTS<CR>
 
 " lines
-nnoremap <leader>pl :CtrlPLine<CR>
+nnoremap [project]l :CtrlPLine<CR>
 
 " commands
 nnoremap <leader>: :CtrlPCmdPalette<CR>
@@ -502,7 +523,7 @@ let g:ctrlp_match_window_bottom = 0
 " }}}
 " dash {{{
 
-nmap <silent> <leader>d <Plug>DashSearch
+map <silent> <leader>dd <Plug>DashSearch
 
 " }}}
 " delimitmate {{{
@@ -523,8 +544,6 @@ autocmd FileType markdown let b:dispatch = 'octodown %'
 
 " Useful shortcut for git commands
 nnoremap git :Git
-nnoremap [git] <NOP>
-nmap <leader>g [git]
 nnoremap [git]a :Gcommit -a<CR>
 nnoremap [git]s :Gstatus<CR>
 nnoremap [git]d :Gdiff<CR>
@@ -572,7 +591,7 @@ command! FZFLines call fzf#run({
             \   'options': '--extended --nth=3..',
             \   'down':    '60%'
             \})
-nnoremap <silent> <leader>sb :FZFLines<CR>
+nnoremap <silent> [search]b :FZFLines<CR>
 
 " fuzzy commandline completion (breaks neovim currently)
 if !has('neovim')
@@ -640,8 +659,8 @@ let g:gitgutter_realtime = 0
 " }}}
 " gitv {{{
 
-nnoremap <leader>gl :Gitv<CR>
-nnoremap <leader>gv :Gitv!<CR>
+nnoremap [git]l :Gitv<CR>
+nnoremap [git]v :Gitv!<CR>
 
 " }}}
 " goyo {{{
@@ -652,7 +671,7 @@ let g:goyo_width = 82
 " gundo {{{
 
 " Map keys for Gundo
-map <leader>u :Gundo<CR>
+nnoremap [undo]u :GundoToggle<CR>
 
 " }}}
 " incsearch {{{
@@ -746,10 +765,10 @@ function! s:try_wincmd(cmd, default)
   endif
 endfunction
 
-nnoremap <silent> <leader>w+ :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
-nnoremap <silent> <leader>w- :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
-nnoremap <silent> <leader>w< :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
-nnoremap <silent> <leader>w> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
+nnoremap <silent> [window]+ :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
+nnoremap <silent> [window]- :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
+nnoremap <silent> [window]< :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
+nnoremap <silent> [window]> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
 
 " }}}
 " open-browser {{{
@@ -876,8 +895,8 @@ let g:vimtex_view_general_options = '-a Skim'
 " vim-togglelist {{{
 
 let g:toggle_list_no_mappings = 1
-nnoremap <leader>l :call ToggleLocationList()<CR>
-nnoremap <leader>q :call ToggleQuickfixList()<CR>
+nnoremap [loclist]l :call ToggleLocationList()<CR>
+nnoremap [quickfix]q :call ToggleQuickfixList()<CR>
 
 " }}}
 " }}}

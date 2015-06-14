@@ -13,7 +13,7 @@ Plug 'kana/vim-gf-user'
 Plug 'mattn/gist-vim', { 'on': 'Gist' }
 Plug 'tpope/vim-git'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
-Plug 'sjl/gundo.vim', { 'on': 'Gundo' }
+Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
 " Plug 'fs111/pydoc.vim'
