@@ -524,7 +524,7 @@ autocmd FileType markdown let b:dispatch = 'octodown %'
 " Useful shortcut for git commands
 nnoremap git :Git
 nnoremap [git] <NOP>
-nnoremap <leader>g [git]
+nmap <leader>g [git]
 nnoremap [git]a :Gcommit -a<CR>
 nnoremap [git]s :Gstatus<CR>
 nnoremap [git]d :Gdiff<CR>
@@ -537,6 +537,7 @@ nnoremap [git]g :Ggrep<CR>
 nnoremap [git]w :Gwrite<CR>
 nnoremap [git]r :Gread<CR>
 nnoremap [git]b :Gblame<CR>
+nnoremap [git]c :Gcommit<CR>
 
 " }}}
 " fzf {{{
