@@ -219,13 +219,14 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+command! SynStack call <SID>SynStack()
 
 " My grep
 command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
 nnoremap [search]g :MyGrep
 " command! -nargs=+ GrepBuffers execute ':call setqflist([]) | :silent bufdo grepadd! <args> % | copen'
 " nnoremap [search]b :GrepBuffers
-nnoremap [search]h :help <C-r><C-w><CR>
+nnoremap [help]w :help <C-r><C-w><CR>
 
 " Toggle wrapping at 80 col
 function! WrapToggle()
@@ -657,6 +658,7 @@ let g:gist_show_privates = 1
 " }}}
 " gitgutter {{{
 
+let g:gitgutter_map_keys = 0
 autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
 nnoremap ghn :GitGutterNextHunk<CR>
 nnoremap ghp :GitGutterPrevHunk<CR>
