@@ -40,7 +40,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/vimproc'
-Plug 'ivanov/vim-ipython', { 'on': 'Ipython' }
+Plug 'ivanov/vim-ipython', { 'for': 'python' }
 Plug 'tpope/vim-obsession', { 'on': 'Obsession' }
 Plug 'smutch/gfplaintasks.vim'
 Plug 'tpope/vim-tbone'

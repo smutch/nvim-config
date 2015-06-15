@@ -54,15 +54,18 @@ let localleader='\'
 " f : file / format
 noremap [file/form] <nop>
 map <leader>f [file/form]
+" b : buffer
+noremap [buffer] <nop>
+map <leader>b [buffer]
 " w : windows
 noremap [window] <nop>
 map <leader>w [window]
 " p : project
 noremap [project] <nop>
 map <leader>p [project]
-" d : doc
-noremap [doc] <nop>
-map <leader>d [doc]
+" h : help
+noremap [help] <nop>
+map <leader>h [help]
 " g : git
 noremap [git] <nop>
 map <leader>g [git]
@@ -81,6 +84,9 @@ map <leader>l [loclist]
 " y : yank
 noremap [yank] <nop>
 map <leader>y [yank]
+" c : compile
+noremap [compile] <nop>
+map <leader>c [compile]
 
 set history=1000                     " Store a ton of history (default is 20)
 set wildmenu                         " show list instead of just completing
@@ -319,8 +325,8 @@ imap <C-@> <C-Space>
 inoremap kj <ESC>
 
 " Cycle through buffers quickly
-nnoremap <silent> <leader>bn :bn<CR>
-nnoremap <silent> <leader>bp :bp<CR>
+nnoremap <silent> [buffer]n :bn<CR>
+nnoremap <silent> [buffer]p :bp<CR>
 
 " Quick switch to directory of current file
 nnoremap [file/form]d :lcd %:p:h<CR>:pwd<CR>
@@ -346,7 +352,7 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 " Switch back to alternate file
 nnoremap ,, <C-S-^>
-nnoremap <leader>bb <C-S-^>
+nnoremap [buffer]b <C-S-^>
 
 " Disable increment number up / down - *way* too dangerous...
 nmap <C-a> <Nop>
@@ -483,7 +489,7 @@ let g:ctrlp_map = '[project]p'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
-nnoremap <silent> <leader>bs :CtrlPBuffer<CR>
+nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
 nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
 
 " Open files
@@ -523,7 +529,7 @@ let g:ctrlp_match_window_bottom = 0
 " }}}
 " dash {{{
 
-map <silent> <leader>dd <Plug>DashSearch
+map <silent> [help]d <Plug>DashSearch
 
 " }}}
 " delimitmate {{{
@@ -562,14 +568,14 @@ nnoremap [git]c :Gcommit<CR>
 " fzf {{{
 
 " colorscheme chooser
-nnoremap <silent> <Leader>cs :call fzf#run({
+command! Cs call fzf#run({
             \   'source':
             \     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
             \         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
             \   'sink':    'colo',
             \   'options': '+m',
             \   'right':    30
-            \ })<CR>
+            \ })
 
 " search lines in all open buffers
 function! s:line_handler(l)
@@ -716,7 +722,7 @@ autocmd FileType python let b:did_ftplugin = 1
 " limelight {{{
 
 " toggle on and off
-nnoremap <leader>L :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
+nnoremap coL :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
 
 " }}}
 " narrowregion {{{
