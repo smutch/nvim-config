@@ -34,6 +34,9 @@ if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
 end
 
+" What machine are we on?
+let hostname = substitute(system('hostname'), '\n', '', '')
+
 " }}}
 " vim-plug {{{
 
@@ -557,11 +560,22 @@ nnoremap [git]a :Gcommit -a<CR>
 nnoremap [git]s :Gstatus<CR>
 nnoremap [git]d :Gdiff<CR>
 nnoremap [git]m :Gmerge<CR>
-nnoremap [git]P :Gpull<CR>
-nnoremap [git]p :Gpush<CR>
-nnoremap [git]f :Gfetch<CR>
+if hostname =~ 'hpc.swin.edu.au'
+    nnoremap [git]P :Git g2 pull<CR>
+else
+    nnoremap [git]P :Gpull<CR>
+endif
+if hostname =~ 'hpc.swin.edu.au'
+    nnoremap [git]p :Git g2 push<CR>
+else
+    nnoremap [git]p :Gpush<CR>
+endif
+if hostname =~ 'hpc.swin.edu.au'
+    nnoremap [git]f :Git g2 fetch<CR>
+else
+    nnoremap [git]f :Gfetch<CR>
+endif
 nnoremap [git]g :Ggrep<CR>
-" nnoremap [git]l :Glog<CR>
 nnoremap [git]w :Gwrite<CR>
 nnoremap [git]r :Gread<CR>
 nnoremap [git]b :Gblame<CR>
