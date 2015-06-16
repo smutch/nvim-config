@@ -180,7 +180,7 @@ syntax on " Use syntax highlighting
 if (&t_Co >= 256) && !has("gui_running")
     set background=dark
     if !has("gui_running")
-        let g:gruvbox_italic=0
+        let g:gruvbox_italic=1
     endif
     colorscheme gruvbox
     " colorscheme molokai
@@ -491,10 +491,12 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
 nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
+nnoremap <silent> ,b :CtrlPBuffer<CR>
 nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
 
 " Open files
 nnoremap <silent> [project]f :CtrlP<CR>
+nnoremap <silent> ,f :CtrlP<CR>
 nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
 
 " Additional mappting for most recently used files
