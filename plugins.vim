@@ -64,7 +64,7 @@ Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
 Plug 'haya14busa/incsearch.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'Konfekt/FastFold'
+" Plug 'Konfekt/FastFold'
 Plug 'talek/obvious-resize'
 " Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
