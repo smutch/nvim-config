@@ -12,4 +12,4 @@ syn match mdTag "@high" contained containedin=mdTask
 syn match mdTag "@today" contained containedin=mdTask
 
 " syn match markdownIgnore "\$\+.\{-}\n*.\{-}\$\+" "Don't use italics with underscore in math
-highlight link markdownItalic markdownIgnore
+" highlight link markdownItalic markdownIgnore
