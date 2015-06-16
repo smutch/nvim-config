@@ -83,6 +83,10 @@ Plug 'lukaszkorecki/workflowish'
 " colorschemes
 Plug 'morhetz/gruvbox'
 Plug 'git@github.com:smutch/vim-colors-solarized.git'
+Plug 'vim-scripts/CSApprox'
+Plug 'DAddYE/soda.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'NLKNguyen/papercolor-theme'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
@@ -104,12 +108,9 @@ if os == "Darwin"
     Plug 'reedes/vim-colors-pencil'
     Plug 'jonathanfilip/vim-lucius'
     Plug 'freeo/vim-kalisi'
-    Plug 'DAddYE/soda.vim'
-    Plug 'whatyouhide/vim-gotham'
-    Plug 'chriskempson/base16-vim'
     Plug 'chankaward/vim-railscasts-theme'
     Plug 'junegunn/limelight.vim'
-    Plug 'NLKNguyen/papercolor-theme'
+    Plug 'whatyouhide/vim-gotham'
 endif
 
 call plug#end()
