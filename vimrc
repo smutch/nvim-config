@@ -182,8 +182,8 @@ let python_highlight_space_errors = 1
 syntax on " Use syntax highlighting
 if (&t_Co >= 256) && !has("gui_running")
     set background=dark
-    if !has("gui_running")
-        let g:gruvbox_italic=1
+    if !has("gui_running") && (hostname =~ "hpc.swin.edu.au")
+        let g:gruvbox_italic=0
     endif
     colorscheme gruvbox
     " colorscheme molokai
