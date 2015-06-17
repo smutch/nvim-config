@@ -590,6 +590,11 @@ nnoremap [git]c :Gcommit<CR>
 " }}}
 " fzf {{{
 
+" Use a new iterm window if calling from macvim
+if has("gui_macvim")
+    let g:fzf_launcher = "in_a_new_term %s"
+endif
+
 " colorscheme chooser
 command! Cs call fzf#run({
             \   'source':
