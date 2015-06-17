@@ -79,6 +79,7 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'neilagabriel/vim-geeknote'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'lukaszkorecki/workflowish'
+Plug 'vim-scripts/Conque-GDB', { 'on': 'ConqueGdb' }
 
 " colorschemes
 Plug 'morhetz/gruvbox'

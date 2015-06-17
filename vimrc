@@ -268,6 +268,7 @@ function! GenCtags()
         execute ':! ctags'.s:cmd
     endif
 endfun
+nnoremap [compile]t :call GenCtags()<CR>
 
 " Softwrap
 command! SoftWrap execute ':g/./,-/\n$/j'
@@ -467,6 +468,11 @@ call airline#add_statusline_func('MyPlugin')
 " bbye {{{
 
 nnoremap Q :Bdelete<CR>
+
+" }}}
+" conquegdb {{{
+
+let g:ConqueGdb_Leader = '<LocalLeader>'
 
 " }}}
 " ctrlp {{{
