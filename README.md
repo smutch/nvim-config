@@ -29,5 +29,5 @@ Usage
 
 **Note:** You _will_ get errors when you run this command.  Don't worry about this though - just ignore them.  You only need to be concerned if you still get errors the next time you run vim.
 
-Now your good to go!...
+Now you're good to go!...
 

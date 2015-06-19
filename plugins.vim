@@ -42,7 +42,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/vimproc'
 Plug 'ivanov/vim-ipython', { 'for': 'python' }
 Plug 'tpope/vim-obsession', { 'on': 'Obsession' }
-Plug 'smutch/gfplaintasks.vim'
+" Plug 'smutch/gfplaintasks.vim'
 Plug 'tpope/vim-tbone'
 Plug 'git@github.com:smutch/vim-tmuxify.git'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
@@ -74,9 +74,10 @@ Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'chrisbra/NrrwRgn'
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'milkypostman/vim-togglelist'
-Plug 'godlygeek/tabular'  " N.B. This must come BEFORE vim-markdown
-Plug 'plasticboy/vim-markdown'
+" Plug 'godlygeek/tabular'  " N.B. This must come BEFORE vim-markdown
+" Plug 'plasticboy/vim-markdown'
 " Plug 'neilagabriel/vim-geeknote'
+Plug 'nelstrom/vim-markdown-folding'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'lukaszkorecki/workflowish'
 Plug 'vim-scripts/Conque-GDB', { 'on': 'ConqueGdb' }
