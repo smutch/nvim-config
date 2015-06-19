@@ -22,7 +22,7 @@ endif
 
 let g:indentLine_noConcealCursor = 1
 setlocal concealcursor=nc
-call WrapToggle()
+" call WrapToggle()
 let s:show_tags_flag = 0
 
 nnoremap <buffer> <CR> :call CycleState()<cr>
@@ -32,6 +32,8 @@ nnoremap <buffer> <LocalLeader>na :call ArchiveTasks()<cr>
 " when pressing enter within a task it creates another task
 setlocal comments-=fb:-
 setlocal comments+=nb:-\ [\ ],fb:-
+setlocal comments-=fb:*
+setlocal comments+=nb:*
 setlocal fo+=ro
 
 function! CycleState()
@@ -50,8 +52,8 @@ function! CycleState()
 endfunction
 
 function! s:cycle_empty()
-    .s/\(^ *\)/\1\*/
-    normal! $hxA  
+    normal! $xA* 
+    normal! $
 endfunction
 
 function! s:cycle_bullet()
