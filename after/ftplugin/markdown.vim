@@ -1,11 +1,12 @@
+setlocal foldlevel=99
 
 nnoremap <buffer> <localleader>m :silent !open -a Marked\ 2.app '%:p'<cr>
 
 " Select 'chunks'
-vnoremap <buffer> ac l?\(^ *-\)\\|\(^ *$\)<CR><Esc>V/<CR>k
-vnoremap <buffer> ic l?\(^ *-\)\\|\(^ *$\)<CR>j<Esc>V/<CR>k
-omap <buffer> ac :normal Vac<CR>:noh<CR>
-omap <buffer> ic :normal Vic<CR>:noh<CR>
+" vnoremap <buffer> ac l?\(^ *-\)\\|\(^ *$\)<CR><Esc>V/<CR>k
+" vnoremap <buffer> ic l?\(^ *-\)\\|\(^ *$\)<CR>j<Esc>V/<CR>k
+" omap <buffer> ac :normal Vac<CR>:noh<CR>
+" omap <buffer> ic :normal Vic<CR>:noh<CR>
 
 " convert address to link
 nmap <buffer> <localleader>l yiWysiW]f]a(<ESC>pa)<ESC>

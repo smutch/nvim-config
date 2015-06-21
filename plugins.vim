@@ -82,6 +82,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'lukaszkorecki/workflowish'
 Plug 'vim-scripts/Conque-GDB', { 'on': 'ConqueGdb' }
 
+" Plug 'fmoralesc/vim-pad'
+Plug 'git@github.com:smutch/vim-pad.git', { 'branch': 'working' }
+
 " colorschemes
 Plug 'morhetz/gruvbox'
 Plug 'git@github.com:smutch/vim-colors-solarized.git'
