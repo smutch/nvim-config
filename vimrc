@@ -224,13 +224,6 @@ function! <SID>SynStack()
 endfunc
 command! SynStack call <SID>SynStack()
 
-" My grep
-command! -nargs=+ MyGrep execute 'silent grep! <args> %' | copen 10
-nnoremap [search]g :MyGrep
-" command! -nargs=+ GrepBuffers execute ':call setqflist([]) | :silent bufdo grepadd! <args> % | copen'
-" nnoremap [search]b :GrepBuffers
-nnoremap [help]w :help <C-r><C-w><CR>
-
 " Toggle wrapping at 80 col
 function! WrapToggle()
     if exists("b:wrapToggleFlag") && b:wrapToggleFlag==1
@@ -385,6 +378,10 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " Reformat chunks (chunks are defined per filetype basis in after/ftplugin)
 " nmap ,; gwic
 " nmap ,: gwac
+
+" Searching
+nnoremap [search]v :VimGrep /
+nnoremap [help]w :help <C-r><C-w><CR>
 
 " Neovim terminal mappings
 if has('nvim')
@@ -921,133 +918,134 @@ map  <buffer> <silent> <LocalLeader>pr   <Plug>(IPython-RunLineAsTopLevel)
 " }}}
 " vim-pad {{{
 
-let g:pad#dir = "~/Dropbox/vpNotes"
-let g:pad#search_backend = "ag"
-let g:pad#default_file_extension = ".md"
-let g:pad#exclude_dirnames = "img,assets"
+" let g:pad#dir = "~/Dropbox/vpNotes"
+" let g:pad#search_backend = "ag"
+" let g:pad#default_file_extension = ".md"
+" let g:pad#exclude_dirnames = "img,assets"
+" let g:pad#open_in_split = 0
 
-function! InsertImage(sourcePath)
-python << endpython
-import vim
-import os
-import shutil
-from subprocess import call
+" function! InsertImage(sourcePath)
+" python << endpython
+" import vim
+" import os
+" import shutil
+" from subprocess import call
 
-__img_dir = "img"
-__assets_dir = "assets"
-
-
-def copy_file(source, target):
-    target_dir = os.path.split(target)[0]
-    if not os.path.exists(target_dir):
-        os.mkdir(target_dir)
-    shutil.copy(source, target)
+" __img_dir = "img"
+" __assets_dir = "assets"
 
 
-def unique_fname(source_file, img_dir, assets_dir):
-    source_base, ext = os.path.splitext(source_file)
-    idup = 0
+" def copy_file(source, target):
+"     target_dir = os.path.split(target)[0]
+"     if not os.path.exists(target_dir):
+"         os.mkdir(target_dir)
+"     shutil.copy(source, target)
 
-    if ext == ".pdf":
-        pdf = os.path.join(assets_dir, source_file)
-        pdf_base = os.path.splitext(pdf)[0]
-        img = os.path.join(img_dir, source_file[:-4]+".png")
-        img_base = os.path.splitext(img)[0]
 
-        while os.path.exists(pdf):
-            idup += 1
-            pdf = pdf_base + "-{:d}".format(idup) + ".pdf"
-            img = img_base + "-{:d}".format(idup) + ".png"
-            while os.path.exists(img):
-                idup += 1
-                pdf = pdf_base + "-{:d}".format(idup) + ".pdf"
-                img = img_base + "-{:d}".format(idup) + ".png"
+" def unique_fname(source_file, img_dir, assets_dir):
+"     source_base, ext = os.path.splitext(source_file)
+"     idup = 0
 
-        return os.path.split(pdf)[1]
+"     if ext == ".pdf":
+"         pdf = os.path.join(assets_dir, source_file)
+"         pdf_base = os.path.splitext(pdf)[0]
+"         img = os.path.join(img_dir, source_file[:-4]+".png")
+"         img_base = os.path.splitext(img)[0]
 
-    else:
-        img = os.path.join(img_dir, source_file)
-        img_base = os.path.splitext(img)[0]
+"         while os.path.exists(pdf):
+"             idup += 1
+"             pdf = pdf_base + "-{:d}".format(idup) + ".pdf"
+"             img = img_base + "-{:d}".format(idup) + ".png"
+"             while os.path.exists(img):
+"                 idup += 1
+"                 pdf = pdf_base + "-{:d}".format(idup) + ".pdf"
+"                 img = img_base + "-{:d}".format(idup) + ".png"
 
-        while os.path.exists(img):
-            idup += 1
-            img = img_base + "-{:d}".format(idup) + ext
+"         return os.path.split(pdf)[1]
 
-        return os.path.split(img)[1]
+"     else:
+"         img = os.path.join(img_dir, source_file)
+"         img_base = os.path.splitext(img)[0]
 
-    print "unique img: ",target
+"         while os.path.exists(img):
+"             idup += 1
+"             img = img_base + "-{:d}".format(idup) + ext
 
-# are we in a notes dir, or simply writing a standalone doc?
-cur_dir = vim.eval("expand('%:p:h')")
-notes_dir = vim.eval("g:pad#dir")
+"         return os.path.split(img)[1]
 
-if notes_dir == -1:
-    pass
-elif cur_dir == notes_dir:
-    __img_dir = "./"+__img_dir
-    __assets_dir = "./"+__assets_dir
-elif cur_dir.count(notes_dir) >= 1:
-    split_path = cur_dir.replace(notes_dir+"/", "").split("/")
-    rel_path = ""
-    for p in split_path:
-        rel_path += "../"
-    __img_dir = os.path.join(rel_path, __img_dir)
-    __assets_dir = os.path.join(rel_path, __assets_dir)
+"     print "unique img: ",target
 
-img_dir = os.path.join(cur_dir, __img_dir)
-assets_dir = os.path.join(cur_dir, __assets_dir)
-links = ""
+" # are we in a notes dir, or simply writing a standalone doc?
+" cur_dir = vim.eval("expand('%:p:h')")
+" notes_dir = vim.eval("g:pad#dir")
 
-source_path_list = str(vim.eval("a:sourcePath"))
-source_path_list = source_path_list.replace(r"\ ", "&")
-source_path_list = source_path_list.rstrip(" ")
-source_path_list = source_path_list.split(" ")
+" if notes_dir == -1:
+"     pass
+" elif cur_dir == notes_dir:
+"     __img_dir = "./"+__img_dir
+"     __assets_dir = "./"+__assets_dir
+" elif cur_dir.count(notes_dir) >= 1:
+"     split_path = cur_dir.replace(notes_dir+"/", "").split("/")
+"     rel_path = ""
+"     for p in split_path:
+"         rel_path += "../"
+"     __img_dir = os.path.join(rel_path, __img_dir)
+"     __assets_dir = os.path.join(rel_path, __assets_dir)
 
-# print source_path_list
+" img_dir = os.path.join(cur_dir, __img_dir)
+" assets_dir = os.path.join(cur_dir, __assets_dir)
+" links = ""
 
-for source_path in source_path_list:
+" source_path_list = str(vim.eval("a:sourcePath"))
+" source_path_list = source_path_list.replace(r"\ ", "&")
+" source_path_list = source_path_list.rstrip(" ")
+" source_path_list = source_path_list.split(" ")
 
-    source_path = os.path.expanduser(source_path.replace(r"&", " "))
+" # print source_path_list
 
-    # get all of the relevant paths
-    source_file = os.path.split(source_path)[1]
-    source_ext = os.path.splitext(source_file)[1]
+" for source_path in source_path_list:
 
-    # generate unique target filename
-    target_file = unique_fname(source_file, img_dir, assets_dir)
+"     source_path = os.path.expanduser(source_path.replace(r"&", " "))
 
-    # if this is a pdf then we want to copy the original into the assets folder and convert the pdf to a png
-    if source_ext == '.pdf':
-        target_pdf = os.path.join(assets_dir, target_file)
-        target_png = os.path.join(img_dir, target_file[:-4]+".png")
+"     # get all of the relevant paths
+"     source_file = os.path.split(source_path)[1]
+"     source_ext = os.path.splitext(source_file)[1]
 
-        copy_file(source_path, target_pdf)
-        if not os.path.exists(img_dir):
-            os.mkdir(img_dir)
+"     # generate unique target filename
+"     target_file = unique_fname(source_file, img_dir, assets_dir)
 
-        ret_code = call(['convert', '-units', 'PixelsPerInch', '-density', '80', source_path, target_png])
-        if ret_code:
-            print "Failed to convert pdf!"
+"     # if this is a pdf then we want to copy the original into the assets folder and convert the pdf to a png
+"     if source_ext == '.pdf':
+"         target_pdf = os.path.join(assets_dir, target_file)
+"         target_png = os.path.join(img_dir, target_file[:-4]+".png")
 
-        # generate the relative markdown link
-        target_pdf = os.path.join(__assets_dir, target_file)
-        target_png = os.path.join(__img_dir, target_file[:-4]+".png")
-        links += " [![]({:s})]({:s})".format(target_png, target_pdf)
+"         copy_file(source_path, target_pdf)
+"         if not os.path.exists(img_dir):
+"             os.mkdir(img_dir)
 
-    else:
-        target = os.path.join(img_dir, target_file)
-        copy_file(source_path, target)
-        # generate the relative markdown link
-        target = os.path.join(__img_dir, target_file)
-        links += " ![]({:s})".format(target)
+"         ret_code = call(['convert', '-units', 'PixelsPerInch', '-density', '80', source_path, target_png])
+"         if ret_code:
+"             print "Failed to convert pdf!"
 
-vim.command("return '{:s}'".format(links[1:])) # return
-endpython
-endfunction
+"         # generate the relative markdown link
+"         target_pdf = os.path.join(__assets_dir, target_file)
+"         target_png = os.path.join(__img_dir, target_file[:-4]+".png")
+"         links += " [![]({:s})]({:s})".format(target_png, target_pdf)
 
-autocmd FileType markdown
-            \ command! -buffer -nargs=+ InsertImage execute ":normal! a" . InsertImage('<args>')
-autocmd FileType markdown nmap <buffer> <localleader>i :InsertImage
+"     else:
+"         target = os.path.join(img_dir, target_file)
+"         copy_file(source_path, target)
+"         # generate the relative markdown link
+"         target = os.path.join(__img_dir, target_file)
+"         links += " ![]({:s})".format(target)
+
+" vim.command("return '{:s}'".format(links[1:])) # return
+" endpython
+" endfunction
+
+" autocmd FileType markdown
+"             \ command! -buffer -nargs=+ InsertImage execute ":normal! a" . InsertImage('<args>')
+" autocmd FileType markdown nmap <buffer> <localleader>i :InsertImage
 
 " }}}
 " vimtex {{{
@@ -1064,7 +1062,9 @@ let g:vimtex_view_general_options = '-a Skim'
 
 let g:toggle_list_no_mappings = 1
 nnoremap [loclist]l :call ToggleLocationList()<CR>
+nnoremap ,l :call ToggleLocationList()<CR>
 nnoremap [quickfix]q :call ToggleQuickfixList()<CR>
+nnoremap ,q :call ToggleQuickfixList()<CR>
 
 " }}}
 " }}}
