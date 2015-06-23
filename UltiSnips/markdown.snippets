@@ -1,7 +1,3 @@
-snippet todo "mark as todo"
-<span style="color:#CC0033;font-weight:bold">TODO:</span> 
-endsnippet
-
 snippet colspan "span elem with color"
 <span style="color:${1:red}">$0</span>
 endsnippet
@@ -20,7 +16,21 @@ $0
 \\\\]
 endsnippet
 
-snippet brl "break list"
-<!-- break list -->
+snippet lbr "list break"
 
+<!-- list break -->
+
+endsnippet
+
+snippet meta "note metadata"
+
+---
+
+| ----: | :--------- |
+| **tags**: | ${1} |
+| **date**: | `date +%Y-%m-%d` |
+
+---
+
+$0
 endsnippet

@@ -14,6 +14,15 @@ nmap <buffer> <localleader>l yiWysiW]f]a(<ESC>pa)<ESC>
 " Quick map for adding a new item to a list at the same level
 imap <buffer>  <CR>*<Space><C-d>
 
+setlocal concealcursor=nc
+
+" when pressing enter within a task it creates another task
+setlocal comments-=fb:-
+setlocal comments+=nb:-\ [\ ],fb:-
+setlocal comments-=fb:*
+setlocal comments+=nb:*
+setlocal fo+=ro
+
 " -------------------------------------------------------
 
 " Only do the following when not done yet for this buffer
@@ -22,20 +31,12 @@ if exists("b:did_md_extras")
 endif
 
 let g:indentLine_noConcealCursor = 1
-setlocal concealcursor=nc
 " call WrapToggle()
 let s:show_tags_flag = 0
 
 nnoremap <buffer> <CR> :call CycleState()<cr>
 nnoremap <buffer> <LocalLeader>na :call ArchiveTasks()<cr>
 " abbr --- <c-r>=Separator()<cr>
-
-" when pressing enter within a task it creates another task
-setlocal comments-=fb:-
-setlocal comments+=nb:-\ [\ ],fb:-
-setlocal comments-=fb:*
-setlocal comments+=nb:*
-setlocal fo+=ro
 
 function! CycleState()
     let line = getline('.')
