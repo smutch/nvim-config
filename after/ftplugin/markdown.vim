@@ -27,7 +27,9 @@ setlocal fo+=ro
 
 " Only do the following when not done yet for this buffer
 if exists("b:did_md_extras")
-    finish
+    if b:did_md_extras == 1
+        finish
+    endif
 endif
 
 let g:indentLine_noConcealCursor = 1
@@ -35,21 +37,29 @@ let g:indentLine_noConcealCursor = 1
 let s:show_tags_flag = 0
 
 nnoremap <buffer> <CR> :call CycleState()<cr>
+nnoremap <buffer> + :call CycleType()<cr>
 nnoremap <buffer> <LocalLeader>na :call ArchiveTasks()<cr>
 " abbr --- <c-r>=Separator()<cr>
 
 function! CycleState()
     let line = getline('.')
-    if line =~ "^ *$"
-        call s:cycle_empty()
-    elseif line =~ "\\(@todo\\|^ *- \\[ \\]\\)"
-        call s:cycle_todo()
+    if line =~ "\\(@todo\\|^ *- \\[ \\]\\)"
+        call s:cycle_todo(0)
     elseif line =~ "\\(^ *- \\[x\\]\\|@done\\)"
         call s:cycle_done()
     elseif line =~ "\\(@cancelled\\|^ *- X \\)"
         call s:cycle_cancelled()
-    elseif line =~ "^ *[\*-] X\\@\!"
+    endif
+endfunction
+
+function! CycleType()
+    let line = getline('.')
+    if line =~ "^ *$"
+        call s:cycle_empty()
+    elseif line =~ "^ *[\*-] \\(\\[[ x]\\]\\|X\\)\\@\!"
         call s:cycle_bullet()
+    elseif line =~ "^ *[\*-] \\(\\[[ x]\\]\\|X\\)"
+        call s:cycle_todo(1)
     endif
 endfunction
 
@@ -70,12 +80,20 @@ function! s:cycle_done()
     normal! _
 endfunc
 
-function! s:cycle_todo()
-    silent! .s/^\( *\)- \[ \]/\1- \[x\]/
-    silent! .s/ *@todo *//
-    let text = " @done (" . strftime("%Y-%m-%d %H:%M") .")"
-    exec "normal! A" . text
-    normal! _
+function! s:cycle_todo(flag)
+    if a:flag == 0
+        silent! .s/^\( *\)- \[ \]/\1- \[x\]/
+        silent! .s/ *@todo *//
+        let text = " @done (" . strftime("%Y-%m-%d %H:%M") .")"
+        exec "normal! A" . text
+        normal! _
+    elseif a:flag == 1
+        silent! .s/^\( *[-*]\) \(\[[ x]\]\|X\)/\1/
+        silent! .s/ *@done.*$//
+        silent! .s/ *@cancelled.*$//
+    else
+        return
+    endif
 endfunc
 
 function! s:cycle_cancelled()
@@ -102,9 +120,9 @@ function! ArchiveTasks()
     let found=0
     let a_reg = @a
     let @a = ""
-    if search("* \\[x\\]", "", archive_start) != 0
+    if search("[-\\*] \\[x\\]", "", archive_start) != 0
         call cursor(1,1)
-        while search("* \\[x\\]", "", archive_start) > 0
+        while search("[-\\*] \\[x\\]", "", archive_start) > 0
             if (found == 0)
                 normal! "add
             else
