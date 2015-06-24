@@ -380,7 +380,7 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " nmap ,: gwac
 
 " Searching
-nnoremap [search]v :VimGrep /
+nnoremap [search]v :vimgrep /
 nnoremap [help]w :help <C-r><C-w><CR>
 
 " Neovim terminal mappings
