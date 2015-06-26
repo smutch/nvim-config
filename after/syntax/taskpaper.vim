@@ -4,6 +4,6 @@ hi def tpInProgTask ctermfg=175 guifg=#d3869b
 
 " Note the order is important here... The last entries have priority over the
 " first.
-syn match tpInProgTask '^.*@inprog.*$' contains=taskpaperContext
-syn match tpTodayTask '^.*@today.*$' contains=taskpaperContext
-syn match tpHighPriority '^.*\(@HIGH\|@high\).*$' contains=taskpaperContext
+syn match tpTodayTask '^.*@today.*$' contains=taskpaperContext,taskpaperDone
+syn match tpInProgTask '^.*@inprog.*$' contains=taskpaperContext,taskpaperDone
+syn match tpHighPriority '^.*\(@HIGH\|@high\).*$' contains=taskpaperContext,taskpaperDone
