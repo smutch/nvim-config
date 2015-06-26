@@ -71,17 +71,15 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'sjl/clam.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'd11wtq/ctrlp_bdelete.vim'
-Plug 'chrisbra/NrrwRgn'
+Plug 'chrisbra/NrrwRgn', {'on': 'NrrwrgnDo'}
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'milkypostman/vim-togglelist'
-" Plug 'godlygeek/tabular'  " N.B. This must come BEFORE vim-markdown
-" Plug 'plasticboy/vim-markdown'
-" Plug 'neilagabriel/vim-geeknote'
 Plug 'davidoc/taskpaper.vim'
 Plug 'nelstrom/vim-markdown-folding'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-" Plug 'lukaszkorecki/workflowish'
 Plug 'vim-scripts/Conque-GDB', { 'on': 'ConqueGdb' }
+Plug 'reedes/vim-pencil'
+Plug 'reedes/vim-wordy'
 
 " Plug 'fmoralesc/vim-pad'
 " Plug 'git@github.com:smutch/vim-pad.git', { 'branch': 'working' }
@@ -93,6 +91,7 @@ Plug 'vim-scripts/CSApprox'
 Plug 'DAddYE/soda.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'sjl/badwolf'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"

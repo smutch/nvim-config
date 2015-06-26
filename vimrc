@@ -162,7 +162,7 @@ set listchars=tab:▸\ ,eol:↵          " Set hidden characters
 let g:tex_conceal = ""               " Don't use conceal for latex equations
 
 if has("gui_macvim")
-  set guifont=Ubuntu\ Mono:h17
+  set guifont=Monaco:h14
   " set guifont=Bitstream\ Vera\ Sans\ Mono:h17
   set guioptions-=T  " remove toolbar
   set guioptions-=rL " remove right + left scrollbars
@@ -1046,6 +1046,20 @@ map  <buffer> <silent> <LocalLeader>pr   <Plug>(IPython-RunLineAsTopLevel)
 " autocmd FileType markdown
 "             \ command! -buffer -nargs=+ InsertImage execute ":normal! a" . InsertImage('<args>')
 " autocmd FileType markdown nmap <buffer> <localleader>i :InsertImage
+
+" }}}
+" vim-pencil {{{
+
+let g:pencil#textwidth = 80
+let g:pencil#joinspaces = 1
+let g:airline_section_x = '%{PencilMode()}'
+
+" augroup pencil
+"   autocmd!
+"   autocmd FileType markdown,mkd call pencil#init()
+"   autocmd FileType text         call pencil#init()
+"   autocmd FileType tex,latex    call pencil#init()
+" augroup END
 
 " }}}
 " vimtex {{{

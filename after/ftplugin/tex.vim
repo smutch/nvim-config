@@ -2,9 +2,7 @@
 let g:tex_flavour='latex'
 
 set spell
-" setlocal nofoldenable
 setlocal formatprg=par\ -w80\ -g
-" setlocal conceallevel=0  "Prevent rendering of latex symbols (tres annoying!)
 setlocal nocursorline
 setlocal smartindent
 
@@ -14,10 +12,10 @@ setlocal iskeyword-=_
 setlocal softtabstop=2
 setlocal shiftwidth=2
 setlocal tw=80 fo=awtqron wm=0
+let b:wrapToggleFlag=1
 execute "set colorcolumn=" . join(range(81,335), ',')
 
 " setlocal cursorline  "This is very slow for large files
-let b:wrapToggleFlag=1
 
 " imap <Space><Space> <CR>
 function! HardWrapSentences()
@@ -26,10 +24,10 @@ function! HardWrapSentences()
     call append('.', lineparts)
     delete
 endfunction
-nnoremap <buffer> <leader>lw :call HardWrapSentences()<CR>
+nnoremap <buffer> <localleader>lw :call HardWrapSentences()<CR>
 
 " Save then compile
-nmap <buffer> <leader>s :w<CR><leader>ll<CR>
+nmap <buffer> <localleader>s :w<CR><leader>ll<CR>
 
 " Quick map for adding a new item to an itemize environment list
 imap <buffer>  <CR>\item<Space>
@@ -44,10 +42,10 @@ setlocal scrolloff=5
 setlocal formatoptions-=l
 
 " Maps FormatPar function to ,L
-nnoremap  <buffer> ,L  :silent call FormatLatexPar(0)<CR>
+" nnoremap  <buffer> ,L  :silent call FormatLatexPar(0)<CR>
 
 " Jump to position in pdf
-map <buffer> <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline
+map <buffer> <silent> <localLeader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline
     \ <C-R>=line('.')<CR> "<C-R>=latex#data[0].out()<CR>" "%:p" <CR>
 
 " Tex only abbreviations
