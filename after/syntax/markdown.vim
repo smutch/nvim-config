@@ -4,6 +4,8 @@ hi def link mdCancelledTask diffRemoved
 hi def link mdContext Question
 hi def link htmlHighlight DiffText
 
+autocmd BufReadPost,BufNewFile *.md hi Conceal ctermfg=109 guifg=#4271ae
+
 " if has("gui_macvim")
 "     syn region htmlItalic matchgroup=htmlStyleDelim start="\\\@<!\*\S\@=" end="\S\@<=\\\@<!\*" keepend oneline concealends
 "     syn region htmlItalic matchgroup=htmlStyleDelim start="\(^\|\s\)\@<=_\|\\\@<!_\([^_]\+\s\)\@=" end="\S\@<=_\|_\S\@=" keepend oneline concealends
@@ -37,3 +39,5 @@ syn match mdContext "@[^ ]*" containedin=ALL
 
 syn match mdItem "^ *[\*-]\( X\| \[[x ]\]\)\@! " contains=mdBullet
 syn match mdBullet "[\*-]" contained containedin=mdItem conceal cchar=•
+
+syn region mdIgnore start="\S\@<=\$\|\$\S\@=" end="\S\@<=\$\|\$\S\@=" keepend oneline concealends

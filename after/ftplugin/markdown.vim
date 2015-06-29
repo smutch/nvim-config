@@ -14,6 +14,7 @@ nmap <buffer> <localleader>l yiWysiW]f]a(<ESC>pa)<ESC>
 " Quick map for adding a new item to a list at the same level
 imap <buffer>  <CR>*<Space><C-d>
 
+set cole=2
 setlocal concealcursor=nc
 
 " when pressing enter within a task it creates another task

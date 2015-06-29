@@ -730,7 +730,7 @@ let g:incsearch#consistent_n_direction = 1
 " let g:loaded_indentLine=1
 " let g:indentLine_char="|"
 let g:indentLine_char = '┊'
-let g:indentLine_fileTypeExclude=["tex", "Help"] 
+let g:indentLine_fileTypeExclude=["tex", "Help", "markdown", "mkd"] 
 nnoremap coI :IndentLinesToggle<CR>
 
 " }}}
