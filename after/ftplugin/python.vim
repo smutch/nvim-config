@@ -9,11 +9,11 @@ setlocal autoindent
 setlocal number
 
 " Set some useful keybindings
-nmap <buffer> \s :w<CR>:SyntasticCheck<CR>
+nmap <buffer> <localleader>s :w<CR>:SyntasticCheck<CR>
 if has("gui_macvim")
-    nmap <buffer> \p :w<CR>:!/usr/local/bin/python %<CR>
+    nmap <buffer> <localleader>p :w<CR>:Dispatch /usr/local/bin/python %<CR>
 else
-    nmap <buffer> \p :w<CR>:!python %<CR>
+    nmap <buffer> <localleader>p :w<CR>:Dispatch python %<CR>
 endif
 
 " " Load indentline plugin
