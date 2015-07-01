@@ -6,7 +6,7 @@ date = arrow.get(vim.eval("l:due_date")).humanize()
 print date
 vim.command("let l:countdown = '"+date+"'")
 EOF
-return '@due('.l:due_date.':'.l:countdown.')'
+return '@due('.l:due_date.'| '.l:countdown.')'
 endfunction
 
 command! -range=% CountdownDueDates exec "normal! m'" | silent! <line1>,<line2>s/\(@due([^)]*)\)/\=s:countdown_due_date(submatch(1))/ | noh | exec "normal! ''"

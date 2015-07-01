@@ -1069,8 +1069,8 @@ let g:airline_section_x = '%{PencilMode()}'
 let g:vimtex_latexmk_build_dir = './build'
 let g:vimtex_latexmk_continuous = 0
 let g:vimtex_latexmk_background = 1
-let g:vimtex_view_general_viewer = 'open'
-let g:vimtex_view_general_options = '-a Skim'
+let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+let g:vimtex_view_general_options = '@line @pdf @tex'
 
 " }}}
 " vim-togglelist {{{
