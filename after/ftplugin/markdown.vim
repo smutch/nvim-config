@@ -33,6 +33,7 @@ if exists("b:did_md_extras")
     endif
 endif
 
+let g:indentLine_loaded = 1
 let g:indentLine_noConcealCursor = 1
 " call WrapToggle()
 let s:show_tags_flag = 0

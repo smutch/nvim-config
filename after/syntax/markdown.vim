@@ -3,6 +3,7 @@ hi def link mdCompleteTask Comment
 hi def link mdCancelledTask diffRemoved
 hi def link mdContext Question
 hi def link htmlHighlight DiffText
+hi def link mdStrikethrough Comment
 
 autocmd BufReadPost,BufNewFile *.md hi Conceal ctermfg=109 guifg=#4271ae
 
@@ -16,6 +17,8 @@ autocmd BufReadPost,BufNewFile *.md hi Conceal ctermfg=109 guifg=#4271ae
 " " syn region htmlBoldItalic matchgroup=htmlStyleDelim start="\S\@<=\*\*\*\|\*\*\*\S\@=" end="\S\@<=\*\*\*\|\*\*\*\S\@=" keepend oneline concealends
 " " syn region htmlBoldItalic matchgroup=htmlStyleDelim start="\S\@<=___\|___\S\@=" end="\S\@<=___\|___\S\@=" keepend oneline concealends
 " syn region htmlHighlight matchgroup=htmlStyleDelim start="{==" end="==}" keepend oneline concealends
+
+syn region mdStrikethrough matchgroup=htmlStyleDelim start="\S\@<=\~\~\|\~\~\S\@=" end="\S\@<=\~\~\|\~\~\S\@=" keepend oneline concealends
 
 syn cluster mkdNonListItem remove=htmlItalic,htmlBold,htmlBoldItalic,mkdFootnotes,mkdInlineURL,mkdLink,mkdLinkDef
 
