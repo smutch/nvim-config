@@ -761,12 +761,14 @@ let g:nrrw_rgn_nohl = 1
 " }}}
 " neomake {{{
 
-let g:neomake_c_cppcheck_maker = {
-    \ 'exe': 'cppcheck',
-    \ 'args': ['--enable=all'],
-    \ }
-let g:neomake_c_enabled_makers = ['cppcheck']
-autocmd! BufWritePost *.c,*.h Neomake!
+if has("nvim")
+    let g:neomake_c_cppcheck_maker = {
+                \ 'exe': 'cppcheck',
+                \ 'args': ['--enable=all'],
+                \ }
+    let g:neomake_c_enabled_makers = ['cppcheck']
+    autocmd! BufWritePost *.c,*.h Neomake!
+endif
 
 " }}}
 " nerd_commenter {{{
