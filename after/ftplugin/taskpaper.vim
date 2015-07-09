@@ -11,3 +11,5 @@ endfunction
 
 command! -range=% CountdownDueDates exec "normal! m'" | silent! <line1>,<line2>s/\(@due([^)]*)\)/\=s:countdown_due_date(submatch(1))/ | noh | exec "normal! ''"
 nnoremap <localleader>tu :CountdownDueDates<CR>
+
+nmap <CR> <localleader>td

@@ -759,6 +759,16 @@ nnoremap coL :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
 let g:nrrw_rgn_nohl = 1
 
 " }}}
+" neomake {{{
+
+let g:neomake_c_cppcheck_maker = {
+    \ 'exe': 'cppcheck',
+    \ 'args': ['--enable=all'],
+    \ }
+let g:neomake_c_enabled_makers = ['cppcheck']
+autocmd! BufWritePost *.c,*.h Neomake!
+
+" }}}
 " nerd_commenter {{{
 
 " Custom NERDCommenter mappings
