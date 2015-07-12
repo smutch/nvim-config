@@ -12,4 +12,6 @@ endfunction
 command! -range=% CountdownDueDates exec "normal! m'" | silent! <line1>,<line2>s/\(@due([^)]*)\)/\=s:countdown_due_date(submatch(1))/ | noh | exec "normal! ''"
 nnoremap <localleader>tu :CountdownDueDates<CR>
 
-nmap <CR> <localleader>td
+command! TaskpaperToggleDone call taskpaper#delete_tag('today') | call taskpaper#delete_tag('inprog') | call taskpaper#toggle_tag('done', taskpaper#date())
+nnoremap <buffer> <localleader>td :TaskpaperToggleDone<CR>
+nmap <buffer> <CR> :TaskpaperToggleDone<CR>
