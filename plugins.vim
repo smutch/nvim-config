@@ -102,7 +102,7 @@ if os == "Darwin"
     Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
     " Plug 'git@github.com:smutch/LaTeX-Box.git'
     Plug 'lervag/vim-latex', { 'for': 'tex' }
-    " Plug 'kchmck/vim-coffee-script'
+    Plug 'kchmck/vim-coffee-script'
     Plug 'tyru/open-browser.vim'
     Plug 'davidbeckingsale/writegood.vim'
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
