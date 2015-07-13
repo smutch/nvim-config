@@ -15,3 +15,6 @@ nnoremap <localleader>tu :CountdownDueDates<CR>
 command! TaskpaperToggleDone call taskpaper#delete_tag('today') | call taskpaper#delete_tag('inprog') | call taskpaper#toggle_tag('done', taskpaper#date())
 nnoremap <buffer> <localleader>td :TaskpaperToggleDone<CR>
 nmap <buffer> <CR> :TaskpaperToggleDone<CR>
+
+command! TaskpaperDeadlineSearch call taskpaper#search('\v^(.*\@due.*|.*\@today.*)&(.*\@done.*)@!.*')
+nnoremap <buffer> <localleader>tU :TaskpaperDeadlineSearch<CR>
