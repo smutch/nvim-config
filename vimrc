@@ -426,7 +426,7 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 if !executable('ag')
 
     " Map keys for Ack
-    nnoremap [search]a <Esc>:Ack!<Space>
+    nnoremap [search]g <Esc>:Ack!<Space>
 
     " Ack for current word under cursor
     nnoremap [search]w yiw<Esc>:Ack! <C-r>"<CR>
@@ -440,7 +440,7 @@ endif
 if executable('ag')
 
     " Map keys for Ag
-    nnoremap [search]a <Esc>:Ag!<Space>
+    nnoremap [search]g <Esc>:Ag!<Space>
 
     " Ag for current word under cursor
     nnoremap [search]w yiw<Esc>:Ag! <C-r>"<CR>
