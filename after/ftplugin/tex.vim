@@ -27,7 +27,8 @@ endfunction
 nnoremap <buffer> <localleader>lw :call HardWrapSentences()<CR>
 
 " Save then compile
-nmap <buffer> <localleader>s :w<CR><leader>ll<CR>
+nmap <buffer> <localleader>s :w<CR><localleader>ll<CR>
+nnoremap <buffer> [compile]c :w<CR>:call vimtex#latexmk#compile()<CR>
 
 " Quick map for adding a new item to an itemize environment list
 imap <buffer>  <CR>\item<Space>
@@ -43,10 +44,6 @@ setlocal formatoptions-=l
 
 " Maps FormatPar function to ,L
 " nnoremap  <buffer> ,L  :silent call FormatLatexPar(0)<CR>
-
-" Jump to position in pdf
-map <buffer> <silent> <localLeader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline
-    \ <C-R>=line('.')<CR> "<C-R>=latex#data[0].out()<CR>" "%:p" <CR>
 
 " Tex only abbreviations
 ab <buffer> ... \ldots

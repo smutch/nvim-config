@@ -181,13 +181,16 @@ let python_highlight_space_errors = 1
 
 syntax on " Use syntax highlighting
 if (&t_Co >= 256) && !has("gui_running")
+    let base16colorspace=256
     set background=dark
     if !has("gui_running") && (hostname =~ "hpc.swin.edu.au")
         let g:gruvbox_italic=0
     endif
+    let g:gruvbox_contrast_dark="soft"
     colorscheme gruvbox
     " colorscheme molokai
 elseif has("gui_running")
+    let base16colorspace=256
     set background=light
     colorscheme solarized
 else
@@ -761,14 +764,14 @@ let g:nrrw_rgn_nohl = 1
 " }}}
 " neomake {{{
 
-if has("nvim")
-    let g:neomake_c_cppcheck_maker = {
-                \ 'exe': 'cppcheck',
-                \ 'args': ['--enable=all'],
-                \ }
-    let g:neomake_c_enabled_makers = ['cppcheck']
-    autocmd! BufWritePost *.c,*.h Neomake!
-endif
+" if has("nvim")
+"     let g:neomake_c_cppcheck_maker = {
+"                 \ 'exe': 'cppcheck',
+"                 \ 'args': ['--enable=all'],
+"                 \ }
+"     let g:neomake_c_enabled_makers = ['cppcheck']
+"     autocmd! BufWritePost *.c,*.h Neomake!
+" endif
 
 " }}}
 " nerd_commenter {{{

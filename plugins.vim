@@ -23,12 +23,12 @@ Plug 'vim-scripts/scons.vim'
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
-if has("nvim")
-    Plug 'benekastah/neomake'
-else
+" if has("nvim")
+    " Plug 'benekastah/neomake'
+" else
     Plug 'scrooloose/syntastic'
     Plug 'tpope/vim-dispatch'
-endif
+" endif
 Plug 'vim-scripts/taglist.vim', { 'on': 'Tlist' }
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 " Plug 'benmills/vimux'
@@ -92,6 +92,8 @@ Plug 'DAddYE/soda.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'jdkanani/vim-material-theme'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
