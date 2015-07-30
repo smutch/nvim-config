@@ -185,9 +185,9 @@ if (&t_Co >= 256) && !has("gui_running")
     set background=dark
     if !has("gui_running") && (hostname =~ "hpc.swin.edu.au")
         let g:gruvbox_italic=0
-    " else
-        " let g:gruvbox_contrast_dark="soft"
     endif
+    let g:gruvbox_contrast_dark="soft"
+    let g:gruvbox_invert_tabline=1
     colorscheme gruvbox
     " colorscheme molokai
 elseif has("gui_running")
