@@ -62,7 +62,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'machakann/vim-textobj-delimited'
 Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
-Plug 'haya14busa/incsearch.vim'
+" Plug 'haya14busa/incsearch.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 " Plug 'Konfekt/FastFold'
 Plug 'talek/obvious-resize'
@@ -109,6 +109,7 @@ if os == "Darwin"
     Plug 'davidbeckingsale/writegood.vim'
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
     " Plug 'vim-scripts/JavaScript-Indent'
+    Plug 'lilydjwg/colorizer'
 
     " colorschemes
     Plug 'git@github.com:smutch/vim-monokai.git'

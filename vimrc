@@ -185,15 +185,17 @@ if (&t_Co >= 256) && !has("gui_running")
     set background=dark
     if !has("gui_running") && (hostname =~ "hpc.swin.edu.au")
         let g:gruvbox_italic=0
+    " else
+        " let g:gruvbox_contrast_dark="soft"
     endif
-    let g:gruvbox_contrast_dark="soft"
     colorscheme gruvbox
     " colorscheme molokai
 elseif has("gui_running")
-    let base16colorspace=256
-    set background=light
-    colorscheme solarized
+    set background=dark
+    colorscheme hybrid_material
+    let g:airline_theme="hybrid"
 else
+    let base16colorspace=16
     set background=dark
     colorscheme base16-default
 end
@@ -362,7 +364,8 @@ nmap <C-a> <Nop>
 nmap <C-x> <Nop>
 
 " Turn off highlighting
-nmap ,h <Esc>:noh<CR>
+" nmap ,h <Esc>:noh<CR>
+nmap <backspace> <Esc>:noh<CR>
 
 " Paste without auto indent
 nnoremap <F2> :set invpaste paste?<CR>
@@ -713,19 +716,19 @@ nnoremap [undo]u :GundoToggle<CR>
 " }}}
 " incsearch {{{
 
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+" map /  <Plug>(incsearch-forward)
+" map ?  <Plug>(incsearch-backward)
+" map g/ <Plug>(incsearch-stay)
 
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+" let g:incsearch#auto_nohlsearch = 1
+" map n  <Plug>(incsearch-nohl-n)
+" map N  <Plug>(incsearch-nohl-N)
+" map *  <Plug>(incsearch-nohl-*)
+" map #  <Plug>(incsearch-nohl-#)
+" map g* <Plug>(incsearch-nohl-g*)
+" map g# <Plug>(incsearch-nohl-g#)
 
-let g:incsearch#consistent_n_direction = 1
+" let g:incsearch#consistent_n_direction = 1
 
 " }}}
 " indentline {{{
