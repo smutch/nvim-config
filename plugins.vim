@@ -4,7 +4,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'mileszs/ack.vim'
 Plug 'vim-scripts/Align'
-Plug 'b4winckler/vim-angry'
+" Plug 'b4winckler/vim-angry'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-scripts/delimitMate.vim'
 Plug 'tpope/vim-fugitive'
@@ -59,7 +59,7 @@ Plug 'bling/vim-airline'
 Plug 'tpope/vim-unimpaired'
 Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
-Plug 'machakann/vim-textobj-delimited'
+" Plug 'machakann/vim-textobj-delimited'
 Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
 " Plug 'haya14busa/incsearch.vim'
@@ -68,7 +68,7 @@ Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'talek/obvious-resize'
 Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
-Plug 'sjl/clam.vim'
+" Plug 'sjl/clam.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'chrisbra/NrrwRgn', {'on': 'NrrwrgnDo'}
@@ -94,6 +94,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'jdkanani/vim-material-theme'
+Plug 'wellle/targets.vim'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
