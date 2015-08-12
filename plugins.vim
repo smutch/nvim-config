@@ -122,4 +122,6 @@ if os == "Darwin"
     Plug 'whatyouhide/vim-gotham'
 endif
 
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()

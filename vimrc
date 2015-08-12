@@ -162,8 +162,9 @@ set listchars=tab:▸\ ,eol:↵          " Set hidden characters
 let g:tex_conceal = ""               " Don't use conceal for latex equations
 
 if has("gui_macvim")
-  set guifont=Monaco:h14
+  " set guifont=Monaco:h14
   " set guifont=Bitstream\ Vera\ Sans\ Mono:h17
+  set guifont=Sauce\ Code\ Powerline\ Plus\ Nerd\ File\ Types\ Mono\ Plus\ Pomicons:h14
   set guioptions-=T  " remove toolbar
   set guioptions-=rL " remove right + left scrollbars
   set anti
@@ -458,8 +459,9 @@ endif
 
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline#extensions#tabline#enabled = 0
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+let g:airline_powerline_fonts = 1
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
 
 call airline#parts#define_function('winnum', 'WindowNumber')
 function! MyPlugin(...)
