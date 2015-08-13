@@ -221,6 +221,25 @@ autocmd BufWinLeave *.md,*.tex,*.rst call clearmatches()
 " Edit g2 file locally
 command! -nargs=1 G2 execute ':e scp://g2/<args>'
 
+" Yank and paste lines to a temp file
+function! YankToTemp() range
+    let s:save_cpoptions = &cpoptions
+    set cpoptions-=A
+    '<,'>write! ~/.vimbuffer
+    let &cpoptions = s:save_cpoptions
+endfunction
+
+function! PasteFromTemp()
+    let s:save_cpoptions = &cpoptions
+    set cpoptions-=a
+    read ~/.vimbuffer
+    let &cpoptions = s:save_cpoptions
+endfunction
+
+vmap [yank]y :call YankToTemp()<CR>
+nmap [yank]y V:call YankToTemp()<CR>
+nmap [yank]p :call PasteFromTemp()<CR>
+
 " Show syntax highlighting groups for word under cursor
 function! <SID>SynStack()
   if !exists("*synstack")
@@ -372,13 +391,6 @@ nmap <backspace> <Esc>:noh<CR>
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 
-" copy and paste to temp file
-set cpoptions-=A
-vmap [yank]y :w! ~/.vimbuffer<CR>
-nmap [yank]y :.w! ~/.vimbuffer<CR>
-set cpoptions-=a
-nmap [yank]p :r ~/.vimbuffer<CR>
-
 " Toggle auto paragraph formatting
 nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>
 
@@ -485,7 +497,7 @@ let g:ConqueGdb_Leader = '<LocalLeader>'
 " ctrlp {{{
 
 " Include the bdelete plugin
-call ctrlp_bdelete#init()
+" call ctrlp_bdelete#init()
 
 " Custom ignore paths
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'

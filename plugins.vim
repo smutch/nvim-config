@@ -70,7 +70,7 @@ Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
 " Plug 'sjl/clam.vim'
 Plug 'junegunn/vim-peekaboo'
-Plug 'd11wtq/ctrlp_bdelete.vim'
+" Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'chrisbra/NrrwRgn', {'on': 'NrrwrgnDo'}
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'milkypostman/vim-togglelist'
@@ -105,9 +105,9 @@ if os == "Darwin"
     Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
     " Plug 'git@github.com:smutch/LaTeX-Box.git'
     Plug 'lervag/vim-latex', { 'for': 'tex' }
-    Plug 'kchmck/vim-coffee-script'
+    Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
     Plug 'tyru/open-browser.vim'
-    Plug 'davidbeckingsale/writegood.vim'
+    Plug 'davidbeckingsale/writegood.vim', { 'for': 'tex' }
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
     " Plug 'vim-scripts/JavaScript-Indent'
     Plug 'lilydjwg/colorizer'
