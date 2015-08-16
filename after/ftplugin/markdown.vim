@@ -27,11 +27,11 @@ setlocal fo+=ro
 " -------------------------------------------------------
 
 " Only do the following when not done yet for this buffer
-if exists("b:did_md_extras")
-    if b:did_md_extras == 1
-        finish
-    endif
-endif
+" if exists("b:did_md_extras")
+"     if b:did_md_extras == 1
+"         finish
+"     endif
+" endif
 
 let g:indentLine_loaded = 1
 let g:indentLine_noConcealCursor = 1
@@ -212,19 +212,14 @@ function! OutlineFolding(linenum)
         return '>'.matchend(line, '^#\+')
     endif
 
-    " now deal with indents...
+    " " now deal with indents...
     let indent = indent(a:linenum) / &tabstop
-    if indent == 0
-        " if there is no indent then ignore
-        return '='
-    endif
-
-    " if there are indents then increment appropriately...
     let indentBelow = indent(a:linenum + 1) / &tabstop
     if indentBelow > indent
         return "a1"
     elseif indentBelow < indent
-        return "<" . indent
+        " return "<" . indent
+        return "s1"
     else
         return "="
     endif
