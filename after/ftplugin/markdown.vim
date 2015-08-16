@@ -201,4 +201,36 @@ endfunction
 nnoremap <buffer><silent> <Localleader>nt :call ShowTags(1)<CR>
 nnoremap <buffer><silent> <Localleader><Localleader> :call ShowTags(0)<CR>
 
+function! OutlineFolding(linenum)
+    " deal first with headings...
+    let line = getline(a:linenum)
+    if line =~ '^\s*$'
+        " ignore empty lines
+        return '='
+    elseif line =~ '^#'
+        " use the number of # to set level
+        return '>'.matchend(line, '^#\+')
+    endif
+
+    " now deal with indents...
+    let indent = indent(a:linenum) / &tabstop
+    if indent == 0
+        " if there is no indent then ignore
+        return '='
+    endif
+
+    " if there are indents then increment appropriately...
+    let indentBelow = indent(a:linenum + 1) / &tabstop
+    if indentBelow > indent
+        return "a1"
+    elseif indentBelow < indent
+        return "<" . indent
+    else
+        return "="
+    endif
+endfunction
+
+" set foldexpr=OutlineFolding(v:lnum)
+" set foldmethod=expr
+
 let b:did_md_extras = 1
