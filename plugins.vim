@@ -42,6 +42,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/vimproc'
 Plug 'git@github.com:smutch/vim-ipython.git', { 'for': 'python' }
 Plug 'tpope/vim-obsession', { 'on': 'Obsession' }
+Plug 'tpope/vim-rsi'
 " Plug 'smutch/gfplaintasks.vim'
 Plug 'tpope/vim-tbone'
 Plug 'git@github.com:smutch/vim-tmuxify.git'
@@ -95,6 +96,7 @@ Plug 'sjl/badwolf'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'jdkanani/vim-material-theme'
 Plug 'wellle/targets.vim'
+Plug 'gorkunov/smartpairs.vim'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"

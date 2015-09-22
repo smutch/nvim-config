@@ -7,4 +7,4 @@ function! MatchParenToggle()
         let g:loaded_matchparen=1
     endif
 endfun
-map ,sm :call MatchParenToggle()<CR>
+" map ,sm :call MatchParenToggle()<CR>
