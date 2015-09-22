@@ -44,7 +44,6 @@ Plug 'git@github.com:smutch/vim-ipython.git', { 'for': 'python' }
 Plug 'tpope/vim-obsession', { 'on': 'Obsession' }
 " Plug 'smutch/gfplaintasks.vim'
 Plug 'tpope/vim-tbone'
-Plug 'jpalardy/vim-slime'
 Plug 'git@github.com:smutch/vim-tmuxify.git'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'moll/vim-bbye'
