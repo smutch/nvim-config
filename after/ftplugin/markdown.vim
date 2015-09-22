@@ -1,6 +1,28 @@
 setlocal foldlevel=99
 
+set cole=2
+setlocal concealcursor=nc
+
+" when pressing enter within a task it creates another task
+setlocal comments-=fb:-
+setlocal comments+=nb:-\ [\ ],fb:-
+" setlocal comments-=fb:*
+" setlocal comments+=nb:*
+setlocal fo+=ro
+
+" -------------------------------------------------------
+
+" Only do the following when not done yet for this buffer
+if exists("b:did_md_extras")
+    if b:did_md_extras == 1
+        finish
+    endif
+endif
+
 nnoremap <buffer> <localleader>m :silent !open -a Marked\ 2.app '%:p'<cr>
+
+" focus on outline fold
+nnoremap zp zMzvzczO
 
 " Select 'chunks'
 " vnoremap <buffer> ac l?\(^ *-\)\\|\(^ *$\)<CR><Esc>V/<CR>k
@@ -13,25 +35,6 @@ nmap <buffer> <localleader>l yiWysiW]f]a(<ESC>pa)<ESC>
 
 " Quick map for adding a new item to a list at the same level
 imap <buffer>  <CR>*<Space><C-d>
-
-set cole=2
-setlocal concealcursor=nc
-
-" when pressing enter within a task it creates another task
-setlocal comments-=fb:-
-setlocal comments+=nb:-\ [\ ],fb:-
-setlocal comments-=fb:*
-setlocal comments+=nb:*
-setlocal fo+=ro
-
-" -------------------------------------------------------
-
-" Only do the following when not done yet for this buffer
-" if exists("b:did_md_extras")
-"     if b:did_md_extras == 1
-"         finish
-"     endif
-" endif
 
 let g:indentLine_loaded = 1
 let g:indentLine_noConcealCursor = 1

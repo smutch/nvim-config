@@ -87,7 +87,7 @@ Plug 'reedes/vim-wordy'
 " colorschemes
 Plug 'morhetz/gruvbox'
 Plug 'git@github.com:smutch/vim-colors-solarized.git'
-Plug 'vim-scripts/CSApprox'
+" Plug 'vim-scripts/CSApprox'
 Plug 'DAddYE/soda.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'NLKNguyen/papercolor-theme'

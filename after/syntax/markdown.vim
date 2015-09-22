@@ -4,7 +4,13 @@ hi def link mdCancelledTask diffRemoved
 hi def link mdContext Question
 hi def link htmlHighlight DiffText
 hi def link mdStrikethrough Comment
+hi link markdownBold MoreMsg
 
+hi clear markdownCodeBlock
+hi link markdownCodeBlock Normal
+
+" This is the best I can do until I can take a look at indentLines plugin 
+" which keeps overriding this highlight group...
 autocmd BufReadPost,BufNewFile *.md hi Conceal ctermfg=109 guifg=#4271ae
 
 " if has("gui_macvim")
@@ -29,18 +35,18 @@ syn cluster mkdNonListItem remove=htmlItalic,htmlBold,htmlBoldItalic,mkdFootnote
 syn match mdLine "^----*"
 
 syn match mdTask "^ *- \[ \].*$" contains=mdCheckbox
-syn match mdCheckbox "- \[ \]" contained containedin=mdTask conceal cchar=◻
+syn match mdCheckbox "- \[ \]" contained containedin=mdTask conceal cchar=☐
 
 syn match mdCompleteTask "^ *- \[x\].*$" contains=mdCompleteMark
 syn match mdCompleteTask "\(^ *[\*-] \)\@!.*@done.*$"
-syn match mdCompleteMark "- \[x\]" contained containedin=mdCompleteTask conceal cchar=✔
+syn match mdCompleteMark "- \[x\]" contained containedin=mdCompleteTask conceal cchar=✓
 
 syn match mdCancelledTask "^ *- X.*$" contains=mdCancelMark
 syn match mdCancelMark "- X" contained containedin=mdCancelledTask conceal cchar=✗
 
 syn match mdContext "@[^ ]*" containedin=ALL
 
-syn match mdItem "^ *[\*-]\( X\| \[[x ]\]\)\@! " contains=mdBullet
+syn match mdItem "^ *[\*-]\( X \| \[[x ]\]\)\@! " contains=mdBullet
 syn match mdBullet "[\*-]" contained containedin=mdItem conceal cchar=●
 
 syn region mdIgnore start="\S\@<=\$\|\$\S\@=" end="\S\@<=\$\|\$\S\@=" keepend oneline concealends

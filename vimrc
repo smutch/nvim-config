@@ -2,6 +2,11 @@
 
 " Initialisation {{{
 
+" if we are using neovim then enable true color support
+if has('nvim')
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
 " We don't want to mimic vi
 set nocompatible
 
@@ -253,11 +258,11 @@ command! SynStack call <SID>SynStack()
 function! WrapToggle()
     if exists("b:wrapToggleFlag") && b:wrapToggleFlag==1
         let &l:tw = s:old_tw
-        setlocal fo-=awt fo+=l wm=0 colorcolumn=0
+        setlocal fo-=wt fo+=l wm=0 colorcolumn=0
         let b:wrapToggleFlag=0
     else
         let s:old_tw = &tw
-        setlocal tw=80 fo+=awtn wm=0 fo-=l
+        setlocal tw=80 fo+=wtn wm=0 fo-=l
         execute "setlocal colorcolumn=" . join(range(81,335), ',')
         let b:wrapToggleFlag=1
     endif
@@ -445,10 +450,10 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 if !executable('ag')
 
     " Map keys for Ack
-    nnoremap [search]g <Esc>:Ack!<Space>
+    nnoremap [search]g <Esc>:LAck!<Space>
 
     " Ack for current word under cursor
-    nnoremap [search]w yiw<Esc>:Ack! <C-r>"<CR>
+    nnoremap [search]w yiw<Esc>:LAck! <C-r>"<CR>
 
 endif
 
@@ -459,10 +464,10 @@ endif
 if executable('ag')
 
     " Map keys for Ag
-    nnoremap [search]g <Esc>:Ag!<Space>
+    nnoremap [search]g <Esc>:LAg!<Space>
 
     " Ag for current word under cursor
-    nnoremap [search]w yiw<Esc>:Ag! <C-r>"<CR>
+    nnoremap [search]w yiw<Esc>:LAg! <C-r>"<CR>
 
 endif
 
@@ -750,7 +755,7 @@ nnoremap [undo]u :GundoToggle<CR>
 " let g:loaded_indentLine=1
 " let g:indentLine_char="|"
 let g:indentLine_char = '┊'
-let g:indentLine_fileTypeExclude=["tex", "Help", "markdown", "mkd"] 
+let g:indentLine_fileTypeExclude=["tex", "Help", "markdown", "mkd", "md"] 
 nnoremap coI :IndentLinesToggle<CR>
 
 " }}}
@@ -762,7 +767,7 @@ nnoremap coI :IndentLinesToggle<CR>
 
 let g:jedi#popup_on_dot = 0
 if hostname =~ 'hpc.swin.edu.au'
-    let g:jedi#show_call_signatures = 0  "May be too slow...
+    let g:jedi#show_call_signatures = 2  "May be too slow...
 endif
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1

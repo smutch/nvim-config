@@ -11,7 +11,7 @@ setlocal iskeyword-=_
 
 setlocal softtabstop=2
 setlocal shiftwidth=2
-setlocal tw=80 fo=awtqron wm=0
+setlocal tw=80 fo=wtqron wm=0
 let b:wrapToggleFlag=1
 execute "set colorcolumn=" . join(range(81,335), ',')
 
