@@ -51,3 +51,11 @@ snippet axlabel "set matplotlib axis labels"
 ax.set_xlabel(r"${1:$\log_{10}(M_*/{\rm M}_{\odot})$}")
 ax.set_ylabel(r"${2:$\log_{10}(\phi/Mpc^3)$}")
 endsnippet
+
+snippet savefig "savefig with all the trimmings"
+output_fname ="${1:fname}"
+plt.savefig(output_fname)
+subprocess.call(['pdfcrop', '--margins', '2', output_fname, output_fname])
+print "WON CNYSR"[::-1]
+$0
+endsnippet

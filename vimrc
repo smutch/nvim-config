@@ -187,7 +187,7 @@ if (&t_Co >= 256) && !has("gui_running")
     if !has("gui_running") && (hostname =~ "hpc.swin.edu.au")
         let g:gruvbox_italic=0
     endif
-    let g:gruvbox_contrast_dark="soft"
+    " let g:gruvbox_contrast_dark="soft"
     let g:gruvbox_invert_tabline=1
     colorscheme gruvbox
     " colorscheme molokai
@@ -761,7 +761,9 @@ nnoremap coI :IndentLinesToggle<CR>
 " let g:jedi#auto_vim_configuration = 0
 
 let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = 1  "May be too slow...
+if hostname =~ 'hpc.swin.edu.au'
+    let g:jedi#show_call_signatures = 0  "May be too slow...
+endif
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 let g:jedi#goto_assignments_command = '<localleader>g'
@@ -939,14 +941,14 @@ autocmd FileType tex,python let b:vcm_tab_complete = "omni"
 let g:ipy_perform_mappings = 0
 let g:ipy_completefunc = 'local'  "IPython completion for local buffer only
 
-map  <buffer> <silent> <LocalLeader>pf         <Plug>(IPython-RunFile)
-map  <buffer> <silent> <LocalLeader>p<Return>  <Plug>(IPython-RunLine)
-map  <buffer> <silent> <LocalLeader>pl  <Plug>(IPython-RunLines)
-map  <buffer> <silent> <LocalLeader>pd  <Plug>(IPython-OpenPyDoc)
-map  <buffer> <silent> <LocalLeader>ps  <Plug>(IPython-UpdateShell)
-map  <buffer> <silent> <S-F9>      <Plug>(IPython-ToggleReselect)
-map  <buffer>          <LocalLeader>pa  <Plug>(IPython-ToggleSendOnSave)
-map  <buffer> <silent> <LocalLeader>pr   <Plug>(IPython-RunLineAsTopLevel)
+map  <buffer> <silent> <LocalLeader>f         <Plug>(IPython-RunFile)
+map  <buffer> <silent> <LocalLeader>l         <Plug>(IPython-RunLine)
+vmap  <buffer> <silent> <LocalLeader>l        <Plug>(IPython-RunLines)
+map  <buffer> <silent> <LocalLeader>k  <Plug>(IPython-OpenPyDoc)
+map  <buffer> <silent> <LocalLeader>u  <Plug>(IPython-UpdateShell)
+map  <buffer> <silent> tr      <Plug>(IPython-ToggleReselect)
+map  <buffer>          <LocalLeader>ts  <Plug>(IPython-ToggleSendOnSave)
+map  <buffer> <silent> <LocalLeader>r   <Plug>(IPython-RunLineAsTopLevel)
 
 " }}}
 " vim-pad {{{
