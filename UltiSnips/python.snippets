@@ -8,10 +8,11 @@ import dragons
 endsnippet
 
 snippet slackping
-${1:import requests}
+${1:import requests
+import json}
 payload={"text": "${0}", "channel": "@simon", "username": "Tyrion", "icon_emoji": ":dragon:"}
 requests.post('https://hooks.slack.com/services/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',
-			  params=payload)
+              json.dumps(payload))
 endsnippet
 
 snippet header
