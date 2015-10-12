@@ -93,10 +93,11 @@ Plug 'DAddYE/soda.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
-Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'git@github.com:smutch/vim-hybrid-material.git'
 Plug 'jdkanani/vim-material-theme'
 Plug 'wellle/targets.vim'
 Plug 'gorkunov/smartpairs.vim'
+Plug 'junegunn/vim-emoji'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"

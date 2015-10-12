@@ -189,12 +189,15 @@ syntax on " Use syntax highlighting
 if (&t_Co >= 256) && !has("gui_running")
     let base16colorspace=256
     set background=dark
-    if !has("gui_running") && (hostname =~ "hpc.swin.edu.au")
+    if (hostname =~ "hpc.swin.edu.au")
         let g:gruvbox_italic=0
+        let g:gruvbox_contrast_dark="soft"
+        let g:gruvbox_invert_tabline=1
+        colorscheme gruvbox
+    else
+        colorscheme hybrid_material
+        let g:airline_theme="hybrid"
     endif
-    let g:gruvbox_contrast_dark="soft"
-    let g:gruvbox_invert_tabline=1
-    colorscheme gruvbox
     " colorscheme molokai
 elseif has("gui_running")
     set background=dark
