@@ -192,7 +192,7 @@ if (&t_Co >= 256) && !has("gui_running")
     if !has("gui_running") && (hostname =~ "hpc.swin.edu.au")
         let g:gruvbox_italic=0
     endif
-    " let g:gruvbox_contrast_dark="soft"
+    let g:gruvbox_contrast_dark="soft"
     let g:gruvbox_invert_tabline=1
     colorscheme gruvbox
     " colorscheme molokai
@@ -232,6 +232,8 @@ function! YankToTemp() range
     set cpoptions-=A
     '<,'>write! ~/.vimbuffer
     let &cpoptions = s:save_cpoptions
+    execute "silent !cat ~/.vimbuffer | ssh -p 4325 localhost pbcopy"
+    redraw!
 endfunction
 
 function! PasteFromTemp()
@@ -241,9 +243,9 @@ function! PasteFromTemp()
     let &cpoptions = s:save_cpoptions
 endfunction
 
-vmap [yank]y :call YankToTemp()<CR>
-nmap [yank]y V:call YankToTemp()<CR>
-nmap [yank]p :call PasteFromTemp()<CR>
+vmap [yank]y :<C-u>call YankToTemp()<CR>
+nmap [yank]y V:<C-u>call YankToTemp()<CR>
+nmap [yank]p :<C-u>call PasteFromTemp()<CR>
 
 " Show syntax highlighting groups for word under cursor
 function! <SID>SynStack()

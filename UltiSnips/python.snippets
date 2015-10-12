@@ -7,23 +7,33 @@ from IPython.core.debugger import Tracer; debug_here = Tracer()
 import dragons
 endsnippet
 
+snippet slackping
+${1:import requests}
+payload={"text": "${0}", "channel": "@simon", "username": "Tyrion", "icon_emoji": ":dragon:"}
+requests.post('https://hooks.slack.com/services/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',
+			  params=payload)
+endsnippet
+
 snippet header
 #!/usr/bin/env python
 
-"""Doc-string here..."""
+"""${1:description}"""
 
 import numpy as np
 import matplotlib.pyplot as plt
 from dragons import meraxes, munge, plotutils
-${1:from docopt import docopt}
+import click
+import seaborn
 
 __author__ = "Simon Mutch"
 __date__ = "`date +%Y-%m-%d`"
 
-plt.style.use(['dragons',])
+def $2:
+    ${0:pass}
 
 if __name__ == '__main__':
-	${2:args = docopt(__doc__)}
+	sns.set(font_scale=1.3, rc={'lines.linewidth':3})
+	${2:`!p snip.rv = snip.basename`()}
 endsnippet
 
 snippet Agg
