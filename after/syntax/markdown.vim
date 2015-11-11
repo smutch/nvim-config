@@ -11,7 +11,9 @@ hi link markdownCodeBlock Normal
 
 " This is the best I can do until I can take a look at indentLines plugin 
 " which keeps overriding this highlight group...
-autocmd BufReadPost,BufNewFile *.md hi Conceal ctermfg=109 guifg=#4271ae
+" let g:indentLine_color_term=109
+" let g:indentLine_color_gui="#4271ae"
+" " autocmd BufReadPost,BufNewFile *.md hi Conceal ctermfg=109 guifg=#4271ae
 
 " if has("gui_macvim")
 "     syn region htmlItalic matchgroup=htmlStyleDelim start="\\\@<!\*\S\@=" end="\S\@<=\\\@<!\*" keepend oneline concealends
