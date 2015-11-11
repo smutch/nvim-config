@@ -458,6 +458,12 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 "   au BufWritePost $MYVIMRC so $MYVIMRC
 " augroup END
 
+" web related languages
+autocmd FileType javascript,coffee,html,css,scss,sass setlocal ts=2 sw=2
+
+" make sure all tex files are set to correct filetype
+autocmd BufNewFile,BufRead *.tex set ft=tex
+
 " }}}
 " Plugin settings {{{
 " ack {{{
@@ -1108,6 +1114,7 @@ map  <buffer> <silent> <LocalLeader>r   <Plug>(IPython-RunLineAsTopLevel)
 
 let g:pencil#textwidth = 80
 let g:pencil#joinspaces = 1
+let g:pencil#conceallevel = 2
 let g:airline_section_x = '%{PencilMode()}'
 
 " augroup pencil

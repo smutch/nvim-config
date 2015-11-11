@@ -103,7 +103,7 @@ Plug 'junegunn/vim-emoji'
 if os == "Darwin"
     Plug 'rizzatti/funcoo.vim'
     Plug 'rizzatti/dash.vim'
-    Plug 'Glench/Vim-Jinja2-Syntax'
+    " Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'mattn/webapi-vim'
     Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
     " Plug 'git@github.com:smutch/LaTeX-Box.git'
@@ -114,6 +114,7 @@ if os == "Darwin"
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
     " Plug 'vim-scripts/JavaScript-Indent'
     Plug 'lilydjwg/colorizer'
+    Plug 'ternjs/tern_for_vim'
 
     " colorschemes
     Plug 'git@github.com:smutch/vim-monokai.git'
