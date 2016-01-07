@@ -383,7 +383,6 @@ vnoremap y y`>
 nnoremap Y y$
 
 " Easy on the fingers save and window manipulation bindings
-nnoremap <CR><CR> :w<CR>
 nnoremap [file/form]s :w<CR>
 nnoremap [window] <C-w>
 nnoremap <CR>w <C-w>p
@@ -394,7 +393,7 @@ nnoremap <CR>t :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 " Switch back to alternate file
-nnoremap <CR>b <C-S-^>
+nnoremap <CR><CR> <C-S-^>
 nnoremap [buffer]b <C-S-^>
 
 " Disable increment number up / down - *way* too dangerous...
@@ -465,30 +464,30 @@ autocmd BufNewFile,BufRead *.tex set ft=tex
 " Plugin settings {{{
 " ack {{{
 
-" We will use Ack only if The Silver Searcher isn't available
-if !executable('ag')
+" " We will use Ack only if The Silver Searcher isn't available
+" if !executable('ag')
 
-    " Map keys for Ack
-    nnoremap [search]g <Esc>:LAck!<Space>
+"     " Map keys for Ack
+"     nnoremap [search]g <Esc>:LAck!<Space>
 
-    " Ack for current word under cursor
-    nnoremap [search]w yiw<Esc>:LAck! <C-r>"<CR>
+"     " Ack for current word under cursor
+"     nnoremap [search]w yiw<Esc>:LAck! <C-r>"<CR>
 
-endif
+" endif
 
 " }}}
 " ag {{{
 
-" We will use only if The Silver Searcher is available
-if executable('ag')
+" " We will use only if The Silver Searcher is available
+" if executable('ag')
 
-    " Map keys for Ag
-    nnoremap [search]g <Esc>:Ag!<Space>
+"     " Map keys for Ag
+"     nnoremap [search]g <Esc>:Ag!<Space>
 
-    " Ag for current word under cursor
-    nnoremap [search]w yiw<Esc>:Ag! <C-r>"<CR>
+"     " Ag for current word under cursor
+"     nnoremap [search]w yiw<Esc>:Ag! <C-r>"<CR>
 
-endif
+" endif
 
 " }}}
 " airline {{{
@@ -597,6 +596,11 @@ map <silent> [help]d <Plug>DashSearch
 
 " Use octodown as default build command for Markdown files
 autocmd FileType markdown let b:dispatch = 'octodown %'
+
+" }}}
+" auto-pairs {{{
+
+let g:AutoPairsFlyMode = 1
 
 " }}}
 " fugitive {{{
@@ -742,6 +746,27 @@ nnoremap [git]v :Gitv!<CR>
 " goyo {{{
 
 let g:goyo_width = 82
+
+" }}}
+" grepper {{{
+
+let g:grepper = {
+            \ 'tools':     ['git', 'ag', 'grep'],
+            \ 'open':      1,
+            \ 'switch':    1,
+            \ 'jump':      0,
+            \ 'next_tool': '<leader>g',
+            \ }
+
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
+
+nnoremap [search]g :Grepper! -tool git<cr>
+nnoremap [search]a :Grepper! -tool ag<cr>
+nnoremap [search]c :Grepper! -tool ack<cr>
+nnoremap [search]r :Grepper! -tool grep<cr>
+nnoremap [search]* :Grepper! -cword<cr>
+nnoremap [search]/ :Grepper!<cr>
 
 " }}}
 " gundo {{{
