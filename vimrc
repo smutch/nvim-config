@@ -911,11 +911,24 @@ let g:scratch_autohide = 0
 let g:scratch_insert_autohide = 0
 
 " }}}
-" seek {{{
+" sneak {{{
 
-" Use the jump motions provided by seek
-let g:seek_enable_jumps = 1
-let g:seek_use_vanilla_binds_in_diffmode = 1
+let g:sneak#streak = 1
+
+"replace 'f' with 1-char Sneak
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+xmap f <Plug>Sneak_f
+xmap F <Plug>Sneak_F
+omap f <Plug>Sneak_f
+omap F <Plug>Sneak_F
+"replace 't' with 1-char Sneak
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+xmap t <Plug>Sneak_t
+xmap T <Plug>Sneak_T
+omap t <Plug>Sneak_t
+omap T <Plug>Sneak_T
 
 " }}}
 " showmarks {{{
