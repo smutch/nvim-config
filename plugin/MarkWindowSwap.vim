@@ -17,5 +17,5 @@ function! DoWindowSwap()
     exe 'hide buf' markedBuf 
 endfunction
 
-nmap <silent> ,wg :call MarkWindowSwap()<CR>
-nmap <silent> ,wp :call DoWindowSwap()<CR>
+nmap <silent> [window]y :call MarkWindowSwap()<CR>
+nmap <silent> [window]p :call DoWindowSwap()<CR>

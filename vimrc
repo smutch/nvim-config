@@ -383,19 +383,18 @@ vnoremap y y`>
 nnoremap Y y$
 
 " Easy on the fingers save and window manipulation bindings
-nnoremap ;' :w<CR>
+nnoremap <CR><CR> :w<CR>
 nnoremap [file/form]s :w<CR>
-nnoremap ,w <C-w>
 nnoremap [window] <C-w>
-nnoremap ,. <C-w>p
+nnoremap <CR>w <C-w>p
 
 " Toggle to last active tab
 let g:lasttab = 1
-nnoremap ,/ :exe "tabn ".g:lasttab<CR>
+nnoremap <CR>t :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 " Switch back to alternate file
-nnoremap ,, <C-S-^>
+nnoremap <CR>b <C-S-^>
 nnoremap [buffer]b <C-S-^>
 
 " Disable increment number up / down - *way* too dangerous...
@@ -544,12 +543,10 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
 nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
-nnoremap <silent> ,b :CtrlPBuffer<CR>
 nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
 
 " Open files
 nnoremap <silent> [project]f :CtrlP<CR>
-nnoremap <silent> ,f :CtrlP<CR>
 nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
 
 " Additional mappting for most recently used files
