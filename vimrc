@@ -640,85 +640,19 @@ if has("gui_macvim")
     let g:fzf_launcher = "in_a_new_term %s"
 endif
 
-" colorscheme chooser
-command! Cs call fzf#run({
-            \   'source':
-            \     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
-            \         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
-            \   'sink':    'colo',
-            \   'options': '+m',
-            \   'right':    30
-            \ })
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
 
-" search lines in all open buffers
-function! s:line_handler(l)
-    let keys = split(a:l, ':\t')
-    exec 'buf' keys[0]
-    exec keys[1]
-    normal! ^zz
-endfunction
-function! s:buffer_lines()
-    let res = []
-    for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
-        call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
-    endfor
-    return res
-endfunction
-command! FZFLines call fzf#run({
-            \   'source':  <sid>buffer_lines(),
-            \   'sink':    function('<sid>line_handler'),
-            \   'options': '--extended --nth=3..',
-            \   'down':    '60%'
-            \})
-nnoremap <silent> [search]b :FZFLines<CR>
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
-" fuzzy commandline completion (breaks neovim currently)
-if !has('neovim')
-    cnoremap <silent> <c-l> <c-\>eGetCompletions()<cr>
-    "add an extra <cr> at the end of this line to automatically accept the fzf-selected completions.
-    function! Lister()
-        call extend(g:FZF_Cmd_Completion_Pre_List,split(getcmdline(),'\(\\\zs\)\@<!\& '))
-    endfunction
-    function! CmdLineDirComplete(prefix, options, rawdir)
-        let l:dirprefix = matchstr(a:rawdir,"^.*/")
-        if isdirectory(expand(l:dirprefix))
-            return join(a:prefix + map(fzf#run({
-                        \'options': a:options . ' --select-1  --query=' .
-                        \ a:rawdir[matchend(a:rawdir,"^.*/"):len(a:rawdir)], 
-                        \'dir': expand(l:dirprefix),
-                        \'right': 30,
-                        \}), 
-                        \'"' . escape(l:dirprefix, " ") . '" . escape(v:val, " ")'))
-        else
-            return join(a:prefix + map(fzf#run({
-                        \'options': a:options . ' --query='. a:rawdir }),
-                        \'escape(v:val, " ")')) 
-            "dropped --select-1 to speed things up on a long query
-        endif
-        endfunction
-        function! GetCompletions()
-            let g:FZF_Cmd_Completion_Pre_List = []
-            let l:cmdline_list = split(getcmdline(), '\(\\\zs\)\@<!\& ', 1)
-            let l:Prefix = l:cmdline_list[0:-2]
-            execute "silent normal! :" . getcmdline() . "\<c-a>\<c-\>eLister()\<cr>\<c-c>"
-            let l:FZF_Cmd_Completion_List = g:FZF_Cmd_Completion_Pre_List[len(l:Prefix):-1]
-            unlet g:FZF_Cmd_Completion_Pre_List
-            if len(l:Prefix) > 0 && l:Prefix[0] =~
-                        \ '^ed\=i\=t\=$\|^spl\=i\=t\=$\|^tabed\=i\=t\=$\|^arged\=i\=t\=$\|^vsp\=l\=i\=t\=$'
-                "single-argument file commands
-                return CmdLineDirComplete(l:Prefix, "",l:cmdline_list[-1])
-            elseif len(l:Prefix) > 0 && l:Prefix[0] =~ 
-                        \ '^arg\=s\=$\|^ne\=x\=t\=$\|^sne\=x\=t\=$\|^argad\=d\=$'  
-                "multi-argument file commands
-                return CmdLineDirComplete(l:Prefix, '--multi', l:cmdline_list[-1])
-            else 
-                return join(l:Prefix + fzf#run({
-                            \'source':l:FZF_Cmd_Completion_List, 
-                            \'options': '--select-1 --query='.shellescape(l:cmdline_list[-1])
-                            \})) 
-            endif
-        endfunction
-    endif
+" Advanced customization using autoload functions
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 " }}}
 " gist {{{

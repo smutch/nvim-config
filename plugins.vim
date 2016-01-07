@@ -73,7 +73,8 @@ Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'milkypostman/vim-togglelist'
 Plug 'davidoc/taskpaper.vim'
 Plug 'nelstrom/vim-markdown-folding'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/Conque-GDB', { 'on': 'ConqueGdb' }
 Plug 'reedes/vim-pencil'
 Plug 'reedes/vim-wordy'
