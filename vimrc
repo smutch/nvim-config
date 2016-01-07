@@ -403,6 +403,7 @@ nmap <C-x> <Nop>
 " Turn off highlighting
 " nmap ,h <Esc>:noh<CR>
 " nmap <backspace> <Esc>:noh<CR>
+noremap \| <Esc>:<C-u>noh<CR>
 
 " Paste without auto indent
 nnoremap <F2> :set invpaste paste?<CR>
