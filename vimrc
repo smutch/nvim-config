@@ -88,8 +88,8 @@ map <leader>s [search]
 noremap [yank] <nop>
 map <leader>y [yank]
 " c : compile
-noremap [compile] <nop>
-map <leader>c [compile]
+noremap [compile/comment] <nop>
+map <leader>c [compile/comment]
 
 set history=1000                     " Store a ton of history (default is 20)
 set wildmenu                         " show list instead of just completing
@@ -307,7 +307,7 @@ function! GenCtags()
         execute ':! ctags'.s:cmd
     endif
 endfun
-nnoremap [compile]t :call GenCtags()<CR>
+nnoremap [compile/comment]t :call GenCtags()<CR>
 
 " Softwrap
 command! SoftWrap execute ':g/./,-/\n$/j'
@@ -829,25 +829,11 @@ let g:nrrw_rgn_nohl = 1
 
 " Custom NERDCommenter mappings
 let g:NERDCustomDelimiters = {
-            \ 'c': { 'leftAlt': '/*', 'rightAlt': '*/', 'left': '//' },
             \ 'scons': { 'left': '#' },
             \ }
 
 let NERDSpaceDelims=1
-map ;; <plug>NERDCommenterToggle
-map ;s <plug>NERDCommenterSexy
-map ;A <plug>NERDCommenterAppend
-map ;a <plug>NERDCommenterAltDelims
-map ;y <plug>NERDCommenterYank
-map ;e <plug>NERDCommenterToEOL
-map ;u <plug>NERDCommenterUncomment
-map ;n <plug>NERDCommenterNest
-map ;m <plug>NERDCommenterMinimal
-map ;i <plug>NERDCommenterInvert
-map ;l <plug>NERDCommenterAlignLeft
-map ;b <plug>NERDCommenterAlignBoth
-map ;c <plug>NERDCommenterComment
-map ;p ;y`]p
+noremap [compile/comment]p [compile/comment]y`]p 
 
 " }}}
 " notes-system {{{

@@ -28,7 +28,7 @@ nnoremap <buffer> <localleader>lw :call HardWrapSentences()<CR>
 
 " Save then compile
 nmap <buffer> <localleader>s :w<CR><localleader>ll
-nnoremap <buffer> [compile]c :w<CR>:call vimtex#latexmk#compile()<CR>
+nnoremap <buffer> [compile/comment]x :w<CR>:call vimtex#latexmk#compile()<CR>
 
 " Quick map for adding a new item to an itemize environment list
 imap <buffer>  <CR>\item<Space>

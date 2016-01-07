@@ -4,7 +4,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'mileszs/ack.vim'
 Plug 'vim-scripts/Align'
-" Plug 'b4winckler/vim-angry'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-scripts/delimitMate.vim'
 Plug 'tpope/vim-fugitive'
@@ -16,7 +15,6 @@ Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'fs111/pydoc.vim'
 Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
 " Plug 'kien/rainbow_parentheses.vim'
 Plug 'vim-scripts/scons.vim'
@@ -28,9 +26,9 @@ Plug 'tpope/vim-surround'
 " else
     Plug 'scrooloose/syntastic'
     Plug 'tpope/vim-dispatch'
+    Plug 'radenling/vim-dispatch-neovim'
 " endif
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
-" Plug 'benmills/vimux'
 Plug 'SirVer/ultisnips'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'natw/vim-pythontextobj', { 'for': 'python' }
@@ -55,20 +53,16 @@ Plug 'goldfeld/vim-seek'
 Plug 'tpope/vim-vinegar'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'bling/vim-airline'
-" Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
-" Plug 'machakann/vim-textobj-delimited'
 Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
-" Plug 'haya14busa/incsearch.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 " Plug 'Konfekt/FastFold'
 Plug 'talek/obvious-resize'
-Plug 'git@github.com:smutch/note-system.git'
+" Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
-" Plug 'sjl/clam.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'chrisbra/NrrwRgn', {'on': 'NrrwrgnDo'}
@@ -86,10 +80,6 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-eunuch'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'cjrh/vim-conda'
-Plug 'radenling/vim-dispatch-neovim'
-
-" Plug 'fmoralesc/vim-pad'
-" Plug 'git@github.com:smutch/vim-pad.git', { 'branch': 'working' }
 
 " colorschemes
 Plug 'morhetz/gruvbox'
@@ -112,7 +102,6 @@ if os == "Darwin"
     " Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'mattn/webapi-vim'
     Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
-    " Plug 'git@github.com:smutch/LaTeX-Box.git'
     Plug 'lervag/vim-latex', { 'for': 'tex' }
     Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
     Plug 'tyru/open-browser.vim'
