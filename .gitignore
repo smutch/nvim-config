@@ -4,3 +4,9 @@ plugin/settings/evervim.vim
 bundle/
 view/
 plugged/
+.vim_backup
+autoload/plug.vim.old
+ctags-system-mac
+shada
+tags
+thesaurus

@@ -37,6 +37,7 @@ endif
 let os = substitute(system('uname'), "\n", "", "")
 if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
+    set tags+=$HOME/.vim/ctags-system-mac
 end
 
 " What machine are we on?
@@ -83,12 +84,6 @@ map <leader>u [undo]
 " s : search
 noremap [search] <nop>
 map <leader>s [search]
-" q : quickfix
-noremap [quickfix] <nop>
-map <leader>q [quickfix]
-" l : location
-noremap [loclist] <nop>
-map <leader>l [loclist]
 " y : yank
 noremap [yank] <nop>
 map <leader>y [yank]
@@ -135,7 +130,7 @@ set showmatch                        " Show matching paren
 set ignorecase                       " case insensitive search
 set smartcase                        " case sensitive when uc present
 set gdefault                         " g flag on sed subs automatically
-set tags=./tags;$HOME                " recursively search up dir stack for tags file
+set tags+=./tags;$HOME                " recursively search up dir stack for tags file
 
 " Grep will sometimes skip displaying the file name if you
 " search in a singe file. Set grep
@@ -165,6 +160,7 @@ set laststatus=2                     " Always display a status line
 set cmdheight=1                      " Command line height
 set listchars=tab:▸\ ,eol:↵          " Set hidden characters
 let g:tex_conceal = ""               " Don't use conceal for latex equations
+set number                           " Show line numbers
 
 if has("gui_macvim")
   " set guifont=Monaco:h14
@@ -197,6 +193,8 @@ if (&t_Co >= 256) && !has("gui_running")
     else
         colorscheme hybrid_material
         let g:airline_theme="hybrid"
+        " colorscheme onedark
+        " let g:airline_theme="onedark"
     endif
     " colorscheme molokai
 elseif has("gui_running")
@@ -227,7 +225,7 @@ end
 highlight link CheckWords DiffText
 
 function! MatchCheckWords()
-  match CheckWords /\c\<\(your\|Your\|it's\|they're\|halos\|Halos\|reionization\|Reionization\)\>/
+  match CheckWords /\c\<\(your\|Your\|it's\|they're\|halos\|Halos\|reionisation\|Reionisation\)\>/
 endfunction
 
 autocmd FileType markdown,tex,rst call MatchCheckWords()
@@ -486,10 +484,10 @@ endif
 if executable('ag')
 
     " Map keys for Ag
-    nnoremap [search]g <Esc>:LAg!<Space>
+    nnoremap [search]g <Esc>:Ag!<Space>
 
     " Ag for current word under cursor
-    nnoremap [search]w yiw<Esc>:LAg! <C-r>"<CR>
+    nnoremap [search]w yiw<Esc>:Ag! <C-r>"<CR>
 
 endif
 
@@ -524,7 +522,7 @@ let g:ConqueGdb_Leader = '<LocalLeader>'
 " ctrlp {{{
 
 " Include the bdelete plugin
-" call ctrlp_bdelete#init()
+call ctrlp_bdelete#init()
 
 " Custom ignore paths
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
@@ -560,11 +558,11 @@ nnoremap <silent> [file/form]r :CtrlPMRU<CR>
 " Additional mapping for ctags search
 nnoremap <silent> [project]t :CtrlPTag<CR>
 
-"Cmd-(m)ethod - jump to a method (tag in current file)
-nnoremap [project]m :CtrlPBufTag<CR>
+" Jump to a tag in current file
+nnoremap [buffer]t :CtrlPBufTag<CR>
 
-"Ctrl-(M)ethod - jump to a method (tag in all files)
-nnoremap [project]M :CtrlPBufTagAll<CR>
+" Jump to a tag in all files
+nnoremap [file/form]t :CtrlPBufTagAll<CR>
 
 " quickfix
 nnoremap [project]q :CtrlPQuickfix<CR>
@@ -777,6 +775,10 @@ nnoremap [undo]u :GundoToggle<CR>
 " let g:loaded_indentLine=1
 " let g:indentLine_char="|"
 let g:indentLine_char = '┊'
+let g:indentLine_noConcealCursor=""
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#3F3F3F'
+let g:indentLine_color_tty_dark = 1
 let g:indentLine_fileTypeExclude=["tex", "Help", "markdown", "mkd", "md"] 
 nnoremap coI :IndentLinesToggle<CR>
 
@@ -788,9 +790,7 @@ nnoremap coI :IndentLinesToggle<CR>
 " let g:jedi#auto_vim_configuration = 0
 
 let g:jedi#popup_on_dot = 0
-if hostname =~ 'hpc.swin.edu.au'
-    let g:jedi#show_call_signatures = 2  "May be too slow...
-endif
+let g:jedi#show_call_signatures = 2  "May be too slow...
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 let g:jedi#goto_assignments_command = '<localleader>g'
@@ -813,10 +813,15 @@ let g:nrrw_rgn_nohl = 1
 " if has("nvim")
 "     let g:neomake_c_cppcheck_maker = {
 "                 \ 'exe': 'cppcheck',
-"                 \ 'args': ['--enable=all'],
+"                 \ 'args': ['--enable=all', '-I.'],
 "                 \ }
-"     let g:neomake_c_enabled_makers = ['cppcheck']
-"     autocmd! BufWritePost *.c,*.h Neomake!
+"     let g:neomake_cpp_cppcheck_maker = {
+"                 \ 'exe': 'cppcheck',
+"                 \ 'args': ['--enable=all', '-I.'],
+"                 \ }
+"     " let g:neomake_c_enabled_makers = ['cppcheck']
+"     " let g:neomake_cpp_enabled_makers = ['cppcheck']
+"     autocmd! BufWritePost *.c,*.h Neomake cppcheck
 " endif
 
 " }}}
@@ -873,6 +878,12 @@ nmap go <Plug>(openbrowser-smart-search)
 vmap go <Plug>(openbrowser-smart-search)
 
 " }}}
+" peekaboo {{{
+
+let g:peekaboo_window = 'enew'
+let g:peekaboo_delay = 750
+
+" }}}
 " pydoc {{{
 
 " Pydoc
@@ -924,8 +935,13 @@ autocmd FileType markdown let b:surround_105 = "*\r*" "italics
 " }}}
 " syntastic {{{
 
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': [],
+                           \ 'active_filetypes': ['c', 'cpp', 'python'],
                            \ 'passive_filetypes': [] }
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
@@ -1138,10 +1154,8 @@ let g:vimtex_view_general_options = '@line @pdf @tex'
 " vim-togglelist {{{
 
 let g:toggle_list_no_mappings = 1
-nnoremap [loclist]l :call ToggleLocationList()<CR>
-nnoremap ,l :call ToggleLocationList()<CR>
-nnoremap [quickfix]q :call ToggleQuickfixList()<CR>
-nnoremap ,q :call ToggleQuickfixList()<CR>
+nnoremap [buffer]l :call ToggleLocationList()<CR>
+nnoremap [buffer]q :call ToggleQuickfixList()<CR>
 
 " }}}
 " }}}

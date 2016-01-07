@@ -29,7 +29,6 @@ Plug 'tpope/vim-surround'
     Plug 'scrooloose/syntastic'
     Plug 'tpope/vim-dispatch'
 " endif
-Plug 'vim-scripts/taglist.vim', { 'on': 'Tlist' }
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 " Plug 'benmills/vimux'
 Plug 'SirVer/ultisnips'
@@ -71,7 +70,7 @@ Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
 " Plug 'sjl/clam.vim'
 Plug 'junegunn/vim-peekaboo'
-" Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'chrisbra/NrrwRgn', {'on': 'NrrwrgnDo'}
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'milkypostman/vim-togglelist'
@@ -81,6 +80,13 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'vim-scripts/Conque-GDB', { 'on': 'ConqueGdb' }
 Plug 'reedes/vim-pencil'
 Plug 'reedes/vim-wordy'
+Plug 'hail2u/vim-css3-syntax', { 'for': ['scss', 'css', 'sass'] }
+Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-eunuch'
+Plug 'heavenshell/vim-pydocstring'
+Plug 'cjrh/vim-conda'
+Plug 'radenling/vim-dispatch-neovim'
 
 " Plug 'fmoralesc/vim-pad'
 " Plug 'git@github.com:smutch/vim-pad.git', { 'branch': 'working' }
@@ -115,6 +121,7 @@ if os == "Darwin"
     " Plug 'vim-scripts/JavaScript-Indent'
     Plug 'lilydjwg/colorizer'
     Plug 'ternjs/tern_for_vim'
+    Plug 'KabbAmine/vCoolor.vim'
 
     " colorschemes
     Plug 'git@github.com:smutch/vim-monokai.git'
@@ -124,6 +131,8 @@ if os == "Darwin"
     Plug 'chankaward/vim-railscasts-theme'
     Plug 'junegunn/limelight.vim'
     Plug 'whatyouhide/vim-gotham'
+    Plug 'joshdick/onedark.vim'
+    Plug 'joshdick/airline-onedark.vim'
 endif
 
 Plug 'ryanoasis/vim-devicons'

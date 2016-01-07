@@ -55,4 +55,4 @@ omap <buffer> ac :normal Vac<CR>:noh<CR>
 omap <buffer> ic :normal Vic<CR>:noh<CR>
 
 " complete mnras style citation commands (citet, citep, etc.)
-let g:vimtex_complete_patterns.bib='\C\\\a*cite[tp]\=\a*\*\?\(\[[^\]]*\]\)*\_\s*{[^{}]*'
+" let g:vimtex_complete_patterns.bib='\C\\\a*cite[tp]\=\a*\*\?\(\[[^\]]*\]\)*\_\s*{[^{}]*'
