@@ -402,7 +402,7 @@ nmap <C-x> <Nop>
 
 " Turn off highlighting
 " nmap ,h <Esc>:noh<CR>
-nmap <backspace> <Esc>:noh<CR>
+" nmap <backspace> <Esc>:noh<CR>
 
 " Paste without auto indent
 nnoremap <F2> :set invpaste paste?<CR>
@@ -789,7 +789,9 @@ let g:NERDCustomDelimiters = {
             \ }
 
 let NERDSpaceDelims=1
-noremap [compile/comment]p [compile/comment]y`]p 
+map [compile/comment]<space> <plug>NERDCommenterComment
+map [compile/comment]c <plug>NERDCommenterToggle
+map [compile/comment]p [compile/comment]y`]p 
 
 " }}}
 " notes-system {{{
