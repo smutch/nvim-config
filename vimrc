@@ -790,8 +790,7 @@ let g:NERDCustomDelimiters = {
             \ }
 
 let NERDSpaceDelims=1
-map [compile/comment]<space> <plug>NERDCommenterComment
-map [compile/comment]c <plug>NERDCommenterToggle
+map <leader><leader> <plug>NERDCommenterToggle
 map [compile/comment]p [compile/comment]y`]p 
 
 " }}}

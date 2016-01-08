@@ -3,7 +3,8 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'mileszs/ack.vim'
-Plug 'vim-scripts/Align'
+" Plug 'vim-scripts/Align'
+Plug 'junegunn/vim-easy-align'
 Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'vim-scripts/delimitMate.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -84,20 +85,22 @@ Plug 'tpope/vim-eunuch'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'cjrh/vim-conda'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'chrisbra/unicode.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'wellle/targets.vim'
+Plug 'gorkunov/smartpairs.vim'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
 Plug 'git@github.com:smutch/vim-colors-solarized.git'
 " Plug 'vim-scripts/CSApprox'
-Plug 'DAddYE/soda.vim'
-Plug 'chriskempson/base16-vim'
+" Plug 'chriskempson/base16-vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
 Plug 'git@github.com:smutch/vim-hybrid-material.git'
-Plug 'jdkanani/vim-material-theme'
-Plug 'wellle/targets.vim'
-Plug 'gorkunov/smartpairs.vim'
 Plug 'junegunn/vim-emoji'
+Plug 'w0ng/vim-hybrid'
+Plug 'noahfrederick/vim-noctu'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
@@ -118,12 +121,11 @@ if os == "Darwin"
 
     " colorschemes
     Plug 'git@github.com:smutch/vim-monokai.git'
+    Plug 'tomasr/molokai'
     Plug 'reedes/vim-colors-pencil'
     Plug 'jonathanfilip/vim-lucius'
-    Plug 'freeo/vim-kalisi'
     Plug 'chankaward/vim-railscasts-theme'
     Plug 'junegunn/limelight.vim'
-    Plug 'whatyouhide/vim-gotham'
     Plug 'joshdick/onedark.vim'
     Plug 'joshdick/airline-onedark.vim'
 endif
