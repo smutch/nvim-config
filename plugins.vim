@@ -83,7 +83,9 @@ Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-eunuch'
 Plug 'heavenshell/vim-pydocstring'
-Plug 'cjrh/vim-conda'
+if has("nvim")
+    Plug 'cjrh/vim-conda'
+endif
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'chrisbra/unicode.vim'
 Plug 'AndrewRadev/splitjoin.vim'
