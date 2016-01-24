@@ -2,7 +2,7 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'mileszs/ack.vim'
+" Plug 'mileszs/ack.vim'
 " Plug 'vim-scripts/Align'
 Plug 'junegunn/vim-easy-align'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -89,6 +89,7 @@ Plug 'chrisbra/unicode.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'wellle/targets.vim'
 Plug 'gorkunov/smartpairs.vim'
+Plug 'severin-lemaignan/vim-minimap'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
@@ -109,7 +110,7 @@ if os == "Darwin"
     " Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'mattn/webapi-vim'
     Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
-    Plug 'lervag/vim-latex', { 'for': 'tex' }
+    Plug 'lervag/vim-latex' ", { 'for': 'tex' }
     Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
     Plug 'tyru/open-browser.vim'
     Plug 'davidbeckingsale/writegood.vim', { 'for': 'tex' }

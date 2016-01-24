@@ -191,7 +191,8 @@ if (&t_Co >= 256) && !has("gui_running")
         let g:gruvbox_invert_tabline=1
         colorscheme gruvbox
     else
-        colorscheme hybrid_material
+        let g:hybrid_reduced_contrast = 1
+        colorscheme hybrid
         let g:airline_theme="hybrid"
         " colorscheme onedark
         " let g:airline_theme="onedark"
@@ -441,7 +442,7 @@ endif
 
 " Scons files
 au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
-set makeprg=scons
+" set makeprg=scons
 
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
@@ -508,6 +509,11 @@ endfunction
 call airline#add_statusline_func('MyPlugin')
 
 " }}}
+" auto-pairs {{{
+
+" let g:AutoPairsFlyMode = 1
+
+" }}}
 " bbye {{{
 
 nnoremap Q :Bdelete<CR>
@@ -536,8 +542,6 @@ let g:ctrlp_working_path_mode = 'ra'
 " controller
 let g:ctrlp_by_filename = 1
 
-" We don't want to use Ctrl-p as the mapping because
-" it interferes with YankRing (paste, then hit ctrl-p)
 let g:ctrlp_map = '[project]p'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
@@ -553,7 +557,13 @@ nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
 nnoremap <silent> [file/form]r :CtrlPMRU<CR>
 
 " Additional mapping for ctags search
-nnoremap <silent> [project]t :CtrlPTag<CR>
+function! CtrlPTagsWrapper()
+    let old_tags = &tags
+    let &tags = './tags;../tags'
+    exec ':CtrlPTag'
+    let &tags = old_tags
+endfunction
+nnoremap <silent> [project]t :<C-u>call CtrlPTagsWrapper()<CR>
 
 " Jump to a tag in current file
 nnoremap [buffer]t :CtrlPBufTag<CR>
@@ -599,9 +609,10 @@ map <silent> [help]d <Plug>DashSearch
 autocmd FileType markdown let b:dispatch = 'octodown %'
 
 " }}}
-" auto-pairs {{{
+" easy-align {{{
 
-let g:AutoPairsFlyMode = 1
+vmap <Enter> <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " }}}
 " fugitive {{{
@@ -669,6 +680,8 @@ let g:gitgutter_map_keys = 0
 autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
 nnoremap ghn :GitGutterNextHunk<CR>
 nnoremap ghp :GitGutterPrevHunk<CR>
+nnoremap ghs :GitGutterStageHunk<CR>
+nnoremap ghr :GitGutterRevertHunk<CR>
 let g:gitgutter_realtime = 0
 
 " }}}
@@ -686,7 +699,7 @@ let g:goyo_width = 82
 " grepper {{{
 
 let g:grepper = {
-            \ 'tools':     ['git', 'ag', 'grep'],
+            \ 'tools':     ['git', 'ag', 'grep', 'ack'],
             \ 'open':      1,
             \ 'switch':    1,
             \ 'jump':      0,
@@ -872,9 +885,6 @@ omap T <Plug>Sneak_T
 " Set showmarks bundle to off by default
 let g:showmarks_enable = 0
 
-" Toggle on/off
-nnoremap com :ShowMarksToggle<CR>
-
 " Don't show marks which may link to other files
 let g:showmarks_include="abcdefghijklmnopqrstuvwxyz.'`^<>[]{}()\""
 
@@ -893,13 +903,14 @@ autocmd FileType markdown let b:surround_105 = "*\r*" "italics
 " syntastic {{{
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['c', 'cpp', 'python'],
                            \ 'passive_filetypes': [] }
+let g:syntastic_python_checkers = ["python", "flake8"]
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 
