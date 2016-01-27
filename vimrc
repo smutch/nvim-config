@@ -299,6 +299,18 @@ function! WindowNumber()
     return str
 endfunction
 
+" Allow <CR> to be prefixed by a window number to use for the jump
+function! QFOpenInWindow()
+    if v:count is 0
+        .cc
+    else
+        let s:linenumber = line('.')
+        exec v:count . 'wincmd w'
+        exec ':' . s:linenumber . 'cc'
+    endif
+endfunction
+autocmd BufReadPost quickfix nnoremap <CR> :<C-u>call QFOpenInWindow()<CR>
+
 " Ctags command
 function! GenCtags()
     let s:cmd = ' -R --fields=+iaS --extra=+q'
