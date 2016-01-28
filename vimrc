@@ -37,7 +37,7 @@ endif
 let os = substitute(system('uname'), "\n", "", "")
 if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
-    set tags+=$HOME/.vim/ctags-system-mac
+    " set tags+=$HOME/.vim/ctags-system-mac
 end
 
 " What machine are we on?
@@ -182,31 +182,51 @@ let python_highlight_space_errors = 1
 " Colorscheme {{{
 
 syntax on " Use syntax highlighting
-if (&t_Co >= 256) && !has("gui_running")
+if (&t_Co >= 256)
     let base16colorspace=256
     set background=dark
-    if (hostname =~ "hpc.swin.edu.au")
+    if (hostname =~ "hpc.swin.edu.au") && !has("gui_running")
         let g:gruvbox_italic=0
         let g:gruvbox_contrast_dark="soft"
         let g:gruvbox_invert_tabline=1
         colorscheme gruvbox
     else
         let g:hybrid_reduced_contrast = 1
-        colorscheme hybrid
+        colorscheme hybrid_material
         let g:airline_theme="hybrid"
         " colorscheme onedark
         " let g:airline_theme="onedark"
     endif
     " colorscheme molokai
-elseif has("gui_running")
-    set background=dark
-    colorscheme hybrid_material
-    let g:airline_theme="hybrid"
+" elseif has("gui_running")
+"     set background=dark
+"     colorscheme hybrid_material
+"     let g:airline_theme="hybrid"
 else
     let base16colorspace=16
     set background=dark
     colorscheme base16-default
 end
+
+" Neovim terminal colors
+if has("nvim")
+    let g:terminal_color_0 = "#002b36"
+    let g:terminal_color_1 = "#dc322f"
+    let g:terminal_color_2 = "#859900"
+    let g:terminal_color_3 = "#b58900"
+    let g:terminal_color_4 = "#268bd2"
+    let g:terminal_color_5 = "#6c71c4"
+    let g:terminal_color_6 = "#2aa198"
+    let g:terminal_color_7 = "#93a1a1"
+    let g:terminal_color_8 = "#657b83"
+    let g:terminal_color_9 = "#dc322f"
+    let g:terminal_color_10 = "#859900"
+    let g:terminal_color_11 = "#b58900"
+    let g:terminal_color_12 = "#268bd2"
+    let g:terminal_color_13 = "#6c71c4"
+    let g:terminal_color_14 = "#2aa198"
+    let g:terminal_color_15 = "#fdf6e3"
+endif
 
 " }}}
 
@@ -946,6 +966,23 @@ let Tlist_File_Fold_Auto_Close = 1
 let g:tmuxline_powerline_separators = 0
 
 " }}}
+" tmux-navigator {{{
+
+ nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+ nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+ nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+ nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+ nnoremap <silent> <CR>w :TmuxNavigatePrevious<cr>
+
+ if has("nvim")
+     tnoremap <silent> <C-h> <C-\><C-n>:<C-u>TmuxNavigateLeft<cr>
+     tnoremap <silent> <C-j> <C-\><C-n>:<C-u>TmuxNavigateDown<cr>
+     tnoremap <silent> <C-k> <C-\><C-n>:<C-u>TmuxNavigateUp<cr>
+     tnoremap <silent> <C-l> <C-\><C-n>:<C-u>TmuxNavigateRight<cr>
+     tnoremap <silent> <CR>w <C-\><C-n>:<C-u>TmuxNavigatePrevious<cr>
+ endif
+
+" }}}
 " ultisnips {{{
 
 let g:UltiSnipsUsePythonVersion = 2
@@ -956,7 +993,7 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " }}}
 " vimcompletesme {{{
 
-autocmd FileType tex,python let b:vcm_tab_complete = "omni"
+autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
 
 " }}}
 " vim-ipython {{{
