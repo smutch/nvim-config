@@ -100,7 +100,7 @@ set clipboard=unnamed                " To work in tmux
 set spelllang=en_gb                  " British spelling
 set showmode                         " Show the current mode
 " set list                             " Show newline & tab markers
-set showcmd                          " Show partial command in bottom right
+" set showcmd                          " Show partial command in bottom right
 
 set secure                           " Secure mode for reading vimrc, exrc files etc. in current dir
 set exrc                             " Allow the use of folder dependent settings
@@ -192,7 +192,7 @@ if (&t_Co >= 256)
         colorscheme gruvbox
     else
         let g:hybrid_reduced_contrast = 1
-        colorscheme hybrid_material
+        colorscheme hybrid
         let g:airline_theme="hybrid"
         " colorscheme onedark
         " let g:airline_theme="onedark"
@@ -556,72 +556,72 @@ nnoremap Q :Bdelete<CR>
 let g:ConqueGdb_Leader = '<LocalLeader>'
 
 " }}}
-" ctrlp {{{
+" " ctrlp {{{
 
-" Include the bdelete plugin
-call ctrlp_bdelete#init()
+" " Include the bdelete plugin
+" call ctrlp_bdelete#init()
 
-" Custom ignore paths
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
+" " Custom ignore paths
+" let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
 
-" Custom root markers
-let g:ctrlp_root_markers = ['.ctrlp_marker']
+" " Custom root markers
+" let g:ctrlp_root_markers = ['.ctrlp_marker']
 
-" This is the default value, but is used below...
-let g:ctrlp_working_path_mode = 'ra'
+" " This is the default value, but is used below...
+" let g:ctrlp_working_path_mode = 'ra'
 
-" Default to filename searches - so that appctrl will find application
-" controller
-let g:ctrlp_by_filename = 1
+" " Default to filename searches - so that appctrl will find application
+" " controller
+" let g:ctrlp_by_filename = 1
 
-let g:ctrlp_map = '[project]p'
-let g:ctrlp_cmd = 'CtrlPMixed'
+" let g:ctrlp_map = '[project]p'
+" let g:ctrlp_cmd = 'CtrlPMixed'
 
-" Additional mapping for buffer search
-nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
-nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
+" " Additional mapping for buffer search
+" nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
+" nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
 
-" Open files
-nnoremap <silent> [project]f :CtrlP<CR>
-nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
+" " Open files
+" nnoremap <silent> [project]f :CtrlP<CR>
+" nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
 
-" Additional mappting for most recently used files
-nnoremap <silent> [file/form]r :CtrlPMRU<CR>
+" " Additional mappting for most recently used files
+" nnoremap <silent> [file/form]r :CtrlPMRU<CR>
 
-" Additional mapping for ctags search
-function! CtrlPTagsWrapper()
-    let old_tags = &tags
-    let &tags = './tags;../tags'
-    exec ':CtrlPTag'
-    let &tags = old_tags
-endfunction
-nnoremap <silent> [project]t :<C-u>call CtrlPTagsWrapper()<CR>
+" " Additional mapping for ctags search
+" function! CtrlPTagsWrapper()
+"     let old_tags = &tags
+"     let &tags = './tags;../tags'
+"     exec ':CtrlPTag'
+"     let &tags = old_tags
+" endfunction
+" nnoremap <silent> [project]t :<C-u>call CtrlPTagsWrapper()<CR>
 
-" Jump to a tag in current file
-nnoremap [buffer]t :CtrlPBufTag<CR>
+" " Jump to a tag in current file
+" nnoremap [buffer]t :CtrlPBufTag<CR>
 
-" Jump to a tag in all files
-nnoremap [file/form]t :CtrlPBufTagAll<CR>
+" " Jump to a tag in all files
+" nnoremap [file/form]t :CtrlPBufTagAll<CR>
 
-" quickfix
-nnoremap [project]q :CtrlPQuickfix<CR>
+" " quickfix
+" nnoremap [project]q :CtrlPQuickfix<CR>
 
-" directories
-nnoremap [project]d :CtrlPDir<CR>
+" " directories
+" nnoremap [project]d :CtrlPDir<CR>
 
-" Search files in runtime path (vimrc etc.)
-nnoremap [project]v :CtrlPRTS<CR>
+" " Search files in runtime path (vimrc etc.)
+" nnoremap [project]v :CtrlPRTS<CR>
 
-" lines
-nnoremap [project]l :CtrlPLine<CR>
+" " lines
+" nnoremap [project]l :CtrlPLine<CR>
 
-" commands
-nnoremap <leader>: :CtrlPCmdPalette<CR>
+" " commands
+" nnoremap <leader>: :CtrlPCmdPalette<CR>
 
-" Show the match window at the top of the screen
-let g:ctrlp_match_window_bottom = 0
+" " Show the match window at the top of the screen
+" let g:ctrlp_match_window_bottom = 0
 
-" }}}
+" " }}}
 " dash {{{
 
 map <silent> [help]d <Plug>DashSearch
@@ -697,6 +697,56 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+" - window (nvim only)
+let g:fzf_layout = { 'up': '~40%' }
+
+" For Commits and BCommits to customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+" Additional mapping for buffer search
+nnoremap <silent> [buffer]s :Buffers<CR>
+nnoremap [buffer]l :Lines<CR>
+
+" Open files
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+command! ProjectFiles execute 'Files' s:find_git_root()
+nnoremap <silent> [project]f :ProjectFiles<CR>
+nnoremap <silent> [file/form]o :Files<CR>
+
+" Additional mappting for most recently used files
+nnoremap <silent> [file/form]r :History<CR>
+
+" Additional mapping for ctags search
+function! FZFTagsWrapper()
+    let old_tags = &tags
+    let &tags = './tags;../tags'
+    exec ':Tags'
+    let &tags = old_tags
+endfunction
+nnoremap <silent> [project]t :<C-u>call FZFTagsWrapper()<CR>
+
+" Jump to a tag in current file
+nnoremap [buffer]t :BTags<CR>
+
+" commands
+nnoremap <leader>: :Commands<CR>
+
+" help tags
+nnoremap [search]h :Helptags<CR>
+
+" snippets
+nnoremap [search]s :Snippets<CR>
 
 " }}}
 " gist {{{
