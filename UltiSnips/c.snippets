@@ -1,9 +1,23 @@
+# MPI {{{
+
 snippet mpiinit "MPI initialisation"
 int i_rank, n_rank;
 MPI_Init(&argc, &argv);
 MPI_Comm_rank(MPI_COMM_WORLD, &i_${1:rank});
 MPI_Comm_size(MPI_COMM_WORLD, &n_$1);
 endsnippet
+
+snippet MPI_Sendrecv "MPI_Sendrecv"
+MPI_Sendrecv(${1:const void *sendbuf}, ${2:int sendcount}, ${3:MPI_Datatype sendtype}, ${4:int dest}, ${5:int sendtag},
+			${6:void *recvbuf}, ${7:int recvcount}, ${8:MPI_Datatype recvtype}, ${9:int source}, ${10:int recvtag},
+			${11:MPI_Comm comm}, ${12:MPI_Status *status});
+endsnippet
+
+
+snippet MPI_Send "MPI_Send"
+MPI_Send(${1:const void *buf}, ${2:int count}, ${3:MPI_Datatype datatype}, ${4:int dest}, ${5:int tag}, ${6:MPI_Comm comm});
+endsnippet
+# }}}
 
 snippet sidlog "SID_log"
 SID_log("${1:%s}", ${2:SID_LOG_COMMENT}${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
@@ -59,6 +73,66 @@ if(($1 = fopen(${2:fname}, ${3:"rb"})) == NULL)
 }
 endsnippet
 
+snippet rng "GSL RNG setup"
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
+gsl_rng *rngesus = gsl_rng_alloc(gsl_rng_taus);
+gsl_rng_set(rngesus, 793821);
+float random_val = gsl_rng_uniform(rngesus);
+gsl_rng_free(rngesus);
+endsnippet
+
+snippet logger "Simple logger with indent"
+#include <stdarg.h>
+
+extern int indent;
+int indent = 0;
+
+typedef enum logger_flag_t {
+  LOG,
+  LOG_CONT,
+  LOG_OPEN,
+  LOG_CLOSE
+} logger_flag_t;
+
+
+void _print(const int i_rank, const int n_rank, const char * restrict msg, logger_flag_t flag, ...)
+{
+  if (flag == LOG_CONT)
+  {
+    printf("%s", msg);
+    return;
+  }
+
+  printf("RANK %d(of %d) :: ", i_rank, n_rank);
+  switch(flag)
+  {
+    case LOG:
+      printf("%*s", indent*4, " ");
+      break;
+    case LOG_CONT:
+      break;
+    case LOG_OPEN:
+      printf("%*s", indent*4, " ");
+      indent+=1;
+      break;
+    case LOG_CLOSE:
+      indent-=1;
+      printf("%*s", indent*4, " ");
+      break;
+  }
+
+  va_list vargs;
+  va_start(vargs, flag);
+  vprintf(msg, vargs);
+  va_end(vargs);
+
+  printf("\n");
+}
+#define print(...) \
+  do { _print(i_rank, n_rank, __VA_ARGS__); } while(0)
+endsnippet
+
 # HDF5 snippets {{{
 snippet h5fopen "H5Fopen call"
 ${5:file_id} = H5Fopen(${1:const char *name},${2: H5F_ACC_RDWR}${3: H5F_ACC_RDONLY}, ${4:H5P_DEFAULT});
@@ -71,5 +145,4 @@ endsnippet
 snippet h5lt_make_dataset_int "H5LT_make_dataset_int call"
 ${6:status = }H5LTmake_dataset_int(${1:hid_t loc_id}, ${2:const char *dset_name}, ${3:int rank}, ${4:const hsize_t *dims}, ${5:const int *buffer});
 endsnippet
-
 # }}}
