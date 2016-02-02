@@ -329,7 +329,8 @@ function! QFOpenInWindow()
         exec ':' . s:linenumber . 'cc'
     endif
 endfunction
-autocmd BufReadPost quickfix nnoremap <CR> :<C-u>call QFOpenInWindow()<CR>
+autocmd BufWinEnter quickfix,qf unmap <buffer> <CR>
+autocmd BufWinEnter quickfix,qf nnoremap <buffer> <CR> :<C-u>call QFOpenInWindow()<CR>
 
 " Ctags command
 function! GenCtags()
@@ -791,12 +792,12 @@ let g:grepper = {
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
-nnoremap [search]g :Grepper! -tool git<cr>
-nnoremap [search]a :Grepper! -tool ag<cr>
-nnoremap [search]c :Grepper! -tool ack<cr>
-nnoremap [search]r :Grepper! -tool grep<cr>
-nnoremap [search]* :Grepper! -cword<cr>
-nnoremap [search]/ :Grepper!<cr>
+nnoremap [search]g :Grepper -tool git<cr>
+nnoremap [search]a :Grepper -tool ag<cr>
+nnoremap [search]c :Grepper -tool ack<cr>
+nnoremap [search]r :Grepper -tool grep<cr>
+nnoremap [search]* :Grepper -cword<cr>
+nnoremap [search]/ :Grepper<cr>
 
 " }}}
 " gundo {{{
