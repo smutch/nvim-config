@@ -5,10 +5,9 @@ call plug#begin('~/.vim/plugged')
 " Plug 'mileszs/ack.vim'
 " Plug 'vim-scripts/Align'
 Plug 'junegunn/vim-easy-align'
-" Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'd11wtq/ctrlp_bdelete.vim'
-" Plug 'fisadev/vim-ctrlp-cmdpalette'
-" Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'JazzCore/ctrlp-cmatcher', {'do': 'export CFLAGS=-Qunused-arguments && export CPPFLAGS=-Qunused-arguments && ./install.sh'}
 Plug 'jiangmiao/auto-pairs'
 " Plug 'vim-scripts/delimitMate.vim'
 Plug 'tpope/vim-fugitive'

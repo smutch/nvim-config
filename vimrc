@@ -329,8 +329,7 @@ function! QFOpenInWindow()
         exec ':' . s:linenumber . 'cc'
     endif
 endfunction
-autocmd BufWinEnter quickfix,qf unmap <buffer> <CR>
-autocmd BufWinEnter quickfix,qf nnoremap <buffer> <CR> :<C-u>call QFOpenInWindow()<CR>
+autocmd FileType quickfix,qf nnoremap <buffer> e :<C-u>call QFOpenInWindow()<CR>
 
 " Ctags command
 function! GenCtags()
@@ -559,68 +558,67 @@ let g:ConqueGdb_Leader = '<LocalLeader>'
 " }}}
 " " ctrlp {{{
 
-" " Include the bdelete plugin
-" call ctrlp_bdelete#init()
+" Set the matching function
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
-" " Custom ignore paths
-" let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
+" Include the bdelete plugin
+call ctrlp_bdelete#init()
 
-" " Custom root markers
-" let g:ctrlp_root_markers = ['.ctrlp_marker']
+" Custom ignore paths
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
 
-" " This is the default value, but is used below...
-" let g:ctrlp_working_path_mode = 'ra'
+" Custom root markers
+let g:ctrlp_root_markers = ['.ctrlp_marker']
 
-" " Default to filename searches - so that appctrl will find application
-" " controller
-" let g:ctrlp_by_filename = 1
+" This is the default value, but is used below...
+let g:ctrlp_working_path_mode = 'ra'
 
-" let g:ctrlp_map = '[project]p'
-" let g:ctrlp_cmd = 'CtrlPMixed'
+" Default to filename searches - so that appctrl will find application
+" controller
+let g:ctrlp_by_filename = 1
 
-" " Additional mapping for buffer search
-" nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
-" nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
+let g:ctrlp_map = '[project]p'
+let g:ctrlp_cmd = 'CtrlPMixed'
 
-" " Open files
-" nnoremap <silent> [project]f :CtrlP<CR>
-" nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
+" Additional mapping for buffer search
+nnoremap <silent> [search]b :CtrlPBuffer<CR>
 
-" " Additional mappting for most recently used files
-" nnoremap <silent> [file/form]r :CtrlPMRU<CR>
+" Project bookmarks
+nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
 
-" " Additional mapping for ctags search
-" function! CtrlPTagsWrapper()
-"     let old_tags = &tags
-"     let &tags = './tags;../tags'
-"     exec ':CtrlPTag'
-"     let &tags = old_tags
-" endfunction
-" nnoremap <silent> [project]t :<C-u>call CtrlPTagsWrapper()<CR>
+" Open files
+nnoremap <silent> [project]f :CtrlP<CR>
+nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
 
-" " Jump to a tag in current file
-" nnoremap [buffer]t :CtrlPBufTag<CR>
+" Additional mappting for most recently used files
+nnoremap <silent> [file/form]r :CtrlPMRU<CR>
 
-" " Jump to a tag in all files
-" nnoremap [file/form]t :CtrlPBufTagAll<CR>
+" Additional mapping for ctags search
+function! CtrlPTagsWrapper()
+    let old_tags = &tags
+    let &tags = './tags;../tags'
+    exec ':CtrlPTag'
+    let &tags = old_tags
+endfunction
+nnoremap <silent> [project]t :<C-u>call CtrlPTagsWrapper()<CR>
 
-" " quickfix
-" nnoremap [project]q :CtrlPQuickfix<CR>
+" Jump to a tag in current file
+nnoremap [buffer]t :CtrlPBufTag<CR>
 
-" " directories
-" nnoremap [project]d :CtrlPDir<CR>
+" Jump to a tag in all files
+nnoremap [file/form]t :CtrlPBufTagAll<CR>
 
-" " Search files in runtime path (vimrc etc.)
-" nnoremap [project]v :CtrlPRTS<CR>
+" quickfix
+nnoremap [search]q :CtrlPQuickfix<CR>
 
-" " lines
-" nnoremap [project]l :CtrlPLine<CR>
+" directories
+nnoremap [search]d :CtrlPDir<CR>
 
-" " commands
-" nnoremap <leader>: :CtrlPCmdPalette<CR>
+" Search files in runtime path (vimrc etc.)
+nnoremap [file/form]v :CtrlPRTS<CR>
 
-" " Show the match window at the top of the screen
-" let g:ctrlp_match_window_bottom = 0
+" Show the match window at the top of the screen
+let g:ctrlp_match_window_bottom = 0
 
 " " }}}
 " dash {{{
@@ -714,7 +712,7 @@ let g:fzf_layout = { 'up': '~40%' }
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 " Additional mapping for buffer search
-nnoremap <silent> [buffer]s :Buffers<CR>
+" nnoremap <silent> [buffer]s :Buffers<CR>
 nnoremap [buffer]l :Lines<CR>
 
 " Open files
@@ -722,23 +720,24 @@ function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 command! ProjectFiles execute 'Files' s:find_git_root()
-nnoremap <silent> [project]f :ProjectFiles<CR>
-nnoremap <silent> [file/form]o :Files<CR>
+" nnoremap <silent> [project]f :ProjectFiles<CR>
+" nnoremap <silent> [file/form]o :Files<CR>
 
 " Additional mappting for most recently used files
-nnoremap <silent> [file/form]r :History<CR>
+" nnoremap <silent> [file/form]r :History<CR>
 
 " Additional mapping for ctags search
-function! FZFTagsWrapper()
+function! s:FZFTagsWrapper()
     let old_tags = &tags
     let &tags = './tags;../tags'
     exec ':Tags'
     let &tags = old_tags
 endfunction
-nnoremap <silent> [project]t :<C-u>call FZFTagsWrapper()<CR>
+command! FZFTagsWrapper execute s:FZFTagsWrapper()
+" nnoremap <silent> [project]t :<C-u>call FZFTagsWrapper()<CR>
 
 " Jump to a tag in current file
-nnoremap [buffer]t :BTags<CR>
+" nnoremap [buffer]t :BTags<CR>
 
 " commands
 nnoremap <leader>: :Commands<CR>
