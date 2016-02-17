@@ -20,6 +20,7 @@ Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
+Plug 'tweekmonster/braceless.vim'
 " Plug 'kien/rainbow_parentheses.vim'
 Plug 'vim-scripts/scons.vim'
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
@@ -66,7 +67,7 @@ Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
 " Plug 'Konfekt/FastFold'
 Plug 'talek/obvious-resize'
-" Plug 'git@github.com:smutch/note-system.git'
+Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
 Plug 'junegunn/vim-peekaboo'
 Plug 'chrisbra/NrrwRgn', {'on': 'NrrwrgnDo'}
@@ -112,7 +113,7 @@ if os == "Darwin"
     " Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'mattn/webapi-vim'
     Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
-    Plug 'lervag/vim-latex' ", { 'for': 'tex' }
+    Plug 'lervag/vimtex' ", { 'for': 'tex' }
     Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
     Plug 'tyru/open-browser.vim'
     Plug 'davidbeckingsale/writegood.vim', { 'for': 'tex' }

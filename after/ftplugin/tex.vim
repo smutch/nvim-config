@@ -2,7 +2,7 @@
 let g:tex_flavour='latex'
 
 set spell
-setlocal formatprg=par\ -w80\ -g
+setlocal formatprg=par\ -w79\ -g
 setlocal nocursorline
 setlocal smartindent
 
@@ -11,7 +11,7 @@ setlocal iskeyword-=_
 
 setlocal softtabstop=2
 setlocal shiftwidth=2
-setlocal tw=80 fo=wtqron wm=0
+setlocal tw=79 fo=wtqron wm=0
 let b:wrapToggleFlag=1
 execute "set colorcolumn=" . join(range(81,335), ',')
 

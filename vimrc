@@ -551,12 +551,17 @@ call airline#add_statusline_func('MyPlugin')
 nnoremap Q :Bdelete<CR>
 
 " }}}
+" braceless {{{
+ 
+autocmd FileType python BracelessEnable +indent +highlight-cc2 +fold-inner
+ 
+" }}}
 " conquegdb {{{
 
 let g:ConqueGdb_Leader = '<LocalLeader>'
 
 " }}}
-" " ctrlp {{{
+" ctrlp {{{
 
 " Set the matching function
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
@@ -581,7 +586,7 @@ let g:ctrlp_map = '[project]p'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
-nnoremap <silent> [search]b :CtrlPBuffer<CR>
+nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
 
 " Project bookmarks
 nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
@@ -620,7 +625,7 @@ nnoremap [file/form]v :CtrlPRTS<CR>
 " Show the match window at the top of the screen
 let g:ctrlp_match_window_bottom = 0
 
-" " }}}
+" }}}
 " dash {{{
 
 map <silent> [help]d <Plug>DashSearch
@@ -885,8 +890,9 @@ let g:NERDCustomDelimiters = {
             \ }
 
 let NERDSpaceDelims=1
+let NERD_c_alt_style=1
 map <leader><leader> <plug>NERDCommenterToggle
-map [compile/comment]p [compile/comment]y`]p 
+nnoremap [compile/comment]p yy:<C-u>call NERDComment('n', 'comment')<CR>p
 
 " }}}
 " notes-system {{{
