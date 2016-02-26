@@ -496,34 +496,6 @@ autocmd BufNewFile,BufRead *.tex set ft=tex
 
 " }}}
 " Plugin settings {{{
-" ack {{{
-
-" " We will use Ack only if The Silver Searcher isn't available
-" if !executable('ag')
-
-"     " Map keys for Ack
-"     nnoremap [search]g <Esc>:LAck!<Space>
-
-"     " Ack for current word under cursor
-"     nnoremap [search]w yiw<Esc>:LAck! <C-r>"<CR>
-
-" endif
-
-" }}}
-" ag {{{
-
-" " We will use only if The Silver Searcher is available
-" if executable('ag')
-
-"     " Map keys for Ag
-"     nnoremap [search]g <Esc>:Ag!<Space>
-
-"     " Ag for current word under cursor
-"     nnoremap [search]w yiw<Esc>:Ag! <C-r>"<CR>
-
-" endif
-
-" }}}
 " airline {{{
 
 let g:airline#extensions#tmuxline#enabled = 0
@@ -549,16 +521,6 @@ call airline#add_statusline_func('MyPlugin')
 " bbye {{{
 
 nnoremap Q :Bdelete<CR>
-
-" }}}
-" braceless {{{
- 
-autocmd FileType python BracelessEnable +indent +highlight-cc2 +fold-inner
- 
-" }}}
-" conquegdb {{{
-
-let g:ConqueGdb_Leader = '<LocalLeader>'
 
 " }}}
 " ctrlp {{{
@@ -754,13 +716,6 @@ nnoremap [search]h :Helptags<CR>
 nnoremap [search]s :Snippets<CR>
 
 " }}}
-" gist {{{
-
-" Make gists private by default
-let g:gist_show_privates = 1
-
-
-" }}}
 " gitgutter {{{
 
 let g:gitgutter_map_keys = 0
@@ -770,12 +725,6 @@ nnoremap ghp :GitGutterPrevHunk<CR>
 nnoremap ghs :GitGutterStageHunk<CR>
 nnoremap ghr :GitGutterRevertHunk<CR>
 let g:gitgutter_realtime = 0
-
-" }}}
-" gitv {{{
-
-nnoremap [git]l :Gitv<CR>
-nnoremap [git]v :Gitv!<CR>
 
 " }}}
 " goyo {{{
@@ -808,23 +757,6 @@ nnoremap [search]/ :Grepper<cr>
 
 " Map keys for Gundo
 nnoremap [undo]u :GundoToggle<CR>
-
-" }}}
-" incsearch {{{
-
-" map /  <Plug>(incsearch-forward)
-" map ?  <Plug>(incsearch-backward)
-" map g/ <Plug>(incsearch-stay)
-
-" let g:incsearch#auto_nohlsearch = 1
-" map n  <Plug>(incsearch-nohl-n)
-" map N  <Plug>(incsearch-nohl-N)
-" map *  <Plug>(incsearch-nohl-*)
-" map #  <Plug>(incsearch-nohl-#)
-" map g* <Plug>(incsearch-nohl-g*)
-" map g# <Plug>(incsearch-nohl-g#)
-
-" let g:incsearch#consistent_n_direction = 1
 
 " }}}
 " indentline {{{
@@ -860,28 +792,6 @@ let g:jedi#goto_assignments_command = '<localleader>g'
 nnoremap coL :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
 
 " }}}
-" narrowregion {{{
-
-let g:nrrw_rgn_nohl = 1
-
-" }}}
-" neomake {{{
-
-" if has("nvim")
-"     let g:neomake_c_cppcheck_maker = {
-"                 \ 'exe': 'cppcheck',
-"                 \ 'args': ['--enable=all', '-I.'],
-"                 \ }
-"     let g:neomake_cpp_cppcheck_maker = {
-"                 \ 'exe': 'cppcheck',
-"                 \ 'args': ['--enable=all', '-I.'],
-"                 \ }
-"     " let g:neomake_c_enabled_makers = ['cppcheck']
-"     " let g:neomake_cpp_enabled_makers = ['cppcheck']
-"     autocmd! BufWritePost *.c,*.h Neomake cppcheck
-" endif
-
-" }}}
 " nerd_commenter {{{
 
 " Custom NERDCommenter mappings
@@ -900,23 +810,6 @@ nnoremap [compile/comment]p yy:<C-u>call NERDComment('n', 'comment')<CR>p
 let g:notes_dir = "/Users/smutch/Dropbox/Notes"
 
 " }}}
-" obvious-resize {{{
-
-function! s:try_wincmd(cmd, default)
-  if exists(':' . a:cmd)
-    let cmd = v:count ? join([a:cmd, v:count]) : a:cmd
-    execute cmd
-  else
-    execute join([v:count, 'wincmd', a:default])
-  endif
-endfunction
-
-nnoremap <silent> [window]+ :<C-u>call <SID>try_wincmd('ObviousResizeUp',    '+')<CR>
-nnoremap <silent> [window]- :<C-u>call <SID>try_wincmd('ObviousResizeDown',  '-')<CR>
-nnoremap <silent> [window]< :<C-u>call <SID>try_wincmd('ObviousResizeLeft',  '<')<CR>
-nnoremap <silent> [window]> :<C-u>call <SID>try_wincmd('ObviousResizeRight', '>')<CR>
-
-" }}}
 " open-browser {{{
 
 nmap go <Plug>(openbrowser-smart-search)
@@ -927,6 +820,11 @@ vmap go <Plug>(openbrowser-smart-search)
 
 let g:peekaboo_window = 'enew'
 let g:peekaboo_delay = 750
+
+" }}}
+" polyglot {{{
+
+ let g:polyglot_disabled = ['tex', 'latex']
 
 " }}}
 " pydoc {{{
@@ -1022,26 +920,9 @@ let Tlist_File_Fold_Auto_Close = 1
 let g:tmuxline_powerline_separators = 0
 
 " }}}
-" tmux-navigator {{{
-
- nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
- nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
- nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
- nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
- nnoremap <silent> <CR>w :TmuxNavigatePrevious<cr>
-
- if has("nvim")
-     tnoremap <silent> <C-h> <C-\><C-n>:<C-u>TmuxNavigateLeft<cr>
-     tnoremap <silent> <C-j> <C-\><C-n>:<C-u>TmuxNavigateDown<cr>
-     tnoremap <silent> <C-k> <C-\><C-n>:<C-u>TmuxNavigateUp<cr>
-     tnoremap <silent> <C-l> <C-\><C-n>:<C-u>TmuxNavigateRight<cr>
-     tnoremap <silent> <CR>w <C-\><C-n>:<C-u>TmuxNavigatePrevious<cr>
- endif
-
-" }}}
 " ultisnips {{{
 
-let g:UltiSnipsUsePythonVersion = 2
+let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
@@ -1050,153 +931,6 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " vimcompletesme {{{
 
 autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
-
-" }}}
-" vim-ipython {{{
-
-let g:ipy_perform_mappings = 0
-let g:ipy_completefunc = 'local'  "IPython completion for local buffer only
-
-map  <buffer> <silent> <LocalLeader>f         <Plug>(IPython-RunFile)
-map  <buffer> <silent> <LocalLeader>l         <Plug>(IPython-RunLine)
-vmap  <buffer> <silent> <LocalLeader>l        <Plug>(IPython-RunLines)
-map  <buffer> <silent> <LocalLeader>k  <Plug>(IPython-OpenPyDoc)
-map  <buffer> <silent> <LocalLeader>u  <Plug>(IPython-UpdateShell)
-map  <buffer> <silent> tr      <Plug>(IPython-ToggleReselect)
-map  <buffer>          <LocalLeader>ts  <Plug>(IPython-ToggleSendOnSave)
-map  <buffer> <silent> <LocalLeader>r   <Plug>(IPython-RunLineAsTopLevel)
-
-" }}}
-" vim-pad {{{
-
-" let g:pad#dir = "~/Dropbox/vpNotes"
-" let g:pad#search_backend = "ag"
-" let g:pad#default_file_extension = ".md"
-" let g:pad#exclude_dirnames = "img,assets"
-" let g:pad#open_in_split = 0
-
-" function! InsertImage(sourcePath)
-" python << endpython
-" import vim
-" import os
-" import shutil
-" from subprocess import call
-
-" __img_dir = "img"
-" __assets_dir = "assets"
-
-
-" def copy_file(source, target):
-"     target_dir = os.path.split(target)[0]
-"     if not os.path.exists(target_dir):
-"         os.mkdir(target_dir)
-"     shutil.copy(source, target)
-
-
-" def unique_fname(source_file, img_dir, assets_dir):
-"     source_base, ext = os.path.splitext(source_file)
-"     idup = 0
-
-"     if ext == ".pdf":
-"         pdf = os.path.join(assets_dir, source_file)
-"         pdf_base = os.path.splitext(pdf)[0]
-"         img = os.path.join(img_dir, source_file[:-4]+".png")
-"         img_base = os.path.splitext(img)[0]
-
-"         while os.path.exists(pdf):
-"             idup += 1
-"             pdf = pdf_base + "-{:d}".format(idup) + ".pdf"
-"             img = img_base + "-{:d}".format(idup) + ".png"
-"             while os.path.exists(img):
-"                 idup += 1
-"                 pdf = pdf_base + "-{:d}".format(idup) + ".pdf"
-"                 img = img_base + "-{:d}".format(idup) + ".png"
-
-"         return os.path.split(pdf)[1]
-
-"     else:
-"         img = os.path.join(img_dir, source_file)
-"         img_base = os.path.splitext(img)[0]
-
-"         while os.path.exists(img):
-"             idup += 1
-"             img = img_base + "-{:d}".format(idup) + ext
-
-"         return os.path.split(img)[1]
-
-"     print "unique img: ",target
-
-" # are we in a notes dir, or simply writing a standalone doc?
-" cur_dir = vim.eval("expand('%:p:h')")
-" notes_dir = vim.eval("g:pad#dir")
-
-" if notes_dir == -1:
-"     pass
-" elif cur_dir == notes_dir:
-"     __img_dir = "./"+__img_dir
-"     __assets_dir = "./"+__assets_dir
-" elif cur_dir.count(notes_dir) >= 1:
-"     split_path = cur_dir.replace(notes_dir+"/", "").split("/")
-"     rel_path = ""
-"     for p in split_path:
-"         rel_path += "../"
-"     __img_dir = os.path.join(rel_path, __img_dir)
-"     __assets_dir = os.path.join(rel_path, __assets_dir)
-
-" img_dir = os.path.join(cur_dir, __img_dir)
-" assets_dir = os.path.join(cur_dir, __assets_dir)
-" links = ""
-
-" source_path_list = str(vim.eval("a:sourcePath"))
-" source_path_list = source_path_list.replace(r"\ ", "&")
-" source_path_list = source_path_list.rstrip(" ")
-" source_path_list = source_path_list.split(" ")
-
-" # print source_path_list
-
-" for source_path in source_path_list:
-
-"     source_path = os.path.expanduser(source_path.replace(r"&", " "))
-
-"     # get all of the relevant paths
-"     source_file = os.path.split(source_path)[1]
-"     source_ext = os.path.splitext(source_file)[1]
-
-"     # generate unique target filename
-"     target_file = unique_fname(source_file, img_dir, assets_dir)
-
-"     # if this is a pdf then we want to copy the original into the assets folder and convert the pdf to a png
-"     if source_ext == '.pdf':
-"         target_pdf = os.path.join(assets_dir, target_file)
-"         target_png = os.path.join(img_dir, target_file[:-4]+".png")
-
-"         copy_file(source_path, target_pdf)
-"         if not os.path.exists(img_dir):
-"             os.mkdir(img_dir)
-
-"         ret_code = call(['convert', '-units', 'PixelsPerInch', '-density', '80', source_path, target_png])
-"         if ret_code:
-"             print "Failed to convert pdf!"
-
-"         # generate the relative markdown link
-"         target_pdf = os.path.join(__assets_dir, target_file)
-"         target_png = os.path.join(__img_dir, target_file[:-4]+".png")
-"         links += " [![]({:s})]({:s})".format(target_png, target_pdf)
-
-"     else:
-"         target = os.path.join(img_dir, target_file)
-"         copy_file(source_path, target)
-"         # generate the relative markdown link
-"         target = os.path.join(__img_dir, target_file)
-"         links += " ![]({:s})".format(target)
-
-" vim.command("return '{:s}'".format(links[1:])) # return
-" endpython
-" endfunction
-
-" autocmd FileType markdown
-"             \ command! -buffer -nargs=+ InsertImage execute ":normal! a" . InsertImage('<args>')
-" autocmd FileType markdown nmap <buffer> <localleader>i :InsertImage
 
 " }}}
 " vim-pencil {{{
@@ -1222,13 +956,6 @@ let g:vimtex_latexmk_continuous = 0
 let g:vimtex_latexmk_background = 1
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
-
-" }}}
-" vim-togglelist {{{
-
-let g:toggle_list_no_mappings = 1
-nnoremap [buffer]l :call ToggleLocationList()<CR>
-nnoremap [buffer]q :call ToggleQuickfixList()<CR>
 
 " }}}
 " }}}
