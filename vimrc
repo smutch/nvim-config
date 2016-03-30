@@ -952,8 +952,10 @@ let g:airline_section_x = '%{PencilMode()}'
 
 " Latex options
 let g:vimtex_latexmk_build_dir = './build'
-let g:vimtex_latexmk_continuous = 0
-let g:vimtex_latexmk_background = 1
+let g:vimtex_latexmk_continuous = 1
+" let g:vimtex_latexmk_background = 1
+let g:vimtex_quickfix_mode = 1
+let g:vimtex_quickfix_ignore_all_warnings = 1
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
 
