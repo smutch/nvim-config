@@ -41,6 +41,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'mhinz/vim-grepper'
 Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -70,7 +71,11 @@ Plug 'wellle/targets.vim'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'git@github.com:smutch/vim-colors-solarized.git'
+if has('nvim')
+    Plug 'frankier/neovim-colors-solarized-truecolor-only'
+else
+    Plug 'git@github.com:smutch/vim-colors-solarized.git'
+endif
 Plug 'git@github.com:smutch/vim-hybrid-material.git'
 " Plug 'junegunn/vim-emoji'
 Plug 'w0ng/vim-hybrid'
