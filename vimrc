@@ -43,6 +43,10 @@ end
 " What machine are we on?
 let hostname = substitute(system('hostname'), '\n', '', '')
 
+if (hostname =~ "hpc.swin.edu.au")
+    set shell=/home/smutch/3rd_party/zsh-5.0.5/bin/zsh
+endif
+
 " }}}
 " vim-plug {{{
 
