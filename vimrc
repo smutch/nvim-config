@@ -724,8 +724,8 @@ nnoremap [search]s :Snippets<CR>
 
 let g:gitgutter_map_keys = 0
 autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
-nnoremap ghn :GitGutterNextHunk<CR>
-nnoremap ghp :GitGutterPrevHunk<CR>
+nnoremap ]h :GitGutterNextHunk<CR>
+nnoremap [h :GitGutterPrevHunk<CR>
 nnoremap ghs :GitGutterStageHunk<CR>
 nnoremap ghr :GitGutterRevertHunk<CR>
 let g:gitgutter_realtime = 0
