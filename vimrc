@@ -962,7 +962,7 @@ autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
 " vim-ipython {{{
 
 let g:ipy_perform_mappings = 0
-let g:ipy_completefunc = 'global'  "IPython completion for local buffer only
+let g:ipy_completefunc = 'local'  "IPython completion for local buffer only
 
 map  <buffer> <silent> <LocalLeader>f         <Plug>(IPython-RunFile)
 map  <buffer> <silent> <LocalLeader>l         <Plug>(IPython-RunLine)
