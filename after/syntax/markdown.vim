@@ -5,6 +5,7 @@ hi def link mdContext Question
 hi def link htmlHighlight DiffText
 hi def link mdStrikethrough Comment
 hi link markdownBold MoreMsg
+hi link markdownItalic JavascriptTry
 
 hi clear markdownCodeBlock
 hi link markdownCodeBlock Normal
