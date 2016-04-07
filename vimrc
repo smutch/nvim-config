@@ -391,6 +391,12 @@ endfunction
 
 command! -nargs=+ -complete=command Page :call <SID>Page(<q-args>)
 
+" quickly edit recorded macros
+nnoremap <leader>m :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+
+" make <c-l> do more than just redraw the screen
+nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
 " }}}
 " Keybindings {{{
 
@@ -497,6 +503,10 @@ autocmd FileType javascript,coffee,html,css,scss,sass setlocal ts=2 sw=2
 
 " make sure all tex files are set to correct filetype
 autocmd BufNewFile,BufRead *.tex set ft=tex
+
+" set marks to jump between header and source files
+autocmd BufLeave *.{c,cpp} mark C
+autocmd BufLeave *.h       mark H
 
 " }}}
 " Plugin settings {{{
@@ -796,6 +806,13 @@ let g:jedi#goto_assignments_command = '<localleader>g'
 nnoremap coL :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
 
 " }}}
+" matchit {{{
+
+if !exists('g:loaded_matchit')
+  runtime macros/matchit.vim
+endif
+
+" }}}
 " nerd_commenter {{{
 
 " Custom NERDCommenter mappings
@@ -977,7 +994,7 @@ let g:airline_section_x = '%{PencilMode()}'
 " Latex options
 let g:vimtex_latexmk_build_dir = './build'
 let g:vimtex_latexmk_continuous = 1
-" let g:vimtex_latexmk_background = 1
+let g:vimtex_latexmk_background = 1
 let g:vimtex_quickfix_mode = 1
 let g:vimtex_quickfix_ignore_all_warnings = 1
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
