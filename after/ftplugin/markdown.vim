@@ -10,6 +10,9 @@ setlocal comments-=fb:*
 setlocal comments+=nb:*
 setlocal fo+=ro
 
+set makeprg=scons
+nnoremap <localleader>s :<C-u>w<CR>:Make<CR>
+
 " -------------------------------------------------------
 
 " Only do the following when not done yet for this buffer
