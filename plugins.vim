@@ -66,7 +66,6 @@ Plug 'reedes/vim-wordy'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-eunuch'
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
-Plug 'cjrh/vim-conda'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
 

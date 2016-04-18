@@ -14,16 +14,16 @@ set nocompatible
 set encoding=utf-8
 
 " Use virtualenv for python
-py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
+" py << EOF
+" import os.path
+" import sys
+" import vim
+" if 'VIRTUAL_ENV' in os.environ:
+"     project_base_dir = os.environ['VIRTUAL_ENV']
+"     sys.path.insert(0, project_base_dir)
+"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"     execfile(activate_this, dict(__file__=activate_this))
+" EOF
 
 " Deal with gnu screen
 if (match($TERM, "screen")!=-1) && !has('nvim')
@@ -189,19 +189,19 @@ syntax on " Use syntax highlighting
 if (&t_Co >= 256)
     let base16colorspace=256
     set background=dark
-    if (hostname =~ "hpc.swin.edu.au") && !has("gui_running")
-        let g:gruvbox_italic=0
-        let g:gruvbox_contrast_dark="soft"
-        let g:gruvbox_invert_tabline=1
-        colorscheme gruvbox
-    else
+    " if (hostname =~ "hpc.swin.edu.au") && !has("gui_running")
+    "     let g:gruvbox_italic=0
+    "     let g:gruvbox_contrast_dark="soft"
+    "     let g:gruvbox_invert_tabline=1
+    "     colorscheme gruvbox
+    " else
         let g:hybrid_custom_term_colors = 1
         let g:hybrid_reduced_contrast = 1
         colorscheme hybrid
         let g:airline_theme="hybrid"
         " colorscheme onedark
         " let g:airline_theme="onedark"
-    endif
+    " endif
     " colorscheme molokai
 " elseif has("gui_running")
 "     set background=dark
