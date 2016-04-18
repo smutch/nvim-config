@@ -4,6 +4,7 @@ hi def link mdCancelledTask diffRemoved
 hi def link mdContext Question
 hi def link htmlHighlight DiffText
 hi def link mdStrikethrough Comment
+hi def link mdQuote Comment
 hi link markdownBold MoreMsg
 hi link markdownItalic JavascriptTry
 
@@ -26,6 +27,8 @@ hi link markdownCodeBlock Normal
 " " syn region htmlBoldItalic matchgroup=htmlStyleDelim start="\S\@<=\*\*\*\|\*\*\*\S\@=" end="\S\@<=\*\*\*\|\*\*\*\S\@=" keepend oneline concealends
 " " syn region htmlBoldItalic matchgroup=htmlStyleDelim start="\S\@<=___\|___\S\@=" end="\S\@<=___\|___\S\@=" keepend oneline concealends
 " syn region htmlHighlight matchgroup=htmlStyleDelim start="{==" end="==}" keepend oneline concealends
+
+syn match mdQuote "^ *>.*$"
 
 syn region mdStrikethrough matchgroup=htmlStyleDelim start="\S\@<=\~\~\|\~\~\S\@=" end="\S\@<=\~\~\|\~\~\S\@=" keepend oneline concealends
 
