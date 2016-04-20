@@ -4,27 +4,23 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/vimproc'
 Plug 'junegunn/vim-easy-align'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'ctrlpvim/ctrlp.vim' | Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'JazzCore/ctrlp-cmatcher', {'do': 'export CFLAGS=-Qunused-arguments && export CPPFLAGS=-Qunused-arguments && ./install.sh'}
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
 Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
-Plug 'smutch/vim-ipython'
+Plug '/Users/smutch/Code/vim-plugins/vim-ipython'
 Plug 'vim-scripts/scons.vim'
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-dispatch'
-Plug 'radenling/vim-dispatch-neovim'
+Plug 'tpope/vim-dispatch' | Plug 'radenling/vim-dispatch-neovim'
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
-Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'natw/vim-pythontextobj', { 'for': 'python' }
 Plug 'kana/vim-textobj-function'
@@ -41,13 +37,11 @@ Plug 'moll/vim-bbye'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'mhinz/vim-grepper'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
 Plug 'justinmk/vim-dirvish'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-unimpaired'
-Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
 Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
@@ -57,8 +51,7 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'junegunn/vim-peekaboo'
 Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
 Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'reedes/vim-pencil'
 Plug 'reedes/vim-wordy'
 " Plug 'hail2u/vim-css3-syntax', { 'for': ['scss', 'css', 'sass'] }
