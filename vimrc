@@ -63,38 +63,6 @@ filetype indent on
 let mapleader="\<Space>"
 let localleader='\'
 
-" mappings
-" f : file / format
-noremap [file/form] <nop>
-map <leader>f [file/form]
-" b : buffer
-noremap [buffer] <nop>
-map <leader>b [buffer]
-" w : windows
-noremap [window] <nop>
-map <leader>w [window]
-" p : project
-noremap [project] <nop>
-map <leader>p [project]
-" h : help
-noremap [help] <nop>
-map <leader>h [help]
-" g : git
-noremap [git] <nop>
-map <leader>g [git]
-" u : undo
-noremap [undo] <nop>
-map <leader>u [undo]
-" s : search
-noremap [search] <nop>
-map <leader>s [search]
-" y : yank
-noremap [yank] <nop>
-map <leader>y [yank]
-" c : compile
-noremap [compile/comment] <nop>
-map <leader>c [compile/comment]
-
 set history=1000                     " Store a ton of history (default is 20)
 set wildmenu                         " show list instead of just completing
 set autoread                         " Automatically re-read changed files
@@ -210,7 +178,6 @@ if (&t_Co >= 256)
 else
     let base16colorspace=16
     set background=dark
-    colorscheme base16-default
 end
 
 " Neovim terminal colors
@@ -281,9 +248,9 @@ function! PasteFromTemp()
     let &cpoptions = s:save_cpoptions
 endfunction
 
-vmap [yank]y :<C-u>call YankToTemp()<CR>
-nmap [yank]y V:<C-u>call YankToTemp()<CR>
-nmap [yank]p :<C-u>call PasteFromTemp()<CR>
+vmap <leader>y :<C-u>call YankToTemp()<CR>
+nmap <leader>y V:<C-u>call YankToTemp()<CR>
+nmap <leader>P :<C-u>call PasteFromTemp()<CR>
 
 " Show syntax highlighting groups for word under cursor
 function! <SID>SynStack()
@@ -311,7 +278,6 @@ map coW :call WrapToggle()<CR>
 
 " Remove trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$// | :noh'
-nmap [file/form]w :TrimWhitespace<CR>:w<CR>
 
 " Allow us to move to windows by number using the leader key
 let i = 1
@@ -345,7 +311,6 @@ function! GenCtags()
         execute ':! ctags'.s:cmd
     endif
 endfun
-nnoremap [compile/comment]t :call GenCtags()<CR>
 
 " Softwrap
 command! SoftWrap execute ':g/./,-/\n$/j'
@@ -413,11 +378,11 @@ imap <C-@> <C-Space>
 inoremap kj <ESC>
 
 " Cycle through buffers quickly
-nnoremap <silent> [buffer]n :bn<CR>
-nnoremap <silent> [buffer]p :bp<CR>
+nnoremap <silent> gbn :bn<CR>
+nnoremap <silent> gbp :bp<CR>
 
 " Quick switch to directory of current file
-nnoremap [file/form]d :lcd %:p:h<CR>:pwd<CR>
+nnoremap gcd :lcd %:p:h<CR>:pwd<CR>
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual 
 " mode
@@ -427,8 +392,8 @@ vnoremap y y`>
 nnoremap Y y$
 
 " Easy on the fingers save and window manipulation bindings
-nnoremap [file/form]s :w<CR>
-nnoremap [window] <C-w>
+nnoremap <leader>s :w<CR>
+nnoremap <leader>w <C-w>
 nnoremap <CR>w <C-w>p
 
 " Toggle to last active tab
@@ -438,7 +403,6 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 " Switch back to alternate file
 nnoremap <CR><CR> <C-S-^>
-nnoremap [buffer]b <C-S-^>
 
 " Disable increment number up / down - *way* too dangerous...
 nmap <C-a> <Nop>
@@ -459,10 +423,6 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " Reformat chunks (chunks are defined per filetype basis in after/ftplugin)
 " nmap ,; gwic
 " nmap ,: gwac
-
-" Searching
-nnoremap [search]v :vimgrep /
-nnoremap [help]w :help <C-r><C-w><CR>
 
 " Neovim terminal mappings
 if has('nvim')
@@ -559,21 +519,21 @@ let g:ctrlp_working_path_mode = 'ra'
 " controller
 let g:ctrlp_by_filename = 1
 
-let g:ctrlp_map = '[project]p'
+let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
-nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
+nnoremap <silent> <leader>b :CtrlPBuffer<CR>
 
 " Project bookmarks
-nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
+nnoremap <silent> <leader>B :CtrlPBookmarkDir<CR>
 
 " Open files
-nnoremap <silent> [project]f :CtrlP<CR>
-nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
+nnoremap <silent> <leader>p :CtrlP<CR>
+nnoremap <silent> <leader>f :CtrlP %p:h<CR>
 
 " Additional mappting for most recently used files
-nnoremap <silent> [file/form]r :CtrlPMRU<CR>
+nnoremap <silent> <leader>m :CtrlPMRU<CR>
 
 " Additional mapping for ctags search
 function! CtrlPTagsWrapper()
@@ -582,22 +542,10 @@ function! CtrlPTagsWrapper()
     exec ':CtrlPTag'
     let &tags = old_tags
 endfunction
-nnoremap <silent> [project]t :<C-u>call CtrlPTagsWrapper()<CR>
-
-" Jump to a tag in current file
-nnoremap [buffer]t :CtrlPBufTag<CR>
+nnoremap <silent> <leader>T :<C-u>call CtrlPTagsWrapper()<CR>
 
 " Jump to a tag in all files
-nnoremap [file/form]t :CtrlPBufTagAll<CR>
-
-" quickfix
-nnoremap [search]q :CtrlPQuickfix<CR>
-
-" directories
-nnoremap [search]d :CtrlPDir<CR>
-
-" Search files in runtime path (vimrc etc.)
-nnoremap [file/form]v :CtrlPRTS<CR>
+nnoremap <leader>t :CtrlPBufTagAll<CR>
 
 " Show the match window at the top of the screen
 let g:ctrlp_match_window_bottom = 0
@@ -605,15 +553,7 @@ let g:ctrlp_match_window_bottom = 0
 " }}}
 " dash {{{
 
-map <silent> [help]d <Plug>DashSearch
-
-" }}}
-" delimitmate {{{
-
-" Settings for delimitmate
-
-"This has pathological cases which annoy the shit out of me
-" let delimitMate_autoclose = 0
+map <silent> <leader>D <Plug>DashSearch
 
 " }}}
 " dispatch {{{
@@ -632,30 +572,30 @@ nmap ga <Plug>(EasyAlign)
 
 " Useful shortcut for git commands
 nnoremap git :Git
-nnoremap [git]a :Gcommit -a<CR>
-nnoremap [git]s :Gstatus<CR>
-nnoremap [git]d :Gdiff<CR>
-nnoremap [git]m :Gmerge<CR>
+nmap <leader>gc :Gcommit<CR>
+nnoremap <leader>gca :Gcommit -a<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gm :Gmerge<CR>
 if hostname =~ 'hpc.swin.edu.au'
-    nnoremap [git]P :Git g2 pull<CR>
+    nnoremap <leader>gP :Git g2 pull<CR>
 else
-    nnoremap [git]P :Gpull<CR>
+    nnoremap <leader>gP :Gpull<CR>
 endif
 if hostname =~ 'hpc.swin.edu.au'
-    nnoremap [git]p :Git g2 push<CR>
+    nnoremap <leader>gp :Git g2 push<CR>
 else
-    nnoremap [git]p :Gpush<CR>
+    nnoremap <leader>gp :Gpush<CR>
 endif
 if hostname =~ 'hpc.swin.edu.au'
-    nnoremap [git]f :Git g2 fetch<CR>
+    nnoremap <leader>gf :Git g2 fetch<CR>
 else
-    nnoremap [git]f :Gfetch<CR>
+    nnoremap <leader>gf :Gfetch<CR>
 endif
-nnoremap [git]g :Ggrep<CR>
-nnoremap [git]w :Gwrite<CR>
-nnoremap [git]r :Gread<CR>
-nnoremap [git]b :Gblame<CR>
-nnoremap [git]c :Gcommit<CR>
+nnoremap <leader>gg :Ggrep<CR>
+nnoremap <leader>gw :Gwrite<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gb :Gblame<CR>
 
 " }}}
 " fzf {{{
@@ -693,20 +633,11 @@ let g:fzf_layout = { 'up': '~40%' }
 " For Commits and BCommits to customize the options used by 'git log':
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
-" Additional mapping for buffer search
-" nnoremap <silent> [buffer]s :Buffers<CR>
-nnoremap [buffer]l :Lines<CR>
-
 " Open files
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 command! ProjectFiles execute 'Files' s:find_git_root()
-" nnoremap <silent> [project]f :ProjectFiles<CR>
-" nnoremap <silent> [file/form]o :Files<CR>
-
-" Additional mappting for most recently used files
-" nnoremap <silent> [file/form]r :History<CR>
 
 " Additional mapping for ctags search
 function! s:FZFTagsWrapper()
@@ -716,19 +647,9 @@ function! s:FZFTagsWrapper()
     let &tags = old_tags
 endfunction
 command! FZFTagsWrapper execute s:FZFTagsWrapper()
-" nnoremap <silent> [project]t :<C-u>call FZFTagsWrapper()<CR>
-
-" Jump to a tag in current file
-" nnoremap [buffer]t :BTags<CR>
 
 " commands
 nnoremap <leader>: :Commands<CR>
-
-" help tags
-nnoremap [search]h :Helptags<CR>
-
-" snippets
-nnoremap [search]s :Snippets<CR>
 
 " }}}
 " gitgutter {{{
@@ -754,24 +675,14 @@ let g:grepper = {
             \ 'open':      1,
             \ 'switch':    1,
             \ 'jump':      0,
-            \ 'next_tool': '<leader>g',
+            \ 'next_tool': '<C-n>',
             \ }
 
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
-nnoremap [search]g :Grepper -tool git<cr>
-nnoremap [search]a :Grepper -tool ag<cr>
-nnoremap [search]c :Grepper -tool ack<cr>
-nnoremap [search]r :Grepper -tool grep<cr>
-nnoremap [search]* :Grepper -cword<cr>
-nnoremap [search]/ :Grepper<cr>
-
-" }}}
-" gundo {{{
-
-" Map keys for Gundo
-nnoremap [undo]u :GundoToggle<CR>
+nnoremap <leader>* :Grepper -cword<cr>
+nnoremap <leader>/ :Grepper<cr>
 
 " }}}
 " indentline {{{
@@ -819,23 +730,18 @@ endif
 " Custom NERDCommenter mappings
 let g:NERDCustomDelimiters = {
             \ 'scons': { 'left': '#' },
+            \ 'jinja': { 'left': '<!--', 'right': '-->' },
             \ }
 
 let NERDSpaceDelims=1
 let NERD_c_alt_style=1
 map <leader><leader> <plug>NERDCommenterToggle
-nnoremap [compile/comment]p yy:<C-u>call NERDComment('n', 'comment')<CR>p
+nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
 
 " }}}
 " notes-system {{{
 
 let g:notes_dir = "/Users/smutch/Dropbox/Notes"
-
-" }}}
-" open-browser {{{
-
-nmap go <Plug>(openbrowser-smart-search)
-vmap go <Plug>(openbrowser-smart-search)
 
 " }}}
 " peekaboo {{{
@@ -860,12 +766,6 @@ elseif has("mac")
 elseif has("unix")
     let g:pydoc_cmd = "/usr/local/python-2.7.1/bin/pydoc"
 endif
-
-" }}}
-" scratch {{{
-
-let g:scratch_autohide = 0
-let g:scratch_insert_autohide = 0
 
 " }}}
 " sneak {{{
@@ -949,7 +849,7 @@ let g:tmuxline_powerline_separators = 0
 " }}}
 " ultisnips {{{
 
-let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsUsePythonVersion = 2
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'

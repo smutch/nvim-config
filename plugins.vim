@@ -14,7 +14,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
 Plug '/Users/smutch/Code/vim-plugins/vim-ipython'
 Plug 'vim-scripts/scons.vim'
-Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
@@ -65,11 +64,11 @@ Plug 'wellle/targets.vim'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
-if has('nvim')
-    Plug 'frankier/neovim-colors-solarized-truecolor-only'
-else
-    Plug 'git@github.com:smutch/vim-colors-solarized.git'
-endif
+" if has('nvim')
+"     Plug 'frankier/neovim-colors-solarized-truecolor-only'
+" else
+"     Plug 'git@github.com:smutch/vim-colors-solarized.git'
+" endif
 Plug 'git@github.com:smutch/vim-hybrid-material.git'
 " Plug 'junegunn/vim-emoji'
 Plug 'w0ng/vim-hybrid'
@@ -81,14 +80,12 @@ Plug 'reedes/vim-colors-pencil'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
-    Plug 'rizzatti/funcoo.vim'
-    Plug 'rizzatti/dash.vim'
+    Plug 'rizzatti/funcoo.vim' | Plug 'rizzatti/dash.vim'
     " Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'mattn/webapi-vim'
     Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
     Plug 'lervag/vimtex'
     Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-    Plug 'tyru/open-browser.vim'
     Plug 'davidbeckingsale/writegood.vim', { 'for': 'tex' }
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
     " Plug 'vim-scripts/JavaScript-Indent'
