@@ -42,7 +42,7 @@ imap <buffer>  <CR>*<Space><C-d>
 let s:show_tags_flag = 0
 call pencil#init({'wrap': 'soft'})
 
-nnoremap <buffer> <CR> :call CycleState()<cr>
+nnoremap <buffer> <tab> :call CycleState()<cr>
 nnoremap <buffer> + :call CycleType()<cr>
 nnoremap <buffer> <LocalLeader>na :call ArchiveTasks()<cr>
 " abbr --- <c-r>=Separator()<cr>
