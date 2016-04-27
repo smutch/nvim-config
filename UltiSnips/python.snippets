@@ -24,7 +24,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from dragons import meraxes, munge, plotutils
 import click
-import seaborn
+import seaborn as sns
+import h5py as h5
+from tqdm import tqdm
 
 __author__ = "Simon Mutch"
 __date__ = "`date +%Y-%m-%d`"
@@ -51,7 +53,7 @@ ax = fig.add_subplot(gs[0])
 endsnippet
 
 snippet talign
-horizontalalignment="${1:left}", verticalalignment="${2:bottom}", $0
+ha="${1:left}", va="${2:bottom}", ${3:transform=ax.transAxes}
 endsnippet
 
 snippet newfig "new matplotlib figure"
@@ -69,4 +71,8 @@ plt.savefig(output_fname)
 subprocess.call(['pdfcrop', '--margins', '2', output_fname, output_fname])
 print "WON CNYSR"[::-1]
 $0
+endsnippet
+
+snippet astropy "astropy standard imports"
+from astropy import cosmology, units as U
 endsnippet

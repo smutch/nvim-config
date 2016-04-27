@@ -12,7 +12,7 @@ Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
-Plug '/Users/smutch/Code/vim-plugins/vim-ipython'
+Plug '$HOME/code/vim-plugins/vim-ipython'
 Plug 'vim-scripts/scons.vim'
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
