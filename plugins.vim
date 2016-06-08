@@ -73,7 +73,7 @@ Plug 'morhetz/gruvbox'
 "     Plug 'git@github.com:smutch/vim-colors-solarized.git'
 " endif
 Plug 'git@github.com:smutch/vim-hybrid-material.git'
-" Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-emoji'
 Plug 'w0ng/vim-hybrid'
 Plug 'joshdick/onedark.vim', { 'on': 'Colors' }
 Plug 'joshdick/airline-onedark.vim', { 'on': 'Colors' }
@@ -96,6 +96,7 @@ if os == "Darwin"
     Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
     Plug 'KabbAmine/vCoolor.vim'
     Plug 'junegunn/limelight.vim'
+    Plug 'mattn/emmet-vim'
 endif
 
 Plug 'ryanoasis/vim-devicons'

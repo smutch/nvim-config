@@ -1,6 +1,6 @@
 setlocal foldlevel=99
 
-set cole=2
+" set cole=2
 setlocal concealcursor=nc
 
 " when pressing enter within a task it creates another task

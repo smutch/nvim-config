@@ -45,7 +45,7 @@ syn match mdCheckbox "- \[ \]" contained containedin=mdTask conceal cchar=☐
 
 syn match mdCompleteTask "^ *- \[x\].*$" contains=mdCompleteMark
 syn match mdCompleteTask "\(^ *[\*-] \)\@!.*@done.*$"
-syn match mdCompleteMark "- \[x\]" contained containedin=mdCompleteTask conceal cchar=✓
+syn match mdCompleteMark "- \[x\]" contained containedin=mdCompleteTask conceal cchar=☑︎
 
 syn match mdCancelledTask "^ *- X.*$" contains=mdCancelMark
 syn match mdCancelMark "- X" contained containedin=mdCancelledTask conceal cchar=✗
@@ -54,5 +54,4 @@ syn match mdContext "@[^ ]*" containedin=ALL
 
 syn match mdItem "^ *[\*-]\( X \| \[[x ]\]\)\@! " contains=mdBullet
 syn match mdBullet "[\*-]" contained containedin=mdItem conceal cchar=●
-
 syn region mdIgnore start="\S\@<=\$\|\$\S\@=" end="\S\@<=\$\|\$\S\@=" keepend oneline concealends

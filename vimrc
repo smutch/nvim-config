@@ -525,7 +525,7 @@ let g:ctrlp_working_path_mode = 'ra'
 " controller
 let g:ctrlp_by_filename = 1
 
-let g:ctrlp_map = '<leader>p'
+let g:ctrlp_map = '<leader>M'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
@@ -844,7 +844,7 @@ let g:syntastic_style_warning_symbol = '💩'
 " Tlist options
 
 " Set the list of tags
-let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'TEMPORARY']
+let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'TEMPORARY', '@todo']
 
 let Tlist_Auto_Update = 1
 let Tlist_Auto_Highlight_Tag = 1
@@ -871,6 +871,11 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
 
 " }}}
+" vim-emoji {{{
+
+command! EmojiRender normal! :%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<CR>
+
+" }}}
 " vim-ipython {{{
 
 let g:ipy_perform_mappings = 0
@@ -892,13 +897,14 @@ let g:pencil#textwidth = 80
 let g:pencil#joinspaces = 1
 let g:pencil#conceallevel = 2
 let g:airline_section_x = '%{PencilMode()}'
+let g:pencil#wrapModeDefault = 'soft'
 
-" augroup pencil
-"   autocmd!
-"   autocmd FileType markdown,mkd call pencil#init()
-"   autocmd FileType text         call pencil#init()
-"   autocmd FileType tex,latex    call pencil#init()
-" augroup END
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+  " autocmd FileType tex,latex    call pencil#init()
+augroup END
 
 " }}}
 " vimtex {{{
