@@ -17,7 +17,10 @@ Plug 'vim-scripts/scons.vim'
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-dispatch' | Plug 'radenling/vim-dispatch-neovim'
+Plug 'tpope/vim-dispatch'
+if os == 'Darwin'
+    Plug 'radenling/vim-dispatch-neovim'
+endif
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
@@ -60,6 +63,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
+Plug 'FooSoft/vim-argwrap'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
@@ -71,11 +75,11 @@ Plug 'morhetz/gruvbox'
 Plug 'git@github.com:smutch/vim-hybrid-material.git'
 " Plug 'junegunn/vim-emoji'
 Plug 'w0ng/vim-hybrid'
-Plug 'joshdick/onedark.vim'
-Plug 'joshdick/airline-onedark.vim'
+Plug 'joshdick/onedark.vim', { 'on': 'Colors' }
+Plug 'joshdick/airline-onedark.vim', { 'on': 'Colors' }
 " Plug 'git@github.com:smutch/vim-monokai.git'
 " Plug 'tomasr/molokai'
-Plug 'reedes/vim-colors-pencil'
+Plug 'reedes/vim-colors-pencil', { 'on': 'Colors' }
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"

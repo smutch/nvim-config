@@ -109,7 +109,7 @@ set tags+=./tags;$HOME                " recursively search up dir stack for tags
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
 
-set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
+set wildignore+=*.o,*.obj,*/.git/*,*.pyc,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
             \Session.vim,Project.vim,tags,*.hdf5,.sconsign.dblite
 
@@ -167,6 +167,7 @@ if (&t_Co >= 256)
         let g:hybrid_reduced_contrast = 1
         colorscheme hybrid
         let g:airline_theme="hybrid"
+        hi! link Search DiffAdd
         " colorscheme onedark
         " let g:airline_theme="onedark"
     " endif
@@ -488,6 +489,11 @@ endfunction
 call airline#add_statusline_func('MyPlugin')
 
 " }}}
+" argwrap {{{
+
+nnoremap <silent> <leader>a :<C-u>ArgWrap<CR>
+
+" }}}
 " auto-pairs {{{
 
 " let g:AutoPairsFlyMode = 1
@@ -560,6 +566,11 @@ map <silent> <leader>D <Plug>DashSearch
 
 " Use octodown as default build command for Markdown files
 autocmd FileType markdown let b:dispatch = 'octodown %'
+nnoremap <leader>x :Dispatch<CR>
+
+let g:dispatch_compilers = {
+      \ 'markdown': 'doit',
+      \ 'python': 'python %'}
 
 " }}}
 " easy-align {{{
@@ -573,7 +584,7 @@ nmap ga <Plug>(EasyAlign)
 " Useful shortcut for git commands
 nnoremap git :Git
 nmap <leader>gc :Gcommit<CR>
-nnoremap <leader>gca :Gcommit -a<CR>
+nnoremap <leader>ga :Gcommit -a<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gm :Gmerge<CR>
@@ -733,8 +744,8 @@ let g:NERDCustomDelimiters = {
             \ 'jinja': { 'left': '<!--', 'right': '-->' },
             \ }
 
-let NERDSpaceDelims=1
-let NERD_c_alt_style=1
+let g:NERDSpaceDelims = 1
+let g:NERDAltDelims_c = 1
 map <leader><leader> <plug>NERDCommenterToggle
 nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
 
@@ -816,15 +827,15 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['c', 'cpp', 'python'],
                            \ 'passive_filetypes': [] }
+                           " \ 'active_filetypes': ['c', 'cpp', 'python'],
 let g:syntastic_python_checkers = ["python", "flake8"]
 " let g:syntastic_error_symbol = '✗'
 " let g:syntastic_warning_symbol = '⚠'
 
 let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
 let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_error_symbol = '🚫'
 let g:syntastic_style_warning_symbol = '💩'
 
 " }}}
@@ -849,7 +860,7 @@ let g:tmuxline_powerline_separators = 0
 " }}}
 " ultisnips {{{
 
-let g:UltiSnipsUsePythonVersion = 2
+" let g:UltiSnipsUsePythonVersion = 2
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
