@@ -4,26 +4,25 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/vimproc'
 Plug 'junegunn/vim-easy-align'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'ctrlpvim/ctrlp.vim' | Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'JazzCore/ctrlp-cmatcher', {'do': 'export CFLAGS=-Qunused-arguments && export CPPFLAGS=-Qunused-arguments && ./install.sh'}
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
 Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
+Plug '$HOME/code/vim-plugins/vim-ipython'
 Plug 'vim-scripts/scons.vim'
-Plug 'mtth/scratch.vim', { 'on': 'Scratch' }
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-dispatch'
-Plug 'radenling/vim-dispatch-neovim'
+if os == 'Darwin'
+    Plug 'radenling/vim-dispatch-neovim'
+endif
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
-Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'natw/vim-pythontextobj', { 'for': 'python' }
 Plug 'kana/vim-textobj-function'
@@ -40,12 +39,11 @@ Plug 'moll/vim-bbye'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'mhinz/vim-grepper'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-unimpaired'
-Plug 'honza/vim-snippets'
 Plug 'sheerun/vim-polyglot'
 Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
@@ -55,8 +53,7 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'junegunn/vim-peekaboo'
 Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
 Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'reedes/vim-pencil'
 Plug 'reedes/vim-wordy'
 " Plug 'hail2u/vim-css3-syntax', { 'for': ['scss', 'css', 'sass'] }
@@ -64,32 +61,34 @@ Plug 'reedes/vim-wordy'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-eunuch'
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
-Plug 'cjrh/vim-conda'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
+Plug 'FooSoft/vim-argwrap'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'git@github.com:smutch/vim-colors-solarized.git'
+" if has('nvim')
+"     Plug 'frankier/neovim-colors-solarized-truecolor-only'
+" else
+"     Plug 'git@github.com:smutch/vim-colors-solarized.git'
+" endif
 Plug 'git@github.com:smutch/vim-hybrid-material.git'
-" Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-emoji'
 Plug 'w0ng/vim-hybrid'
-Plug 'joshdick/onedark.vim'
-Plug 'joshdick/airline-onedark.vim'
+Plug 'joshdick/onedark.vim', { 'on': 'Colors' }
+Plug 'joshdick/airline-onedark.vim', { 'on': 'Colors' }
 " Plug 'git@github.com:smutch/vim-monokai.git'
 " Plug 'tomasr/molokai'
-Plug 'reedes/vim-colors-pencil'
+Plug 'reedes/vim-colors-pencil', { 'on': 'Colors' }
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
-    Plug 'rizzatti/funcoo.vim'
-    Plug 'rizzatti/dash.vim'
+    Plug 'rizzatti/funcoo.vim' | Plug 'rizzatti/dash.vim'
     " Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'mattn/webapi-vim'
     Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
     Plug 'lervag/vimtex'
     Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-    Plug 'tyru/open-browser.vim'
     Plug 'davidbeckingsale/writegood.vim', { 'for': 'tex' }
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
     " Plug 'vim-scripts/JavaScript-Indent'
@@ -97,6 +96,7 @@ if os == "Darwin"
     Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
     Plug 'KabbAmine/vCoolor.vim'
     Plug 'junegunn/limelight.vim'
+    Plug 'mattn/emmet-vim'
 endif
 
 Plug 'ryanoasis/vim-devicons'

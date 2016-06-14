@@ -23,6 +23,10 @@ snippet sidlog "SID_log"
 SID_log("${1:%s}", ${2:SID_LOG_COMMENT}${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
 endsnippet
 
+snippet sidloga "SID_log on all ranks"
+SID_log("%d :: ${1:%s}", ${2:SID_LOG_COMMENT}|SID_LOG_ALLRANKS, SID.My_rank${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
 snippet sidbcast "SID_Bcast"
 SID_Bcast(${1:void *buffer}, ${2:int data_size}, ${3:int source_rank}, ${4:SID.COMM_WORLD});
 endsnippet
@@ -45,10 +49,6 @@ while (0 == i)
 }
 endsnippet
 
-snippet h5noerror "Turn off HDF5 error reporting"
-H5Eset_auto(H5P_DEFAULT, NULL, NULL);
-endsnippet
-
 
 snippet fori "for int (ii) loop (fori)"
 for(int ${2:ii}=0; $2 < ${1:count}; ${3:$2++})
@@ -64,7 +64,7 @@ snippet header "common c header"
 #include <stdbool.h>
 endsnippet
 
-snippet openfile "fopen with error check"
+snippet fopen "fopen with error check"
 FILE *${1:fin};
 if(($1 = fopen(${2:fname}, ${3:"rb"})) == NULL)
 {
@@ -142,7 +142,11 @@ snippet h5fcreate "H5Fcreate call"
 ${6:file_id} = H5Fcreate(${1:const char *name},${2: H5F_ACC_TRUNC}${3: H5F_ACC_EXCL}, ${4:H5P_DEFAULT}, ${5:H5P_DEFAULT});
 endsnippet
 
-snippet h5lt_make_dataset_int "H5LT_make_dataset_int call"
-${6:status = }H5LTmake_dataset_int(${1:hid_t loc_id}, ${2:const char *dset_name}, ${3:int rank}, ${4:const hsize_t *dims}, ${5:const int *buffer});
+snippet h5lt_make_dataset "H5LT_make_dataset call"
+${6:status = }H5LTmake_dataset_${1:int}(${2:hid_t loc_id}, ${3:const char *dset_name}, ${4:int rank}, ${5:const hsize_t *dims}, ${6:const int *buffer});
+endsnippet
+
+snippet h5noerror "Turn off HDF5 error reporting"
+H5Eset_auto(H5P_DEFAULT, NULL, NULL);
 endsnippet
 # }}}

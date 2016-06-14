@@ -11,9 +11,9 @@ setlocal iskeyword-=_
 
 setlocal softtabstop=2
 setlocal shiftwidth=2
-setlocal tw=79 fo=wtqron wm=0
+setlocal tw=79 fo=tqron2 wm=0
 let b:wrapToggleFlag=1
-execute "set colorcolumn=" . join(range(81,335), ',')
+execute "set colorcolumn=" . join(range(80,335), ',')
 
 " setlocal cursorline  "This is very slow for large files
 
@@ -31,16 +31,13 @@ nmap <buffer> <localleader>s :w<CR><localleader>ll
 nnoremap <buffer> [compile/comment]x :w<CR>:call vimtex#latexmk#compile()<CR>
 
 " Quick map for adding a new item to an itemize environment list
-imap <buffer>  <CR>\item<Space>
+imap <buffer> ;; <CR>\item<Space>
 
 " Wrap between lines when scrolling
 set whichwrap+=<,>,h,l,[,]
 
 " Keep minimum 5 lines above or below the cursor at all times
 setlocal scrolloff=5
-
-" Allow the wrapping to mess with existing lines
-setlocal formatoptions-=l
 
 " Maps FormatPar function to ,L
 " nnoremap  <buffer> ,L  :silent call FormatLatexPar(0)<CR>

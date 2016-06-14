@@ -1,6 +1,6 @@
 setlocal foldlevel=99
 
-set cole=2
+" set cole=2
 setlocal concealcursor=nc
 
 " when pressing enter within a task it creates another task
@@ -9,6 +9,9 @@ setlocal comments+=nb:-\ [\ ],fb:-
 setlocal comments-=fb:*
 setlocal comments+=nb:*
 setlocal fo+=ro
+
+set makeprg=scons
+nnoremap <localleader>s :<C-u>w<CR>:Make<CR>
 
 " -------------------------------------------------------
 
@@ -39,7 +42,7 @@ imap <buffer>  <CR>*<Space><C-d>
 let s:show_tags_flag = 0
 call pencil#init({'wrap': 'soft'})
 
-nnoremap <buffer> <CR> :call CycleState()<cr>
+nnoremap <buffer> <tab> :call CycleState()<cr>
 nnoremap <buffer> + :call CycleType()<cr>
 nnoremap <buffer> <LocalLeader>na :call ArchiveTasks()<cr>
 " abbr --- <c-r>=Separator()<cr>

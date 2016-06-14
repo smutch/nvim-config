@@ -5,8 +5,8 @@ setlocal tabstop=8
 setlocal softtabstop=4
 setlocal shiftwidth=4
 setlocal autoindent
-" setlocal colorcolumn=80
 setlocal number
+setlocal noshowmode  " Allows jedi to show function call signatures
 
 " Set some useful keybindings
 nmap <buffer> <localleader>s :w<CR>:SyntasticCheck<CR>

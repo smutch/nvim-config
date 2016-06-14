@@ -14,16 +14,16 @@ set nocompatible
 set encoding=utf-8
 
 " Use virtualenv for python
-py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
+" py << EOF
+" import os.path
+" import sys
+" import vim
+" if 'VIRTUAL_ENV' in os.environ:
+"     project_base_dir = os.environ['VIRTUAL_ENV']
+"     sys.path.insert(0, project_base_dir)
+"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"     execfile(activate_this, dict(__file__=activate_this))
+" EOF
 
 " Deal with gnu screen
 if (match($TERM, "screen")!=-1) && !has('nvim')
@@ -43,6 +43,10 @@ end
 " What machine are we on?
 let hostname = substitute(system('hostname'), '\n', '', '')
 
+if (hostname =~ "hpc.swin.edu.au")
+    set shell=/home/smutch/3rd_party/zsh-5.0.5/bin/zsh
+endif
+
 " }}}
 " vim-plug {{{
 
@@ -58,38 +62,6 @@ filetype indent on
 " Basic settings {{{
 let mapleader="\<Space>"
 let localleader='\'
-
-" mappings
-" f : file / format
-noremap [file/form] <nop>
-map <leader>f [file/form]
-" b : buffer
-noremap [buffer] <nop>
-map <leader>b [buffer]
-" w : windows
-noremap [window] <nop>
-map <leader>w [window]
-" p : project
-noremap [project] <nop>
-map <leader>p [project]
-" h : help
-noremap [help] <nop>
-map <leader>h [help]
-" g : git
-noremap [git] <nop>
-map <leader>g [git]
-" u : undo
-noremap [undo] <nop>
-map <leader>u [undo]
-" s : search
-noremap [search] <nop>
-map <leader>s [search]
-" y : yank
-noremap [yank] <nop>
-map <leader>y [yank]
-" c : compile
-noremap [compile/comment] <nop>
-map <leader>c [compile/comment]
 
 set history=1000                     " Store a ton of history (default is 20)
 set wildmenu                         " show list instead of just completing
@@ -137,7 +109,7 @@ set tags+=./tags;$HOME                " recursively search up dir stack for tags
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
 
-set wildignore+=*.o,*.obj,*/.git/*,*.pyc,*.pdf,*.ps,*.png,*.jpg,
+set wildignore+=*.o,*.obj,*/.git/*,*.pyc,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
             \Session.vim,Project.vim,tags,*.hdf5,.sconsign.dblite
 
@@ -185,18 +157,20 @@ syntax on " Use syntax highlighting
 if (&t_Co >= 256)
     let base16colorspace=256
     set background=dark
-    if (hostname =~ "hpc.swin.edu.au") && !has("gui_running")
-        let g:gruvbox_italic=0
-        let g:gruvbox_contrast_dark="soft"
-        let g:gruvbox_invert_tabline=1
-        colorscheme gruvbox
-    else
+    " if (hostname =~ "hpc.swin.edu.au") && !has("gui_running")
+    "     let g:gruvbox_italic=0
+    "     let g:gruvbox_contrast_dark="soft"
+    "     let g:gruvbox_invert_tabline=1
+    "     colorscheme gruvbox
+    " else
+        let g:hybrid_custom_term_colors = 1
         let g:hybrid_reduced_contrast = 1
         colorscheme hybrid
         let g:airline_theme="hybrid"
+        hi! link Search DiffAdd
         " colorscheme onedark
         " let g:airline_theme="onedark"
-    endif
+    " endif
     " colorscheme molokai
 " elseif has("gui_running")
 "     set background=dark
@@ -205,7 +179,6 @@ if (&t_Co >= 256)
 else
     let base16colorspace=16
     set background=dark
-    colorscheme base16-default
 end
 
 " Neovim terminal colors
@@ -276,9 +249,9 @@ function! PasteFromTemp()
     let &cpoptions = s:save_cpoptions
 endfunction
 
-vmap [yank]y :<C-u>call YankToTemp()<CR>
-nmap [yank]y V:<C-u>call YankToTemp()<CR>
-nmap [yank]p :<C-u>call PasteFromTemp()<CR>
+vmap <leader>y :<C-u>call YankToTemp()<CR>
+nmap <leader>y V:<C-u>call YankToTemp()<CR>
+nmap <leader>P :<C-u>call PasteFromTemp()<CR>
 
 " Show syntax highlighting groups for word under cursor
 function! <SID>SynStack()
@@ -306,7 +279,6 @@ map coW :call WrapToggle()<CR>
 
 " Remove trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$// | :noh'
-nmap [file/form]w :TrimWhitespace<CR>:w<CR>
 
 " Allow us to move to windows by number using the leader key
 let i = 1
@@ -340,7 +312,6 @@ function! GenCtags()
         execute ':! ctags'.s:cmd
     endif
 endfun
-nnoremap [compile/comment]t :call GenCtags()<CR>
 
 " Softwrap
 command! SoftWrap execute ':g/./,-/\n$/j'
@@ -387,6 +358,12 @@ endfunction
 
 command! -nargs=+ -complete=command Page :call <SID>Page(<q-args>)
 
+" quickly edit recorded macros
+nnoremap <leader>m :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+
+" make <c-l> do more than just redraw the screen
+nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
 " }}}
 " Keybindings {{{
 
@@ -402,11 +379,11 @@ imap <C-@> <C-Space>
 inoremap kj <ESC>
 
 " Cycle through buffers quickly
-nnoremap <silent> [buffer]n :bn<CR>
-nnoremap <silent> [buffer]p :bp<CR>
+nnoremap <silent> gbn :bn<CR>
+nnoremap <silent> gbp :bp<CR>
 
 " Quick switch to directory of current file
-nnoremap [file/form]d :lcd %:p:h<CR>:pwd<CR>
+nnoremap gcd :lcd %:p:h<CR>:pwd<CR>
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual 
 " mode
@@ -416,8 +393,8 @@ vnoremap y y`>
 nnoremap Y y$
 
 " Easy on the fingers save and window manipulation bindings
-nnoremap [file/form]s :w<CR>
-nnoremap [window] <C-w>
+nnoremap <leader>s :w<CR>
+nnoremap <leader>w <C-w>
 nnoremap <CR>w <C-w>p
 
 " Toggle to last active tab
@@ -427,7 +404,6 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 " Switch back to alternate file
 nnoremap <CR><CR> <C-S-^>
-nnoremap [buffer]b <C-S-^>
 
 " Disable increment number up / down - *way* too dangerous...
 nmap <C-a> <Nop>
@@ -448,10 +424,6 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " Reformat chunks (chunks are defined per filetype basis in after/ftplugin)
 " nmap ,; gwic
 " nmap ,: gwac
-
-" Searching
-nnoremap [search]v :vimgrep /
-nnoremap [help]w :help <C-r><C-w><CR>
 
 " Neovim terminal mappings
 if has('nvim')
@@ -494,6 +466,10 @@ autocmd FileType javascript,coffee,html,css,scss,sass setlocal ts=2 sw=2
 " make sure all tex files are set to correct filetype
 autocmd BufNewFile,BufRead *.tex set ft=tex
 
+" set marks to jump between header and source files
+autocmd BufLeave *.{c,cpp} mark C
+autocmd BufLeave *.h       mark H
+
 " }}}
 " Plugin settings {{{
 " airline {{{
@@ -511,6 +487,11 @@ function! MyPlugin(...)
     let w:airline_section_x = '[' . s:my_part . '] ' . g:airline_right_sep . get(w:, 'airline_section_x', g:airline_section_x)
 endfunction
 call airline#add_statusline_func('MyPlugin')
+
+" }}}
+" argwrap {{{
+
+nnoremap <silent> <leader>a :<C-u>ArgWrap<CR>
 
 " }}}
 " auto-pairs {{{
@@ -544,21 +525,21 @@ let g:ctrlp_working_path_mode = 'ra'
 " controller
 let g:ctrlp_by_filename = 1
 
-let g:ctrlp_map = '[project]p'
+let g:ctrlp_map = '<leader>M'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Additional mapping for buffer search
-nnoremap <silent> [buffer]s :CtrlPBuffer<CR>
+nnoremap <silent> <leader>b :CtrlPBuffer<CR>
 
 " Project bookmarks
-nnoremap <silent> [project]b :CtrlPBookmarkDir<CR>
+nnoremap <silent> <leader>B :CtrlPBookmarkDir<CR>
 
 " Open files
-nnoremap <silent> [project]f :CtrlP<CR>
-nnoremap <silent> [file/form]o :CtrlP %p:h<CR>
+nnoremap <silent> <leader>p :CtrlP<CR>
+nnoremap <silent> <leader>f :CtrlP %p:h<CR>
 
 " Additional mappting for most recently used files
-nnoremap <silent> [file/form]r :CtrlPMRU<CR>
+nnoremap <silent> <leader>m :CtrlPMRU<CR>
 
 " Additional mapping for ctags search
 function! CtrlPTagsWrapper()
@@ -567,22 +548,10 @@ function! CtrlPTagsWrapper()
     exec ':CtrlPTag'
     let &tags = old_tags
 endfunction
-nnoremap <silent> [project]t :<C-u>call CtrlPTagsWrapper()<CR>
-
-" Jump to a tag in current file
-nnoremap [buffer]t :CtrlPBufTag<CR>
+nnoremap <silent> <leader>T :<C-u>call CtrlPTagsWrapper()<CR>
 
 " Jump to a tag in all files
-nnoremap [file/form]t :CtrlPBufTagAll<CR>
-
-" quickfix
-nnoremap [search]q :CtrlPQuickfix<CR>
-
-" directories
-nnoremap [search]d :CtrlPDir<CR>
-
-" Search files in runtime path (vimrc etc.)
-nnoremap [file/form]v :CtrlPRTS<CR>
+nnoremap <leader>t :CtrlPBufTagAll<CR>
 
 " Show the match window at the top of the screen
 let g:ctrlp_match_window_bottom = 0
@@ -590,21 +559,18 @@ let g:ctrlp_match_window_bottom = 0
 " }}}
 " dash {{{
 
-map <silent> [help]d <Plug>DashSearch
-
-" }}}
-" delimitmate {{{
-
-" Settings for delimitmate
-
-"This has pathological cases which annoy the shit out of me
-" let delimitMate_autoclose = 0
+map <silent> <leader>D <Plug>DashSearch
 
 " }}}
 " dispatch {{{
 
 " Use octodown as default build command for Markdown files
 autocmd FileType markdown let b:dispatch = 'octodown %'
+nnoremap <leader>x :Dispatch<CR>
+
+let g:dispatch_compilers = {
+      \ 'markdown': 'doit',
+      \ 'python': 'python %'}
 
 " }}}
 " easy-align {{{
@@ -617,30 +583,30 @@ nmap ga <Plug>(EasyAlign)
 
 " Useful shortcut for git commands
 nnoremap git :Git
-nnoremap [git]a :Gcommit -a<CR>
-nnoremap [git]s :Gstatus<CR>
-nnoremap [git]d :Gdiff<CR>
-nnoremap [git]m :Gmerge<CR>
+nmap <leader>gc :Gcommit<CR>
+nnoremap <leader>ga :Gcommit -a<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gm :Gmerge<CR>
 if hostname =~ 'hpc.swin.edu.au'
-    nnoremap [git]P :Git g2 pull<CR>
+    nnoremap <leader>gP :Git g2 pull<CR>
 else
-    nnoremap [git]P :Gpull<CR>
+    nnoremap <leader>gP :Gpull<CR>
 endif
 if hostname =~ 'hpc.swin.edu.au'
-    nnoremap [git]p :Git g2 push<CR>
+    nnoremap <leader>gp :Git g2 push<CR>
 else
-    nnoremap [git]p :Gpush<CR>
+    nnoremap <leader>gp :Gpush<CR>
 endif
 if hostname =~ 'hpc.swin.edu.au'
-    nnoremap [git]f :Git g2 fetch<CR>
+    nnoremap <leader>gf :Git g2 fetch<CR>
 else
-    nnoremap [git]f :Gfetch<CR>
+    nnoremap <leader>gf :Gfetch<CR>
 endif
-nnoremap [git]g :Ggrep<CR>
-nnoremap [git]w :Gwrite<CR>
-nnoremap [git]r :Gread<CR>
-nnoremap [git]b :Gblame<CR>
-nnoremap [git]c :Gcommit<CR>
+nnoremap <leader>gg :Ggrep<CR>
+nnoremap <leader>gw :Gwrite<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gb :Gblame<CR>
 
 " }}}
 " fzf {{{
@@ -678,20 +644,11 @@ let g:fzf_layout = { 'up': '~40%' }
 " For Commits and BCommits to customize the options used by 'git log':
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
-" Additional mapping for buffer search
-" nnoremap <silent> [buffer]s :Buffers<CR>
-nnoremap [buffer]l :Lines<CR>
-
 " Open files
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 command! ProjectFiles execute 'Files' s:find_git_root()
-" nnoremap <silent> [project]f :ProjectFiles<CR>
-" nnoremap <silent> [file/form]o :Files<CR>
-
-" Additional mappting for most recently used files
-" nnoremap <silent> [file/form]r :History<CR>
 
 " Additional mapping for ctags search
 function! s:FZFTagsWrapper()
@@ -701,27 +658,17 @@ function! s:FZFTagsWrapper()
     let &tags = old_tags
 endfunction
 command! FZFTagsWrapper execute s:FZFTagsWrapper()
-" nnoremap <silent> [project]t :<C-u>call FZFTagsWrapper()<CR>
-
-" Jump to a tag in current file
-" nnoremap [buffer]t :BTags<CR>
 
 " commands
 nnoremap <leader>: :Commands<CR>
-
-" help tags
-nnoremap [search]h :Helptags<CR>
-
-" snippets
-nnoremap [search]s :Snippets<CR>
 
 " }}}
 " gitgutter {{{
 
 let g:gitgutter_map_keys = 0
 autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
-nnoremap ghn :GitGutterNextHunk<CR>
-nnoremap ghp :GitGutterPrevHunk<CR>
+nnoremap ]h :GitGutterNextHunk<CR>
+nnoremap [h :GitGutterPrevHunk<CR>
 nnoremap ghs :GitGutterStageHunk<CR>
 nnoremap ghr :GitGutterRevertHunk<CR>
 let g:gitgutter_realtime = 0
@@ -739,24 +686,14 @@ let g:grepper = {
             \ 'open':      1,
             \ 'switch':    1,
             \ 'jump':      0,
-            \ 'next_tool': '<leader>g',
+            \ 'next_tool': '<C-n>',
             \ }
 
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
-nnoremap [search]g :Grepper -tool git<cr>
-nnoremap [search]a :Grepper -tool ag<cr>
-nnoremap [search]c :Grepper -tool ack<cr>
-nnoremap [search]r :Grepper -tool grep<cr>
-nnoremap [search]* :Grepper -cword<cr>
-nnoremap [search]/ :Grepper<cr>
-
-" }}}
-" gundo {{{
-
-" Map keys for Gundo
-nnoremap [undo]u :GundoToggle<CR>
+nnoremap <leader>* :Grepper -cword<cr>
+nnoremap <leader>/ :Grepper<cr>
 
 " }}}
 " indentline {{{
@@ -792,28 +729,30 @@ let g:jedi#goto_assignments_command = '<localleader>g'
 nnoremap coL :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
 
 " }}}
+" matchit {{{
+
+if !exists('g:loaded_matchit')
+  runtime macros/matchit.vim
+endif
+
+" }}}
 " nerd_commenter {{{
 
 " Custom NERDCommenter mappings
 let g:NERDCustomDelimiters = {
             \ 'scons': { 'left': '#' },
+            \ 'jinja': { 'left': '<!--', 'right': '-->' },
             \ }
 
-let NERDSpaceDelims=1
-let NERD_c_alt_style=1
+let g:NERDSpaceDelims = 1
+let g:NERDAltDelims_c = 1
 map <leader><leader> <plug>NERDCommenterToggle
-nnoremap [compile/comment]p yy:<C-u>call NERDComment('n', 'comment')<CR>p
+nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
 
 " }}}
 " notes-system {{{
 
 let g:notes_dir = "/Users/smutch/Dropbox/Notes"
-
-" }}}
-" open-browser {{{
-
-nmap go <Plug>(openbrowser-smart-search)
-vmap go <Plug>(openbrowser-smart-search)
 
 " }}}
 " peekaboo {{{
@@ -838,12 +777,6 @@ elseif has("mac")
 elseif has("unix")
     let g:pydoc_cmd = "/usr/local/python-2.7.1/bin/pydoc"
 endif
-
-" }}}
-" scratch {{{
-
-let g:scratch_autohide = 0
-let g:scratch_insert_autohide = 0
 
 " }}}
 " sneak {{{
@@ -894,11 +827,16 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['c', 'cpp', 'python'],
                            \ 'passive_filetypes': [] }
+                           " \ 'active_filetypes': ['c', 'cpp', 'python'],
 let g:syntastic_python_checkers = ["python", "flake8"]
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
+" let g:syntastic_error_symbol = '✗'
+" let g:syntastic_warning_symbol = '⚠'
+
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_error_symbol = '🚫'
+let g:syntastic_style_warning_symbol = '💩'
 
 " }}}
 " tlist {{{
@@ -906,7 +844,7 @@ let g:syntastic_warning_symbol = '⚠'
 " Tlist options
 
 " Set the list of tags
-let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'TEMPORARY']
+let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'TEMPORARY', '@todo']
 
 let Tlist_Auto_Update = 1
 let Tlist_Auto_Highlight_Tag = 1
@@ -922,7 +860,7 @@ let g:tmuxline_powerline_separators = 0
 " }}}
 " ultisnips {{{
 
-let g:UltiSnipsUsePythonVersion = 3
+" let g:UltiSnipsUsePythonVersion = 2
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
@@ -933,27 +871,50 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
 
 " }}}
+" vim-emoji {{{
+
+command! EmojiRender normal! :%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<CR>
+
+" }}}
+" vim-ipython {{{
+
+let g:ipy_perform_mappings = 0
+let g:ipy_completefunc = 'local'  "IPython completion for local buffer only
+
+map  <buffer> <silent> <LocalLeader>f         <Plug>(IPython-RunFile)
+map  <buffer> <silent> <LocalLeader>l         <Plug>(IPython-RunLine)
+vmap  <buffer> <silent> <LocalLeader>l        <Plug>(IPython-RunLines)
+map  <buffer> <silent> <LocalLeader>k  <Plug>(IPython-OpenPyDoc)
+map  <buffer> <silent> <LocalLeader>u  <Plug>(IPython-UpdateShell)
+map  <buffer> <silent> tr      <Plug>(IPython-ToggleReselect)
+map  <buffer>          <LocalLeader>ts  <Plug>(IPython-ToggleSendOnSave)
+map  <buffer> <silent> <LocalLeader>r   <Plug>(IPython-RunLineAsTopLevel)
+
+" }}}
 " vim-pencil {{{
 
 let g:pencil#textwidth = 80
 let g:pencil#joinspaces = 1
 let g:pencil#conceallevel = 2
 let g:airline_section_x = '%{PencilMode()}'
+let g:pencil#wrapModeDefault = 'soft'
 
-" augroup pencil
-"   autocmd!
-"   autocmd FileType markdown,mkd call pencil#init()
-"   autocmd FileType text         call pencil#init()
-"   autocmd FileType tex,latex    call pencil#init()
-" augroup END
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+  " autocmd FileType tex,latex    call pencil#init()
+augroup END
 
 " }}}
 " vimtex {{{
 
 " Latex options
 let g:vimtex_latexmk_build_dir = './build'
-let g:vimtex_latexmk_continuous = 0
+let g:vimtex_latexmk_continuous = 1
 let g:vimtex_latexmk_background = 1
+let g:vimtex_quickfix_mode = 1
+let g:vimtex_quickfix_ignore_all_warnings = 1
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
 

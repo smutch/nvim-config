@@ -4,7 +4,9 @@ hi def link mdCancelledTask diffRemoved
 hi def link mdContext Question
 hi def link htmlHighlight DiffText
 hi def link mdStrikethrough Comment
+hi def link mdQuote Comment
 hi link markdownBold MoreMsg
+hi link markdownItalic JavascriptTry
 
 hi clear markdownCodeBlock
 hi link markdownCodeBlock Normal
@@ -26,6 +28,8 @@ hi link markdownCodeBlock Normal
 " " syn region htmlBoldItalic matchgroup=htmlStyleDelim start="\S\@<=___\|___\S\@=" end="\S\@<=___\|___\S\@=" keepend oneline concealends
 " syn region htmlHighlight matchgroup=htmlStyleDelim start="{==" end="==}" keepend oneline concealends
 
+syn match mdQuote "^ *>.*$"
+
 syn region mdStrikethrough matchgroup=htmlStyleDelim start="\S\@<=\~\~\|\~\~\S\@=" end="\S\@<=\~\~\|\~\~\S\@=" keepend oneline concealends
 
 syn cluster mkdNonListItem remove=htmlItalic,htmlBold,htmlBoldItalic,mkdFootnotes,mkdInlineURL,mkdLink,mkdLinkDef
@@ -41,7 +45,7 @@ syn match mdCheckbox "- \[ \]" contained containedin=mdTask conceal cchar=☐
 
 syn match mdCompleteTask "^ *- \[x\].*$" contains=mdCompleteMark
 syn match mdCompleteTask "\(^ *[\*-] \)\@!.*@done.*$"
-syn match mdCompleteMark "- \[x\]" contained containedin=mdCompleteTask conceal cchar=✓
+syn match mdCompleteMark "- \[x\]" contained containedin=mdCompleteTask conceal cchar=☑︎
 
 syn match mdCancelledTask "^ *- X.*$" contains=mdCancelMark
 syn match mdCancelMark "- X" contained containedin=mdCancelledTask conceal cchar=✗
@@ -50,5 +54,4 @@ syn match mdContext "@[^ ]*" containedin=ALL
 
 syn match mdItem "^ *[\*-]\( X \| \[[x ]\]\)\@! " contains=mdBullet
 syn match mdBullet "[\*-]" contained containedin=mdItem conceal cchar=●
-
 syn region mdIgnore start="\S\@<=\$\|\$\S\@=" end="\S\@<=\$\|\$\S\@=" keepend oneline concealends
