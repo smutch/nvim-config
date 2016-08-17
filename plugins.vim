@@ -5,21 +5,25 @@ call plug#begin('~/.vim/plugged')
 Plug 'Shougo/vimproc'
 Plug 'junegunn/vim-easy-align'
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'd11wtq/ctrlp_bdelete.vim'
-Plug 'JazzCore/ctrlp-cmatcher', {'do': 'export CFLAGS=-Qunused-arguments && export CPPFLAGS=-Qunused-arguments && ./install.sh'}
+Plug 'FelikZ/ctrlp-py-matcher'
+" Plug 'JazzCore/ctrlp-cmatcher', {'do': 'export CFLAGS=-Qunused-arguments && export CPPFLAGS=-Qunused-arguments && ./install.sh'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
 Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
-Plug '$HOME/code/vim-plugins/vim-ipython'
+" Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
+" Plug 'cjrh/vim-conda'
+" Plug '$HOME/code/vim-plugins/vim-ipython'
 Plug 'vim-scripts/scons.vim'
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-dispatch'
 if os == 'Darwin'
+    Plug 'tpope/vim-dispatch'
     Plug 'radenling/vim-dispatch-neovim'
+else
+    Plug 'smutch/vim-dispatch', { 'branch' : 'extra_env_vars' }
 endif
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -39,8 +43,8 @@ Plug 'moll/vim-bbye'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'mhinz/vim-grepper'
-" Plug 'tpope/vim-vinegar'
-Plug 'justinmk/vim-dirvish'
+Plug 'tpope/vim-vinegar'
+" Plug 'justinmk/vim-dirvish'
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-unimpaired'
@@ -63,7 +67,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
-Plug 'FooSoft/vim-argwrap'
 
 " colorschemes
 Plug 'morhetz/gruvbox'

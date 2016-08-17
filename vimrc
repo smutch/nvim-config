@@ -13,6 +13,8 @@ set nocompatible
 " Set the encoding
 set encoding=utf-8
 
+py3 pass
+
 " Use virtualenv for python
 " py << EOF
 " import os.path
@@ -115,6 +117,25 @@ set wildignore+=*.o,*.obj,*/.git/*,*.pyc,
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
+
+" cscope
+if has("cscope")
+    set csprg=/usr/bin/cscope
+    set csto=0
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set csverb
+
+    map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
+    map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
+endif
 
 " }}}
 " Backup and swap files {{{
@@ -385,6 +406,9 @@ nnoremap <silent> gbp :bp<CR>
 " Quick switch to directory of current file
 nnoremap gcd :lcd %:p:h<CR>:pwd<CR>
 
+" Quickly create a file in the directory of the current buffer
+nmap <leader>e :<C-u>e <C-R>=expand("%:p:h") . "/" <CR>
+
 " Leave cursor at end of yank after yanking text with lowercase y in visual 
 " mode
 vnoremap y y`>
@@ -507,7 +531,13 @@ nnoremap Q :Bdelete<CR>
 " ctrlp {{{
 
 " Set the matching function
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+" PyMatcher for CtrlP
+if !has('python3')
+    echo 'In order to use pymatcher plugin, you need +python compiled vim'
+else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+" let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
 " Include the bdelete plugin
 call ctrlp_bdelete#init()
@@ -567,6 +597,8 @@ map <silent> <leader>D <Plug>DashSearch
 " Use octodown as default build command for Markdown files
 autocmd FileType markdown let b:dispatch = 'octodown %'
 nnoremap <leader>x :Dispatch<CR>
+
+let g:dispatch_extra_env_vars = 'LD_LIBRARY_PATH=/home/smutch/3rd_party/pcre/lib'
 
 let g:dispatch_compilers = {
       \ 'markdown': 'doit',
@@ -715,12 +747,19 @@ nnoremap coI :IndentLinesToggle<CR>
 " let g:jedi#completions_enabled = 0
 " let g:jedi#auto_vim_configuration = 0
 
+" Ensure conda paths are being used (see https://github.com/cjrh/vim-conda/issues/15)
+" let s:custom_sys_paths = system('~/miniconda3/bin/python -c "import sys; print(sys.path)"') 
+" py3 << EOF
+" import vim, sys, ast
+" sys.path.extend(ast.literal_eval(vim.eval("s:custom_sys_paths")))
+" EOF
+
+let g:jedi#force_py_version = 3
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 2  "May be too slow...
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 let g:jedi#goto_assignments_command = '<localleader>g'
-
 
 " }}}
 " limelight {{{
@@ -827,9 +866,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'passive_filetypes': [] }
+                           \ 'passive_filetypes': [],
+                           \ 'active_filetypes': ['python'] }
                            " \ 'active_filetypes': ['c', 'cpp', 'python'],
-let g:syntastic_python_checkers = ["python", "flake8"]
+let g:syntastic_python_checkers = ["python"] 
+" "flake8"]
 " let g:syntastic_error_symbol = '✗'
 " let g:syntastic_warning_symbol = '⚠'
 
@@ -860,7 +901,7 @@ let g:tmuxline_powerline_separators = 0
 " }}}
 " ultisnips {{{
 
-" let g:UltiSnipsUsePythonVersion = 2
+let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
