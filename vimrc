@@ -122,7 +122,7 @@ set suffixes=.bak,~,.o,.info,.swp,.obj
 if has("cscope")
     set csprg=/usr/bin/cscope
     set csto=0
-    set cst
+    " set cst
     set nocsverb
     " add any database in current directory
     if filereadable("cscope.out")
@@ -789,6 +789,11 @@ map <leader><leader> <plug>NERDCommenterToggle
 nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
 
 " }}}
+" " neomake {{
+
+" " let g:neomake_python_enabled_makers = ['python']
+
+" " }}
 " notes-system {{{
 
 let g:notes_dir = "/Users/smutch/Dropbox/Notes"

@@ -19,6 +19,7 @@ Plug 'vim-scripts/scons.vim'
 Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
+" Plug 'neomake/neomake'
 if os == 'Darwin'
     Plug 'tpope/vim-dispatch'
     Plug 'radenling/vim-dispatch-neovim'

@@ -18,4 +18,3 @@ endif
 
 " " Load indentline plugin
 " let g:loaded_indentLine = 1
-
