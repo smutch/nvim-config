@@ -39,7 +39,10 @@ endif
 let os = substitute(system('uname'), "\n", "", "")
 if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
+    let cscope_cmd="/usr/local/bin/cscope"
     " set tags+=$HOME/.vim/ctags-system-mac
+else
+    let cscope_cmd="/usr/bin/cscope"
 end
 
 " What machine are we on?
@@ -120,7 +123,7 @@ set suffixes=.bak,~,.o,.info,.swp,.obj
 
 " cscope
 if has("cscope")
-    set csprg=/usr/bin/cscope
+    let &csprg = cscope_cmd
     set csto=0
     " set cst
     set nocsverb
