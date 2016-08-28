@@ -484,6 +484,9 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 "   au BufWritePost $MYVIMRC so $MYVIMRC
 " augroup END
 
+" If we have a wide window then put the preview window on the right
+au BufAdd * if &previewwindow && &columns >= 160 | silent! wincmd L | endif
+
 " web related languages
 autocmd FileType javascript,coffee,html,css,scss,sass setlocal ts=2 sw=2
 
@@ -760,6 +763,9 @@ let g:jedi#show_call_signatures = 2  "May be too slow...
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 let g:jedi#goto_assignments_command = '<localleader>g'
+
+" move documentation to the right if the window is big enough
+" au BufAdd * if bufname(expand('<afile>')) ==# "'__doc__'" | silent! wincmd L | endif
 
 " }}}
 " limelight {{{

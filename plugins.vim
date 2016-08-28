@@ -65,7 +65,6 @@ Plug 'reedes/vim-wordy'
 " Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-eunuch'
-Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
 
@@ -79,11 +78,11 @@ Plug 'morhetz/gruvbox'
 Plug 'git@github.com:smutch/vim-hybrid-material.git'
 Plug 'junegunn/vim-emoji'
 Plug 'w0ng/vim-hybrid'
-Plug 'joshdick/onedark.vim', { 'on': 'Colors' }
-Plug 'joshdick/airline-onedark.vim', { 'on': 'Colors' }
+Plug 'joshdick/onedark.vim'
+Plug 'joshdick/airline-onedark.vim'
 " Plug 'git@github.com:smutch/vim-monokai.git'
 " Plug 'tomasr/molokai'
-Plug 'reedes/vim-colors-pencil', { 'on': 'Colors' }
+Plug 'reedes/vim-colors-pencil'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
