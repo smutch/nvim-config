@@ -796,6 +796,9 @@ let g:NERDSpaceDelims = 1
 let g:NERDAltDelims_c = 1
 map <leader><leader> <plug>NERDCommenterToggle
 nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
+nnoremap <leader>cP yy:<C-u>call NERDComment('n', 'comment')<CR>P
+vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
+vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 " }}}
 " " neomake {{
