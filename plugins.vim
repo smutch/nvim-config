@@ -69,21 +69,25 @@ Plug 'wellle/targets.vim'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
-" if has('nvim')
-"     Plug 'frankier/neovim-colors-solarized-truecolor-only'
-" else
-"     Plug 'git@github.com:smutch/vim-colors-solarized.git'
-" endif
-Plug 'git@github.com:smutch/vim-hybrid-material.git'
-Plug 'junegunn/vim-emoji'
 Plug 'w0ng/vim-hybrid'
-" Plug 'joshdick/onedark.vim'
-" Plug 'joshdick/airline-onedark.vim'
-Plug 'NLKNguyen/papercolor-theme'
-" Plug 'git@github.com:smutch/vim-monokai.git'
-" Plug 'tomasr/molokai'
-Plug 'reedes/vim-colors-pencil'
-Plug 'rakr/vim-two-firewatch'
+Plug 'git@github.com:smutch/vim-hybrid-material.git'
+if exists('&termguicolors')
+    Plug 'frankier/neovim-colors-solarized-truecolor-only'
+    Plug 'junegunn/vim-emoji'
+    Plug 'rakr/vim-one'
+    Plug 'joshdick/onedark.vim'
+    Plug 'joshdick/airline-onedark.vim'
+    Plug 'NLKNguyen/papercolor-theme'
+    Plug 'git@github.com:smutch/vim-monokai.git'
+    Plug 'tomasr/molokai'
+    Plug 'reedes/vim-colors-pencil'
+    Plug 'rakr/vim-two-firewatch'
+    Plug 'tyrannicaltoucan/vim-deep-space'
+    Plug 'mkarmona/colorsbox'
+    Plug 'raphamorim/lucario'
+    Plug 'owickstrom/vim-colors-paramount'
+    Plug 'mhartington/oceanic-next'
+endif
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
