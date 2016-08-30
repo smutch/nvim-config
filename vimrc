@@ -109,10 +109,22 @@ set smartcase                        " case sensitive when uc present
 set gdefault                         " g flag on sed subs automatically
 set tags+=./tags;$HOME                " recursively search up dir stack for tags file
 
-" Grep will sometimes skip displaying the file name if you
-" search in a singe file. Set grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
+" Use ag if possible, if not then ack, and fall back to grep if all else fails
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+    set grepformat=%f:%l:%c:%m
+elseif executable('ack')
+    set grepprg=ack\ -s\ -H\ --nocolor\ --nogroup\ --column
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+else
+    " Grep will sometimes skip displaying the file name if you
+    " search in a singe file. Set grep
+    " program to always generate a file-name.
+    set grepprg=grep\ -nH\ $*
+endif
+nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>
+command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen
+nnoremap <leader>/ :Grep 
 
 set wildignore+=*.o,*.obj,*/.git/*,*.pyc,
             \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
@@ -715,23 +727,6 @@ let g:gitgutter_realtime = 0
 " goyo {{{
 
 let g:goyo_width = 82
-
-" }}}
-" grepper {{{
-
-let g:grepper = {
-            \ 'tools':     ['git', 'ag', 'grep', 'ack'],
-            \ 'open':      1,
-            \ 'switch':    1,
-            \ 'jump':      0,
-            \ 'next_tool': '<C-n>',
-            \ }
-
-nmap gs <plug>(GrepperOperator)
-xmap gs <plug>(GrepperOperator)
-
-nnoremap <leader>* :Grepper -cword<cr>
-nnoremap <leader>/ :Grepper<cr>
 
 " }}}
 " indentline {{{
