@@ -28,7 +28,7 @@ py3 pass
 " EOF
 
 " Deal with gnu screen
-if (match($TERM, "screen")!=-1) && !has('nvim')
+if (match($TERM, "screen")!=-1) && !exists('&termguicolors')
     set term=screen-256color
 endif
 
@@ -50,6 +50,7 @@ let hostname = substitute(system('hostname'), '\n', '', '')
 
 if (hostname =~ "hpc.swin.edu.au")
     set shell=/home/smutch/3rd_party/zsh-5.0.5/bin/zsh
+    set t_ut=
 endif
 
 " }}}
@@ -76,7 +77,7 @@ set mouse=a                          " enable mouse for all modes settings
 set clipboard=unnamed                " To work in tmux
 set spelllang=en_gb                  " British spelling
 set showmode                         " Show the current mode
-" set list                             " Show newline & tab markers
+" set list                             " Show trailing & tab markers
 " set showcmd                          " Show partial command in bottom right
 
 set secure                           " Secure mode for reading vimrc, exrc files etc. in current dir
@@ -122,8 +123,8 @@ else
     " program to always generate a file-name.
     set grepprg=grep\ -nH\ $*
 endif
-nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>
-command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen
+nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>
+command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!
 nnoremap <leader>/ :Grep 
 
 set wildignore+=*.o,*.obj,*/.git/*,*.pyc,
@@ -163,12 +164,13 @@ set undofile                         " Save undo's after file closes
 " }}}
 " Visual settings {{{
 
-set vb t_vb=                         " Turn off visual beep
-set laststatus=2                     " Always display a status line
-set cmdheight=1                      " Command line height
-set listchars=tab:▸\ ,eol:↵          " Set hidden characters
-let g:tex_conceal = ""               " Don't use conceal for latex equations
-set number                           " Show line numbers
+set vb t_vb=                            " Turn off visual beep
+set laststatus=2                        " Always display a status line
+set cmdheight=1                         " Command line height
+set listchars=tab:▸\ ,eol:↵,trail:·     " Set hidden characters
+" set listchars=tab:▸\ ,trail:·           " Set hidden characters
+let g:tex_conceal = ""                  " Don't use conceal for latex equations
+set number                              " Show line numbers
 
 if has("gui_macvim")
   " set guifont=Monaco:h14
@@ -200,7 +202,7 @@ if (&t_Co >= 256)
     "     colorscheme gruvbox
     " else
 
-    let g:hybrid_custom_term_colors = 1
+    " let g:hybrid_custom_term_colors = 1
     let g:hybrid_reduced_contrast = 0
     colorscheme hybrid
     let g:airline_theme="hybrid"
@@ -731,19 +733,19 @@ let g:gitgutter_realtime = 0
 let g:goyo_width = 82
 
 " }}}
-" indentline {{{
+" " indentline {{{
 
-" let g:loaded_indentLine=1
-" let g:indentLine_char="|"
-let g:indentLine_char = '┊'
-let g:indentLine_noConcealCursor=""
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui = '#3F3F3F'
-let g:indentLine_color_tty_dark = 1
-let g:indentLine_fileTypeExclude=["tex", "Help", "markdown", "mkd", "md"] 
-nnoremap coI :IndentLinesToggle<CR>
+" " let g:loaded_indentLine=1
+" " let g:indentLine_char="|"
+" let g:indentLine_char = '┊'
+" let g:indentLine_noConcealCursor=""
+" let g:indentLine_color_term = 239
+" let g:indentLine_color_gui = '#3F3F3F'
+" let g:indentLine_color_tty_dark = 1
+" let g:indentLine_fileTypeExclude=["tex", "Help", "markdown", "mkd", "md"] 
+" nnoremap coI :IndentLinesToggle<CR>
 
-" }}}
+" " }}}
 " jedi {{{
 
 " These two are required for neocomplete
