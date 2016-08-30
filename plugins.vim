@@ -83,6 +83,7 @@ Plug 'NLKNguyen/papercolor-theme'
 " Plug 'git@github.com:smutch/vim-monokai.git'
 " Plug 'tomasr/molokai'
 Plug 'reedes/vim-colors-pencil'
+Plug 'rakr/vim-two-firewatch'
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"

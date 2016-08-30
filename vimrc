@@ -2,9 +2,9 @@
 
 " Initialisation {{{
 
-" if we are using neovim then enable true color support
-if has('nvim')
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" If we have true color support available
+if exists('&termguicolors')
+    set termguicolors
 endif
 
 " We don't want to mimic vi
@@ -199,13 +199,15 @@ if (&t_Co >= 256)
     "     let g:gruvbox_invert_tabline=1
     "     colorscheme gruvbox
     " else
-        let g:hybrid_custom_term_colors = 1
-        let g:hybrid_reduced_contrast = 1
-        colorscheme hybrid
-        let g:airline_theme="hybrid"
-        hi! link Search DiffAdd
-        " colorscheme onedark
-        " let g:airline_theme="onedark"
+
+    let g:hybrid_custom_term_colors = 1
+    let g:hybrid_reduced_contrast = 0
+    colorscheme hybrid
+    let g:airline_theme="hybrid"
+    hi! link Search DiffAdd
+
+    " colorscheme two-firewatch
+    " let g:airline_theme='twofirewatch'
     " endif
     " colorscheme molokai
 " elseif has("gui_running")
