@@ -7,6 +7,7 @@ setlocal shiftwidth=4
 setlocal autoindent
 setlocal number
 setlocal noshowmode  " Allows jedi to show function call signatures
+setlocal concealcursor=nic
 
 " Set some useful keybindings
 nmap <buffer> <localleader>s :w<CR>:SyntasticCheck<CR>

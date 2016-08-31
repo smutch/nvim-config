@@ -7,3 +7,8 @@ hi def link pythonClassMember Identifier
 hi def link pythonFuncCallName Function
 hi def link pythonComparisonOps Operator
 hi pythonFuncCallKW term=bold cterm=bold gui=bold
+
+" show indentation
+syn match leadingWS /\(^\(\s\{4}\)\+\)\@<=\s/ conceal cchar=⋮
+" hi! def link leadingWS WarningMsg
+hi! Conceal ctermfg=249 guifg=#bcbcbc

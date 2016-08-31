@@ -32,7 +32,7 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'natw/vim-pythontextobj', { 'for': 'python' }
 Plug 'kana/vim-textobj-function'
 Plug 'kana/vim-textobj-user'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-obsession', { 'on': 'Obsession' }
 Plug 'tpope/vim-rsi'
