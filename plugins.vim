@@ -78,15 +78,17 @@ if exists('&termguicolors')
     Plug 'joshdick/onedark.vim'
     Plug 'joshdick/airline-onedark.vim'
     Plug 'NLKNguyen/papercolor-theme'
-    Plug 'git@github.com:smutch/vim-monokai.git'
-    Plug 'tomasr/molokai'
+    " Plug 'git@github.com:smutch/vim-monokai.git'
+    " Plug 'tomasr/molokai'
     Plug 'reedes/vim-colors-pencil'
     Plug 'rakr/vim-two-firewatch'
     Plug 'tyrannicaltoucan/vim-deep-space'
-    Plug 'mkarmona/colorsbox'
+    " Plug 'mkarmona/colorsbox'
     Plug 'raphamorim/lucario'
     Plug 'owickstrom/vim-colors-paramount'
-    Plug 'mhartington/oceanic-next'
+    " Plug 'mhartington/oceanic-next'
+    Plug 'jdkanani/vim-material-theme'
+    Plug 'whatyouhide/vim-gotham'
 endif
 
 " These bundles are unlikely to be required anywhere other than on my mac

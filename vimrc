@@ -203,7 +203,7 @@ if (&t_Co >= 256)
     " else
 
     " let g:hybrid_custom_term_colors = 1
-    let g:hybrid_reduced_contrast = 0
+    let g:hybrid_reduced_contrast = 1
     colorscheme hybrid
     let g:airline_theme="hybrid"
     hi! link Search DiffAdd
