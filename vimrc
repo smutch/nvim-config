@@ -88,6 +88,9 @@ let g:netrw_altfile = 1              " Prev buffer command excludes netrw buffer
 " Use an interactive shell to allow command line aliases to work
 " set shellcmdflag=-ic
 
+" I tend to write c rather than c++
+let g:c_syntax_for_h = 1
+ 
 " Indent and wrapping {{{
 
 set backspace=indent,eol,start       " Sane backspace
@@ -800,11 +803,34 @@ vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
 vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 " }}}
-" " neomake {{
+" neomake {{
 
-" " let g:neomake_python_enabled_makers = ['python']
+if hostname =~ 'hpc.swin.edu.au'
+    let g:neomake_python_enabled_makers = ['python']
+endif
 
-" " }}
+function! SetWarningType(entry)
+    if a:entry.type =~? '\m^[SPI]'
+        let a:entry.type = 'I'
+    endif
+endfunction
+
+let g:neomake_c_cppcheck_maker = {
+        \ 'args': ['%:p', '-q', '--enable=style'],
+        \ 'errorformat': '[%f:%l]: (%trror) %m,' .
+        \ '[%f:%l]: (%tarning) %m,' .
+        \ '[%f:%l]: (%ttyle) %m,' .
+        \ '[%f:%l]: (%terformance) %m,' .
+        \ '[%f:%l]: (%tortability) %m,' .
+        \ '[%f:%l]: (%tnformation) %m,' .
+        \ '[%f:%l]: (%tnconclusive) %m,' .
+        \ '%-G%.%#',
+        \ 'postprocess': function('SetWarningType')
+        \ }
+
+
+
+" }}
 " notes-system {{{
 
 let g:notes_dir = "/Users/smutch/Dropbox/Notes"
