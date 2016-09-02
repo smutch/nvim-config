@@ -874,28 +874,28 @@ autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
 
 " }}}
-" syntastic {{{
+" " syntastic {{{
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'passive_filetypes': [],
-                           \ 'active_filetypes': ['python'] }
-                           " \ 'active_filetypes': ['c', 'cpp', 'python'],
-let g:syntastic_python_checkers = ["python"] 
-" "flake8"]
-" let g:syntastic_error_symbol = '✗'
-" let g:syntastic_warning_symbol = '⚠'
+" let g:syntastic_mode_map = { 'mode': 'passive',
+"                            \ 'passive_filetypes': [],
+"                            \ 'active_filetypes': ['python'] }
+"                            " \ 'active_filetypes': ['c', 'cpp', 'python'],
+" let g:syntastic_python_checkers = ["python"] 
+" " "flake8"]
+" " let g:syntastic_error_symbol = '✗'
+" " let g:syntastic_warning_symbol = '⚠'
 
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_error_symbol = '🚫'
-let g:syntastic_style_warning_symbol = '💩'
+" let g:syntastic_error_symbol = '❌'
+" let g:syntastic_warning_symbol = '⚠️'
+" let g:syntastic_style_error_symbol = '🚫'
+" let g:syntastic_style_warning_symbol = '💩'
 
-" }}}
+" " }}}
 " tlist {{{
 
 " Tlist options
