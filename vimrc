@@ -130,9 +130,9 @@ nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>
 command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!
 nnoremap <leader>/ :Grep 
 
-set wildignore+=*.o,*.obj,*/.git/*,*.pyc,
-            \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags,*.hdf5,.sconsign.dblite
+set wildignore+=*.o,*.obj,*.pyc,
+            \*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
+            \Session.vim,Project.vim,tags,.sconsign.dblite
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
@@ -562,13 +562,15 @@ if !has('python3')
 else
     let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 endif
-" let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
 " Include the bdelete plugin
 call ctrlp_bdelete#init()
 
 " Custom ignore paths
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.git|\.hg|include|lib|bin)',
+  \ 'file': '\v\.(exe|so|dll|os|swp|svn|hdf5|h5)$',
+  \ }
 
 " Custom root markers
 let g:ctrlp_root_markers = ['.ctrlp_marker']
