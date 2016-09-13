@@ -210,6 +210,7 @@ if (&t_Co >= 256)
     colorscheme hybrid
     let g:airline_theme="hybrid"
     hi! link Search DiffAdd
+    hi! link Conceal NonText
 
     " colorscheme two-firewatch
     " let g:airline_theme='twofirewatch'
@@ -738,19 +739,6 @@ let g:gitgutter_realtime = 0
 let g:goyo_width = 82
 
 " }}}
-" " indentline {{{
-
-" " let g:loaded_indentLine=1
-" " let g:indentLine_char="|"
-" let g:indentLine_char = '┊'
-" let g:indentLine_noConcealCursor=""
-" let g:indentLine_color_term = 239
-" let g:indentLine_color_gui = '#3F3F3F'
-" let g:indentLine_color_tty_dark = 1
-" let g:indentLine_fileTypeExclude=["tex", "Help", "markdown", "mkd", "md"] 
-" nnoremap coI :IndentLinesToggle<CR>
-
-" " }}}
 " jedi {{{
 
 " These two are required for neocomplete
@@ -807,9 +795,7 @@ vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 " }}}
 " neomake {{
 
-if hostname =~ 'hpc.swin.edu.au'
-    let g:neomake_python_enabled_makers = ['python']
-endif
+let g:neomake_python_enabled_makers = ['python', 'pyflakes']
 
 function! SetWarningType(entry)
     if a:entry.type =~? '\m^[SPI]'
@@ -830,12 +816,20 @@ let g:neomake_c_cppcheck_maker = {
         \ 'postprocess': function('SetWarningType')
         \ }
 
+augroup Neomake
+    au!
+    if (hostname !~ "hpc.swin.edu.au")
+        au BufWritePost *.py Neomake
+        au BufWritePost *.[ch] Neomake
+    endif
+augroup END
 
 
 " }}
 " notes-system {{{
 
 let g:notes_dir = "/Users/smutch/Dropbox/Notes"
+let g:notes_assets_dir = "assets"
 
 " }}}
 " peekaboo {{{
