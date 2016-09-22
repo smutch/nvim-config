@@ -827,6 +827,7 @@ function! ToggleNeomakeOnSave()
         augroup END
     endif
 endfunction
+command! ToggleNeomakeOnSave normal! :<C-u>call ToggleNeomakeOnSave()<CR>
 
 
 " }}
