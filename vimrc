@@ -196,34 +196,26 @@ let python_highlight_space_errors = 1
 
 syntax on " Use syntax highlighting
 if (&t_Co >= 256)
-    let base16colorspace=256
-    set background=dark
-    " if (hostname =~ "hpc.swin.edu.au") && !has("gui_running")
-    "     let g:gruvbox_italic=0
-    "     let g:gruvbox_contrast_dark="soft"
-    "     let g:gruvbox_invert_tabline=1
-    "     colorscheme gruvbox
-    " else
-
-    " let g:hybrid_custom_term_colors = 1
-    let g:hybrid_reduced_contrast = 1
-    colorscheme hybrid
-    let g:airline_theme="hybrid"
+    if exists('light') && light==1
+        colorscheme Tomorrow
+        let g:airline_theme='tomorrow'
+    else
+        " let g:hybrid_custom_term_colors = 1
+        let g:hybrid_reduced_contrast = 1
+        colorscheme hybrid
+        let g:airline_theme="hybrid"
+        " colorscheme two-firewatch
+        " let g:airline_theme="twofirewatch"
+    endif
     hi! link Search DiffAdd
     hi! link Conceal NonText
-
-    " colorscheme two-firewatch
-    " let g:airline_theme='twofirewatch'
-    " endif
-    " colorscheme molokai
-" elseif has("gui_running")
-"     set background=dark
-"     colorscheme hybrid_material
-"     let g:airline_theme="hybrid"
-else
-    let base16colorspace=16
-    set background=dark
 end
+
+if exists('light') && light == 1
+    set background=light
+else
+    set background=dark
+endif
 
 " Neovim terminal colors
 if has("nvim")
@@ -823,6 +815,18 @@ augroup Neomake
         au BufWritePost *.[ch] Neomake
     endif
 augroup END
+
+function! ToggleNeomakeOnSave()
+    if exists("#Neomake#BufWritePost#<buffer>")
+        augroup Neomake
+            au! BufWritePost <buffer>
+        augroup END
+    else
+        augroup Neomake
+            au BufWritePost <buffer> Neomake
+        augroup END
+    endif
+endfunction
 
 
 " }}
