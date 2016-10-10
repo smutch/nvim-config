@@ -76,7 +76,7 @@ if exists('&termguicolors')
     Plug 'junegunn/vim-emoji'
     Plug 'rakr/vim-one'
     Plug 'joshdick/onedark.vim'
-    Plug 'joshdick/airline-onedark.vim'
+    " Plug 'joshdick/airline-onedark.vim'
     Plug 'NLKNguyen/papercolor-theme'
     " Plug 'git@github.com:smutch/vim-monokai.git'
     " Plug 'tomasr/molokai'
@@ -88,7 +88,8 @@ if exists('&termguicolors')
     Plug 'owickstrom/vim-colors-paramount'
     " Plug 'mhartington/oceanic-next'
     Plug 'jdkanani/vim-material-theme'
-    Plug 'whatyouhide/vim-gotham'
+    " Plug 'whatyouhide/vim-gotham'
+    Plug 'dracula/vim'
 endif
 
 " These bundles are unlikely to be required anywhere other than on my mac
