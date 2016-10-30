@@ -53,8 +53,7 @@ Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
 " Plug 'Konfekt/FastFold'
 Plug 'git@github.com:smutch/note-system.git'
-" Plug 'ajh17/VimCompletesMe'
-Plug 'lifepillar/vim-mucomplete'
+Plug 'ajh17/VimCompletesMe'
 Plug 'junegunn/vim-peekaboo'
 Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
 Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }

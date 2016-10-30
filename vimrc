@@ -834,7 +834,7 @@ let g:notes_assets_dir = "assets"
 " peekaboo {{{
 
 let g:peekaboo_window = 'enew'
-let g:peekaboo_delay = 750
+let g:peekaboo_delay = 600
 let g:peekaboo_ins_prefix = '<c-x>'
 
 " }}}
@@ -946,9 +946,10 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 
 " }}}
 " vimcompletesme {{{
-"
-" autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
-"
+
+set noshowmode shortmess+=c
+autocmd FileType tex,python let b:vcm_tab_complete = "omni"
+
 " }}}
 " vim-emoji {{{
 
@@ -968,14 +969,6 @@ map  <buffer> <silent> <LocalLeader>u  <Plug>(IPython-UpdateShell)
 map  <buffer> <silent> tr      <Plug>(IPython-ToggleReselect)
 map  <buffer>          <LocalLeader>ts  <Plug>(IPython-ToggleSendOnSave)
 map  <buffer> <silent> <LocalLeader>r   <Plug>(IPython-RunLineAsTopLevel)
-
-" }}}
-" vim-mucomplete {{{
-
-set noshowmode shortmess+=c
-" set completeopt-=preview
-" set completeopt+=longest,menu,menuone
-" let g:mucomplete#enable_auto_at_startup = 1
 
 " }}}
 " vim-pencil {{{
