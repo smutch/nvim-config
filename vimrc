@@ -201,7 +201,7 @@ if (&t_Co >= 256)
         let g:airline_theme='tomorrow'
     else
         " let g:hybrid_custom_term_colors = 1
-        let g:hybrid_reduced_contrast = 1
+        let g:hybrid_reduced_contrast = 0
         colorscheme hybrid
         let g:airline_theme="hybrid"
         " colorscheme two-firewatch
@@ -403,12 +403,6 @@ nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " }}}
 " Keybindings {{{
 
-" ctrl-space does omnicomplete or keyword complete if menu not already visible
-" inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
-"             \ "\<lt>C-n>" :
-"             \ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
-"             \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
-"             \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
 imap <C-@> <C-Space>
 
 " Quick escape from insert mode
@@ -841,6 +835,7 @@ let g:notes_assets_dir = "assets"
 
 let g:peekaboo_window = 'enew'
 let g:peekaboo_delay = 750
+let g:peekaboo_ins_prefix = '<c-x>'
 
 " }}}
 " polyglot {{{
@@ -901,7 +896,7 @@ autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
 
 " }}}
-" " syntastic {{{
+" syntastic {{{
 
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 0
@@ -951,9 +946,9 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 
 " }}}
 " vimcompletesme {{{
-
-autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
-
+"
+" autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
+"
 " }}}
 " vim-emoji {{{
 
@@ -973,6 +968,14 @@ map  <buffer> <silent> <LocalLeader>u  <Plug>(IPython-UpdateShell)
 map  <buffer> <silent> tr      <Plug>(IPython-ToggleReselect)
 map  <buffer>          <LocalLeader>ts  <Plug>(IPython-ToggleSendOnSave)
 map  <buffer> <silent> <LocalLeader>r   <Plug>(IPython-RunLineAsTopLevel)
+
+" }}}
+" vim-mucomplete {{{
+
+set noshowmode shortmess+=c
+" set completeopt-=preview
+" set completeopt+=longest,menu,menuone
+" let g:mucomplete#enable_auto_at_startup = 1
 
 " }}}
 " vim-pencil {{{
