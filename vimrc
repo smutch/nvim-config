@@ -607,9 +607,9 @@ nnoremap <leader>t :CtrlPBufTagAll<CR>
 let g:ctrlp_match_window_bottom = 0
 
 " }}}
-" dash {{{
+" devicons {{{
 
-map <silent> <leader>D <Plug>DashSearch
+let g:webdevicons_enable_ctrlp = 0
 
 " }}}
 " dispatch {{{
