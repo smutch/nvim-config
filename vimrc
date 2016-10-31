@@ -194,28 +194,30 @@ let python_highlight_space_errors = 1
 
 " Colorscheme {{{
 
+augroup CustomColors
+    au!
+    au ColorScheme hybrid hi! Normal guifg=#d9dbda
+    au ColorScheme * hi! link Search DiffAdd |
+                \ hi! link Conceal NonText
+augroup END
+
 syntax on " Use syntax highlighting
 if (&t_Co >= 256)
     if exists('light') && light==1
+        set background=light
         colorscheme Tomorrow
         let g:airline_theme='tomorrow'
     else
+        set background=dark
         " let g:hybrid_custom_term_colors = 1
-        let g:hybrid_reduced_contrast = 0
+        let g:hybrid_reduced_contrast = 1
         colorscheme hybrid
         let g:airline_theme="hybrid"
+
         " colorscheme two-firewatch
         " let g:airline_theme="twofirewatch"
     endif
-    hi! link Search DiffAdd
-    hi! link Conceal NonText
 end
-
-if exists('light') && light == 1
-    set background=light
-else
-    set background=dark
-endif
 
 " Neovim terminal colors
 if has("nvim")
