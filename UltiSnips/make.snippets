@@ -1,13 +1,24 @@
 snippet basic "basic makefile template"
 CC = ${1:cc}
-CFLAGS = -std=gnu99
-LIBS = 
+OUTPUT_OPTION = -MMD -MP -o $@
+CFLAGS = -std=gnu99 -O3 -march=native
+LDLIBS = -lm
+ 
+SRC = $(wildcard **/*.c)
+OBJ = $(SRC:.c=.o)
+DEP = $(SRC:.c=.d)
+-include $(DEP)
+ 
+.PHONY: clean
+ 
+${2:executable}: $(OBJ)
+ 
+clean:
+	rm -f $(OBJ) $(DEP) foo
+endsnippet
 
-OBJ = ${2:file.o}
 
-${3:executable}: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
-
-%.o: %.c
-	$(CC) -c -o $@ $< $(CFLAGS)
+snippet list "list targets in simple Makefile"
+list:
+	@sed -n 's/\(^[^\t\.]\S*\):/\1/p' Makefile | grep -v list
 endsnippet
