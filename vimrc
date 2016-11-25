@@ -196,7 +196,9 @@ let python_highlight_space_errors = 1
 
 augroup CustomColors
     au!
-    au ColorScheme hybrid hi! Normal guifg=#d9dbda
+    au ColorScheme hybrid if &background == 'dark' |
+                \ hi! Normal guifg=#d9dbda |
+                \ endif
     au ColorScheme * hi! link Search DiffAdd |
                 \ hi! link Conceal NonText
 augroup END
@@ -401,6 +403,18 @@ nnoremap <leader>m :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:
 
 " make <c-l> do more than just redraw the screen
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
+" scrach buffers (taken from
+" <http://dhruvasagar.com/2014/03/11/creating-custom-scratch-buffers-in-vim>)
+function! ScratchEdit(cmd, options)
+    exe a:cmd tempname()
+    setl buftype=nofile bufhidden=wipe nobuflisted
+    if !empty(a:options) | exe 'setl' a:options | endif
+endfunction
+command! -bar -nargs=* Sedit call ScratchEdit('edit', <q-args>)
+command! -bar -nargs=* Ssplit call ScratchEdit('split', <q-args>)
+command! -bar -nargs=* Svsplit call ScratchEdit('vsplit', <q-args>)
+command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
 
 " }}}
 " Keybindings {{{
@@ -636,21 +650,9 @@ nnoremap <leader>ga :Gcommit -a<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gm :Gmerge<CR>
-if hostname =~ 'hpc.swin.edu.au'
-    nnoremap <leader>gP :Git g2 pull<CR>
-else
-    nnoremap <leader>gP :Gpull<CR>
-endif
-if hostname =~ 'hpc.swin.edu.au'
-    nnoremap <leader>gp :Git g2 push<CR>
-else
-    nnoremap <leader>gp :Gpush<CR>
-endif
-if hostname =~ 'hpc.swin.edu.au'
-    nnoremap <leader>gf :Git g2 fetch<CR>
-else
-    nnoremap <leader>gf :Gfetch<CR>
-endif
+nnoremap <leader>gP :Gpull<CR>
+nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gg :Ggrep<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gr :Gread<CR>
@@ -749,6 +751,9 @@ let g:jedi#goto_assignments_command = '<localleader>g'
 
 " move documentation to the right if the window is big enough
 " au BufAdd * if bufname(expand('<afile>')) ==# "'__doc__'" | silent! wincmd L | endif
+
+" close the documentation window
+autocmd FileType python nnoremap <buffer> <leader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
 
 " }}}
 " limelight {{{
