@@ -522,6 +522,25 @@ autocmd BufNewFile,BufRead *.tex set ft=tex
 autocmd BufLeave *.{c,cpp} mark C
 autocmd BufLeave *.h       mark H
 
+" When switching colorscheme in terminal vim change the profile in iTerm as well.
+" from: <https://github.com/vheon/home/blob/ea91f443b33bc15d0deaa34e172a0317db63a53d/.vim/vimrc#L330-L348>
+if !has('gui_running')
+  function! s:change_iterm2_profile()
+      if &background == 'light'
+          let profile = 'Light'
+      else
+          let profile = 'Local'
+      endif
+      let escape = '\033]50;SetProfile='.profile.'\x7'
+      if exists('$TMUX')
+        let escape = '\033Ptmux;'.substitute(escape, '\\033', '\\033\\033', 'g').'\033\\'
+      endif
+      silent call system("printf '".escape."' > /dev/tty")
+  endfunction
+
+  autocmd VimEnter,ColorScheme * call s:change_iterm2_profile()
+endif
+
 " }}}
 " Plugin settings {{{
 " airline {{{
