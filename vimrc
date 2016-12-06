@@ -113,6 +113,11 @@ set smartcase                        " case sensitive when uc present
 set gdefault                         " g flag on sed subs automatically
 set tags+=./tags;$HOME                " recursively search up dir stack for tags file
 
+" Live substitution
+if exists('&inccommand')
+  set inccommand=split
+endif
+
 " Use ag if possible, if not then ack, and fall back to grep if all else fails
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor\ --column
