@@ -129,7 +129,7 @@ else
     " Grep will sometimes skip displaying the file name if you
     " search in a singe file. Set grep
     " program to always generate a file-name.
-    set grepprg=grep\ -nH\ $*
+    set grepprg=grep\ -nHR\ $*
 endif
 nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>
 command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!
@@ -522,6 +522,9 @@ autocmd FileType javascript,coffee,html,css,scss,sass setlocal ts=2 sw=2
 
 " make sure all tex files are set to correct filetype
 autocmd BufNewFile,BufRead *.tex set ft=tex
+
+" make sure pbs scripts are set to the right filetype
+autocmd BufNewFile,BufRead *.{qsub,pbs} set ft=sh
 
 " set marks to jump between header and source files
 autocmd BufLeave *.{c,cpp} mark C
