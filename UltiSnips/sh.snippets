@@ -10,9 +10,7 @@ snippet qsub-coepp "standard qsub script for coepp"
 #PBS -d `readlink -f .`
 
 slack () {
-    curl -X POST --data-urlencode 'payload={"text": "COEPP job '$PBS_JOBNAME' '"\$1"'.", ' \
-        '"channel": "@simon", "username": "COEPP", "icon_emoji": "'"\$2"'"}' \
-        https://hooks.slack.com/services/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
+    curl -X POST --data-urlencode "payload={\"text\": \"COEPP job $PBS_JOBNAME $1.\", \"channel\": \"@simon\", \"username\": \"COEPP\", \"icon_emoji\": \"$2\"}" $SLACK_URL
 }
 
 echo '-------------------------------'
