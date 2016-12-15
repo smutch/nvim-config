@@ -6,33 +6,26 @@ Plug 'Shougo/vimproc'
 Plug 'junegunn/vim-easy-align'
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-" Plug 'JazzCore/ctrlp-cmatcher', {'do': 'export CFLAGS=-Qunused-arguments && export CPPFLAGS=-Qunused-arguments && ./install.sh'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
-Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'austintaylor/vim-indentobject'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'vim-scripts/python_match.vim', { 'for': 'Python' }
-" Plug 'cjrh/vim-conda'
-" Plug '$HOME/code/vim-plugins/vim-ipython'
 Plug 'vim-scripts/scons.vim'
-Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
+" Plug 'zakj/vim-showmarks', {'on': ['ShowMarksOn', 'ShowMarksToggle']}
 Plug 'tpope/vim-surround'
-" Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
 if os == 'Darwin'
     Plug 'tpope/vim-dispatch'
-    Plug 'radenling/vim-dispatch-neovim'
 else
     Plug 'smutch/vim-dispatch', { 'branch' : 'extra_env_vars' }
 endif
+Plug 'radenling/vim-dispatch-neovim'
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'natw/vim-pythontextobj', { 'for': 'python' }
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'kana/vim-textobj-function'
 Plug 'kana/vim-textobj-user'
-" Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-obsession', { 'on': 'Obsession' }
 Plug 'tpope/vim-rsi'
@@ -43,15 +36,12 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'moll/vim-bbye'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-vinegar'
 Plug 'justinmk/vim-dirvish'
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-unimpaired'
 Plug 'sheerun/vim-polyglot'
 Plug 'edkolev/tmuxline.vim', { 'on': 'Tmuxline' }
 Plug 'kana/vim-textobj-fold'
-" Plug 'Konfekt/FastFold'
 Plug 'git@github.com:smutch/note-system.git'
 Plug 'ajh17/VimCompletesMe'
 Plug 'junegunn/vim-peekaboo'
@@ -60,9 +50,6 @@ Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'reedes/vim-pencil'
 Plug 'reedes/vim-wordy'
-" Plug 'hail2u/vim-css3-syntax', { 'for': ['scss', 'css', 'sass'] }
-" Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-eunuch'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
@@ -70,35 +57,28 @@ Plug 'wellle/targets.vim'
 " colorschemes
 Plug 'morhetz/gruvbox'
 Plug 'w0ng/vim-hybrid'
-Plug 'git@github.com:smutch/vim-hybrid-material.git'
+" Plug 'git@github.com:smutch/vim-hybrid-material.git'
 if exists('&termguicolors')
     Plug 'dikiaap/minimalist'
-    Plug 'frankier/neovim-colors-solarized-truecolor-only'
     Plug 'junegunn/vim-emoji'
     Plug 'rakr/vim-one'
     Plug 'joshdick/onedark.vim'
-    " Plug 'joshdick/airline-onedark.vim'
     Plug 'NLKNguyen/papercolor-theme'
-    " Plug 'git@github.com:smutch/vim-monokai.git'
-    " Plug 'tomasr/molokai'
     Plug 'reedes/vim-colors-pencil'
     Plug 'rakr/vim-two-firewatch'
     Plug 'tyrannicaltoucan/vim-deep-space'
-    " Plug 'mkarmona/colorsbox'
     Plug 'raphamorim/lucario'
     Plug 'owickstrom/vim-colors-paramount'
-    " Plug 'mhartington/oceanic-next'
     Plug 'jdkanani/vim-material-theme'
-    " Plug 'whatyouhide/vim-gotham'
     Plug 'dracula/vim'
 endif
 
 " These bundles are unlikely to be required anywhere other than on my mac
 if os == "Darwin"
-    Plug 'rizzatti/funcoo.vim' | Plug 'rizzatti/dash.vim'
+    " Plug 'hail2u/vim-css3-syntax', { 'for': ['scss', 'css', 'sass'] }
+    " Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
     " Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'mattn/webapi-vim'
-    Plug 'git@github.com:smutch/RST-Tables.git', { 'for': 'rst' }
     Plug 'lervag/vimtex'
     Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
     Plug 'davidbeckingsale/writegood.vim', { 'for': 'tex' }
