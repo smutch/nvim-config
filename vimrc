@@ -204,27 +204,37 @@ augroup CustomColors
     au ColorScheme hybrid if &background == 'dark' |
                 \ hi! Normal guifg=#d9dbda |
                 \ endif
+    au ColorScheme Tomorrow if &background == 'light' |
+                \ hi! link Folded ColorColumn |
+                \ endif
     au ColorScheme * hi! link Search DiffAdd |
                 \ hi! link Conceal NonText
 augroup END
 
 syntax on " Use syntax highlighting
-if (&t_Co >= 256)
-    if exists('light') && light==1
-        set background=light
-        colorscheme Tomorrow
-        let g:airline_theme='tomorrow'
-    else
-        set background=dark
-        " let g:hybrid_custom_term_colors = 1
-        let g:hybrid_reduced_contrast = 1
-        colorscheme hybrid
-        let g:airline_theme="hybrid"
+function! SetTheme()
+    if (&t_Co >= 256)
+        if exists('g:light') && g:light==1
+            set background=light
+            colorscheme Tomorrow
+            let g:airline_theme='tomorrow'
+        else
+            set background=dark
+            " let g:hybrid_custom_term_colors = 1
+            let g:hybrid_reduced_contrast = 1
+            colorscheme hybrid
+            let g:airline_theme="hybrid"
+            let g:light=0
 
-        " colorscheme two-firewatch
-        " let g:airline_theme="twofirewatch"
-    endif
-end
+            " colorscheme two-firewatch
+            " let g:airline_theme="twofirewatch"
+        endif
+    end
+endfunction
+command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
+nnoremap cot :<C-u>ToggleTheme<CR> 
+call SetTheme()
+
 
 " Neovim terminal colors
 if has("nvim")
@@ -1015,7 +1025,6 @@ let g:pencil#wrapModeDefault = 'soft'
 
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
   autocmd FileType text         call pencil#init()
   " autocmd FileType tex,latex    call pencil#init()
 augroup END
