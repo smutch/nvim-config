@@ -214,7 +214,7 @@ augroup END
 syntax on " Use syntax highlighting
 function! SetTheme()
     if (&t_Co >= 256)
-        if exists('g:light') && g:light==1
+        if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
             colorscheme Tomorrow
             let g:airline_theme='tomorrow'
@@ -234,7 +234,6 @@ endfunction
 command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
 nnoremap cot :<C-u>ToggleTheme<CR> 
 call SetTheme()
-
 
 " Neovim terminal colors
 if has("nvim")
@@ -767,6 +766,11 @@ let g:goyo_width = 82
 
 " }}}
 " jedi {{{
+
+" ---
+" UNCOMMENT TO DISABLE
+" let g:jedi#auto_initialization = 0
+" ---
 
 " These two are required for neocomplete
 " let g:jedi#completions_enabled = 0
