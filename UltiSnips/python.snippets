@@ -80,3 +80,21 @@ endsnippet
 snippet debug "debug"
 import ipdb; ipdb.set_trace()
 endsnippet
+
+snippet ipy "embed ipython here"
+import IPython; IPython.embed()
+endsnippet
+
+snippet pv "print a variable"
+print("$1 =", ${1:var})
+endsnippet
+
+snippet logger "setup a nice colored logger"
+import logging as logg
+import coloredlogs
+coloredlogs.install(level='INFO')
+endsnippet
+
+snippet pdnull "Set pandas to use inf as null"
+pd.set_option('mode.use_inf_as_null', True)
+endsnippet

@@ -2,9 +2,9 @@
 
 " Initialisation {{{
 
-" if we are using neovim then enable true color support
-if has('nvim')
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" If we have true color support available
+if exists('&termguicolors')
+    set termguicolors
 endif
 
 " We don't want to mimic vi
@@ -12,6 +12,8 @@ set nocompatible
 
 " Set the encoding
 set encoding=utf-8
+
+py3 pass
 
 " Use virtualenv for python
 " py << EOF
@@ -26,7 +28,7 @@ set encoding=utf-8
 " EOF
 
 " Deal with gnu screen
-if (match($TERM, "screen")!=-1) && !has('nvim')
+if (match($TERM, "screen")!=-1) && !exists('&termguicolors')
     set term=screen-256color
 endif
 
@@ -37,7 +39,10 @@ endif
 let os = substitute(system('uname'), "\n", "", "")
 if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
+    let cscope_cmd="/usr/local/bin/cscope"
     " set tags+=$HOME/.vim/ctags-system-mac
+else
+    let cscope_cmd="/usr/bin/cscope"
 end
 
 " What machine are we on?
@@ -45,6 +50,7 @@ let hostname = substitute(system('hostname'), '\n', '', '')
 
 if (hostname =~ "hpc.swin.edu.au")
     set shell=/home/smutch/3rd_party/zsh-5.0.5/bin/zsh
+    set t_ut=
 endif
 
 " }}}
@@ -71,7 +77,7 @@ set mouse=a                          " enable mouse for all modes settings
 set clipboard=unnamed                " To work in tmux
 set spelllang=en_gb                  " British spelling
 set showmode                         " Show the current mode
-" set list                             " Show newline & tab markers
+" set list                             " Show trailing & tab markers
 " set showcmd                          " Show partial command in bottom right
 
 set secure                           " Secure mode for reading vimrc, exrc files etc. in current dir
@@ -82,6 +88,9 @@ let g:netrw_altfile = 1              " Prev buffer command excludes netrw buffer
 " Use an interactive shell to allow command line aliases to work
 " set shellcmdflag=-ic
 
+" I tend to write c rather than c++
+let g:c_syntax_for_h = 1
+ 
 " Indent and wrapping {{{
 
 set backspace=indent,eol,start       " Sane backspace
@@ -104,17 +113,53 @@ set smartcase                        " case sensitive when uc present
 set gdefault                         " g flag on sed subs automatically
 set tags+=./tags;$HOME                " recursively search up dir stack for tags file
 
-" Grep will sometimes skip displaying the file name if you
-" search in a singe file. Set grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
+" Live substitution
+if exists('&inccommand')
+  set inccommand=split
+endif
 
-set wildignore+=*.o,*.obj,*/.git/*,*.pyc,
-            \*.aux,*.log,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags,*.hdf5,.sconsign.dblite
+" Use ag if possible, if not then ack, and fall back to grep if all else fails
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+    set grepformat=%f:%l:%c:%m
+elseif executable('ack')
+    set grepprg=ack\ -s\ -H\ --nocolor\ --nogroup\ --column
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+else
+    " Grep will sometimes skip displaying the file name if you
+    " search in a singe file. Set grep
+    " program to always generate a file-name.
+    set grepprg=grep\ -nHRI\ $*
+endif
+nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>
+command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!
+nnoremap <leader>/ :Grep 
+
+set wildignore+=*.o,*.obj,*.pyc,
+            \*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
+            \Session.vim,Project.vim,tags,.sconsign.dblite
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
+
+" cscope
+if has("cscope")
+    let &csprg = cscope_cmd
+    set csto=0
+    " set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set csverb
+
+    map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
+    map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
+endif
 
 " }}}
 " Backup and swap files {{{
@@ -127,12 +172,13 @@ set undofile                         " Save undo's after file closes
 " }}}
 " Visual settings {{{
 
-set vb t_vb=                         " Turn off visual beep
-set laststatus=2                     " Always display a status line
-set cmdheight=1                      " Command line height
-set listchars=tab:▸\ ,eol:↵          " Set hidden characters
-let g:tex_conceal = ""               " Don't use conceal for latex equations
-set number                           " Show line numbers
+set vb t_vb=                            " Turn off visual beep
+set laststatus=2                        " Always display a status line
+set cmdheight=1                         " Command line height
+set listchars=tab:▸\ ,eol:↵,trail:·     " Set hidden characters
+" set listchars=tab:▸\ ,trail:·           " Set hidden characters
+let g:tex_conceal = ""                  " Don't use conceal for latex equations
+set number                              " Show line numbers
 
 if has("gui_macvim")
   " set guifont=Monaco:h14
@@ -153,33 +199,41 @@ let python_highlight_space_errors = 1
 
 " Colorscheme {{{
 
+augroup CustomColors
+    au!
+    au ColorScheme hybrid if &background == 'dark' |
+                \ hi! Normal guifg=#d9dbda |
+                \ endif
+    au ColorScheme Tomorrow if &background == 'light' |
+                \ hi! link Folded ColorColumn |
+                \ endif
+    au ColorScheme * hi! link Search DiffAdd |
+                \ hi! link Conceal NonText
+augroup END
+
 syntax on " Use syntax highlighting
-if (&t_Co >= 256)
-    let base16colorspace=256
-    set background=dark
-    " if (hostname =~ "hpc.swin.edu.au") && !has("gui_running")
-    "     let g:gruvbox_italic=0
-    "     let g:gruvbox_contrast_dark="soft"
-    "     let g:gruvbox_invert_tabline=1
-    "     colorscheme gruvbox
-    " else
-        let g:hybrid_custom_term_colors = 1
-        let g:hybrid_reduced_contrast = 1
-        colorscheme hybrid
-        let g:airline_theme="hybrid"
-        hi! link Search DiffAdd
-        " colorscheme onedark
-        " let g:airline_theme="onedark"
-    " endif
-    " colorscheme molokai
-" elseif has("gui_running")
-"     set background=dark
-"     colorscheme hybrid_material
-"     let g:airline_theme="hybrid"
-else
-    let base16colorspace=16
-    set background=dark
-end
+function! SetTheme()
+    if (&t_Co >= 256)
+        if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
+            set background=light
+            colorscheme Tomorrow
+            let g:airline_theme='tomorrow'
+        else
+            set background=dark
+            " let g:hybrid_custom_term_colors = 1
+            let g:hybrid_reduced_contrast = 1
+            colorscheme hybrid
+            let g:airline_theme="hybrid"
+            let g:light=0
+
+            " colorscheme two-firewatch
+            " let g:airline_theme="twofirewatch"
+        endif
+    end
+endfunction
+command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
+nnoremap cot :<C-u>ToggleTheme<CR> 
+call SetTheme()
 
 " Neovim terminal colors
 if has("nvim")
@@ -364,15 +418,21 @@ nnoremap <leader>m :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:
 " make <c-l> do more than just redraw the screen
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
+" scrach buffers (taken from
+" <http://dhruvasagar.com/2014/03/11/creating-custom-scratch-buffers-in-vim>)
+function! ScratchEdit(cmd, options)
+    exe a:cmd tempname()
+    setl buftype=nofile bufhidden=wipe nobuflisted
+    if !empty(a:options) | exe 'setl' a:options | endif
+endfunction
+command! -bar -nargs=* Sedit call ScratchEdit('edit', <q-args>)
+command! -bar -nargs=* Ssplit call ScratchEdit('split', <q-args>)
+command! -bar -nargs=* Svsplit call ScratchEdit('vsplit', <q-args>)
+command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
+
 " }}}
 " Keybindings {{{
 
-" ctrl-space does omnicomplete or keyword complete if menu not already visible
-" inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
-"             \ "\<lt>C-n>" :
-"             \ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
-"             \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
-"             \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
 imap <C-@> <C-Space>
 
 " Quick escape from insert mode
@@ -384,6 +444,9 @@ nnoremap <silent> gbp :bp<CR>
 
 " Quick switch to directory of current file
 nnoremap gcd :lcd %:p:h<CR>:pwd<CR>
+
+" Quickly create a file in the directory of the current buffer
+nmap <leader>e :<C-u>e <C-R>=expand("%:p:h") . "/" <CR>
 
 " Leave cursor at end of yank after yanking text with lowercase y in visual 
 " mode
@@ -460,15 +523,40 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 "   au BufWritePost $MYVIMRC so $MYVIMRC
 " augroup END
 
+" If we have a wide window then put the preview window on the right
+au BufAdd * if &previewwindow && &columns >= 160 | silent! wincmd L | endif
+
 " web related languages
 autocmd FileType javascript,coffee,html,css,scss,sass setlocal ts=2 sw=2
 
 " make sure all tex files are set to correct filetype
 autocmd BufNewFile,BufRead *.tex set ft=tex
 
+" make sure pbs scripts are set to the right filetype
+autocmd BufNewFile,BufRead *.{qsub,pbs} set ft=sh
+
 " set marks to jump between header and source files
 autocmd BufLeave *.{c,cpp} mark C
 autocmd BufLeave *.h       mark H
+
+" When switching colorscheme in terminal vim change the profile in iTerm as well.
+" from: <https://github.com/vheon/home/blob/ea91f443b33bc15d0deaa34e172a0317db63a53d/.vim/vimrc#L330-L348>
+if !has('gui_running')
+  function! s:change_iterm2_profile()
+      if &background == 'light'
+          let profile = 'Light'
+      else
+          let profile = 'Local'
+      endif
+      let escape = '\033]50;SetProfile='.profile.'\x7'
+      if exists('$TMUX')
+        let escape = '\033Ptmux;'.substitute(escape, '\\033', '\\033\\033', 'g').'\033\\'
+      endif
+      silent call system("printf '".escape."' > /dev/tty")
+  endfunction
+
+  autocmd VimEnter,ColorScheme * call s:change_iterm2_profile()
+endif
 
 " }}}
 " Plugin settings {{{
@@ -507,13 +595,21 @@ nnoremap Q :Bdelete<CR>
 " ctrlp {{{
 
 " Set the matching function
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+" PyMatcher for CtrlP
+if !has('python3')
+    echo 'In order to use pymatcher plugin, you need +python compiled vim'
+else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
 
 " Include the bdelete plugin
 call ctrlp_bdelete#init()
 
 " Custom ignore paths
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|include|lib|bin)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.git|\.hg|include|lib|bin)',
+  \ 'file': '\v\.(exe|so|dll|os|swp|svn|hdf5|h5)$',
+  \ }
 
 " Custom root markers
 let g:ctrlp_root_markers = ['.ctrlp_marker']
@@ -557,9 +653,9 @@ nnoremap <leader>t :CtrlPBufTagAll<CR>
 let g:ctrlp_match_window_bottom = 0
 
 " }}}
-" dash {{{
+" devicons {{{
 
-map <silent> <leader>D <Plug>DashSearch
+let g:webdevicons_enable_ctrlp = 0
 
 " }}}
 " dispatch {{{
@@ -567,6 +663,8 @@ map <silent> <leader>D <Plug>DashSearch
 " Use octodown as default build command for Markdown files
 autocmd FileType markdown let b:dispatch = 'octodown %'
 nnoremap <leader>x :Dispatch<CR>
+
+let g:dispatch_extra_env_vars = 'LD_LIBRARY_PATH=/home/smutch/3rd_party/pcre/lib'
 
 let g:dispatch_compilers = {
       \ 'markdown': 'doit',
@@ -588,21 +686,9 @@ nnoremap <leader>ga :Gcommit -a<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gm :Gmerge<CR>
-if hostname =~ 'hpc.swin.edu.au'
-    nnoremap <leader>gP :Git g2 pull<CR>
-else
-    nnoremap <leader>gP :Gpull<CR>
-endif
-if hostname =~ 'hpc.swin.edu.au'
-    nnoremap <leader>gp :Git g2 push<CR>
-else
-    nnoremap <leader>gp :Gpush<CR>
-endif
-if hostname =~ 'hpc.swin.edu.au'
-    nnoremap <leader>gf :Git g2 fetch<CR>
-else
-    nnoremap <leader>gf :Gfetch<CR>
-endif
+nnoremap <leader>gP :Gpull<CR>
+nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gg :Ggrep<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gr :Gread<CR>
@@ -679,48 +765,36 @@ let g:gitgutter_realtime = 0
 let g:goyo_width = 82
 
 " }}}
-" grepper {{{
-
-let g:grepper = {
-            \ 'tools':     ['git', 'ag', 'grep', 'ack'],
-            \ 'open':      1,
-            \ 'switch':    1,
-            \ 'jump':      0,
-            \ 'next_tool': '<C-n>',
-            \ }
-
-nmap gs <plug>(GrepperOperator)
-xmap gs <plug>(GrepperOperator)
-
-nnoremap <leader>* :Grepper -cword<cr>
-nnoremap <leader>/ :Grepper<cr>
-
-" }}}
-" indentline {{{
-
-" let g:loaded_indentLine=1
-" let g:indentLine_char="|"
-let g:indentLine_char = '┊'
-let g:indentLine_noConcealCursor=""
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui = '#3F3F3F'
-let g:indentLine_color_tty_dark = 1
-let g:indentLine_fileTypeExclude=["tex", "Help", "markdown", "mkd", "md"] 
-nnoremap coI :IndentLinesToggle<CR>
-
-" }}}
 " jedi {{{
+
+" ---
+" UNCOMMENT TO DISABLE
+" let g:jedi#auto_initialization = 0
+" ---
 
 " These two are required for neocomplete
 " let g:jedi#completions_enabled = 0
 " let g:jedi#auto_vim_configuration = 0
 
+" Ensure conda paths are being used (see https://github.com/cjrh/vim-conda/issues/15)
+" let s:custom_sys_paths = system('~/miniconda3/bin/python -c "import sys; print(sys.path)"') 
+" py3 << EOF
+" import vim, sys, ast
+" sys.path.extend(ast.literal_eval(vim.eval("s:custom_sys_paths")))
+" EOF
+
+let g:jedi#force_py_version = 3
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 2  "May be too slow...
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 let g:jedi#goto_assignments_command = '<localleader>g'
 
+" move documentation to the right if the window is big enough
+" au BufAdd * if bufname(expand('<afile>')) ==# "'__doc__'" | silent! wincmd L | endif
+
+" close the documentation window
+autocmd FileType python nnoremap <buffer> <leader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
 
 " }}}
 " limelight {{{
@@ -748,17 +822,68 @@ let g:NERDSpaceDelims = 1
 let g:NERDAltDelims_c = 1
 map <leader><leader> <plug>NERDCommenterToggle
 nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
+nnoremap <leader>cP yy:<C-u>call NERDComment('n', 'comment')<CR>P
+vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
+vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 " }}}
+" neomake {{
+
+let g:neomake_python_enabled_makers = ['python', 'pyflakes']
+
+function! SetWarningType(entry)
+    if a:entry.type =~? '\m^[SPI]'
+        let a:entry.type = 'I'
+    endif
+endfunction
+
+let g:neomake_c_cppcheck_maker = {
+        \ 'args': ['%:p', '-q', '--enable=style'],
+        \ 'errorformat': '[%f:%l]: (%trror) %m,' .
+        \ '[%f:%l]: (%tarning) %m,' .
+        \ '[%f:%l]: (%ttyle) %m,' .
+        \ '[%f:%l]: (%terformance) %m,' .
+        \ '[%f:%l]: (%tortability) %m,' .
+        \ '[%f:%l]: (%tnformation) %m,' .
+        \ '[%f:%l]: (%tnconclusive) %m,' .
+        \ '%-G%.%#',
+        \ 'postprocess': function('SetWarningType')
+        \ }
+
+augroup Neomake
+    au!
+    if (hostname !~ "hpc.swin.edu.au")
+        au BufWritePost *.py Neomake
+        au BufWritePost *.[ch] Neomake
+    endif
+augroup END
+
+function! ToggleNeomakeOnSave()
+    if exists("#Neomake#BufWritePost#<buffer>")
+        augroup Neomake
+            au! BufWritePost <buffer>
+        augroup END
+    else
+        augroup Neomake
+            au BufWritePost <buffer> Neomake
+        augroup END
+    endif
+endfunction
+command! ToggleNeomakeOnSave normal! :<C-u>call ToggleNeomakeOnSave()<CR>
+
+
+" }}
 " notes-system {{{
 
 let g:notes_dir = "/Users/smutch/Dropbox/Notes"
+let g:notes_assets_dir = "assets"
 
 " }}}
 " peekaboo {{{
 
 let g:peekaboo_window = 'enew'
-let g:peekaboo_delay = 750
+let g:peekaboo_delay = 600
+let g:peekaboo_ins_prefix = '<c-x>'
 
 " }}}
 " polyglot {{{
@@ -821,24 +946,26 @@ autocmd FileType markdown let b:surround_105 = "*\r*" "italics
 " }}}
 " syntastic {{{
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'passive_filetypes': [] }
-                           " \ 'active_filetypes': ['c', 'cpp', 'python'],
-let g:syntastic_python_checkers = ["python", "flake8"]
-" let g:syntastic_error_symbol = '✗'
-" let g:syntastic_warning_symbol = '⚠'
+" let g:syntastic_mode_map = { 'mode': 'passive',
+"                            \ 'passive_filetypes': [],
+"                            \ 'active_filetypes': ['python'] }
+"                            " \ 'active_filetypes': ['c', 'cpp', 'python'],
+" let g:syntastic_python_checkers = ["python"] 
+" " "flake8"]
+" " let g:syntastic_error_symbol = '✗'
+" " let g:syntastic_warning_symbol = '⚠'
 
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_error_symbol = '🚫'
-let g:syntastic_style_warning_symbol = '💩'
+" let g:syntastic_error_symbol = '❌'
+" let g:syntastic_warning_symbol = '⚠️'
+" let g:syntastic_style_error_symbol = '🚫'
+" let g:syntastic_style_warning_symbol = '💩'
 
-" }}}
+" " }}}
 " tlist {{{
 
 " Tlist options
@@ -860,7 +987,7 @@ let g:tmuxline_powerline_separators = 0
 " }}}
 " ultisnips {{{
 
-" let g:UltiSnipsUsePythonVersion = 2
+let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
@@ -868,7 +995,8 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " }}}
 " vimcompletesme {{{
 
-autocmd FileType tex,python,c let b:vcm_tab_complete = "omni"
+set noshowmode shortmess+=c
+autocmd FileType tex,python let b:vcm_tab_complete = "omni"
 
 " }}}
 " vim-emoji {{{
@@ -901,7 +1029,6 @@ let g:pencil#wrapModeDefault = 'soft'
 
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
   autocmd FileType text         call pencil#init()
   " autocmd FileType tex,latex    call pencil#init()
 augroup END

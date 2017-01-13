@@ -1,3 +1,27 @@
 snippet mpiomp "arguments for using openmp with mpi"
 -n 1 -cpus-per-rank $PBS_NUM_PPN
 endsnippet
+
+snippet qsub-coepp "standard qsub script for coepp"
+#PBS -V
+#PBS -q ${1:long}
+#PBS -l nodes=${2:1}:ppn=${3:4},walltime=${4:11:59:59}
+#PBS -N ${5:test_new_setup}
+#PBS -d `readlink -f .`
+
+slack () {
+    curl -X POST --data-urlencode "payload={\"text\": \"COEPP job $PBS_JOBNAME $1.\", \"channel\": \"@simon\", \"username\": \"COEPP\", \"icon_emoji\": \"$2\"}" $SLACK_URL
+}
+
+echo '-------------------------------'
+echo "DATE     is "\`date\`
+echo "PWD      is "$PWD
+echo "NNODES   is "\`uniq $PBS_NODEFILE | wc -l\`
+echo "NPROCS   is "\`cat  $PBS_NODEFILE | wc -l\`
+echo "Using the following nodes:"
+cat $PBS_NODEFILE | uniq
+echo '-------------------------------'
+
+mpiexec ${0} > >(tee $PBS_JOBNAME.out) 2> >(tee $PBS_JOBNAME.err >&2) && slack 'is complete!' ':thumbsup:' || slack 'has failed. :white_frowning_face:' ':poop:'
+rm $PBS_JOBNAME.out $PBS_JOBNAME.err
+endsnippet
