@@ -129,7 +129,7 @@ else
     " Grep will sometimes skip displaying the file name if you
     " search in a singe file. Set grep
     " program to always generate a file-name.
-    set grepprg=grep\ -nHRI\ $*
+    set grepprg=grep\ -nHRI\ $*\ .
 endif
 nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>
 command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!
