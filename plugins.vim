@@ -53,6 +53,9 @@ Plug 'reedes/vim-wordy'
 Plug 'tpope/vim-eunuch'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
+Plug 'OmniCppComplete'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'christoomey/vim-tmux-navigator'
 
 " colorschemes
 Plug 'morhetz/gruvbox'

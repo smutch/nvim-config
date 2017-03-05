@@ -111,7 +111,7 @@ set showmatch                        " Show matching paren
 set ignorecase                       " case insensitive search
 set smartcase                        " case sensitive when uc present
 set gdefault                         " g flag on sed subs automatically
-set tags+=./tags;$HOME                " recursively search up dir stack for tags file
+" set tags+=./tags;$HOME                " recursively search up dir stack for tags file
 
 " Live substitution
 if exists('&inccommand')
@@ -575,11 +575,6 @@ function! MyPlugin(...)
     let w:airline_section_x = '[' . s:my_part . '] ' . g:airline_right_sep . get(w:, 'airline_section_x', g:airline_section_x)
 endfunction
 call airline#add_statusline_func('MyPlugin')
-
-" }}}
-" argwrap {{{
-
-nnoremap <silent> <leader>a :<C-u>ArgWrap<CR>
 
 " }}}
 " auto-pairs {{{
