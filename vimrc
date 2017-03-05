@@ -760,6 +760,11 @@ let g:gitgutter_realtime = 0
 let g:goyo_width = 82
 
 " }}}
+" {{{ gutentags
+
+let g:gutentags_project_root = [".tagme"]
+
+" }}}
 " jedi {{{
 
 " ---
