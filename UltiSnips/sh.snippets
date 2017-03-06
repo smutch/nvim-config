@@ -25,3 +25,7 @@ echo '-------------------------------'
 mpiexec ${0} > >(tee $PBS_JOBNAME.out) 2> >(tee $PBS_JOBNAME.err >&2) && slack 'is complete!' ':thumbsup:' || slack 'has failed. :white_frowning_face:' ':poop:'
 rm $PBS_JOBNAME.out $PBS_JOBNAME.err
 endsnippet
+
+snippet pwd
+`pwd`
+endsnippet

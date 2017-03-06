@@ -98,3 +98,21 @@ endsnippet
 snippet pdnull "Set pandas to use inf as null"
 pd.set_option('mode.use_inf_as_null', True)
 endsnippet
+
+snippet doc "Numpy style docstring" m
+"""${1:short description}
+
+Parameters
+----------
+${2:param1 : float or None (default)
+	This is a description.}
+
+Returns
+-------
+${3:return_val : long}
+
+Notes
+-----
+${4:Watch out! Winter is coming...}
+"""
+endsnippet
