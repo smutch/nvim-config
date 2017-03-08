@@ -10,12 +10,8 @@ setlocal noshowmode  " Allows jedi to show function call signatures
 setlocal concealcursor=nic
 
 " Set some useful keybindings
-nmap <buffer> <localleader>s :w<CR>:SyntasticCheck<CR>
 if has("gui_macvim")
     nmap <buffer> <localleader>p :w<CR>:Dispatch /usr/local/bin/python %<CR>
 else
     nmap <buffer> <localleader>p :w<CR>:Dispatch python %<CR>
 endif
-
-" " Load indentline plugin
-" let g:loaded_indentLine = 1

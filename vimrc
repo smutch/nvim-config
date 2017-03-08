@@ -177,7 +177,6 @@ set laststatus=2                        " Always display a status line
 set cmdheight=1                         " Command line height
 set listchars=tab:▸\ ,eol:↵,trail:·     " Set hidden characters
 " set listchars=tab:▸\ ,trail:·           " Set hidden characters
-let g:tex_conceal = ""                  " Don't use conceal for latex equations
 set number                              " Show line numbers
 
 if has("gui_macvim")
@@ -218,12 +217,15 @@ function! SetTheme()
             set background=light
             colorscheme Tomorrow
             let g:airline_theme='tomorrow'
+            let g:light=1
         else
             set background=dark
-            " let g:hybrid_custom_term_colors = 1
             let g:hybrid_reduced_contrast = 1
             colorscheme hybrid
             let g:airline_theme="hybrid"
+            " let g:quantum_italics = 1
+            " colorscheme quantum
+            " let g:airline_theme="quantum"
             let g:light=0
 
             " colorscheme two-firewatch
@@ -555,7 +557,7 @@ if !has('gui_running')
       silent call system("printf '".escape."' > /dev/tty")
   endfunction
 
-  autocmd VimEnter,ColorScheme * call s:change_iterm2_profile()
+  " autocmd VimEnter,ColorScheme * call s:change_iterm2_profile()
 endif
 
 " }}}
@@ -757,7 +759,7 @@ let g:gitgutter_realtime = 0
 " }}}
 " goyo {{{
 
-let g:goyo_width = 82
+let g:goyo_width = 81
 
 " }}}
 " {{{ gutentags

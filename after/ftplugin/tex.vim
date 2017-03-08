@@ -1,6 +1,9 @@
 " ensure we are using latex and not plaintex
 let g:tex_flavour='latex'
 
+" let g:tex_conceal = ""  " Don't use conceal for latex equations
+set cole=2
+
 set spell
 setlocal formatprg=par\ -w79\ -g
 setlocal nocursorline

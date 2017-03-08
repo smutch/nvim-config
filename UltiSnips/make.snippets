@@ -2,6 +2,8 @@ snippet basic "basic makefile template"
 CC = ${1:cc}
 OUTPUT_OPTION = -MMD -MP -o $@
 CFLAGS = -std=gnu99 -O3 -march=native
+CPPFLAGS = 
+LDFLAGS = 
 LDLIBS = -lm
  
 SRC = $(wildcard **/*.c)
@@ -11,10 +13,10 @@ DEP = $(SRC:.c=.d)
  
 .PHONY: clean
  
-${2:executable}: $(OBJ)
+${2:foo}: $(OBJ)
  
 clean:
-	rm -f $(OBJ) $(DEP) foo
+	rm -f $(OBJ) $(DEP) $2
 endsnippet
 
 

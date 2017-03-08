@@ -19,7 +19,7 @@ if os == 'Darwin'
 else
     Plug 'smutch/vim-dispatch', { 'branch' : 'extra_env_vars' }
 endif
-Plug 'radenling/vim-dispatch-neovim'
+" Plug 'radenling/vim-dispatch-neovim'
 Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
@@ -74,6 +74,7 @@ if exists('&termguicolors')
     Plug 'owickstrom/vim-colors-paramount'
     Plug 'jdkanani/vim-material-theme'
     Plug 'dracula/vim'
+    Plug 'tyrannicaltoucan/vim-quantum'
 endif
 
 " These bundles are unlikely to be required anywhere other than on my mac
@@ -82,13 +83,12 @@ if os == "Darwin"
     " Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
     " Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'mattn/webapi-vim'
-    Plug 'lervag/vimtex'
+    Plug 'lervag/vimtex', { 'for': 'tex' }
     Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-    Plug 'davidbeckingsale/writegood.vim', { 'for': 'tex' }
+    Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown'] }
     Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
     " Plug 'vim-scripts/JavaScript-Indent'
     Plug 'lilydjwg/colorizer'
-    Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
     Plug 'KabbAmine/vCoolor.vim'
     Plug 'junegunn/limelight.vim'
     Plug 'mattn/emmet-vim'
