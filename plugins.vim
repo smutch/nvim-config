@@ -24,6 +24,7 @@ Plug 'vim-scripts/TaskList.vim', { 'on': 'TaskList' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+Plug '5long/pytest-vim-compiler', { 'for': 'python' }
 Plug 'kana/vim-textobj-function'
 Plug 'kana/vim-textobj-user'
 Plug 'airblade/vim-gitgutter'
