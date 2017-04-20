@@ -48,13 +48,13 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
 Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'reedes/vim-pencil'
-Plug 'reedes/vim-wordy'
+Plug 'reedes/vim-pencil', { 'for': ['markdown', 'tex', 'latex'] }
+Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'tpope/vim-eunuch'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
-Plug 'OmniCppComplete'
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'OmniCppComplete', { 'for': ['c', 'cpp'] }
+Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
 Plug 'christoomey/vim-tmux-navigator'
 
 " colorschemes

@@ -29,7 +29,7 @@ py3 pass
 
 " Deal with gnu screen
 if (match($TERM, "screen")!=-1) && !exists('&termguicolors')
-    set term=screen-256color
+    set term=xterm-256color
 endif
 
 " }}}
@@ -215,8 +215,8 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            colorscheme Tomorrow
-            let g:airline_theme='tomorrow'
+            colorscheme one
+            let g:airline_theme='one'
             let g:light=1
         else
             set background=dark
@@ -582,6 +582,7 @@ call airline#add_statusline_func('MyPlugin')
 " auto-pairs {{{
 
 " let g:AutoPairsFlyMode = 1
+let g:AutoPairsShortcutToggle = ''
 
 " }}}
 " bbye {{{
@@ -765,6 +766,7 @@ let g:goyo_width = 81
 " {{{ gutentags
 
 let g:gutentags_project_root = [".tagme"]
+let g:gutentags_enabled = 0
 
 " }}}
 " jedi {{{
@@ -1026,13 +1028,13 @@ map  <buffer> <silent> <LocalLeader>r   <Plug>(IPython-RunLineAsTopLevel)
 let g:pencil#textwidth = 80
 let g:pencil#joinspaces = 1
 let g:pencil#conceallevel = 2
-let g:airline_section_x = '%{PencilMode()}'
 let g:pencil#wrapModeDefault = 'soft'
 
 augroup pencil
   autocmd!
   autocmd FileType text         call pencil#init()
-  " autocmd FileType tex,latex    call pencil#init()
+  autocmd FileType tex,latex,markdown  call pencil#init() |
+              \ let g:airline_section_x = '%{PencilMode()}'
 augroup END
 
 " }}}
