@@ -529,7 +529,7 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 " augroup END
 
 " If we have a wide window then put the preview window on the right
-au BufAdd * if &previewwindow && &columns >= 160 | silent! wincmd L | endif
+au BufAdd * if &previewwindow && &columns >= 160 && winnr("$") == 2 | silent! wincmd L | endif
 
 " web related languages
 autocmd FileType javascript,coffee,html,css,scss,sass setlocal ts=2 sw=2
