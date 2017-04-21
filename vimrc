@@ -215,8 +215,8 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            colorscheme one
-            let g:airline_theme='one'
+            colorscheme Tomorrow
+            let g:airline_theme='tomorrow'
             let g:light=1
         else
             set background=dark
@@ -513,6 +513,9 @@ endif
 au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
 " set makeprg=scons
 
+" cython files
+au BufRead,BufNewFile *.pxd,*.pxi,*.pyx set filetype=cython
+
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 
@@ -662,7 +665,7 @@ let g:webdevicons_enable_ctrlp = 0
 autocmd FileType markdown let b:dispatch = 'octodown %'
 nnoremap <leader>x :Dispatch<CR>
 
-let g:dispatch_extra_env_vars = 'LD_LIBRARY_PATH=/home/smutch/3rd_party/pcre/lib'
+" let g:dispatch_extra_env_vars = 'LD_LIBRARY_PATH=/home/smutch/3rd_party/pcre/lib'
 
 let g:dispatch_compilers = {
       \ 'markdown': 'doit',
@@ -765,8 +768,10 @@ let g:goyo_width = 81
 " }}}
 " {{{ gutentags
 
+let g:gutentags_resolve_symlinks = 0
 let g:gutentags_project_root = [".tagme"]
-let g:gutentags_enabled = 0
+let g:gutentags_ctags_tagfile = ".tags"
+let g:gutentags_enabled = 1
 
 " }}}
 " jedi {{{
@@ -831,7 +836,7 @@ vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
 vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 " }}}
-" neomake {{
+" neomake {{{
 
 let g:neomake_python_enabled_makers = ['python', 'pyflakes']
 
@@ -876,18 +881,11 @@ endfunction
 command! ToggleNeomakeOnSave normal! :<C-u>call ToggleNeomakeOnSave()<CR>
 
 
-" }}
+" }}}
 " notes-system {{{
 
 let g:notes_dir = "/Users/smutch/Dropbox/Notes"
 let g:notes_assets_dir = "assets"
-
-" }}}
-" peekaboo {{{
-
-let g:peekaboo_window = 'enew'
-let g:peekaboo_delay = 600
-let g:peekaboo_ins_prefix = '<c-x>'
 
 " }}}
 " polyglot {{{
@@ -928,15 +926,6 @@ omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
 
 " }}}
-" showmarks {{{
-
-" Set showmarks bundle to off by default
-let g:showmarks_enable = 0
-
-" Don't show marks which may link to other files
-let g:showmarks_include="abcdefghijklmnopqrstuvwxyz.'`^<>[]{}()\""
-
-" }}}
 " surround {{{
 
 " Extra surround mappings for particular filetypes
@@ -946,42 +935,6 @@ autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math
 autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout
 autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
-
-" }}}
-" syntastic {{{
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-
-" let g:syntastic_mode_map = { 'mode': 'passive',
-"                            \ 'passive_filetypes': [],
-"                            \ 'active_filetypes': ['python'] }
-"                            " \ 'active_filetypes': ['c', 'cpp', 'python'],
-" let g:syntastic_python_checkers = ["python"] 
-" " "flake8"]
-" " let g:syntastic_error_symbol = '✗'
-" " let g:syntastic_warning_symbol = '⚠'
-
-" let g:syntastic_error_symbol = '❌'
-" let g:syntastic_warning_symbol = '⚠️'
-" let g:syntastic_style_error_symbol = '🚫'
-" let g:syntastic_style_warning_symbol = '💩'
-
-" " }}}
-" tlist {{{
-
-" Tlist options
-
-" Set the list of tags
-let g:tlTokenList = ['FIXME', 'TODO', 'CHANGED', 'TEMPORARY', '@todo']
-
-let Tlist_Auto_Update = 1
-let Tlist_Auto_Highlight_Tag = 1
-let Tlist_Display_Prototype = 1
-let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_File_Fold_Auto_Close = 1
 
 " }}}
 " tmuxline {{{
@@ -1001,26 +954,6 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 
 set noshowmode shortmess+=c
 autocmd FileType tex,python let b:vcm_tab_complete = "omni"
-
-" }}}
-" vim-emoji {{{
-
-command! EmojiRender normal! :%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<CR>
-
-" }}}
-" vim-ipython {{{
-
-let g:ipy_perform_mappings = 0
-let g:ipy_completefunc = 'local'  "IPython completion for local buffer only
-
-map  <buffer> <silent> <LocalLeader>f         <Plug>(IPython-RunFile)
-map  <buffer> <silent> <LocalLeader>l         <Plug>(IPython-RunLine)
-vmap  <buffer> <silent> <LocalLeader>l        <Plug>(IPython-RunLines)
-map  <buffer> <silent> <LocalLeader>k  <Plug>(IPython-OpenPyDoc)
-map  <buffer> <silent> <LocalLeader>u  <Plug>(IPython-UpdateShell)
-map  <buffer> <silent> tr      <Plug>(IPython-ToggleReselect)
-map  <buffer>          <LocalLeader>ts  <Plug>(IPython-ToggleSendOnSave)
-map  <buffer> <silent> <LocalLeader>r   <Plug>(IPython-RunLineAsTopLevel)
 
 " }}}
 " vim-pencil {{{

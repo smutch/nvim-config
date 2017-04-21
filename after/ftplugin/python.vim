@@ -10,8 +10,4 @@ setlocal noshowmode  " Allows jedi to show function call signatures
 setlocal concealcursor=nic
 
 " Set some useful keybindings
-if has("gui_macvim")
-    nmap <buffer> <localleader>p :w<CR>:Dispatch /usr/local/bin/python %<CR>
-else
-    nmap <buffer> <localleader>p :w<CR>:Dispatch python %<CR>
-endif
+nmap <buffer> <localleader>p :w<CR>:Dispatch python %<CR>

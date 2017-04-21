@@ -10,6 +10,4 @@ hi pythonFuncCallKW term=bold cterm=bold gui=bold
 
 " show indentation
 syn match leadingWS /\(^\(\s\{4}\)\+\)\@<=\s/ conceal cchar=⋮
-" hi! def link leadingWS WarningMsg
-" hi! Conceal ctermfg=237 guifg=#425059 ctermbg=NONE guibg=NONE
 hi! link Conceal NonText

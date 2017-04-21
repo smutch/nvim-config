@@ -1,6 +1,4 @@
 setlocal foldlevel=99
-
-" set cole=2
 setlocal concealcursor=nc
 
 " when pressing enter within a task it creates another task
@@ -9,9 +7,6 @@ setlocal comments+=nb:-\ [\ ],fb:-
 setlocal comments-=fb:*
 setlocal comments+=nb:*
 setlocal fo+=ro
-
-set makeprg=scons
-nnoremap <localleader>s :<C-u>w<CR>:Make<CR>
 
 " -------------------------------------------------------
 
@@ -27,12 +22,6 @@ nnoremap <buffer> <localleader>m :silent !open -a Marked\ 2.app '%:p'<cr>
 " focus on outline fold
 nnoremap zp zMzvzczO
 
-" Select 'chunks'
-" vnoremap <buffer> ac l?\(^ *-\)\\|\(^ *$\)<CR><Esc>V/<CR>k
-" vnoremap <buffer> ic l?\(^ *-\)\\|\(^ *$\)<CR>j<Esc>V/<CR>k
-" omap <buffer> ac :normal Vac<CR>:noh<CR>
-" omap <buffer> ic :normal Vic<CR>:noh<CR>
-
 " convert address to link
 nmap <buffer> <localleader>l yiWysiW]f]a(<ESC>pa)<ESC>
 
@@ -41,12 +30,10 @@ imap <buffer>  <CR>*<Space><C-d>
 imap <buffer> ;; <CR>-<Space><C-d>
 
 let s:show_tags_flag = 0
-call pencil#init({'wrap': 'soft'})
 
 nnoremap <buffer> <tab> :call CycleState()<cr>
 nnoremap <buffer> + :call CycleType()<cr>
 nnoremap <buffer> <LocalLeader>na :call ArchiveTasks()<cr>
-" abbr --- <c-r>=Separator()<cr>
 
 function! CycleState()
     let line = getline('.')

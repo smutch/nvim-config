@@ -7,14 +7,9 @@ setlocal spell
 " Allow the wrapping to mess with existing lines
 setlocal formatoptions-=l
 
-let b:wrapToggleFlag=0
-call WrapToggle()
-
 setlocal makeprg=make
 nnoremap <buffer> <localleader>s :w<CR>:make html<CR>
 nnoremap <buffer> <localleader>S :w<CR>:make clean; make html<CR>
-
-nnoremap <buffer> <localleader>m :silent !open -a Marked\ 2 '%:p'<cr>
 
 setlocal comments+=fb:-
 
@@ -22,5 +17,3 @@ setlocal comments+=fb:-
 imap <buffer>  <CR>-<Space><C-d>
 
 setlocal nolist
-
-inoremap ;- —

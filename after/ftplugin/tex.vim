@@ -15,7 +15,6 @@ setlocal iskeyword-=_
 setlocal softtabstop=2
 setlocal shiftwidth=2
 setlocal tw=79 fo=tqron2 wm=0
-let b:wrapToggleFlag=1
 execute "set colorcolumn=" . join(range(80,335), ',')
 
 " setlocal cursorline  "This is very slow for large files
@@ -41,9 +40,6 @@ set whichwrap+=<,>,h,l,[,]
 
 " Keep minimum 5 lines above or below the cursor at all times
 setlocal scrolloff=5
-
-" Maps FormatPar function to ,L
-" nnoremap  <buffer> ,L  :silent call FormatLatexPar(0)<CR>
 
 " Tex only abbreviations
 ab <buffer> ... \ldots
