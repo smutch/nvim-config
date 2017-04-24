@@ -27,7 +27,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 " Plug 'git@github.com:smutch/note-system.git'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'reedes/vim-pencil', { 'for': ['markdown', 'tex', 'latex'] }
+Plug 'reedes/vim-pencil', { 'for': ['markdown', 'text', 'tex', 'latex'] }
 Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
 Plug 'OmniCppComplete', { 'for': ['c', 'cpp'] }

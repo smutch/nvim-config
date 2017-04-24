@@ -318,21 +318,6 @@ function! <SID>SynStack()
 endfunc
 command! SynStack call <SID>SynStack()
 
-" Toggle wrapping at 80 col
-function! WrapToggle()
-    if exists("b:wrapToggleFlag") && b:wrapToggleFlag==1
-        let &l:tw = s:old_tw
-        setlocal fo-=wt fo+=l wm=0 colorcolumn=0
-        let b:wrapToggleFlag=0
-    else
-        let s:old_tw = &tw
-        setlocal tw=80 fo+=wtn wm=0 fo-=l
-        execute "setlocal colorcolumn=" . join(range(81,335), ',')
-        let b:wrapToggleFlag=1
-    endif
-endfun
-map coW :call WrapToggle()<CR>
-
 " Remove trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$// | :noh'
 
@@ -570,8 +555,8 @@ endif
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline#extensions#tabline#enabled = 0
 let g:airline_powerline_fonts = 1
-" let g:airline_left_sep=''
-" let g:airline_right_sep=''
+let g:airline_left_sep=''
+let g:airline_right_sep=''
 
 call airline#parts#define_function('winnum', 'WindowNumber')
 function! MyPlugin(...)
@@ -965,7 +950,7 @@ let g:pencil#wrapModeDefault = 'soft'
 
 augroup pencil
   autocmd!
-  autocmd FileType text         call pencil#init()
+  autocmd FileType text                call pencil#init()
   autocmd FileType tex,latex,markdown  call pencil#init() |
               \ let g:airline_section_x = '%{PencilMode()}'
 augroup END
