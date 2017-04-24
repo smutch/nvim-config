@@ -48,6 +48,7 @@ Plug 'rakr/vim-one'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'ryanoasis/vim-devicons'
+Plug 'nightsense/seabird'
 
 " filetypes
 Plug 'vim-scripts/scons.vim'

@@ -206,6 +206,8 @@ augroup CustomColors
     au ColorScheme Tomorrow if &background == 'light' |
                 \ hi! link Folded ColorColumn |
                 \ endif
+    au ColorScheme seagull,greygull
+                \ hi! NonText ctermfg=7 guifg=#e6eaed
     au ColorScheme * hi! link Search DiffAdd |
                 \ hi! link Conceal NonText
 augroup END
@@ -215,8 +217,8 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            colorscheme Tomorrow
-            let g:airline_theme='tomorrow'
+            colorscheme seagull
+            let g:airline_theme='pencil'
             let g:light=1
         else
             set background=dark
