@@ -217,8 +217,8 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            colorscheme seagull
-            let g:airline_theme='pencil'
+            colorscheme one
+            let g:airline_theme='one'
             let g:light=1
         else
             set background=dark
@@ -235,6 +235,10 @@ function! SetTheme()
         endif
     end
 endfunction
+
+let g:gruvbox_contrast_dark='soft'
+let g:gruvbox_contrast_light='hard'
+
 command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
 nnoremap cot :<C-u>ToggleTheme<CR> 
 call SetTheme()
