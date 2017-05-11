@@ -49,7 +49,7 @@ end
 let hostname = substitute(system('hostname'), '\n', '', '')
 
 if (hostname =~ "hpc.swin.edu.au")
-    set shell=/home/smutch/3rd_party/zsh-5.0.5/bin/zsh
+    set shell=/home/smutch/.vim/g2shell.sh
     set t_ut=
 endif
 
