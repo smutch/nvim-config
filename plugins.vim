@@ -31,7 +31,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 Plug 'reedes/vim-pencil', { 'for': ['markdown', 'text', 'tex', 'latex'] }
 Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
-Plug 'OmniCppComplete', { 'for': ['c', 'cpp'] }
+Plug 'vim-scripts/OmniCppComplete', { 'for': ['c', 'cpp'] }
 Plug 'tpope/vim-eunuch'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
@@ -40,6 +40,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'mattn/emmet-vim'
+Plug 'michaeljsmith/vim-indent-object'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
@@ -51,6 +52,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'nightsense/seabird'
 
 " filetypes
+Plug 'vim-python/python-syntax', { 'for': 'python' }
 Plug 'vim-scripts/scons.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }

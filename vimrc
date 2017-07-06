@@ -202,8 +202,8 @@ augroup CustomColors
     au!
     au ColorScheme hybrid if &background == 'dark' |
                 \ hi! Normal guifg=#d9dbda |
-                \ endif |
-                \ hi! link pythonInclude Include
+                \ endif "|
+                " \ hi! link pythonInclude Include
     au ColorScheme Tomorrow if &background == 'light' |
                 \ hi! link Folded ColorColumn |
                 \ endif
@@ -891,14 +891,12 @@ let g:notes_assets_dir = "assets"
 " }}}
 " pydoc {{{
 
-" Pydoc
-
 if has("gui_macvim")
     let g:pydoc_cmd = "/usr/local/bin/pydoc"
 elseif has("mac")
     let g:pydoc_cmd = "/usr/local/bin/pydoc"
 elseif has("unix")
-    let g:pydoc_cmd = "/usr/local/python-2.7.1/bin/pydoc"
+    let g:pydoc_cmd = "/usr/local/python-3/bin/pydoc"
 endif
 
 " }}}
