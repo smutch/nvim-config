@@ -202,7 +202,8 @@ augroup CustomColors
     au!
     au ColorScheme hybrid if &background == 'dark' |
                 \ hi! Normal guifg=#d9dbda |
-                \ endif
+                \ endif |
+                \ hi! link pythonInclude Include
     au ColorScheme Tomorrow if &background == 'light' |
                 \ hi! link Folded ColorColumn |
                 \ endif
@@ -585,6 +586,7 @@ nnoremap Q :Bdelete<CR>
 
 " }}}
 " ctrlp {{{
+call ctrlp_bdelete#init()
 
 " Set the matching function
 " PyMatcher for CtrlP
@@ -626,7 +628,7 @@ nnoremap <silent> <leader>B :CtrlPBookmarkDir<CR>
 nnoremap <silent> <leader>p :CtrlP<CR>
 nnoremap <silent> <leader>f :CtrlP %p:h<CR>
 
-" Additional mappting for most recently used files
+" Additional mapping for most recently used files
 nnoremap <silent> <leader>m :CtrlPMRU<CR>
 
 " Additional mapping for ctags search
@@ -829,7 +831,8 @@ vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 " }}}
 " neomake {{{
 
-let g:neomake_python_enabled_makers = ['python', 'pyflakes']
+let g:neomake_error_sign = {'text': '✖', 'texthl': 'ErrorMsg'}
+let g:neomake_python_enabled_makers = ['python', 'flake8']
 
 function! SetWarningType(entry)
     if a:entry.type =~? '\m^[SPI]'
@@ -849,6 +852,8 @@ let g:neomake_c_cppcheck_maker = {
         \ '%-G%.%#',
         \ 'postprocess': function('SetWarningType')
         \ }
+
+let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501"]
 
 augroup Neomake
     au!
