@@ -137,7 +137,7 @@ nnoremap <leader>/ :Grep
 
 set wildignore+=*.o,*.obj,*.pyc,
             \*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags,.sconsign.dblite
+            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
@@ -214,6 +214,7 @@ augroup END
 
 syntax on " Use syntax highlighting
 function! SetTheme()
+    let g:hybrid_reduced_contrast = 1
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
@@ -222,7 +223,6 @@ function! SetTheme()
             let g:light=1
         else
             set background=dark
-            let g:hybrid_reduced_contrast = 1
             colorscheme hybrid
             let g:airline_theme="hybrid"
             " let g:quantum_italics = 1
@@ -632,7 +632,7 @@ nnoremap <silent> <leader>m :CtrlPMRU<CR>
 " Additional mapping for ctags search
 function! CtrlPTagsWrapper()
     let old_tags = &tags
-    let &tags = './tags;../tags'
+    let &tags = './.tags;../.tags'
     exec ':CtrlPTag'
     let &tags = old_tags
 endfunction

@@ -74,7 +74,7 @@ $0
 endsnippet
 
 snippet astropy "astropy standard imports"
-from astropy import cosmology, units as U
+from astropy import cosmology, units as U, constants as C
 endsnippet
 
 snippet debug "debug"
@@ -115,4 +115,27 @@ Notes
 -----
 ${4:Watch out! Winter is coming...}
 """
+endsnippet
+
+snippet np "numpy import"
+import numpy as np
+endsnippet
+
+snippet mpl "matplotlib import"
+import matplotlib.pyplot as plt
+endsnippet
+
+snippet pd "pandas import"
+import pandas as pd
+pd.set_option('mode.use_inf_as_null', True)
+endsnippet
+
+snippet sns "seaborn import"
+import seaborn as sns
+plt = sns.plt
+sns.set('talk', 'ticks', font_scale=1.4, rc={'lines.linewidth':3})
+endsnippet
+
+snippet nf "new figure"
+fig, ax = plt.subplots(${1:1}, ${2:1})$0
 endsnippet
