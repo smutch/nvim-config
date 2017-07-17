@@ -967,4 +967,45 @@ let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSuppor
 let g:vimtex_view_general_options = '@line @pdf @tex'
 
 " }}}
+" vimux {{{
+
+ " Run the current file with python
+ au! FileType python nnoremap <buffer> <LocalLeader>v :call VimuxRunCommand("clear; python " . bufname("%"))<CR>
+
+ " Prompt for a command to run
+ map <Leader>vp :VimuxPromptCommand<CR>
+
+ " Run last command executed by VimuxRunCommand
+ map <Leader>vl :VimuxRunLastCommand<CR>
+
+ " Inspect runner pane
+ map <Leader>vi :VimuxInspectRunner<CR>
+
+ " Close vim tmux runner opened by VimuxRunCommand
+ map <Leader>vq :VimuxCloseRunner<CR>
+
+ " Interrupt any command running in the runner pane
+ map <Leader>vx :VimuxInterruptRunner<CR>
+
+ " Zoom the runner pane (use <bind-key> z to restore runner pane)
+ map <Leader>vz :call VimuxZoomRunner()<CR>
+
+ function! VimuxSlime()
+  call VimuxSendText(@v)
+  call VimuxSendKeys("Enter")
+ endfunction
+
+ " If text is selected, save it in the v buffer and send that buffer it to tmux
+ vnoremap <Leader>vs "vy :call VimuxSlime()<CR>
+
+ " Select current paragraph and send it to tmux
+ nnoremap <Leader>vs vip"vy :call VimuxSlime()<CR>
+
+ " Select current line and send it to tmux
+ nnoremap <Leader>vS ^v$"vy :call VimuxSlime()<CR>
+
+ " Call OpenRunner to assign pane if not already
+ nnoremap <Leader>vo :call VimuxOpenRunner()<CR>
+
+" }}}
 " }}}

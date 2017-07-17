@@ -2,7 +2,7 @@
 " file
 let g:rst_syntax_code_list = []
 
-setlocal spell
+" setlocal spell
 
 " Allow the wrapping to mess with existing lines
 setlocal formatoptions-=l
