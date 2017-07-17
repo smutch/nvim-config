@@ -29,7 +29,7 @@ py3 pass
 
 " Deal with gnu screen
 if (match($TERM, "screen")!=-1) && !exists('&termguicolors')
-    set term=xterm-256color
+    set term=screen-256color
 endif
 
 " }}}
@@ -264,16 +264,6 @@ if has("nvim")
     let g:terminal_color_15 = "#fdf6e3"
 endif
 
-" }}}
-
-" Cursor configuration {{{
-" ====================================================================
-  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-  let &t_SI = "\<Esc>[5 q"
-  if exists("&t_SR")
-      let &t_SR = "\<Esc>[3 q"
-  endif
-  let &t_EI = "\<Esc>[2 q"
 " }}}
 
 " }}}

@@ -37,6 +37,7 @@ Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'benmills/vimux'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'mattn/emmet-vim'
