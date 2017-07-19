@@ -18,6 +18,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug '5long/pytest-vim-compiler', { 'for': 'python' }
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-tbone'
