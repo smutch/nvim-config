@@ -983,7 +983,7 @@ let g:vimtex_view_general_options = '@line @pdf @tex'
  au! FileType python nnoremap <buffer> <LocalLeader>v :call VimuxRunCommand("clear; python " . bufname("%"))<CR>
 
  " Prompt for a command to run
- map <Leader>vp :VimuxPromptCommand<CR>
+ map <Leader>vc :VimuxPromptCommand<CR>
 
  " Run last command executed by VimuxRunCommand
  map <Leader>vl :VimuxRunLastCommand<CR>
@@ -1002,7 +1002,7 @@ let g:vimtex_view_general_options = '@line @pdf @tex'
 
  function! VimuxSlime()
   call VimuxSendText(@v)
-  call VimuxSendKeys("Enter")
+  " call VimuxSendKeys("Enter")
  endfunction
 
  " If text is selected, save it in the v buffer and send that buffer it to tmux
@@ -1016,6 +1016,19 @@ let g:vimtex_view_general_options = '@line @pdf @tex'
 
  " Call OpenRunner to assign pane if not already
  nnoremap <Leader>vo :call VimuxOpenRunner()<CR>
+
+ function! VimuxIPython()
+     call VimuxSendText("%cpaste")
+     call VimuxSendKeys("Enter")
+     call VimuxSendText(@v."--")
+     " call VimuxSendKeys("Enter")
+ endfunction
+
+ " If text is selected, save it in the v buffer and send that buffer it to ipython
+ vnoremap <Leader>vi "vy :call VimuxIPython()<CR>
+
+ " Select current paragraph and send it to ipython
+ nnoremap <Leader>vi vip"vy :call VimuxIPython()<CR>
 
 " }}}
 " }}}
