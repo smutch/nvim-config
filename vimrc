@@ -274,6 +274,9 @@ endif
       let &t_SR = "\<Esc>[3 q"
   endif
   let &t_EI = "\<Esc>[2 q"
+  if has("nvim")
+      set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+  endif
 " }}}
 
 " }}}
