@@ -50,6 +50,7 @@ let hostname = substitute(system('hostname'), '\n', '', '')
 
 if (hostname =~ "hpc.swin.edu.au")
     set shell=/home/smutch/.vim/g2shell.sh
+    let &shellpipe="|& tee"
     set t_ut=
 endif
 
