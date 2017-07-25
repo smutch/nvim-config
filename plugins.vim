@@ -43,6 +43,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'mattn/emmet-vim'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'dyng/ctrlsf.vim'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
