@@ -247,36 +247,36 @@ call SetTheme()
 
 " Neovim terminal colors
 if has("nvim")
-    let g:terminal_color_0 = "#002b36"
-    let g:terminal_color_1 = "#dc322f"
-    let g:terminal_color_2 = "#859900"
-    let g:terminal_color_3 = "#b58900"
-    let g:terminal_color_4 = "#268bd2"
-    let g:terminal_color_5 = "#6c71c4"
-    let g:terminal_color_6 = "#2aa198"
-    let g:terminal_color_7 = "#93a1a1"
-    let g:terminal_color_8 = "#657b83"
-    let g:terminal_color_9 = "#dc322f"
-    let g:terminal_color_10 = "#859900"
-    let g:terminal_color_11 = "#b58900"
-    let g:terminal_color_12 = "#268bd2"
-    let g:terminal_color_13 = "#6c71c4"
-    let g:terminal_color_14 = "#2aa198"
-    let g:terminal_color_15 = "#fdf6e3"
+    let g:terminal_color_0 = "#252525"
+    let g:terminal_color_1 = "#FF5252"
+    let g:terminal_color_2 = "#C3D82C"
+    let g:terminal_color_3 = "#FFD740"
+    let g:terminal_color_4 = "#40C4FF"
+    let g:terminal_color_5 = "#FF4081"
+    let g:terminal_color_6 = "#18FFFF"
+    let g:terminal_color_7 = "#F5F5F5"
+    let g:terminal_color_8 = "#708284"
+    let g:terminal_color_9 = "#FF5252"
+    let g:terminal_color_10 = "#C3D82C"
+    let g:terminal_color_11 = "#FFD740"
+    let g:terminal_color_12 = "#40C4FF"
+    let g:terminal_color_13 = "#FF4081"
+    let g:terminal_color_14 = "#18FFFF"
+    let g:terminal_color_15 = "#F5F5F5"
 endif
 
 " }}}
 
 " Cursor configuration {{{
 " ====================================================================
-  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-  let &t_SI = "\<Esc>[5 q"
-  if exists("&t_SR")
-      let &t_SR = "\<Esc>[3 q"
-  endif
-  let &t_EI = "\<Esc>[2 q"
   if has("nvim")
       set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+  else
+      let &t_SI = "\<Esc>[5 q"
+      if exists("&t_SR")
+          let &t_SR = "\<Esc>[3 q"
+      endif
+      let &t_EI = "\<Esc>[2 q"
   endif
 " }}}
 
@@ -861,10 +861,10 @@ let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501"]
 
 augroup Neomake
     au!
-    if (hostname !~ "hpc.swin.edu.au")
+    " if (hostname !~ "hpc.swin.edu.au")
         au BufWritePost *.py Neomake
         au BufWritePost *.[ch] Neomake
-    endif
+    " endif
 augroup END
 
 function! ToggleNeomakeOnSave()
@@ -880,6 +880,11 @@ function! ToggleNeomakeOnSave()
 endfunction
 command! ToggleNeomakeOnSave normal! :<C-u>call ToggleNeomakeOnSave()<CR>
 
+
+" }}}
+" neoterm {{{
+
+let g:neoterm_automap_keys = "<leader>T"
 
 " }}}
 " notes-system {{{
