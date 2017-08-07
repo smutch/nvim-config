@@ -26,7 +26,6 @@ nnoremap zp zMzvzczO
 nmap <buffer> <localleader>l yiWysiW]f]a(<ESC>pa)<ESC>
 
 " Quick map for adding a new item to a list at the same level
-imap <buffer>  <CR>*<Space><C-d>
 imap <buffer> ;; <CR>-<Space><C-d>
 
 let s:show_tags_flag = 0
