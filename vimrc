@@ -662,8 +662,6 @@ let g:webdevicons_enable_ctrlp = 0
 autocmd FileType markdown let b:dispatch = 'octodown %'
 nnoremap <leader>x :Dispatch<CR>
 
-" let g:dispatch_extra_env_vars = 'LD_LIBRARY_PATH=/home/smutch/3rd_party/pcre/lib'
-
 let g:dispatch_compilers = {
       \ 'markdown': 'doit',
       \ 'python': 'python %'}

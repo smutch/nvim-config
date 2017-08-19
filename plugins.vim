@@ -16,6 +16,7 @@ Plug 'tpope/vim-abolish'
 Plug 'neomake/neomake'
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-dispatch'
+Plug 'radenling/vim-dispatch-neovim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug '5long/pytest-vim-compiler', { 'for': 'python' }
