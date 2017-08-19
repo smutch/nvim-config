@@ -46,6 +46,7 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'mattn/emmet-vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'dyng/ctrlsf.vim'
+Plug 'majutsushi/tagbar'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
