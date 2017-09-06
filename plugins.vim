@@ -21,6 +21,7 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug '5long/pytest-vim-compiler', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+Plug 'anntzer/vim-cython', { 'for': 'cython'}
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-tbone'
