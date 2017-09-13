@@ -49,6 +49,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'dyng/ctrlsf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
+Plug 'chrisbra/Colorizer'
 
 " colorschemes
 Plug 'morhetz/gruvbox'
