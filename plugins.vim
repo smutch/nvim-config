@@ -3,7 +3,8 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-repeat'
-Plug 'ajh17/VimCompletesMe'
+" Plug 'ajh17/VimCompletesMe'
+Plug 'roxma/nvim-completion-manager'
 Plug 'junegunn/vim-easy-align'
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
@@ -16,7 +17,6 @@ Plug 'tpope/vim-abolish'
 Plug 'neomake/neomake'
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-dispatch'
-Plug 'radenling/vim-dispatch-neovim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug '5long/pytest-vim-compiler', { 'for': 'python' }

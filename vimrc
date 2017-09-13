@@ -136,6 +136,9 @@ nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>
 command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!
 nnoremap <leader>/ :Grep 
 
+" Load up last search in buffer into the locaiton list and open it
+nnoremap <leader>l :<C-u>lvim // % \| lopen<CR>
+
 set wildignore+=*.o,*.obj,*.pyc,
             \*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
             \Session.vim,Project.vim,tags,.tags,.sconsign.dblite
@@ -473,8 +476,8 @@ command! -nargs=+ -complete=command Page :call <SID>Page(<q-args>)
 " quickly edit recorded macros
 nnoremap <leader>m :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 
-" make <c-l> do more than just redraw the screen
-nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+" make something like <c-l> that does more than just redraw the screen
+nnoremap <leader>L :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 " scrach buffers (taken from
 " <http://dhruvasagar.com/2014/03/11/creating-custom-scratch-buffers-in-vim>)
@@ -951,6 +954,18 @@ let g:notes_dir = "/Users/smutch/Dropbox/Notes"
 let g:notes_assets_dir = "assets"
 
 " }}}
+" nvim-completion-manager {{{
+
+set noshowmode shortmess+=c
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
+inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
+
+
+" }}}
 " polyglot {{{
 
  let g:polyglot_disabled = ['tex', 'latex']
@@ -998,6 +1013,12 @@ autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
 
 " }}}
+" tagbar {{{
+
+let g:tagbar_left = 1
+nnoremap <leader># :<C-u>Tagbar<CR>
+
+" }}}
 " tmuxline {{{
 
 let g:tmuxline_powerline_separators = 0
@@ -1013,8 +1034,8 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " }}}
 " vimcompletesme {{{
 
-set noshowmode shortmess+=c
-autocmd FileType tex,python let b:vcm_tab_complete = "omni"
+" set noshowmode shortmess+=c
+" autocmd FileType tex,python let b:vcm_tab_complete = "omni"
 
 " }}}
 " vim-pencil {{{
