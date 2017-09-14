@@ -652,6 +652,15 @@ let g:AutoPairsShortcutToggle = ''
 nnoremap Q :Bdelete<CR>
 
 " }}}
+" clang-complete {{{
+
+if (hostname =~ "hpc.swin.edu.au")
+    let g:clang_library_path = "/usr/local/x86_64/gnu/clang-3.7/lib"
+else
+    let g:clang_library_path = "/usr/local/Cellar/llvm/4.0.1/lib"
+endif
+
+" }}}
 " ctrlp {{{
 call ctrlp_bdelete#init()
 
