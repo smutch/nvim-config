@@ -55,11 +55,12 @@ Plug 'chrisbra/Colorizer'
 " colorschemes
 Plug 'morhetz/gruvbox'
 Plug 'w0ng/vim-hybrid'
-Plug 'rakr/vim-one'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'ryanoasis/vim-devicons'
 Plug 'nightsense/seabird'
+Plug 'joshdick/onedark.vim'
+Plug 'mhartington/oceanic-next'
 
 " filetypes
 Plug 'vim-python/python-syntax', { 'for': 'python' }
