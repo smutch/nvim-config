@@ -660,6 +660,14 @@ else
     let g:clang_library_path = "/usr/local/Cellar/llvm/4.0.1/lib"
 endif
 
+" show the preview window
+" let let g:cm_completeopt="menu,menuone,noinsert,noselect,preview"
+" automatically close the preview window after completion
+" au CompleteDone * pclose
+
+au FileType c,cpp  nmap gD <Plug>(clang_complete_goto_declaration)
+au FileType c,cpp  nmap gd <Plug>(clang_complete_goto_declaration_preview)
+
 " }}}
 " ctrlp {{{
 call ctrlp_bdelete#init()
