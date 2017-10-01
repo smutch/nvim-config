@@ -1,0 +1,26 @@
+snippet hdf5 "Link against hdf5"
+find_package(hdf5 REQUIRED COMPONENTS C HL)
+include_directories(${HDF5_INCLUDE_DIRS})
+link_libraries(${HDF5_C_LIBRARIES} ${HDF5_C_HL_LIBRARIES})
+add_definitions(${HDF5_DEFINITIONS})
+# THIS IS A TEMPORARY HACK TO OVERCOME A BUG IN SOME VERSIONS OF CMAKE
+if(NOT (${HDF5_C_HL_LIBRARIES} MATCHES "libhdf5_hl"))
+    list(GET HDF5_C_LIBRARIES 0 HDF5_LIB)
+    get_filename_component(HDF5_LIBDIR ${HDF5_LIB} DIRECTORY)
+    link_libraries("${HDF5_LIBDIR}/libhdf5_hl.so")
+endif()
+endsnippet
+
+snippet basic "A basic cmake template"
+cmake_minimum_required(VERSION 3.0)
+project(${1:name})
+
+# output paths
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+set(CMAKE_C_FLAGS "${cmake_c_flags} -std=gnu99 -g -O3 -march=native")
+
+add_executable($1 $1.c)
+endsnippet
