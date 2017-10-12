@@ -6,7 +6,7 @@ requests.post('https://hooks.slack.com/services/T0C3DGQL9/B0C93643Z/nHWdVeBNsDne
               json.dumps(payload))
 endsnippet
 
-snippet header
+snippet common
 #!/usr/bin/env python
 
 """${1:description}"""
@@ -28,6 +28,15 @@ if __name__ == '__main__':
 	sns.set(font_scale=1.3, rc={'lines.linewidth':3})
     pd.set_option('use_inf_as_null', True)
 	${2:`!p snip.rv = snip.basename`()}
+endsnippet
+
+snippet header
+#!/usr/bin/env python
+
+"""${1:description}"""
+
+__author__ = "Simon Mutch"
+__date__ = "`date +%Y-%m-%d`"
 endsnippet
 
 snippet Agg
