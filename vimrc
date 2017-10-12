@@ -206,6 +206,7 @@ augroup CustomColors
     au!
     au ColorScheme hybrid if &background == 'dark' |
                 \ hi! Normal guifg=#d9dbda |
+                \ hi! Normal guibg=NONE | 
                 \ endif "|
                 " \ hi! link pythonInclude Include
     au ColorScheme Tomorrow if &background == 'light' |
@@ -283,20 +284,15 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs one
-            let g:airline_theme='one'
+            Cs Tomorrow
+            let g:airline_theme='tomorrow'
             let g:light=1
         else
             set background=dark
             Cs hybrid
             let g:airline_theme="hybrid"
-            " let g:quantum_italics = 1
-            " colorscheme quantum
-            " let g:airline_theme="quantum"
-            let g:light=0
 
-            " colorscheme two-firewatch
-            " let g:airline_theme="twofirewatch"
+            let g:light=0
         endif
     end
 endfunction
@@ -980,7 +976,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
 inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
-
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 " }}}
 " polyglot {{{

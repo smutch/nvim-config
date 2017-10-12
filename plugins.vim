@@ -14,6 +14,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-obsession'
 Plug 'neomake/neomake'
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-dispatch'
@@ -61,6 +62,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'nightsense/seabird'
 Plug 'joshdick/onedark.vim'
 Plug 'mhartington/oceanic-next'
+Plug 'davidklsn/vim-sialoquent'
+Plug 'arcticicestudio/nord-vim'
 
 " filetypes
 Plug 'vim-python/python-syntax', { 'for': 'python' }
