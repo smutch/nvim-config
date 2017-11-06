@@ -4,7 +4,8 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-repeat'
 " Plug 'ajh17/VimCompletesMe'
-Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/ncm-clang'
 Plug 'junegunn/vim-easy-align'
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
