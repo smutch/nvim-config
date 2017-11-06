@@ -211,6 +211,7 @@ augroup CustomColors
                 " \ hi! link pythonInclude Include
     au ColorScheme Tomorrow if &background == 'light' |
                 \ hi! link Folded ColorColumn |
+                \ hi! Normal guibg=NONE | 
                 \ endif
     au ColorScheme seagull,greygull
                 \ hi! NonText ctermfg=7 guifg=#e6eaed
@@ -651,7 +652,7 @@ nnoremap Q :Bdelete<CR>
 " clang-complete {{{
 
 if (hostname =~ "hpc.swin.edu.au")
-    let g:clang_library_path = "/usr/local/x86_64/gnu/clang-3.7/lib"
+    let g:clang_library_path = "/usr/local/x86_64/gnu/clang-6.0.0/lib"
 else
     let g:clang_library_path = "/usr/local/Cellar/llvm/4.0.1/lib"
 endif
