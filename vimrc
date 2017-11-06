@@ -211,6 +211,7 @@ augroup CustomColors
                 " \ hi! link pythonInclude Include
     au ColorScheme Tomorrow if &background == 'light' |
                 \ hi! link Folded ColorColumn |
+                \ hi! Normal guibg=NONE | 
                 \ endif
     au ColorScheme seagull,greygull
                 \ hi! NonText ctermfg=7 guifg=#e6eaed
@@ -596,8 +597,8 @@ autocmd BufNewFile,BufRead *.tex set ft=tex
 autocmd BufNewFile,BufRead *.{qsub,pbs} set ft=sh
 
 " set marks to jump between header and source files
-autocmd BufLeave *.{c,cpp} mark C
-autocmd BufLeave *.h       mark H
+autocmd BufLeave *.{c,cpp,cc} mark C
+autocmd BufLeave *.{h,hpp,hh} mark H
 
 " When switching colorscheme in terminal vim change the profile in iTerm as well.
 " from: <https://github.com/vheon/home/blob/ea91f443b33bc15d0deaa34e172a0317db63a53d/.vim/vimrc#L330-L348>
@@ -931,6 +932,8 @@ let g:neomake_c_cppcheck_maker = {
         \ 'postprocess': function('SetWarningType')
         \ }
 
+let g:neomake_cpp_cppcheck_maker = g:neomake_c_cppcheck_maker
+
 let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501"]
 
 augroup Neomake
@@ -1043,6 +1046,7 @@ let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
+let g:ultisnips_python_style = 'numpy'
 
 " }}}
 " vimcompletesme {{{
