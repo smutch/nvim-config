@@ -4,8 +4,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-repeat'
 " Plug 'ajh17/VimCompletesMe'
-" Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/ncm-clang'
+Plug 'roxma/nvim-completion-manager'
 Plug 'junegunn/vim-easy-align'
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
@@ -38,7 +37,8 @@ Plug 'reedes/vim-pencil', { 'for': ['markdown', 'text', 'tex', 'latex'] }
 Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
 Plug 'vim-scripts/OmniCppComplete', { 'for': ['c', 'cpp'] }
-Plug 'roxma/clang_complete', { 'for': ['c', 'cpp'] }
+Plug 'Rip-Rip/clang_complete', { 'for': ['c', 'cpp'] }
+Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
 Plug 'tpope/vim-eunuch'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
@@ -61,7 +61,7 @@ Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'ryanoasis/vim-devicons'
 Plug 'nightsense/seabird'
-Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-one'
 Plug 'mhartington/oceanic-next'
 Plug 'davidklsn/vim-sialoquent'
 Plug 'arcticicestudio/nord-vim'

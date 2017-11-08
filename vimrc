@@ -649,12 +649,12 @@ let g:AutoPairsShortcutToggle = ''
 nnoremap Q :Bdelete<CR>
 
 " }}}
-" clang-complete {{{
+" ncm-clang {{{
 
 if (hostname =~ "hpc.swin.edu.au")
     let g:clang_library_path = "/usr/local/x86_64/gnu/clang-6.0.0/lib"
 else
-    let g:clang_library_path = "/usr/local/Cellar/llvm/4.0.1/lib"
+    let g:clang_library_path = "/usr/local/opt/llvm/lib"
 endif
 
 " show the preview window
@@ -662,8 +662,35 @@ endif
 " automatically close the preview window after completion
 " au CompleteDone * pclose
 
-au FileType c,cpp  nmap gD <Plug>(clang_complete_goto_declaration)
-au FileType c,cpp  nmap gd <Plug>(clang_complete_goto_declaration_preview)
+" default key mapping is annoying
+let g:clang_make_default_keymappings = 0
+" ncm-clang is auto detecting compile_commands.json and .clang_complete
+" file
+let g:clang_auto_user_options = ''
+
+func! WrapClangGoTo(preview)
+    let cwd = getcwd()
+    let info = ncm_clang#compilation_info()
+    exec 'cd ' . info['directory']
+    try
+        let b:clang_user_options = join(info['args'], ' ')
+        if a:preview
+            call g:ClangGotoDeclarationPreview()
+        else
+            call g:ClangGotoDeclaration()
+        endif
+    catch
+    endtry
+    " restore
+    exec 'cd ' . cwd
+endfunc
+
+" map to gd key
+autocmd FileType c,cpp nnoremap <buffer> gD :call WrapClangGoTo(0)<CR>
+autocmd FileType c,cpp nnoremap <buffer> gd :call WrapClangGoTo(1)<CR>
+
+" au FileType c,cpp  nmap gD <Plug>(clang_complete_goto_declaration)
+" au FileType c,cpp  nmap gd <Plug>(clang_complete_goto_declaration_preview)
 
 " }}}
 " ctrlp {{{
