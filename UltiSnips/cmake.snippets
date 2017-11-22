@@ -1,3 +1,13 @@
+snippet mpi "Link against mpi"
+find_package(MPI REQUIRED)
+target_link_libraries($0 MPI::MPI_C)
+endsnippet
+
+snippet gsl "Link against gsl"
+find_package(GSL REQUIRED)
+target_link_libraries($1 GSL::gsl GSL::gslcblas)
+endsnippet
+
 snippet hdf5 "Link against hdf5"
 find_package(hdf5 REQUIRED COMPONENTS C HL)
 include_directories(${HDF5_INCLUDE_DIRS})
@@ -20,7 +30,16 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(CMAKE_C_FLAGS "${cmake_c_flags} -std=gnu99 -g -O3 -march=native")
+# write compile_commands.json file
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-add_executable($1 $1.c)
+# compile flags
+set(CMAKE_C_FLAGS_RELEASE "-O3 -march=native")
+
+set(SRC
+	src/$1.c
+	)
+
+add_executable($1 ${SRC})
+set_property(TARGET mpi_one_sided_test PROPERTY C_STANDARD 99)
 endsnippet
