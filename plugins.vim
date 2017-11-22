@@ -36,9 +36,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 Plug 'reedes/vim-pencil', { 'for': ['markdown', 'text', 'tex', 'latex'] }
 Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
-Plug 'vim-scripts/OmniCppComplete', { 'for': ['c', 'cpp'] }
-Plug 'Rip-Rip/clang_complete', { 'for': ['c', 'cpp'] }
+" Plug 'vim-scripts/OmniCppComplete', { 'for': ['c', 'cpp'] }
 Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
+Plug 'Rip-Rip/clang_complete', { 'for': ['c', 'cpp'] }
 Plug 'tpope/vim-eunuch'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'

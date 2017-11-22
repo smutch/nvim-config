@@ -211,8 +211,8 @@ augroup CustomColors
                 " \ hi! link pythonInclude Include
     au ColorScheme Tomorrow if &background == 'light' |
                 \ hi! link Folded ColorColumn |
-                \ hi! Normal guibg=NONE | 
                 \ endif
+                " \ hi! Normal guibg=NONE | 
     au ColorScheme seagull,greygull
                 \ hi! NonText ctermfg=7 guifg=#e6eaed
     au ColorScheme * hi! link Search DiffAdd |
@@ -285,8 +285,8 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs Tomorrow
-            let g:airline_theme='tomorrow'
+            Cs one
+            let g:airline_theme='one'
             let g:light=1
         else
             set background=dark
@@ -667,6 +667,11 @@ let g:clang_make_default_keymappings = 0
 " ncm-clang is auto detecting compile_commands.json and .clang_complete
 " file
 let g:clang_auto_user_options = ''
+
+" let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
+" let $NVIM_NCM_LOG_LEVEL="DEBUG"
+" let $NVIM_NCM_MULTI_THREAD=0
+" let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
 
 func! WrapClangGoTo(preview)
     let cwd = getcwd()
