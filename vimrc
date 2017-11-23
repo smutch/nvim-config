@@ -548,6 +548,7 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 
 " Neovim terminal mappings
 if has('nvim')
+    let $LAUNCHED_FROM_NVIM = 1
     autocmd BufWinEnter,WinEnter term://* startinsert
     tnoremap kj <C-\><C-n>
     tnoremap <C-w> <C-\><C-n><C-w>
