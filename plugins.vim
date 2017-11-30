@@ -38,7 +38,11 @@ Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
 " Plug 'vim-scripts/OmniCppComplete', { 'for': ['c', 'cpp'] }
 Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
-Plug 'Rip-Rip/clang_complete', { 'for': ['c', 'cpp'] }
+
+if (hostname !~ "hpc.swin.edu.au")
+    Plug 'Rip-Rip/clang_complete', { 'for': ['c', 'cpp'] }
+endif
+
 Plug 'tpope/vim-eunuch'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
