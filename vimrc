@@ -965,7 +965,7 @@ let g:neomake_c_cppcheck_maker = {
 
 let g:neomake_cpp_cppcheck_maker = g:neomake_c_cppcheck_maker
 
-let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501"]
+let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501,E402,E226"]
 
 augroup Neomake
     au!
