@@ -309,7 +309,7 @@ call SetTheme()
 if has("nvim")
     let g:terminal_color_0 = "#252525"
     let g:terminal_color_1 = "#FF5252"
-    let g:terminal_color_2 = "#C3D82C"
+    let g:terminal_color_2 = "#A3C82C"
     let g:terminal_color_3 = "#FFD740"
     let g:terminal_color_4 = "#40C4FF"
     let g:terminal_color_5 = "#FF4081"
@@ -317,7 +317,7 @@ if has("nvim")
     let g:terminal_color_7 = "#F5F5F5"
     let g:terminal_color_8 = "#708284"
     let g:terminal_color_9 = "#FF5252"
-    let g:terminal_color_10 = "#C3D82C"
+    let g:terminal_color_10 = "#A3C82C"
     let g:terminal_color_11 = "#FFD740"
     let g:terminal_color_12 = "#40C4FF"
     let g:terminal_color_13 = "#FF4081"
