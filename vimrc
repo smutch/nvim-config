@@ -91,7 +91,7 @@ let g:netrw_altfile = 1              " Prev buffer command excludes netrw buffer
 
 " I tend to write c rather than c++
 let g:c_syntax_for_h = 1
- 
+
 " Indent and wrapping {{{
 
 set backspace=indent,eol,start       " Sane backspace

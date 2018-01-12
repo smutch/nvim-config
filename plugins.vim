@@ -63,7 +63,9 @@ Plug 'morhetz/gruvbox'
 Plug 'w0ng/vim-hybrid'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'ryanoasis/vim-devicons'
+if !exists("g:gui_oni")
+    Plug 'ryanoasis/vim-devicons'
+endif
 Plug 'nightsense/seabird'
 Plug 'rakr/vim-one'
 Plug 'mhartington/oceanic-next'
