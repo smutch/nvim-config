@@ -290,8 +290,8 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs one
-            let g:airline_theme='one'
+            Cs onehalflight
+            let g:airline_theme='onehalflight'
             let g:light=1
         else
             set background=dark
@@ -702,68 +702,6 @@ endif
 " au CompleteDone * pclose
 
 " }}}
-" ctrlp {{{
-call ctrlp_bdelete#init()
-
-" Set the matching function
-" PyMatcher for CtrlP
-if !has('python3')
-    echo 'In order to use pymatcher plugin, you need +python compiled vim'
-else
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-endif
-
-" Include the bdelete plugin
-call ctrlp_bdelete#init()
-
-" Custom ignore paths
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.git|\.hg|include|lib|bin)',
-  \ 'file': '\v\.(exe|so|dll|os|swp|svn|hdf5|h5)$',
-  \ }
-
-" Custom root markers
-let g:ctrlp_root_markers = ['.ctrlp_marker']
-
-" This is the default value, but is used below...
-let g:ctrlp_working_path_mode = 'ra'
-
-" Default to filename searches - so that appctrl will find application
-" controller
-let g:ctrlp_by_filename = 1
-
-let g:ctrlp_map = '<leader>M'
-let g:ctrlp_cmd = 'CtrlPMixed'
-
-" Additional mapping for buffer search
-nnoremap <silent> <leader>b :CtrlPBuffer<CR>
-
-" Project bookmarks
-nnoremap <silent> <leader>B :CtrlPBookmarkDir<CR>
-
-" Open files
-nnoremap <silent> <leader>p :CtrlP<CR>
-nnoremap <silent> <leader>f :CtrlP %p:h<CR>
-
-" Additional mapping for most recently used files
-nnoremap <silent> <leader>m :CtrlPMRU<CR>
-
-" Additional mapping for ctags search
-function! CtrlPTagsWrapper()
-    let old_tags = &tags
-    let &tags = './.tags;../.tags'
-    exec ':CtrlPTag'
-    let &tags = old_tags
-endfunction
-nnoremap <silent> <leader>T :<C-u>call CtrlPTagsWrapper()<CR>
-
-" Jump to a tag in all files
-nnoremap <leader>t :CtrlPBufTagAll<CR>
-
-" Show the match window at the top of the screen
-let g:ctrlp_match_window_bottom = 0
-
-" }}}
 " devicons {{{
 
 let g:webdevicons_enable_ctrlp = 0
@@ -806,29 +744,13 @@ nnoremap <leader>gb :Gblame<CR>
 " }}}
 " fzf {{{
 
-" Use a new iterm window if calling from macvim
-if has("gui_macvim")
-    let g:fzf_launcher = "in_a_new_term %s"
-endif
-
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 " This is the default extra key bindings
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
+  \ 'ctrl-o': 'split',
   \ 'ctrl-v': 'vsplit' }
 
 " Default fzf layout
@@ -836,26 +758,66 @@ let g:fzf_action = {
 " - window (nvim only)
 let g:fzf_layout = { 'up': '~40%' }
 
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
 " For Commits and BCommits to customize the options used by 'git log':
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
-" Open files
+" Mappings and commands
+nnoremap <leader>fm <plug>(fzf-maps-n)
+xnoremap <leader>fm <plug>(fzf-maps-x)
+onoremap <leader>fm <plug>(fzf-maps-o)
+
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>ff :Files %p:h<CR>
+nnoremap <leader>fhf :History<CR>
+nnoremap <leader>fh: :History:<CR>
+nnoremap <leader>fh/ :History/<CR>
+nnoremap <leader>f: :Commands<CR>
+nnoremap <leader>fw :Windows<CR>
+nnoremap <leader>fs :Snippets<CR>
+nnoremap <leader>f? :HelpTags<CR>
+nnoremap <leader>fg :GitFiles?<CR>
+nnoremap <leader>fl :Lines 
+nnoremap <leader>fL :BLines 
+nnoremap <leader>f/ :Ag 
+
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" project files
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-command! ProjectFiles execute 'Files' s:find_git_root()
+command! FZFProjectFiles execute 'Files' s:find_git_root()
+nnoremap <leader>fp :FZFProjectFiles<CR>
 
 " Additional mapping for ctags search
-function! s:FZFTagsWrapper()
+function! s:FZFTags()
     let old_tags = &tags
     let &tags = './tags;../tags'
     exec ':Tags'
     let &tags = old_tags
 endfunction
-command! FZFTagsWrapper execute s:FZFTagsWrapper()
-
-" commands
-nnoremap <leader>: :Commands<CR>
+command! FZFTags execute s:FZFTags()
+nnoremap <leader>ft :FZFTags 
+nnoremap <leader>fT :BTags 
 
 " }}}
 " gitgutter {{{

@@ -6,8 +6,6 @@ Plug 'tpope/vim-repeat'
 " Plug 'ajh17/VimCompletesMe'
 Plug 'roxma/nvim-completion-manager'
 Plug 'junegunn/vim-easy-align'
-Plug 'ctrlpvim/ctrlp.vim' | Plug 'd11wtq/ctrlp_bdelete.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'jiangmiao/auto-pairs'
@@ -39,6 +37,9 @@ Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
 " Plug 'vim-scripts/OmniCppComplete', { 'for': ['c', 'cpp'] }
 Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
+
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+Plug 'roxma/nvim-cm-racer', { 'for': 'rust' }
 
 if (hostname !~ "hpc.swin.edu.au")
     Plug 'Rip-Rip/clang_complete', { 'for': ['c', 'cpp'] }
@@ -74,6 +75,7 @@ Plug 'rakr/vim-one'
 Plug 'mhartington/oceanic-next'
 Plug 'davidklsn/vim-sialoquent'
 Plug 'arcticicestudio/nord-vim'
+Plug 'sonph/onehalf', {'rtp': 'vim'}
 
 " filetypes
 Plug 'vim-python/python-syntax', { 'for': 'python' }
