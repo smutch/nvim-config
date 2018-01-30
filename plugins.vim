@@ -15,6 +15,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-obsession'
+Plug 'chrisbra/vim-diff-enhanced'
 Plug 'neomake/neomake'
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-dispatch'
@@ -42,6 +43,8 @@ Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
 if (hostname !~ "hpc.swin.edu.au")
     Plug 'Rip-Rip/clang_complete', { 'for': ['c', 'cpp'] }
 endif
+
+Plug 'lambdalisue/vim-gista'
 
 Plug 'tpope/vim-eunuch'
 Plug 'chrisbra/unicode.vim'

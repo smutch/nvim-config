@@ -161,8 +161,12 @@ if has("cscope")
     endif
     set csverb
 
+    " put the cscope output in the quickfix window
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+
     map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
     map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
+    map g<C-/> :cs find s <C-R>=expand("<cword>")<CR><CR>
 endif
 
 " }}}
@@ -863,6 +867,11 @@ nnoremap [h :GitGutterPrevHunk<CR>
 nnoremap ghs :GitGutterStageHunk<CR>
 nnoremap ghr :GitGutterRevertHunk<CR>
 let g:gitgutter_realtime = 0
+
+let g:gitgutter_sign_added = '┃'
+let g:gitgutter_sign_modified = '┃'
+let g:gitgutter_sign_removed = '┃'
+let g:gitgutter_sign_modified_removed = '┃'
 
 " }}}
 " goyo {{{
