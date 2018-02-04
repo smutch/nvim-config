@@ -291,8 +291,8 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs one
-            let g:airline_theme='one'
+            Cs onehalflight
+            let g:airline_theme='onehalflight'
             let g:light=1
         else
             set background=dark
