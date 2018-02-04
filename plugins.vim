@@ -75,7 +75,7 @@ Plug 'rakr/vim-one'
 Plug 'mhartington/oceanic-next'
 Plug 'davidklsn/vim-sialoquent'
 Plug 'arcticicestudio/nord-vim'
-Plug 'sonph/onehalf', {'rtp': 'vim'}
+Plug 'junegunn/seoul256.vim'
 
 " filetypes
 Plug 'vim-python/python-syntax', { 'for': 'python' }

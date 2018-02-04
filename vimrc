@@ -287,11 +287,12 @@ syntax on " Use syntax highlighting
 function! SetTheme()
 	let g:hybrid_custom_term_colors = 1
     let g:hybrid_reduced_contrast = 1
+    let g:seoul256_light_background = 255
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs onehalflight
-            let g:airline_theme='onehalflight'
+            Cs one
+            let g:airline_theme='one'
             let g:light=1
         else
             set background=dark
@@ -782,6 +783,12 @@ nnoremap <leader>fm <plug>(fzf-maps-n)
 xnoremap <leader>fm <plug>(fzf-maps-x)
 onoremap <leader>fm <plug>(fzf-maps-o)
 
+" redefine some commands to use the preview feature
+command! -bang -nargs=* -complete=file Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* -complete=buffer Buffers call fzf#vim#buffers(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* -complete=dir Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang History call fzf#vim#history(fzf#vim#with_preview(), <bang>0)
+
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>ff :Files %p:h<CR>
 nnoremap <leader>fhf :History<CR>
@@ -790,7 +797,7 @@ nnoremap <leader>fh/ :History/<CR>
 nnoremap <leader>f: :Commands<CR>
 nnoremap <leader>fw :Windows<CR>
 nnoremap <leader>fs :Snippets<CR>
-nnoremap <leader>f? :HelpTags<CR>
+nnoremap <leader>f? :Helptags<CR>
 nnoremap <leader>fg :GitFiles?<CR>
 nnoremap <leader>fl :Lines 
 nnoremap <leader>fL :BLines 
@@ -805,7 +812,7 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-command! FZFProjectFiles execute 'Files' s:find_git_root()
+command! -bang FZFProjectFiles call fzf#vim#files(s:find_git_root(), fzf#vim#with_preview(), <bang>0)
 nnoremap <leader>fp :FZFProjectFiles<CR>
 
 " Additional mapping for ctags search
@@ -873,12 +880,15 @@ let g:jedi#show_call_signatures = 2  "May be too slow...
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 let g:jedi#goto_assignments_command = '<localleader>g'
+let g:jedi#goto_command = '<localleader>d'
+let g:jedi#rename_command = '<localleader>r'
+let g:jedi#usages_command = '<localleader>u'
 
 " move documentation to the right if the window is big enough
 " au BufAdd * if bufname(expand('<afile>')) ==# "'__doc__'" | silent! wincmd L | endif
 
 " close the documentation window
-autocmd FileType python nnoremap <buffer> <leader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
+autocmd FileType python nnoremap <buffer> <localleader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
 
 " }}}
 " limelight {{{
