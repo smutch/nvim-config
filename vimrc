@@ -169,6 +169,32 @@ if has("cscope")
     map g<C-/> :cs find s <C-R>=expand("<cword>")<CR><CR>
 endif
 
+" handy mapping to fold around previous search results
+" taken from http://vim.wikia.com/wiki/Folding_with_Regular_Expression
+" \z to show previous search results
+" zr to display more context
+" zm to display less
+function! s:SearchFold()
+    if (!exists('b:searchfold_on') || b:searchfold_on==0)
+        let b:old_foldexpr = &l:foldexpr
+        let b:old_fdm = &l:fdm
+        let b:old_foldlevel = &l:foldlevel
+        let b:old_foldcolumn = &l:foldcolumn
+        setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2
+        let b:searchfold_on = 1
+    else
+        let &l:foldexpr = b:old_foldexpr
+        let &l:foldmethod = b:old_fdm
+        let &l:foldlevel = b:old_foldlevel
+        let &l:foldcolumn = b:old_foldcolumn
+        let b:searchfold_on = 0
+    endif
+endfunction
+command! SearchFold call s:SearchFold()
+nnoremap <localleader>z :SearchFold<CR>
+
+
+
 " }}}
 " Backup and swap files {{{
 set backupdir=~/.vim_backup
