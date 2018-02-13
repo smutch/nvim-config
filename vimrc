@@ -141,7 +141,7 @@ nnoremap <leader>l :<C-u>lvim // % \| lopen<CR>
 
 set wildignore+=*.o,*.obj,*.pyc,
             \*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite
+            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite,*/build/*
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
@@ -885,6 +885,9 @@ let g:gutentags_resolve_symlinks = 0
 let g:gutentags_project_root = [".tagme"]
 let g:gutentags_ctags_tagfile = ".tags"
 let g:gutentags_enabled = 1
+
+let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--fields=+iaS', '--extra=+q']
+let g:gutentags_ctags_exclude = ["*/build/*"]
 
 " }}}
 " jedi {{{
