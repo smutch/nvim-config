@@ -5,6 +5,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-repeat'
 " Plug 'ajh17/VimCompletesMe'
 Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/echodoc.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
 Plug 'scrooloose/nerdcommenter'

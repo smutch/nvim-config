@@ -751,6 +751,11 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
+" echodoc {{{
+
+let g:echodoc_enable_at_startup = 1
+
+" }}}
 " fugitive {{{
 
 " Useful shortcut for git commands
