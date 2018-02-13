@@ -317,8 +317,8 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs onehalflight
-            let g:airline_theme='onehalflight'
+            Cs one
+            let g:airline_theme='one'
             let g:light=1
         else
             set background=dark
@@ -816,7 +816,6 @@ onoremap <leader>fm <plug>(fzf-maps-o)
 
 " redefine some commands to use the preview feature
 command! -bang -nargs=* -complete=file Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-command! -bang -nargs=* -complete=buffer Buffers call fzf#vim#buffers(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* -complete=dir Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang History call fzf#vim#history(fzf#vim#with_preview(), <bang>0)
 
@@ -958,7 +957,9 @@ vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 " neomake {{{
 
 let g:neomake_error_sign = {'text': '✖', 'texthl': 'ErrorMsg'}
+
 let g:neomake_python_enabled_makers = ['python', 'flake8']
+let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501,E402,E226"]
 
 function! SetWarningType(entry)
     if a:entry.type =~? '\m^[SPI]'
@@ -979,9 +980,11 @@ let g:neomake_c_cppcheck_maker = {
         \ 'postprocess': function('SetWarningType')
         \ }
 
+let g:neomake_c_enabled_makers = ['clang', 'cppcheck']
 let g:neomake_cpp_cppcheck_maker = g:neomake_c_cppcheck_maker
 
-let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501,E402,E226"]
+autocmd BufEnter *.c,*.h let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG', '-fopenmp'] + ncm_clang#compilation_info()['args']
+
 
 augroup Neomake
     au!
