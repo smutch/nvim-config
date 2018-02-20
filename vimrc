@@ -213,6 +213,8 @@ set listchars=tab:▸\ ,eol:↵,trail:·     " Set hidden characters
 " set listchars=tab:▸\ ,trail:·           " Set hidden characters
 set number                              " Show line numbers
 
+set cursorline                          " highlight current line
+
 if has("gui_macvim")
   " set guifont=Monaco:h14
   " set guifont=Bitstream\ Vera\ Sans\ Mono:h17
@@ -820,7 +822,7 @@ command! -bang -nargs=* -complete=dir Ag call fzf#vim#ag(<q-args>, fzf#vim#with_
 command! -bang History call fzf#vim#history(fzf#vim#with_preview(), <bang>0)
 
 nnoremap <leader>fb :Buffers<CR>
-nnoremap <leader>ff :Files %p:h<CR>
+nnoremap <leader>ff :Files %:p:h<CR>
 nnoremap <leader>fhf :History<CR>
 nnoremap <leader>fh: :History:<CR>
 nnoremap <leader>fh/ :History/<CR>
@@ -983,7 +985,7 @@ let g:neomake_c_cppcheck_maker = {
 let g:neomake_c_enabled_makers = ['clang', 'cppcheck']
 let g:neomake_cpp_cppcheck_maker = g:neomake_c_cppcheck_maker
 
-autocmd BufEnter *.c,*.h let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG', '-fopenmp'] + ncm_clang#compilation_info()['args']
+autocmd BufEnter *.c,*.h let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
 
 
 augroup Neomake
@@ -1011,7 +1013,21 @@ command! ToggleNeomakeOnSave normal! :<C-u>call ToggleNeomakeOnSave()<CR>
 " }}}
 " neoterm {{{
 
-let g:neoterm_automap_keys = "<leader>T"
+let g:neoterm_position = 'vertical'
+let g:neoterm_automap_keys = '<leader>tt'
+
+" use gx{text-objects} such as gxip
+nmap gx <Plug>(neoterm-repl-send)
+xmap gx <Plug>(neoterm-repl-send)
+nmap gxx <Plug>(neoterm-repl-send-line)
+
+function! s:my_tnew(horiz)
+    let s:old_position = g:neoterm_position
+    let g:neoterm_position = a:horiz ? 'horizontal' : 'vertical'
+    silent call neoterm#tnew()
+    let g:neoterm_position = s:old_position
+endfunc
+command! -bar -bang -complete=shellcmd Tnew call s:my_tnew(<bang>0)
 
 " }}}
 " notes-system {{{
