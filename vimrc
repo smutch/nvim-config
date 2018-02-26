@@ -1149,6 +1149,7 @@ let g:vimtex_quickfix_mode = 1
 let g:vimtex_quickfix_ignore_all_warnings = 1
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
+let g:vimtex_fold_enabled = 1
 
 " }}}
 " vimux {{{

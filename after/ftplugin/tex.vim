@@ -1,11 +1,24 @@
 " ensure we are using latex and not plaintex
 let g:tex_flavour='latex'
 
+augroup my_cm_setup
+    autocmd!
+    autocmd User CmSetup call cm#register_source({
+                \ 'name' : 'vimtex',
+                \ 'priority': 8,
+                \ 'scoping': 1,
+                \ 'scopes': ['tex'],
+                \ 'abbreviation': 'tex',
+                \ 'cm_refresh_patterns': g:vimtex#re#ncm,
+                \ 'cm_refresh': {'omnifunc': 'vimtex#complete#omnifunc'},
+                \ })
+augroup END
+
 " let g:tex_conceal = ""  " Don't use conceal for latex equations
-set cole=2
+au! BufEnter *.tex set cole=0
 
 set spell
-setlocal formatprg=par\ -w79\ -g
+" setlocal formatprg=par\ -w79\ -g
 setlocal nocursorline
 setlocal smartindent
 
