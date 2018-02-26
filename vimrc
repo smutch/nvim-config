@@ -1028,9 +1028,9 @@ function! s:neoterm_create(cmd, horiz)
     let g:neoterm_position = s:old_position
     silent call neoterm#do(a:cmd)
 endfunc
-command! -bar -bang -complete=shellcmd -nargs=+ Tc call s:neoterm_create(<q-args>, <bang>0)
+command! -bar -bang -complete=shellcmd -nargs=* Tc call s:neoterm_create(<q-args>, <bang>0)
 nnoremap <leader>tv :Tc<CR>
-nnoremap <leader>th :Tc!<CR>
+nnoremap <leader>ts :Tc!<CR>
 
 " }}}
 " notes-system {{{
