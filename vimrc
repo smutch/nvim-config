@@ -141,7 +141,7 @@ nnoremap <leader>l :<C-u>lvim // % \| lopen<CR>
 
 set wildignore+=*.o,*.obj,*.pyc,
             \*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite
+            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite,*/build/*
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
@@ -169,6 +169,32 @@ if has("cscope")
     map g<C-/> :cs find s <C-R>=expand("<cword>")<CR><CR>
 endif
 
+" handy mapping to fold around previous search results
+" taken from http://vim.wikia.com/wiki/Folding_with_Regular_Expression
+" \z to show previous search results
+" zr to display more context
+" zm to display less
+function! s:SearchFold()
+    if (!exists('b:searchfold_on') || b:searchfold_on==0)
+        let b:old_foldexpr = &l:foldexpr
+        let b:old_fdm = &l:fdm
+        let b:old_foldlevel = &l:foldlevel
+        let b:old_foldcolumn = &l:foldcolumn
+        setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2
+        let b:searchfold_on = 1
+    else
+        let &l:foldexpr = b:old_foldexpr
+        let &l:foldmethod = b:old_fdm
+        let &l:foldlevel = b:old_foldlevel
+        let &l:foldcolumn = b:old_foldcolumn
+        let b:searchfold_on = 0
+    endif
+endfunction
+command! SearchFold call s:SearchFold()
+nnoremap <localleader>z :SearchFold<CR>
+
+
+
 " }}}
 " Backup and swap files {{{
 set backupdir=~/.vim_backup
@@ -186,6 +212,8 @@ set cmdheight=1                         " Command line height
 set listchars=tab:▸\ ,eol:↵,trail:·     " Set hidden characters
 " set listchars=tab:▸\ ,trail:·           " Set hidden characters
 set number                              " Show line numbers
+
+set cursorline                          " highlight current line
 
 if has("gui_macvim")
   " set guifont=Monaco:h14
@@ -287,6 +315,7 @@ syntax on " Use syntax highlighting
 function! SetTheme()
 	let g:hybrid_custom_term_colors = 1
     let g:hybrid_reduced_contrast = 1
+    let g:seoul256_light_background = 255
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
@@ -702,68 +731,6 @@ endif
 " au CompleteDone * pclose
 
 " }}}
-" ctrlp {{{
-call ctrlp_bdelete#init()
-
-" Set the matching function
-" PyMatcher for CtrlP
-if !has('python3')
-    echo 'In order to use pymatcher plugin, you need +python compiled vim'
-else
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-endif
-
-" Include the bdelete plugin
-call ctrlp_bdelete#init()
-
-" Custom ignore paths
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.git|\.hg|include|lib|bin)',
-  \ 'file': '\v\.(exe|so|dll|os|swp|svn|hdf5|h5)$',
-  \ }
-
-" Custom root markers
-let g:ctrlp_root_markers = ['.ctrlp_marker']
-
-" This is the default value, but is used below...
-let g:ctrlp_working_path_mode = 'ra'
-
-" Default to filename searches - so that appctrl will find application
-" controller
-let g:ctrlp_by_filename = 1
-
-let g:ctrlp_map = '<leader>M'
-let g:ctrlp_cmd = 'CtrlPMixed'
-
-" Additional mapping for buffer search
-nnoremap <silent> <leader>b :CtrlPBuffer<CR>
-
-" Project bookmarks
-nnoremap <silent> <leader>B :CtrlPBookmarkDir<CR>
-
-" Open files
-nnoremap <silent> <leader>p :CtrlP<CR>
-nnoremap <silent> <leader>f :CtrlP %p:h<CR>
-
-" Additional mapping for most recently used files
-nnoremap <silent> <leader>m :CtrlPMRU<CR>
-
-" Additional mapping for ctags search
-function! CtrlPTagsWrapper()
-    let old_tags = &tags
-    let &tags = './.tags;../.tags'
-    exec ':CtrlPTag'
-    let &tags = old_tags
-endfunction
-nnoremap <silent> <leader>T :<C-u>call CtrlPTagsWrapper()<CR>
-
-" Jump to a tag in all files
-nnoremap <leader>t :CtrlPBufTagAll<CR>
-
-" Show the match window at the top of the screen
-let g:ctrlp_match_window_bottom = 0
-
-" }}}
 " devicons {{{
 
 let g:webdevicons_enable_ctrlp = 0
@@ -786,6 +753,11 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
+" echodoc {{{
+
+let g:echodoc_enable_at_startup = 1
+
+" }}}
 " fugitive {{{
 
 " Useful shortcut for git commands
@@ -806,29 +778,13 @@ nnoremap <leader>gb :Gblame<CR>
 " }}}
 " fzf {{{
 
-" Use a new iterm window if calling from macvim
-if has("gui_macvim")
-    let g:fzf_launcher = "in_a_new_term %s"
-endif
-
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 " This is the default extra key bindings
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
+  \ 'ctrl-o': 'split',
   \ 'ctrl-v': 'vsplit' }
 
 " Default fzf layout
@@ -836,26 +792,71 @@ let g:fzf_action = {
 " - window (nvim only)
 let g:fzf_layout = { 'up': '~40%' }
 
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
 " For Commits and BCommits to customize the options used by 'git log':
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
-" Open files
+" Mappings and commands
+nnoremap <leader>fm <plug>(fzf-maps-n)
+xnoremap <leader>fm <plug>(fzf-maps-x)
+onoremap <leader>fm <plug>(fzf-maps-o)
+
+" redefine some commands to use the preview feature
+command! -bang -nargs=* -complete=file Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* -complete=dir Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang History call fzf#vim#history(fzf#vim#with_preview(), <bang>0)
+
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>ff :Files %:p:h<CR>
+nnoremap <leader>fhf :History<CR>
+nnoremap <leader>fh: :History:<CR>
+nnoremap <leader>fh/ :History/<CR>
+nnoremap <leader>f: :Commands<CR>
+nnoremap <leader>fw :Windows<CR>
+nnoremap <leader>fs :Snippets<CR>
+nnoremap <leader>f? :Helptags<CR>
+nnoremap <leader>fg :GitFiles?<CR>
+nnoremap <leader>fl :Lines 
+nnoremap <leader>fL :BLines 
+nnoremap <leader>f/ :Ag 
+
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" project files
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-command! ProjectFiles execute 'Files' s:find_git_root()
+command! -bang FZFProjectFiles call fzf#vim#files(s:find_git_root(), fzf#vim#with_preview(), <bang>0)
+nnoremap <leader>fp :FZFProjectFiles<CR>
 
 " Additional mapping for ctags search
-function! s:FZFTagsWrapper()
+function! s:FZFTags()
     let old_tags = &tags
     let &tags = './tags;../tags'
     exec ':Tags'
     let &tags = old_tags
 endfunction
-command! FZFTagsWrapper execute s:FZFTagsWrapper()
-
-" commands
-nnoremap <leader>: :Commands<CR>
+command! FZFTags execute s:FZFTags()
+nnoremap <leader>ft :FZFTags 
+nnoremap <leader>fT :BTags 
 
 " }}}
 " gitgutter {{{
@@ -886,6 +887,9 @@ let g:gutentags_project_root = [".tagme"]
 let g:gutentags_ctags_tagfile = ".tags"
 let g:gutentags_enabled = 1
 
+let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--fields=+iaS', '--extra=+q']
+let g:gutentags_ctags_exclude = ["*/build/*"]
+
 " }}}
 " jedi {{{
 
@@ -911,12 +915,15 @@ let g:jedi#show_call_signatures = 2  "May be too slow...
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
 let g:jedi#goto_assignments_command = '<localleader>g'
+let g:jedi#goto_command = '<localleader>d'
+let g:jedi#rename_command = '<localleader>r'
+let g:jedi#usages_command = '<localleader>u'
 
 " move documentation to the right if the window is big enough
 " au BufAdd * if bufname(expand('<afile>')) ==# "'__doc__'" | silent! wincmd L | endif
 
 " close the documentation window
-autocmd FileType python nnoremap <buffer> <leader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
+autocmd FileType python nnoremap <buffer> <localleader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
 
 " }}}
 " limelight {{{
@@ -952,7 +959,9 @@ vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 " neomake {{{
 
 let g:neomake_error_sign = {'text': '✖', 'texthl': 'ErrorMsg'}
+
 let g:neomake_python_enabled_makers = ['python', 'flake8']
+let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501,E402,E226"]
 
 function! SetWarningType(entry)
     if a:entry.type =~? '\m^[SPI]'
@@ -973,9 +982,11 @@ let g:neomake_c_cppcheck_maker = {
         \ 'postprocess': function('SetWarningType')
         \ }
 
+let g:neomake_c_enabled_makers = ['clang', 'cppcheck']
 let g:neomake_cpp_cppcheck_maker = g:neomake_c_cppcheck_maker
 
-let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501,E402,E226"]
+autocmd BufEnter *.c,*.h let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
+
 
 augroup Neomake
     au!
@@ -1002,7 +1013,24 @@ command! ToggleNeomakeOnSave normal! :<C-u>call ToggleNeomakeOnSave()<CR>
 " }}}
 " neoterm {{{
 
-let g:neoterm_automap_keys = "<leader>T"
+let g:neoterm_position = 'vertical'
+let g:neoterm_automap_keys = '<leader>tt'
+
+" use gx{text-objects} such as gxip
+nmap gx <Plug>(neoterm-repl-send)
+xmap gx <Plug>(neoterm-repl-send)
+nmap gxx <Plug>(neoterm-repl-send-line)
+
+function! s:neoterm_create(cmd, horiz)
+    let s:old_position = g:neoterm_position
+    let g:neoterm_position = a:horiz ? 'horizontal' : 'vertical'
+    silent call neoterm#tnew()
+    let g:neoterm_position = s:old_position
+    silent call neoterm#do(a:cmd)
+endfunc
+command! -bar -bang -complete=shellcmd -nargs=* Tc call s:neoterm_create(<q-args>, <bang>0)
+nnoremap <leader>tv :Tc<CR>
+nnoremap <leader>ts :Tc!<CR>
 
 " }}}
 " notes-system {{{
@@ -1121,6 +1149,7 @@ let g:vimtex_quickfix_mode = 1
 let g:vimtex_quickfix_ignore_all_warnings = 1
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
+let g:vimtex_fold_enabled = 1
 
 " }}}
 " vimux {{{

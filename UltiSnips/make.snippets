@@ -19,8 +19,27 @@ clean:
 	rm -f $(OBJ) $(DEP) $2
 endsnippet
 
-
 snippet list "list targets in simple Makefile"
 list:
 	@sed -n 's/\(^[^\t\.]\S*\):/\1/p' Makefile | grep -v list
+endsnippet
+
+snippet cmake "Basic makefile for wrapping a cmake build"
+.PHONY: default config cleanbuild
+
+default: build/Makefile
+	@make -C build --no-print-directory $(MFLAGS)
+
+config:
+	@cmake . -Bbuild $(CMAKE_OPTS)
+
+cleanbuild:
+	@rm -r build
+
+
+build/Makefile:
+	@if [ ! -d "build" ]; then cmake . -Bbuild $(CMAKE_OPTS); fi
+
+% :: build/Makefile
+	@make -C build --no-print-directory $@ $(MFLAGS)
 endsnippet
