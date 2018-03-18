@@ -1,87 +1,104 @@
-" vim:ft=vim
+" vim:ft=vim:fdm=marker
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'tpope/vim-repeat'
-" Plug 'ajh17/VimCompletesMe'
+" completion {{{
 Plug 'roxma/nvim-completion-manager'
-Plug 'Shougo/echodoc.vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
+Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
+" }}}
+
+" movement {{{
+Plug 'tpope/vim-rsi'
+Plug 'justinmk/vim-sneak'
+" }}}
+
+" editing {{{
+Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-abolish'
 Plug 'scrooloose/nerdcommenter'
+Plug 'junegunn/vim-easy-align'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-obsession'
-Plug 'chrisbra/vim-diff-enhanced'
-Plug 'neomake/neomake'
-Plug 'kassio/neoterm'
-Plug 'tpope/vim-dispatch'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug '5long/pytest-vim-compiler', { 'for': 'python' }
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
-Plug 'anntzer/vim-cython', { 'for': 'cython'}
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-rsi'
-Plug 'tpope/vim-tbone'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
+" Plug 'chrisbra/unicode.vim'
+Plug 'wellle/targets.vim'
+Plug 'dyng/ctrlsf.vim'
+" }}}
+
+" utils {{{
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-obsession'
+Plug 'Shougo/echodoc.vim'
+Plug 'kassio/neoterm'
+Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
-Plug 'justinmk/vim-sneak'
 Plug 'justinmk/vim-dirvish'
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-" Plug 'git@github.com:smutch/note-system.git'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'chrisbra/Colorizer'
+" }}}
+
+" tmux {{{
+Plug 'tpope/vim-tbone'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'benmills/vimux'
+" }}}
+
+" git {{{
+Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'lambdalisue/vim-gista'
+" }}}
+
+" linting {{{
+Plug 'neomake/neomake'
+" }}}
+
+" looking good {{{
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+" }}}
+
+" prose {{{
 Plug 'reedes/vim-pencil', { 'for': ['markdown', 'text', 'tex', 'latex'] }
 Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
-" Plug 'vim-scripts/OmniCppComplete', { 'for': ['c', 'cpp'] }
-Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
-
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-Plug 'roxma/nvim-cm-racer', { 'for': 'rust' }
-
-if (hostname !~ "hpc.swin.edu.au")
-    Plug 'Rip-Rip/clang_complete', { 'for': ['c', 'cpp'] }
-endif
-
-Plug 'lambdalisue/vim-gista'
-
-Plug 'tpope/vim-eunuch'
-Plug 'chrisbra/unicode.vim'
-Plug 'wellle/targets.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'benmills/vimux'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'lervag/vimtex', { 'for': 'tex' }
-Plug 'mattn/emmet-vim'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'dyng/ctrlsf.vim'
-Plug 'majutsushi/tagbar'
-Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
-Plug 'chrisbra/Colorizer'
+" }}}
 
-" colorschemes
+" colorschemes {{{
 Plug 'morhetz/gruvbox'
 Plug 'w0ng/vim-hybrid'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
-if !exists("g:gui_oni")
-    Plug 'ryanoasis/vim-devicons'
-endif
-Plug 'nightsense/seabird'
+Plug 'ryanoasis/vim-devicons'
 Plug 'rakr/vim-one'
 Plug 'mhartington/oceanic-next'
-Plug 'davidklsn/vim-sialoquent'
-Plug 'arcticicestudio/nord-vim'
-Plug 'junegunn/seoul256.vim'
+" }}}
 
-" filetypes
+" filetypes {{{
+" python {{{
 Plug 'vim-python/python-syntax', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+Plug 'anntzer/vim-cython', { 'for': 'cython'}
+" }}}
+
+" rust {{{
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+Plug 'roxma/nvim-cm-racer', { 'for': 'rust' }
+" }}}
+
+" other {{{
+Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
+Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'vim-scripts/scons.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'mattn/emmet-vim'
+" }}}
+" }}}
 
 call plug#end()

@@ -731,11 +731,6 @@ endif
 " au CompleteDone * pclose
 
 " }}}
-" devicons {{{
-
-let g:webdevicons_enable_ctrlp = 0
-
-" }}}
 " dispatch {{{
 
 " Use octodown as default build command for Markdown files
@@ -926,12 +921,6 @@ let g:jedi#usages_command = '<localleader>u'
 autocmd FileType python nnoremap <buffer> <localleader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
 
 " }}}
-" limelight {{{
-
-" toggle on and off
-nnoremap coL :Limelight<C-R>=(exists('#limelight') == 0) ? '' : '!'<CR><CR>
-
-" }}}
 " matchit {{{
 
 if !exists('g:loaded_matchit')
@@ -1033,12 +1022,6 @@ nnoremap <leader>tv :Tc<CR>
 nnoremap <leader>ts :Tc!<CR>
 
 " }}}
-" notes-system {{{
-
-let g:notes_dir = "/Users/smutch/Dropbox/Notes"
-let g:notes_assets_dir = "assets"
-
-" }}}
 " nvim-completion-manager {{{
 
 set noshowmode shortmess+=c
@@ -1053,18 +1036,7 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 " }}}
 " polyglot {{{
 
- let g:polyglot_disabled = ['tex', 'latex']
-
-" }}}
-" pydoc {{{
-
-if has("gui_macvim")
-    let g:pydoc_cmd = "/usr/local/bin/pydoc"
-elseif has("mac")
-    let g:pydoc_cmd = "/usr/local/bin/pydoc"
-elseif has("unix")
-    let g:pydoc_cmd = "/usr/local/python-3/bin/pydoc"
-endif
+ let g:polyglot_disabled = ['tex', 'latex', 'python']
 
 " }}}
 " sneak {{{
@@ -1096,17 +1068,6 @@ autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math
 autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout
 autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
-
-" }}}
-" tagbar {{{
-
-let g:tagbar_left = 1
-nnoremap <leader># :<C-u>Tagbar<CR>
-
-" }}}
-" tmuxline {{{
-
-let g:tmuxline_powerline_separators = 0
 
 " }}}
 " ultisnips {{{
