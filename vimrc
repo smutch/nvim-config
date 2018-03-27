@@ -116,7 +116,7 @@ set gdefault                         " g flag on sed subs automatically
 
 " Live substitution
 if exists('&inccommand')
-  set inccommand=split
+  set inccommand=nosplit
 endif
 
 " Use ag if possible, if not then ack, and fall back to grep if all else fails
@@ -136,12 +136,12 @@ nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>
 command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!
 nnoremap <leader>/ :Grep 
 
-" Load up last search in buffer into the locaiton list and open it
+" Load up last search in buffer into the location list and open it
 nnoremap <leader>l :<C-u>lvim // % \| lopen<CR>
 
 set wildignore+=*.o,*.obj,*.pyc,
             \*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite,*/build/*
+            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
@@ -812,9 +812,9 @@ xnoremap <leader>fm <plug>(fzf-maps-x)
 onoremap <leader>fm <plug>(fzf-maps-o)
 
 " redefine some commands to use the preview feature
-command! -bang -nargs=* -complete=file Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-command! -bang -nargs=* -complete=dir Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
-command! -bang History call fzf#vim#history(fzf#vim#with_preview(), <bang>0)
+" command! -bang -nargs=* -complete=file Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+" command! -bang -nargs=* -complete=dir Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
+" command! -bang History call fzf#vim#history(fzf#vim#with_preview(), <bang>0)
 
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>ff :Files %:p:h<CR>
@@ -826,8 +826,10 @@ nnoremap <leader>fw :Windows<CR>
 nnoremap <leader>fs :Snippets<CR>
 nnoremap <leader>f? :Helptags<CR>
 nnoremap <leader>fg :GitFiles?<CR>
-nnoremap <leader>fl :Lines 
-nnoremap <leader>fL :BLines 
+nnoremap <leader>fl :Lines<CR>
+nnoremap <leader>fL :BLines<CR>
+nnoremap <leader>ft :Tags<CR>
+nnoremap <leader>fT :BTags<CR>
 nnoremap <leader>f/ :Ag 
 
 imap <c-x><c-k> <plug>(fzf-complete-word)
@@ -839,19 +841,9 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-command! -bang FZFProjectFiles call fzf#vim#files(s:find_git_root(), fzf#vim#with_preview(), <bang>0)
+" command! -bang FZFProjectFiles call fzf#vim#files(s:find_git_root(), fzf#vim#with_preview(), <bang>0)
+command! -bang FZFProjectFiles call fzf#vim#files(s:find_git_root(), <bang>0)
 nnoremap <leader>fp :FZFProjectFiles<CR>
-
-" Additional mapping for ctags search
-function! s:FZFTags()
-    let old_tags = &tags
-    let &tags = './tags;../tags'
-    exec ':Tags'
-    let &tags = old_tags
-endfunction
-command! FZFTags execute s:FZFTags()
-nnoremap <leader>ft :FZFTags 
-nnoremap <leader>fT :BTags 
 
 " }}}
 " gitgutter {{{
