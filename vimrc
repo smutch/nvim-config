@@ -1009,6 +1009,13 @@ nnoremap <leader>ts :Tc!<CR>
 nnoremap <leader>tt :Ttoggle<CR>
 
 " }}}
+" notational-fzf {{{
+
+let g:nv_search_paths = ["./notes", "~/Dropbox/Notes"]
+let g:nv_use_short_pathnames = 1
+nnoremap <leader>n :NV<CR>
+
+" }}}
 " nvim-completion-manager {{{
 
 set noshowmode shortmess+=c

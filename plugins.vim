@@ -40,6 +40,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'chrisbra/Colorizer'
+Plug 'Alok/notational-fzf-vim'
 " }}}
 
 " tmux {{{
