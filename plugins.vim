@@ -96,7 +96,7 @@ Plug 'roxma/nvim-cm-racer', { 'for': 'rust' }
 Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'vim-scripts/scons.vim'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'mattn/emmet-vim'
 " }}}
 " }}}
