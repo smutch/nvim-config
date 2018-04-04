@@ -994,9 +994,6 @@ command! ToggleNeomakeOnSave normal! :<C-u>call ToggleNeomakeOnSave()<CR>
 " }}}
 " neoterm {{{
 
-let g:neoterm_position = 'vertical'
-let g:neoterm_automap_keys = '<leader>tt'
-
 " use gx{text-objects} such as gxip
 nmap gx <Plug>(neoterm-repl-send)
 xmap gx <Plug>(neoterm-repl-send)
