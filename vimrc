@@ -1000,13 +1000,13 @@ xmap gx <Plug>(neoterm-repl-send)
 nmap gxx <Plug>(neoterm-repl-send-line)
 
 function! s:neoterm_create(cmd, horiz)
-    let mod = a:horiz ? 'vertical' : 'belowright'
+    let mod = a:horiz ? 'belowright' : 'vertical'
     exe mod . ' Tnew ' . a:cmd
 endfunc
 command! -bar -bang -complete=shellcmd -nargs=* Tc call s:neoterm_create(<q-args>, <bang>0)
 nnoremap <leader>tv :Tc<CR>
 nnoremap <leader>ts :Tc!<CR>
-nnoremap <leader>tt :Ttoggle<CR>
+nnoremap <silent> <leader>tt :Ttoggle<CR><C-C>
 
 " }}}
 " notational-fzf {{{
