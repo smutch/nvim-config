@@ -234,6 +234,7 @@ augroup CustomColors
     au!
     au ColorScheme hybrid if &background == 'dark' |
                 \ hi! Normal guifg=#d9dbda |
+                \ hi! TermNormal guibg=#1d1f21 |
                 \ endif "|
                 " \ hi! Normal guibg=NONE | 
                 " \ hi! link pythonInclude Include
@@ -309,7 +310,9 @@ command! -nargs=1 -complete=color Cs call <SID>AccurateColorscheme(<q-args>)
 
 syntax on " Use syntax highlighting
 function! SetTheme()
-	let g:hybrid_custom_term_colors = 1
+    " Setting this will turn off the guibg color
+	" let g:hybrid_custom_term_colors = 1
+
     let g:hybrid_reduced_contrast = 1
     let g:seoul256_light_background = 255
     if (&t_Co >= 256)
@@ -579,7 +582,13 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " Neovim terminal mappings
 if has('nvim')
     let $LAUNCHED_FROM_NVIM = 1
-    autocmd BufWinEnter,WinEnter term://* startinsert
+    augroup MyTerm
+        au!
+        au BufWinEnter,WinEnter term://* startinsert
+        au TermOpen * setlocal winhighlight=Normal:TermNormal |
+                    \ setlocal nocursorline
+    augroup END
+
     tnoremap kj <C-\><C-n>
     tnoremap <C-w> <C-\><C-n><C-w>
     tnoremap <C-h> <C-\><C-n><C-w>h
