@@ -10,6 +10,9 @@ setlocal noshowmode  " Allows jedi to show function call signatures
 setlocal concealcursor=nic
 setlocal nofoldenable  " Don't fold by default
 
+" syntax hightlighting options
+let g:python_highlight_all = 1
+
 " Set some useful keybindings
 nnoremap <buffer> <localleader>p :w<CR>:Dispatch python %<CR>
 
