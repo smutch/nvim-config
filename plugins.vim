@@ -2,6 +2,10 @@
 
 call plug#begin('~/.vim/plugged')
 
+if !empty(glob("~/code/note-system"))
+    Plug '~/code/note-system'
+endif
+
 " completion {{{
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
@@ -40,7 +44,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'chrisbra/Colorizer'
-Plug 'Alok/notational-fzf-vim'
 " }}}
 
 " tmux {{{
@@ -61,6 +64,7 @@ Plug 'neomake/neomake'
 
 " looking good {{{
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+" Plug 'ryanoasis/vim-devicons'
 " }}}
 
 " prose {{{
@@ -75,7 +79,6 @@ Plug 'morhetz/gruvbox'
 Plug 'w0ng/vim-hybrid'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'ryanoasis/vim-devicons'
 Plug 'rakr/vim-one'
 Plug 'mhartington/oceanic-next'
 " }}}
