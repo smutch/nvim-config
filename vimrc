@@ -1007,7 +1007,7 @@ nnoremap <silent> <leader>tt :Ttoggle<CR><C-C>
 " }}}
 " notational-fzf {{{
 
-let g:nv_search_paths = ["./notes", "~/Dropbox/Notes"]
+let g:nv_search_paths = ["./notes", "~/Dropbox/Notes", "~/notes"]
 let g:nv_use_short_pathnames = 1
 nnoremap <leader>n :NV<CR>
 
