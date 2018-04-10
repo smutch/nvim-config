@@ -1014,11 +1014,10 @@ nnoremap <leader>ts :Tc!<CR>
 nnoremap <silent> <leader>tt :Ttoggle<CR><C-C>
 
 " }}}
-" notational-fzf {{{
+" note-system {{{
 
-let g:nv_search_paths = ["./notes", "~/Dropbox/Notes", "~/notes"]
-let g:nv_use_short_pathnames = 1
-nnoremap <leader>n :NV<CR>
+let g:notes_dir = '~/Dropbox/Notes'
+let g:notes_assets_dir = 'img'
 
 " }}}
 " nvim-completion-manager {{{
@@ -1107,8 +1106,9 @@ let g:vimtex_latexmk_continuous = 1
 let g:vimtex_latexmk_background = 1
 let g:vimtex_quickfix_mode = 1
 let g:vimtex_quickfix_ignore_all_warnings = 1
-let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-let g:vimtex_view_general_options = '@line @pdf @tex'
+let g:vimtex_view_method = 'skim'
+" let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+" let g:vimtex_view_general_options = '@line @pdf @tex'
 let g:vimtex_fold_enabled = 1
 
 " }}}
