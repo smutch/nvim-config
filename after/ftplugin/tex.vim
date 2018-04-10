@@ -41,10 +41,6 @@ function! HardWrapSentences()
 endfunction
 nnoremap <buffer> <localleader>lw :call HardWrapSentences()<CR>
 
-" Save then compile
-nmap <buffer> <localleader>s :w<CR><localleader>ll
-nnoremap <buffer> [compile/comment]x :w<CR>:call vimtex#latexmk#compile()<CR>
-
 " Quick map for adding a new item to an itemize environment list
 imap <buffer> ;; <CR>\item<Space>
 
@@ -58,10 +54,10 @@ setlocal scrolloff=5
 ab <buffer> ... \ldots
 
 " Select 'chunks'
-vnoremap <buffer> ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR><Esc>V/<CR>k
-vnoremap <buffer> ic ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k
-omap <buffer> ac :normal Vac<CR>:noh<CR>
-omap <buffer> ic :normal Vic<CR>:noh<CR>
+" vnoremap <buffer> ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR><Esc>V/<CR>k
+" vnoremap <buffer> ic ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k
+" omap <buffer> ac :normal Vac<CR>:noh<CR>
+" omap <buffer> ic :normal Vic<CR>:noh<CR>
 
 " complete mnras style citation commands (citet, citep, etc.)
 " let g:vimtex_complete_patterns.bib='\C\\\a*cite[tp]\=\a*\*\?\(\[[^\]]*\]\)*\_\s*{[^{}]*'
