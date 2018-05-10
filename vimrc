@@ -215,19 +215,6 @@ set number                              " Show line numbers
 
 set cursorline                          " highlight current line
 
-if has("gui_macvim")
-  " set guifont=Monaco:h14
-  " set guifont=Bitstream\ Vera\ Sans\ Mono:h17
-  set guifont=Sauce\ Code\ Powerline\ Plus\ Nerd\ File\ Types\ Mono\ Plus\ Pomicons:h14
-  set guioptions-=T  " remove toolbar
-  set guioptions-=rL " remove right + left scrollbars
-  set anti
-  set linespace=3 "Increase the space between lines for better readability
-elseif !has('nvim')
-  " Set the ttymouse value to allow window resizing with mouse
-  set ttymouse=xterm2
-end
-
 " Colorscheme {{{
 
 augroup CustomColors
@@ -240,6 +227,10 @@ augroup CustomColors
                 " \ hi! link pythonInclude Include
     au ColorScheme Tomorrow if &background == 'light' |
                 \ hi! link Folded ColorColumn |
+                \ endif
+                " \ hi! Normal guibg=NONE | 
+    au ColorScheme one if &background == 'light' |
+                \ hi! Normal guibg=#ffffff |
                 \ endif
                 " \ hi! Normal guibg=NONE | 
     au ColorScheme seagull,greygull
@@ -312,7 +303,7 @@ syntax on " Use syntax highlighting
 function! SetTheme()
     " Setting this will turn off the guibg color
 	" let g:hybrid_custom_term_colors = 1
-
+    
     let g:hybrid_reduced_contrast = 1
     let g:seoul256_light_background = 255
     if (&t_Co >= 256)
@@ -362,15 +353,15 @@ endif
 
 " Cursor configuration {{{
 " ====================================================================
-  if has("nvim")
-      set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-  else
-      let &t_SI = "\<Esc>[5 q"
-      if exists("&t_SR")
-          let &t_SR = "\<Esc>[3 q"
-      endif
-      let &t_EI = "\<Esc>[2 q"
-  endif
+if has("nvim")
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+else
+    let &t_SI = "\<Esc>[5 q"
+    if exists("&t_SR")
+        let &t_SR = "\<Esc>[3 q"
+    endif
+    let &t_EI = "\<Esc>[2 q"
+endif
 " }}}
 
 " }}}
@@ -382,9 +373,9 @@ function! MatchCheckWords()
   match CheckWords /\c\<\(your\|Your\|it's\|they're\|halos\|Halos\|reionisation\|Reionisation\)\>/
 endfunction
 
-autocmd FileType markdown,tex,rst call MatchCheckWords()
-autocmd BufWinEnter *.md,*.tex,*.rst call MatchCheckWords()
-autocmd BufWinLeave *.md,*.tex,*.rst call clearmatches()
+" autocmd FileType markdown,tex,rst call MatchCheckWords()
+" autocmd BufWinEnter *.md,*.tex,*.rst call MatchCheckWords()
+" autocmd BufWinLeave *.md,*.tex,*.rst call clearmatches()
 
 " }}}
 " Custom commands and functions {{{
@@ -967,18 +958,18 @@ let g:neomake_c_cppcheck_maker = {
         \ '%-G%.%#',
         \ 'postprocess': function('SetWarningType')
         \ }
-
-let g:neomake_c_enabled_makers = ['clang', 'cppcheck']
 let g:neomake_cpp_cppcheck_maker = g:neomake_c_cppcheck_maker
 
-autocmd BufEnter *.c,*.h let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
-
+let g:neomake_c_enabled_makers = ['clang', 'cppcheck']
+let g:neomake_cpp_enabled_makers = g:neomake_c_enabled_makers
 
 augroup Neomake
     au!
     " if (hostname !~ "hpc.swin.edu.au")
         au BufWritePost *.py Neomake
         au BufWritePost *.[ch] Neomake
+        au BufEnter *.[ch] let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
+        au BufEnter *.cpp,*.hpp,*.hpp,*.hh let g:neomake_cpp_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
     " endif
 augroup END
 
