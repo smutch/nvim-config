@@ -57,8 +57,8 @@ ha="${1:left}", va="${2:bottom}", ${3:transform=ax.transAxes}
 endsnippet
 
 snippet axlabel "set matplotlib axis labels"
-ax.set_xlabel(r"${1:$\log_{10}(M_*/{\rm M}_{\odot})$}")
-ax.set_ylabel(r"${2:$\log_{10}(\phi/Mpc^3)$}")
+ax.set(xlabel=r"${1:$\log_{10}(M_*/{\rm M}_{\odot})$}",
+       ylabel=r"${2:$\log_{10}(\phi/{\rm Mpc^3})$}"$0)
 endsnippet
 
 snippet savefig "savefig with all the trimmings"
