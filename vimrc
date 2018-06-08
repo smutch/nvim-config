@@ -119,10 +119,9 @@ if exists('&inccommand')
   set inccommand=nosplit
 endif
 
-" Use ag if possible, if not then ack, and fall back to grep if all else fails
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor\ --column
-    set grepformat=%f:%l:%c:%m
+" Use ripgrep if possible, if not then ack, and fall back to grep if all else fails
+if executable('rg')
+    set grepprg=set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 elseif executable('ack')
     set grepprg=ack\ -s\ -H\ --nocolor\ --nogroup\ --column
     set grepformat=%f:%l:%c:%m,%f:%l:%m
@@ -812,6 +811,13 @@ onoremap <leader>fm <plug>(fzf-maps-o)
 " command! -bang -nargs=* -complete=dir Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
 " command! -bang History call fzf#vim#history(fzf#vim#with_preview(), <bang>0)
 
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>ff :Files %:p:h<CR>
 nnoremap <leader>fhf :History<CR>
@@ -826,7 +832,7 @@ nnoremap <leader>fl :Lines<CR>
 nnoremap <leader>fL :BLines<CR>
 nnoremap <leader>ft :Tags<CR>
 nnoremap <leader>fT :BTags<CR>
-nnoremap <leader>f/ :Ag 
+nnoremap <leader>f/ :Rg<CR>
 
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
