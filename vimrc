@@ -608,6 +608,9 @@ au BufNewFile,BufRead SConscript,SConstruct set filetype=scons
 " cython files
 au BufRead,BufNewFile *.pxd,*.pxi,*.pyx set filetype=cython
 
+" slurm files
+au BufRead,BufNewFile *.slurm set filetype=slurm
+
 " Trim trailing whitespace when saving python file
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 
