@@ -735,6 +735,11 @@ endif
 " au CompleteDone * pclose
 
 " }}}
+" dirvish {{{
+
+hi! link DirvishArg DiffText
+
+" }}}
 " dispatch {{{
 
 " Use octodown as default build command for Markdown files
