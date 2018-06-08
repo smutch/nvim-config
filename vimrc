@@ -511,6 +511,9 @@ command! -bar -nargs=* Ssplit call ScratchEdit('split', <q-args>)
 command! -bar -nargs=* Svsplit call ScratchEdit('vsplit', <q-args>)
 command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
 
+" store the current directory into register d
+command! GrabPWD let @d = system("pwd")
+
 " }}}
 " Keybindings {{{
 
@@ -540,6 +543,9 @@ nnoremap Y y$
 nnoremap <leader>s :w<CR>
 nnoremap <leader>w <C-w>
 nnoremap <CR>w <C-w>p
+
+" Fit window height to contents and fix
+command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')
 
 " Toggle to last active tab
 let g:lasttab = 1
