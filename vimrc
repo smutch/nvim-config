@@ -660,6 +660,37 @@ endif
 
 " }}}
 " Plugin settings {{{
+" ale {{{
+
+let g:ale_linters = {
+\   'python': ['flake8'],
+\   'c' : ['cppcheck', 'clang']
+\}
+
+let g:ale_python_flake8_options = "--ignore=E501,E402,E226"
+
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '!'
+let g:ale_sign_info = 'ℹ'
+let g:ale_sign_style_error = 'S>'
+let g:ale_sign_style_warning = 's>'
+
+hi! ALEError cterm=underline gui=underline guisp=Red
+
+" let g:ale_completion_enabled = 0
+
+" augroup Neomake
+"     au!
+"     " if (hostname !~ "hpc.swin.edu.au")
+"         au BufWritePost *.py Neomake
+"         au BufWritePost *.[ch] Neomake
+"         au BufEnter *.[ch] let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
+"         au BufEnter *.cpp,*.hpp,*.hpp,*.hh let g:neomake_cpp_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
+"     " endif
+" augroup END
+
+" }}}
+
 " airline {{{
 
 let g:airline#extensions#tmuxline#enabled = 0
@@ -951,61 +982,6 @@ nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
 nnoremap <leader>cP yy:<C-u>call NERDComment('n', 'comment')<CR>P
 vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
 vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
-
-" }}}
-" neomake {{{
-
-let g:neomake_error_sign = {'text': '✖', 'texthl': 'ErrorMsg'}
-
-let g:neomake_python_enabled_makers = ['python', 'flake8']
-let g:neomake_python_flake8_args = ["--format=default", "--ignore=E501,E402,E226"]
-
-function! SetWarningType(entry)
-    if a:entry.type =~? '\m^[SPI]'
-        let a:entry.type = 'I'
-    endif
-endfunction
-
-let g:neomake_c_cppcheck_maker = {
-        \ 'args': ['%:p', '-q', '--enable=style'],
-        \ 'errorformat': '[%f:%l]: (%trror) %m,' .
-        \ '[%f:%l]: (%tarning) %m,' .
-        \ '[%f:%l]: (%ttyle) %m,' .
-        \ '[%f:%l]: (%terformance) %m,' .
-        \ '[%f:%l]: (%tortability) %m,' .
-        \ '[%f:%l]: (%tnformation) %m,' .
-        \ '[%f:%l]: (%tnconclusive) %m,' .
-        \ '%-G%.%#',
-        \ 'postprocess': function('SetWarningType')
-        \ }
-let g:neomake_cpp_cppcheck_maker = g:neomake_c_cppcheck_maker
-
-let g:neomake_c_enabled_makers = ['clang', 'cppcheck']
-let g:neomake_cpp_enabled_makers = g:neomake_c_enabled_makers
-
-augroup Neomake
-    au!
-    " if (hostname !~ "hpc.swin.edu.au")
-        au BufWritePost *.py Neomake
-        au BufWritePost *.[ch] Neomake
-        au BufEnter *.[ch] let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
-        au BufEnter *.cpp,*.hpp,*.hpp,*.hh let g:neomake_cpp_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
-    " endif
-augroup END
-
-function! ToggleNeomakeOnSave()
-    if exists("#Neomake#BufWritePost#<buffer>")
-        augroup Neomake
-            au! BufWritePost <buffer>
-        augroup END
-    else
-        augroup Neomake
-            au BufWritePost <buffer> Neomake
-        augroup END
-    endif
-endfunction
-command! ToggleNeomakeOnSave normal! :<C-u>call ToggleNeomakeOnSave()<CR>
-
 
 " }}}
 " neoterm {{{

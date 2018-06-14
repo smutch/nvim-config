@@ -59,7 +59,7 @@ Plug 'lambdalisue/vim-gista'
 " }}}
 
 " linting {{{
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 " }}}
 
 " looking good {{{
