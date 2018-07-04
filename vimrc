@@ -703,9 +703,9 @@ call airline#parts#define_function('winnum', 'WindowNumber')
 function! MyPlugin(...)
     let s:my_part = airline#section#create(['winnum'])
     let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x)
-    let w:airline_section_x = '[' . s:my_part . '] ' . g:airline_right_sep . get(w:, 'airline_section_x', g:airline_section_x)
+    let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . g:airline_right_sep . ' [' . s:my_part . ']'
 endfunction
-call airline#add_statusline_func('MyPlugin')
+silent call airline#add_statusline_func('MyPlugin')
 
 " }}}
 " auto-pairs {{{
@@ -773,13 +773,14 @@ hi! link DirvishArg DiffText
 " }}}
 " dispatch {{{
 
-" Use octodown as default build command for Markdown files
-autocmd FileType markdown let b:dispatch = 'octodown %'
 nnoremap <leader>x :Dispatch<CR>
 
 let g:dispatch_compilers = {
       \ 'markdown': 'doit',
       \ 'python': 'python %'}
+
+" remove iterm from the list of handlers (don't like it removing focus when run)
+let g:dispatch_handlers = ['tmux', 'screen', 'windows', 'x11', 'headless']
 
 " }}}
 " easy-align {{{
