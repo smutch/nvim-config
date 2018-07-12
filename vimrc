@@ -664,8 +664,15 @@ endif
 
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'c' : ['cppcheck', 'clang']
+\   'c' : ['cppcheck']
 \}
+
+let g:ale_cpp_cppcheck_executable="/fred/oz013/smutch/3rd_party/cppcheck/bin/cppcheck"
+let g:ale_c_cppcheck_executable=g:ale_cpp_cppcheck_executable
+let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
+
+let g:ale_cpp_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang++"
+let g:ale_c_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang"
 
 let g:ale_python_flake8_options = "--ignore=E501,E402,E226"
 
@@ -722,43 +729,22 @@ nnoremap Q :Bdelete<CR>
 " ncm-clang {{{
 
 let g:clang_debug = 1
-if (hostname =~ "hpc.swin.edu.au")
-    let g:clang_library_path = "/usr/local/x86_64/gnu/clang-6.0.0/lib/libclang.so"
+if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
+    let g:clang_library_path = "/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/lib/libclang.so.5.0"
 else
     let g:clang_library_path = "/usr/local/opt/llvm/lib"
-
-    " default key mapping is annoying
-    let g:clang_make_default_keymappings = 0
-    " ncm-clang is auto detecting compile_commands.json and .clang_complete
-    " file
-    let g:clang_auto_user_options = ''
-
-    " let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
-    " let $NVIM_NCM_LOG_LEVEL="DEBUG"
-    " let $NVIM_NCM_MULTI_THREAD=0
-    " let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
-
-    func! WrapClangGoTo(preview)
-        let cwd = getcwd()
-        let info = ncm_clang#compilation_info()
-        exec 'cd ' . info['directory']
-        try
-            let b:clang_user_options = join(info['args'], ' ')
-            if a:preview
-                call g:ClangGotoDeclarationPreview()
-            else
-                call g:ClangGotoDeclaration()
-            endif
-        catch
-        endtry
-        " restore
-        exec 'cd ' . cwd
-    endfunc
-
-    " map to gd key
-    autocmd FileType c,cpp nnoremap <buffer> gD :call WrapClangGoTo(0)<CR>
-    autocmd FileType c,cpp nnoremap <buffer> gd :call WrapClangGoTo(1)<CR>
 endif
+
+" default key mapping is annoying
+let g:clang_make_default_keymappings = 0
+" ncm-clang is auto detecting compile_commands.json and .clang_complete
+" file
+let g:clang_auto_user_options = ''
+
+" let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
+" let $NVIM_NCM_LOG_LEVEL="DEBUG"
+" let $NVIM_NCM_MULTI_THREAD=0
+" let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
 
 " show the preview window
 " let let g:cm_completeopt="menu,menuone,noinsert,noselect,preview"
