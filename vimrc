@@ -617,6 +617,12 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 " enable spell checking on certain files
 autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
 
+" pandoc
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc |
+                \ setlocal cole=0
+augroup END
+
 " Automatically reload vimrc when it's saved
 " augroup AutoReloadVimRC
 "   au!

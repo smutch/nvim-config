@@ -104,6 +104,7 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'vim-scripts/scons.vim'
 " Plug 'sheerun/vim-polyglot'
 Plug 'mattn/emmet-vim'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 " }}}
 " }}}
 
