@@ -670,15 +670,22 @@ endif
 
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'c' : ['cppcheck']
+\   'c' : ['cppcheck'],
+\   'cpp' : ['cppcheck', 'clangtidy', 'clangcheck']
 \}
 
-let g:ale_cpp_cppcheck_executable="/fred/oz013/smutch/3rd_party/cppcheck/bin/cppcheck"
-let g:ale_c_cppcheck_executable=g:ale_cpp_cppcheck_executable
-let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
+if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
+    let g:ale_cpp_cppcheck_executable="/fred/oz013/smutch/3rd_party/cppcheck/bin/cppcheck"
+    let g:ale_c_cppcheck_executable=g:ale_cpp_cppcheck_executable
+    let g:ale_cpp_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang++"
+    let g:ale_c_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang"
+endif
 
-let g:ale_cpp_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang++"
-let g:ale_c_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang"
+let g:ale_c_build_dir_names=['build', 'cmake-build-debug']
+
+let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
+let g:ale_c_clangtidy_checks=['-*', 'google-*', 'modernize-*', 'mpi-*', 'performance-*', 'clang-analyzer-*', 'bugprone-*']
+let g:ale_cpp_clangtidy_checks=g:ale_c_clangtidy_checks + ['cppcoreguidelines-*', '-cppcoreguidelines-pro-*']
 
 let g:ale_python_flake8_options = "--ignore=E501,E402,E226"
 
@@ -743,9 +750,7 @@ endif
 
 " default key mapping is annoying
 let g:clang_make_default_keymappings = 0
-" ncm-clang is auto detecting compile_commands.json and .clang_complete
-" file
-let g:clang_auto_user_options = ''
+let g:ncm_clang#database_paths=['compile_commands.json', 'build/compile_commands.json', 'cmake-build-debug/compile_commands.json']
 
 " let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
 " let $NVIM_NCM_LOG_LEVEL="DEBUG"
