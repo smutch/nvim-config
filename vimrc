@@ -48,7 +48,7 @@ end
 " What machine are we on?
 let hostname = substitute(system('hostname'), '\n', '', '')
 
-if (hostname =~ "hpc.swin.edu.au")
+if (hostname =~ "sstar") || (hostname =~ "gstar")
     set shell=/home/smutch/.vim/g2shell.sh
     let &shellpipe="|& tee"
     set t_ut=
@@ -670,7 +670,7 @@ endif
 
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'c' : ['cppcheck'],
+\   'c' : ['cppcheck', 'clangtidy', 'clangcheck'],
 \   'cpp' : ['cppcheck', 'clangtidy', 'clangcheck']
 \}
 
@@ -679,6 +679,7 @@ if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
     let g:ale_c_cppcheck_executable=g:ale_cpp_cppcheck_executable
     let g:ale_cpp_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang++"
     let g:ale_c_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang"
+    call remove(g:ale_linters['c'], 1, 2)
 endif
 
 let g:ale_c_build_dir_names=['build', 'cmake-build-debug']
