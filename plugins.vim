@@ -7,7 +7,7 @@ if !empty(glob("~/code/note-system"))
 endif
 
 " completion {{{
-Plug 'ncm2/ncm2'
+Plug 'smutch/ncm2'
 Plug 'roxma/nvim-yarp'  " ncm2 requires nvim-yarp
 
 " some completion sources
