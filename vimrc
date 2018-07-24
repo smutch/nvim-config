@@ -932,8 +932,9 @@ endif
 " }}}
 " ncm2 {{{
 
-" enable for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
+" enable for all buffers except neoterm
+let blacklist = ['neoterm']
+autocmd BufEnter * if index(blacklist, &ft) < 0 | call ncm2#enable_for_buffer()
 
 " note that must keep noinsert in completeopt, the others is optional
 set completeopt=noinsert,menuone,noselect
