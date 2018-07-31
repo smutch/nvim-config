@@ -671,12 +671,14 @@ endif
 let g:ale_linters = {
 \   'python': ['flake8'],
 \   'c' : ['cppcheck', 'clangtidy', 'clangcheck'],
-\   'cpp' : ['cppcheck', 'clangtidy', 'clangcheck']
+\   'cpp' : ['cppcheck', 'clangtidy', 'clangcheck'],
+\   'cuda': ['cppcheck']
 \}
 
 if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
     let g:ale_cpp_cppcheck_executable="/fred/oz013/smutch/3rd_party/cppcheck/bin/cppcheck"
     let g:ale_c_cppcheck_executable=g:ale_cpp_cppcheck_executable
+    let g:ale_cuda_cppcheck_executable=g:ale_cpp_cppcheck_executable
     let g:ale_cpp_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang++"
     let g:ale_c_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang"
     call remove(g:ale_linters['c'], 1, 2)
@@ -684,7 +686,7 @@ endif
 
 let g:ale_c_build_dir_names=['build', 'cmake-build-debug']
 
-let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
+" let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
 let g:ale_c_clangtidy_checks=['-*', 'google-*', 'modernize-*', 'mpi-*', 'performance-*', 'clang-analyzer-*', 'bugprone-*']
 let g:ale_cpp_clangtidy_checks=g:ale_c_clangtidy_checks + ['cppcoreguidelines-*', '-cppcoreguidelines-pro-*']
 
