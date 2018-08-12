@@ -964,9 +964,8 @@ endif
 " }}}
 " ncm2 {{{
 
-" " enable for all buffers except neoterm
-" let blacklist = ['neoterm']
-" autocmd BufEnter * if index(blacklist, &ft) < 0 | call ncm2#enable_for_buffer()
+" " enable for all buffers except terminals
+autocmd BufEnter * if &buftype !=# 'terminal' | call ncm2#enable_for_buffer()
 
 " note that must keep noinsert in completeopt, the others is optional
 set completeopt=noinsert,menuone,noselect
@@ -1027,23 +1026,6 @@ vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
 vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 " }}}
-" " neoterm {{{
-
-" " use gx{text-objects} such as gxip
-" nmap gx <Plug>(neoterm-repl-send)
-" xmap gx <Plug>(neoterm-repl-send)
-" nmap gxx <Plug>(neoterm-repl-send-line)
-
-" function! s:neoterm_create(cmd, horiz)
-"     let mod = a:horiz ? 'belowright' : 'vertical'
-"     exe mod . ' Tnew ' . a:cmd
-" endfunc
-" command! -bar -bang -complete=shellcmd -nargs=* Tc call s:neoterm_create(<q-args>, <bang>0)
-" nnoremap <leader>tv :Tc<CR>
-" nnoremap <leader>ts :Tc!<CR>
-" nnoremap <silent> <leader>tt :Ttoggle<CR><C-C>
-
-" " }}}
 " note-system {{{
 
 let g:notes_dir = '~/Dropbox/Notes'
