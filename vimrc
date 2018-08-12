@@ -575,15 +575,45 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " nmap ,; gwic
 " nmap ,: gwac
 
-" Neovim terminal mappings
+" Neovim terminal mappings and settings
 if has('nvim')
     let $LAUNCHED_FROM_NVIM = 1
     augroup MyTerm
         au!
-        au BufWinEnter,WinEnter term://* startinsert
+        au BufWinEnter,WinEnter term://* startinsert 
         au TermOpen * setlocal winhighlight=Normal:TermNormal |
-                    \ setlocal nocursorline
+                    \ setlocal nocursorline nonumber norelativenumber
     augroup END
+
+    let s:my_terminal_buffer = -1
+    let s:my_terminal_window = -1
+
+    function! s:term_create(cmd, mods)
+        if !bufexists(s:my_terminal_buffer)
+            exe a:mods . ' split'
+            exe 'terminal ' . a:cmd
+            let s:my_terminal_window = win_getid()
+            let s:my_terminal_buffer = bufnr('%')
+            startinsert
+        else
+            if !win_gotoid(s:my_terminal_window)
+                exe a:mods . ' split'
+                exe 'buffer ' . s:my_terminal_buffer
+                let s:my_terminal_window = win_getid()
+                let s:my_terminal_buffer = bufnr('%')
+            endif
+            if a:cmd != ''
+                put =a:cmd . ''
+            endif
+        endif
+    endfunction
+
+    command! -bar -complete=shellcmd -nargs=* Tc call s:term_create(<q-args>, <q-mods>)
+    nnoremap <leader>tv :vertical Tc<CR>
+    nnoremap <leader>ts :belowright Tc<CR>
+    nnoremap <leader>tV :vertical Tc 
+    nnoremap <leader>tS :belowright Tc 
+    nnoremap <leader>tt :Tc 
 
     tnoremap kj <C-\><C-n>
     tnoremap <C-w> <C-\><C-n><C-w>
@@ -982,23 +1012,23 @@ vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
 vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 " }}}
-" neoterm {{{
+" " neoterm {{{
 
-" use gx{text-objects} such as gxip
-nmap gx <Plug>(neoterm-repl-send)
-xmap gx <Plug>(neoterm-repl-send)
-nmap gxx <Plug>(neoterm-repl-send-line)
+" " use gx{text-objects} such as gxip
+" nmap gx <Plug>(neoterm-repl-send)
+" xmap gx <Plug>(neoterm-repl-send)
+" nmap gxx <Plug>(neoterm-repl-send-line)
 
-function! s:neoterm_create(cmd, horiz)
-    let mod = a:horiz ? 'belowright' : 'vertical'
-    exe mod . ' Tnew ' . a:cmd
-endfunc
-command! -bar -bang -complete=shellcmd -nargs=* Tc call s:neoterm_create(<q-args>, <bang>0)
-nnoremap <leader>tv :Tc<CR>
-nnoremap <leader>ts :Tc!<CR>
-nnoremap <silent> <leader>tt :Ttoggle<CR><C-C>
+" function! s:neoterm_create(cmd, horiz)
+"     let mod = a:horiz ? 'belowright' : 'vertical'
+"     exe mod . ' Tnew ' . a:cmd
+" endfunc
+" command! -bar -bang -complete=shellcmd -nargs=* Tc call s:neoterm_create(<q-args>, <bang>0)
+" nnoremap <leader>tv :Tc<CR>
+" nnoremap <leader>ts :Tc!<CR>
+" nnoremap <silent> <leader>tt :Ttoggle<CR><C-C>
 
-" }}}
+" " }}}
 " note-system {{{
 
 let g:notes_dir = '~/Dropbox/Notes'

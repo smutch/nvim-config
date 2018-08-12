@@ -36,7 +36,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-obsession'
 Plug 'Shougo/echodoc.vim'
-Plug 'kassio/neoterm'
+" Plug 'kassio/neoterm'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
 Plug 'justinmk/vim-dirvish'
@@ -81,7 +81,7 @@ Plug 'w0ng/vim-hybrid'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
-Plug 'mhartington/oceanic-next'
+Plug 'arcticicestudio/nord-vim'
 " }}}
 
 " filetypes {{{
