@@ -313,8 +313,10 @@ function! SetTheme()
             let g:light=1
         else
             set background=dark
-            Cs hybrid
-            let g:airline_theme="hybrid"
+            " Cs hybrid
+            " let g:airline_theme="hybrid"
+            Cs gruvbox
+            let g:airline_theme="gruvbox"
 
             let g:light=0
         endif
@@ -585,16 +587,30 @@ if has('nvim')
                     \ setlocal nocursorline nonumber norelativenumber
     augroup END
 
-    let s:my_terminal_buffer = -1
-    let s:my_terminal_window = -1
+    if !exists('s:my_terminal_buffer')
+        let s:my_terminal_buffer = -1
+    endif
+    if !exists('s:my_terminal_window')
+        let s:my_terminal_window = -1
+    endif
+    if !exists('s:my_terminal_command')
+        let s:my_terminal_command = -1
+    endif
 
-    function! s:term_create(cmd, mods)
+    function! s:term_create(cmd, mods, bang)
+        let s:cmd = a:bang ? s:my_terminal_command : a:cmd
         if !bufexists(s:my_terminal_buffer)
             exe a:mods . ' split'
-            exe 'terminal ' . a:cmd
+            exe 'terminal ' . s:cmd
+            let s:my_terminal_command = a:cmd
             let s:my_terminal_window = win_getid()
             let s:my_terminal_buffer = bufnr('%')
-            startinsert
+            if a:bang
+                wincmd p
+                stopinsert
+            else
+                startinsert
+            endif
         else
             if !win_gotoid(s:my_terminal_window)
                 exe a:mods . ' split'
@@ -602,18 +618,24 @@ if has('nvim')
                 let s:my_terminal_window = win_getid()
                 let s:my_terminal_buffer = bufnr('%')
             endif
-            if a:cmd != ''
-                put =a:cmd . ''
+            if s:cmd != ''
+                let s:my_terminal_command = s:cmd
+                put =s:cmd . ''
+            endif
+            if a:bang
+                wincmd p
+                stopinsert
             endif
         endif
     endfunction
 
-    command! -bar -complete=shellcmd -nargs=* Tc call s:term_create(<q-args>, <q-mods>)
+    command! -bar -complete=shellcmd -nargs=* -bang Tc call s:term_create(<q-args>, <q-mods>, <bang>0)
     nnoremap <leader>tv :vertical Tc<CR>
     nnoremap <leader>ts :belowright Tc<CR>
     nnoremap <leader>tV :vertical Tc 
     nnoremap <leader>tS :belowright Tc 
-    nnoremap <leader>tt :Tc 
+    nnoremap <leader>tc :Tc 
+    nnoremap <leader>tt :Tc!<CR>
 
     tnoremap kj <C-\><C-n>
     tnoremap <C-w> <C-\><C-n><C-w>
@@ -766,8 +788,6 @@ hi! link DirvishArg DiffText
 
 " }}}
 " dispatch {{{
-
-nnoremap <leader>x :Dispatch<CR>
 
 let g:dispatch_compilers = {
       \ 'markdown': 'doit',
