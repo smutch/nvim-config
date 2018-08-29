@@ -20,17 +20,14 @@ au! BufEnter *.tex set cole=0
 set spell
 " setlocal formatprg=par\ -w79\ -g
 setlocal nocursorline
-setlocal smartindent
 
 setlocal iskeyword+=:
 setlocal iskeyword-=_
 
 setlocal softtabstop=2
 setlocal shiftwidth=2
-setlocal tw=79 fo=tqron2 wm=0
+" setlocal tw=79 fo=tqron2 wm=0
 execute "set colorcolumn=" . join(range(80,335), ',')
-
-" setlocal cursorline  "This is very slow for large files
 
 " imap <Space><Space> <CR>
 function! HardWrapSentences()
