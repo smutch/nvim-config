@@ -323,7 +323,7 @@ function! SetTheme()
     end
 endfunction
 
-let g:gruvbox_contrast_dark='soft'
+let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_contrast_light='hard'
 
 command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
