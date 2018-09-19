@@ -69,7 +69,6 @@ Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 " }}}
 
 " prose {{{
-Plug 'reedes/vim-pencil', { 'for': ['markdown', 'text', 'tex', 'latex'] }
 Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }

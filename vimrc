@@ -1118,23 +1118,6 @@ let g:ultisnips_python_style = 'numpy'
 " autocmd FileType tex,python let b:vcm_tab_complete = "omni"
 
 " }}}
-" vim-pencil {{{
-
-let g:pencil#textwidth = 79
-let g:pencil#joinspaces = 1
-let g:pencil#conceallevel = 0
-let g:pencil#wrapModeDefault = 'soft'
-
-augroup pencil
-  autocmd!
-  autocmd FileType text       call pencil#init()
-  autocmd FileType markdown   call pencil#init()
-  autocmd FileType tex,latex  call pencil#init({'wrap': 'hard'}) |
-              \ let g:airline_section_x = '%{PencilMode()}' |
-              \ setl indentexpr=VimtexIndentExpr()
-augroup END
-
-" }}}
 " vimtex {{{
 
 " Latex options
