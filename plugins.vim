@@ -7,8 +7,18 @@ if !empty(glob("~/code/note-system"))
 endif
 
 " completion {{{
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
+" Plug 'smutch/ncm2', { 'branch': 'hackfix' }
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'  " ncm2 requires nvim-yarp
+
+" some completion sources
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/ncm2-pyclang'
+Plug 'ncm2/ncm2-tagprefix'
 " }}}
 
 " movement {{{
@@ -36,7 +46,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-obsession'
 Plug 'Shougo/echodoc.vim'
-" Plug 'kassio/neoterm'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
 Plug 'justinmk/vim-dirvish'

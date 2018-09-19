@@ -48,7 +48,7 @@ end
 " What machine are we on?
 let hostname = substitute(system('hostname'), '\n', '', '')
 
-if (hostname =~ "hpc.swin.edu.au")
+if (hostname =~ "sstar") || (hostname =~ "gstar")
     set shell=/home/smutch/.vim/g2shell.sh
     let &shellpipe="|& tee"
     set t_ut=
@@ -323,7 +323,7 @@ function! SetTheme()
     end
 endfunction
 
-let g:gruvbox_contrast_dark='soft'
+let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_contrast_light='hard'
 
 command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
@@ -722,20 +722,23 @@ endif
 
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'c' : ['cppcheck'],
-\   'cpp' : ['cppcheck', 'clangtidy', 'clangcheck']
+\   'c' : ['cppcheck', 'clangtidy', 'clangcheck'],
+\   'cpp' : ['cppcheck', 'clangtidy', 'clangcheck'],
+\   'cuda': ['cppcheck']
 \}
 
 if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
     let g:ale_cpp_cppcheck_executable="/fred/oz013/smutch/3rd_party/cppcheck/bin/cppcheck"
     let g:ale_c_cppcheck_executable=g:ale_cpp_cppcheck_executable
+    let g:ale_cuda_cppcheck_executable=g:ale_cpp_cppcheck_executable
     let g:ale_cpp_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang++"
     let g:ale_c_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang"
+    call remove(g:ale_linters['c'], 1, 2)
 endif
 
 let g:ale_c_build_dir_names=['build', 'cmake-build-debug']
 
-let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
+" let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
 let g:ale_c_clangtidy_checks=['-*', 'google-*', 'modernize-*', 'mpi-*', 'performance-*', 'clang-analyzer-*', 'bugprone-*']
 let g:ale_cpp_clangtidy_checks=g:ale_c_clangtidy_checks + ['cppcoreguidelines-*', '-cppcoreguidelines-pro-*']
 
@@ -748,18 +751,6 @@ let g:ale_sign_style_error = 'S>'
 let g:ale_sign_style_warning = 's>'
 
 hi! ALEError cterm=underline gui=underline guisp=Red
-
-" let g:ale_completion_enabled = 0
-
-" augroup Neomake
-"     au!
-"     " if (hostname !~ "hpc.swin.edu.au")
-"         au BufWritePost *.py Neomake
-"         au BufWritePost *.[ch] Neomake
-"         au BufEnter *.[ch] let g:neomake_c_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
-"         au BufEnter *.cpp,*.hpp,*.hpp,*.hh let g:neomake_cpp_clang_args = ['%:p', '-Wall', '-Wextra', '-fsyntax-only', '-DDEBUG'] + ncm_clang#compilation_info()['args']
-"     " endif
-" augroup END
 
 " }}}
 
@@ -789,30 +780,6 @@ let g:AutoPairsShortcutToggle = ''
 " bbye {{{
 
 nnoremap Q :Bdelete<CR>
-
-" }}}
-" ncm-clang {{{
-
-let g:clang_debug = 1
-if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
-    let g:clang_library_path = "/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/lib/libclang.so.5.0"
-else
-    let g:clang_library_path = "/usr/local/opt/llvm/lib"
-endif
-
-" default key mapping is annoying
-let g:clang_make_default_keymappings = 0
-let g:ncm_clang#database_paths=['compile_commands.json', 'build/compile_commands.json', 'cmake-build-debug/compile_commands.json']
-
-" let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
-" let $NVIM_NCM_LOG_LEVEL="DEBUG"
-" let $NVIM_NCM_MULTI_THREAD=0
-" let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
-
-" show the preview window
-" let let g:cm_completeopt="menu,menuone,noinsert,noselect,preview"
-" automatically close the preview window after completion
-" au CompleteDone * pclose
 
 " }}}
 " dirvish {{{
@@ -1015,6 +982,53 @@ if !exists('g:loaded_matchit')
 endif
 
 " }}}
+" ncm2 {{{
+
+" " enable for all buffers except terminals
+autocmd BufEnter * if &buftype !=# 'terminal' | call ncm2#enable_for_buffer()
+
+" note that must keep noinsert in completeopt, the others is optional
+set completeopt=noinsert,menuone,noselect
+
+" supress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
+
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" }}}
+" ncm2-pyclang {{{
+
+if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
+    let g:ncm2_pyclang#library_path = "/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/lib/libclang.so.5.0"
+else
+    let g:ncm2_pyclang#library_path = "/usr/local/opt/llvm/lib"
+endif
+
+autocmd FileType c,cpp nnoremap <buffer> gd :<C-u>call ncm2_pyclang#goto_declaration()<CR>
+
+" show the preview window
+" let g:cm_completeopt="menu,menuone,noinsert,noselect,preview"
+" automatically close the preview window after completion
+" au CompleteDone * pclose
+
+" }}}
+" ncm2-ultisnips {{{
+
+" expand with enter
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" }}}
 " nerd_commenter {{{
 
 " Custom NERDCommenter mappings
@@ -1032,23 +1046,6 @@ vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
 vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 " }}}
-" " neoterm {{{
-
-" " use gx{text-objects} such as gxip
-" nmap gx <Plug>(neoterm-repl-send)
-" xmap gx <Plug>(neoterm-repl-send)
-" nmap gxx <Plug>(neoterm-repl-send-line)
-
-" function! s:neoterm_create(cmd, horiz)
-"     let mod = a:horiz ? 'belowright' : 'vertical'
-"     exe mod . ' Tnew ' . a:cmd
-" endfunc
-" command! -bar -bang -complete=shellcmd -nargs=* Tc call s:neoterm_create(<q-args>, <bang>0)
-" nnoremap <leader>tv :Tc<CR>
-" nnoremap <leader>ts :Tc!<CR>
-" nnoremap <silent> <leader>tt :Ttoggle<CR><C-C>
-
-" " }}}
 " note-system {{{
 
 let g:notes_dir = '~/Dropbox/Notes'
