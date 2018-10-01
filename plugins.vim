@@ -12,7 +12,10 @@ Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'  " ncm2 requires nvim-yarp
 
 " some completion sources
-Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-bufword', { 'for': [] }
+augroup plug_ncm2
+  autocmd FileType * if expand('<amatch>') != 'tex' | call plug#load('ncm2/ncm2-bufword') | execute 'autocmd! plug_ncm2' | endif
+augroup END
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-jedi'

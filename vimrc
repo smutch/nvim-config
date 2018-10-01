@@ -1052,18 +1052,6 @@ let g:notes_dir = '~/Dropbox/Notes'
 let g:notes_assets_dir = 'img'
 
 " }}}
-" nvim-completion-manager {{{
-
-set noshowmode shortmess+=c
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
-inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-" }}}
 " polyglot {{{
 
  let g:polyglot_disabled = ['tex', 'latex', 'python']
