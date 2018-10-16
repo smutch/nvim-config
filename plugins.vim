@@ -90,6 +90,7 @@ Plug 'w0ng/vim-hybrid'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'arcticicestudio/nord-vim'
 " }}}
 

@@ -228,10 +228,16 @@ augroup CustomColors
                 \ hi! link Folded ColorColumn |
                 \ endif
                 " \ hi! Normal guibg=NONE | 
-    au ColorScheme one if &background == 'light' |
-                \ hi! Normal guibg=#ffffff |
+    " au ColorScheme one if &background == 'light' |
+                " \ hi! Normal guibg=#ffffff |
+                " \ endif
+    au ColorScheme one if &background == 'dark' |
+                \ hi! Normal guifg=#cccccc |
                 \ endif
-                " \ hi! Normal guibg=NONE | 
+    " au colorscheme one if &background == 'light' |
+                " \ hi! normal guibg=#ffffff |
+                " \ endif
+                " \ hi! normal guibg=none | 
     au ColorScheme seagull,greygull
                 \ hi! NonText ctermfg=7 guifg=#e6eaed
     au ColorScheme * hi! link Search DiffAdd |
@@ -313,10 +319,10 @@ function! SetTheme()
             let g:light=1
         else
             set background=dark
-            " Cs hybrid
-            " let g:airline_theme="hybrid"
-            Cs gruvbox
-            let g:airline_theme="gruvbox"
+            Cs hybrid
+            let g:airline_theme="hybrid"
+            " Cs gruvbox
+            " let g:airline_theme="gruvbox"
 
             let g:light=0
         endif
@@ -328,6 +334,13 @@ let g:gruvbox_contrast_light='hard'
 
 command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
 nnoremap cot :<C-u>ToggleTheme<CR> 
+
+" use the presence of a file to determine if we want to start in light or dark mode
+if !empty(glob(expand("~") . "/.vimlight"))
+    let g:light=1
+else
+    let g:light=0
+endif
 call SetTheme()
 
 " Neovim terminal colors
@@ -348,6 +361,7 @@ if has("nvim")
     let g:terminal_color_13 = "#FF4081"
     let g:terminal_color_14 = "#18FFFF"
     let g:terminal_color_15 = "#F5F5F5"
+
 endif
 
 " }}}
