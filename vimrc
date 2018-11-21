@@ -77,7 +77,7 @@ set hidden                           " Don't unload a buffer when abandoning it
 set mouse=a                          " enable mouse for all modes settings
 set clipboard=unnamed                " To work in tmux
 set spelllang=en_gb                  " British spelling
-set showmode                         " Show the current mode
+set noshowmode                         " Don't show the current mode
 " set list                             " Show trailing & tab markers
 " set showcmd                          " Show partial command in bottom right
 
@@ -369,7 +369,7 @@ endif
 " Cursor configuration {{{
 " ====================================================================
 if has("nvim")
-    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+    " set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 else
     let &t_SI = "\<Esc>[5 q"
     if exists("&t_SR")
@@ -766,6 +766,9 @@ let g:ale_sign_style_warning = 's>'
 
 hi! ALEError cterm=underline gui=underline guisp=Red
 
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '»'
+
 " }}}
 
 " airline {{{
@@ -951,7 +954,7 @@ let g:gutentags_ctags_tagfile = ".tags"
 let g:gutentags_enabled = 1
 
 let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--fields=+iaS', '--extra=+q']
-let g:gutentags_ctags_exclude = ["*/build/*"]
+let g:gutentags_ctags_exclude = ['build']
 
 " }}}
 " jedi {{{
