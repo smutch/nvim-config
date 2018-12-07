@@ -753,10 +753,12 @@ endif
 let g:ale_c_build_dir_names=['build', 'cmake-build-debug']
 
 " let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
-let g:ale_c_clangtidy_checks=['-*', 'google-*', 'modernize-*', 'mpi-*', 'performance-*', 'clang-analyzer-*', 'bugprone-*']
+let g:ale_c_clangtidy_checks=['-*', 'google-*', '-google-runtime-references', '-google-readability-braces-around-statements', 'modernize-*', 'mpi-*', 'performance-*', 'clang-analyzer-*', 'bugprone-*']
 let g:ale_cpp_clangtidy_checks=g:ale_c_clangtidy_checks + ['cppcoreguidelines-*', '-cppcoreguidelines-pro-*']
 
 let g:ale_python_flake8_options = "--ignore=E501,E402,E226"
+
+let g:ale_tex_chktex_options = "-I -n 35"
 
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '!'
@@ -765,9 +767,11 @@ let g:ale_sign_style_error = 'S>'
 let g:ale_sign_style_warning = 's>'
 
 hi! ALEError cterm=underline gui=underline guisp=Red
+hi! link ALEWarning WarningMsg
+hi! link ALEInfo MoreMsg
 
 let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '»'
+let g:ale_virtualtext_prefix = '» '
 
 " }}}
 
@@ -790,7 +794,7 @@ silent call airline#add_statusline_func('MyPlugin')
 " }}}
 " auto-pairs {{{
 
-" let g:AutoPairsFlyMode = 1
+let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutToggle = ''
 
 " }}}
@@ -1127,11 +1131,20 @@ let g:vimtex_latexmk_build_dir = './build'
 let g:vimtex_latexmk_continuous = 1
 let g:vimtex_latexmk_background = 1
 let g:vimtex_quickfix_mode = 1
-let g:vimtex_quickfix_ignore_all_warnings = 1
+let g:vimtex_quickfix_latexlog = {'default' : 0}
 let g:vimtex_view_method = 'skim'
 " let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 " let g:vimtex_view_general_options = '@line @pdf @tex'
 let g:vimtex_fold_enabled = 1
+
+" Quick map for adding a new item to an itemize environment list
+call vimtex#imaps#add_map({
+  \ 'lhs' : '<A-i>',
+  \ 'rhs' : '\item ',
+  \ 'leader' : '',
+  \ 'wrapper' : 'vimtex#imaps#wrap_environment',
+  \ 'context' : ["itemize", "enumerate"],
+  \})
 
 " }}}
 " vimux {{{

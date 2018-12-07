@@ -46,9 +46,7 @@ call ncm2#register_source({
         \ 'scope': ['tex'],
         \ 'matcher': {'name': 'combine',
         \             'matchers': [
-        \               {'name': 'prefix', 'key': 'word'},
-        \               {'name': 'abbrfuzzy', 'key': 'abbr'},
-        \               {'name': 'abbrfuzzy', 'key': 'menu'},
+        \               {'name': 'prefix', 'key': 'word'}
         \             ]},
         \ 'word_pattern': '\w+',
         \ 'complete_pattern': g:vimtex#re#ncm2#bibtex,
@@ -82,9 +80,6 @@ function! HardWrapSentences()
     delete
 endfunction
 nnoremap <buffer> <localleader>lw :call HardWrapSentences()<CR>
-
-" Quick map for adding a new item to an itemize environment list
-imap <buffer> ;; <CR>\item<Space>
 
 " Wrap between lines when scrolling
 set whichwrap+=<,>,h,l,[,]
