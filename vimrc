@@ -41,6 +41,7 @@ if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
     let cscope_cmd="/usr/local/bin/cscope"
     " set tags+=$HOME/.vim/ctags-system-mac
+    let g:cmake_opts = '-DHDF5_ROOT=/usr/local -DMPI_C_COMPILER=/usr/local/bin/mpicc'
 else
     let cscope_cmd="/usr/bin/cscope"
 end
@@ -53,6 +54,12 @@ if (hostname =~ "sstar") || (hostname =~ "gstar")
     let &shellpipe="|& tee"
     set t_ut=
 endif
+
+" GUI settings {{{
+if exists('g:vv')
+  VVset fontfamily=Hack
+endif
+" }}}
 
 " }}}
 " vim-plug {{{
@@ -241,7 +248,7 @@ endif
 
 " Use ripgrep if possible, if not then ack, and fall back to grep if all else fails
 if executable('rg')
-    set grepprg=set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+    set grepprg=set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ --trim
 elseif executable('ack')
     set grepprg=ack\ -s\ -H\ --nocolor\ --nogroup\ --column
     set grepformat=%f:%l:%c:%m,%f:%l:%m
@@ -439,10 +446,10 @@ function! SetTheme()
             let g:light=1
         else
             set background=dark
-            Cs hybrid
-            let g:airline_theme="hybrid"
-            " Cs gruvbox
-            " let g:airline_theme="gruvbox"
+            " Cs hybrid
+            " let g:airline_theme="hybrid"
+            Cs one
+            let g:airline_theme="one"
 
             let g:light=0
         endif
@@ -515,8 +522,9 @@ endfunction
 " }}}
 " Custom commands and functions {{{
 
-" Edit g2 file locally
+" Edit remote files locally
 command! -nargs=1 G2 execute ':e scp://g2/<args>'
+command! -nargs=1 F1 execute ':e scp://f1/<args>'
 
 " Yank and paste lines to a temp file
 function! YankToTemp() range
@@ -535,8 +543,8 @@ function! PasteFromTemp()
     let &cpoptions = s:save_cpoptions
 endfunction
 
-vmap <leader>y :<C-u>call YankToTemp()<CR>
-nmap <leader>y V:<C-u>call YankToTemp()<CR>
+vmap <leader>Y :<C-u>call YankToTemp()<CR>
+nmap <leader>Y V:<C-u>call YankToTemp()<CR>
 nmap <leader>P :<C-u>call PasteFromTemp()<CR>
 
 " Show syntax highlighting groups for word under cursor
@@ -573,6 +581,22 @@ function! QFOpenInWindow()
     endif
 endfunction
 autocmd FileType quickfix,qf nnoremap <buffer> e :<C-u>call QFOpenInWindow()<CR>
+
+" CMake
+function! s:CMake()
+    let src_dir = fnamemodify(findfile('CMakeLists.txt', '.;'), ':p:h')
+    let build_dir = finddir('build', '.;')
+
+    if build_dir =~ ""
+        let build_dir = src_dir . '/build'
+        echo build_dir
+        call system('mkdir -p ' . build_dir)
+    endif
+    let &makeprg = 'make -j2 -C ' . build_dir
+
+    exec 'Dispatch -dir=' . build_dir . ' cmake .. ' . g:cmake_opts
+endfunction
+command! CMake call <SID>CMake()
 
 " Ctags command
 function! GenCtags()
