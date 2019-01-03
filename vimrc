@@ -1095,7 +1095,7 @@ let g:gutentags_project_root = [".tagme"]
 let g:gutentags_ctags_tagfile = ".tags"
 let g:gutentags_enabled = 1
 
-let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--fields=+iaS', '--extra=+q']
+let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--c-kinds=-p', '--fields=+iaS', '--extra=+q']
 let g:gutentags_ctags_exclude = ['build']
 
 " }}}
