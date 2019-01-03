@@ -1,0 +1,14 @@
+snippet basic "Basic template"
+#include <fmt/core.h>
+#include <range/v3/all.hpp>
+
+namespace rgs = ranges;
+
+int main(int argc, char *argv[])
+{
+    rgs::for_each(rgs::view::ints(0, 3),
+            [](int ii) { fmt::print("Hello world!\n"); }
+    );
+    return 0;
+}
+endsnippet

@@ -43,3 +43,31 @@ set(SRC
 add_executable($1 ${SRC})
 set_property(TARGET $1 PROPERTY C_STANDARD 99)
 endsnippet
+
+snippet basic++ "A basic cmake template for c++"
+cmake_minimum_required(VERSION 3.0)
+project(${1:name})
+
+# output paths
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# write compile_commands.json file
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+
+# compile flags
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
+
+# 3rd party libs
+find_package(fmt REQUIRED)
+find_package(range-v3 REQUIRED)
+
+set(SRC
+	src/$1.c
+	)
+
+add_executable($1 ${SRC})
+set_property(TARGET $1 PROPERTY CXX_STANDARD 17)
+target_link_libraries($1 PRIVATE fmt range-v3)
+endsnippet
