@@ -290,9 +290,9 @@ if has("cscope")
     " put the cscope output in the quickfix window
     set cscopequickfix=s-,c-,d-,i-,t-,e-
 
-    map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
-    map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
-    map g<C-/> :cs find s <C-R>=expand("<cword>")<CR><CR>
+    " map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
+    " map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
+    " map g<C-/> :cs find s <C-R>=expand("<cword>")<CR><CR>
 endif
 
 " handy mapping to fold around previous search results
@@ -946,11 +946,6 @@ let g:AutoPairsShortcutToggle = ''
 nnoremap Q :Bdelete<CR>
 
 " }}}
-" dirvish {{{
-
-hi! link DirvishArg DiffText
-
-" }}}
 " dispatch {{{
 
 let g:dispatch_compilers = {
@@ -1026,9 +1021,9 @@ let g:fzf_colors =
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 " Mappings and commands
-nnoremap <leader>fm <plug>(fzf-maps-n)
-xnoremap <leader>fm <plug>(fzf-maps-x)
-onoremap <leader>fm <plug>(fzf-maps-o)
+nmap <leader>fm <plug>(fzf-maps-n)
+xmap <leader>fm <plug>(fzf-maps-x)
+omap <leader>fm <plug>(fzf-maps-o)
 
 " redefine some commands to use the preview feature
 " command! -bang -nargs=* -complete=file Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -1282,7 +1277,7 @@ let g:vimtex_fold_enabled = 1
 
 " Quick map for adding a new item to an itemize environment list
 call vimtex#imaps#add_map({
-  \ 'lhs' : '<A-i>',
+  \ 'lhs' : '<A-CR>',
   \ 'rhs' : '\item ',
   \ 'leader' : '',
   \ 'wrapper' : 'vimtex#imaps#wrap_environment',
