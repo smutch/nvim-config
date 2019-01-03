@@ -116,7 +116,7 @@ Plug 'tpope/vim-obsession'
 Plug 'Shougo/echodoc.vim'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
-Plug 'justinmk/vim-dirvish'
+Plug 'tpope/vim-vinegar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
@@ -157,10 +157,10 @@ Plug 'w0ng/vim-hybrid'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
+" Plug 'nightsense/stellarized'
 " Plug 'sonph/onehalf', {'rtp': 'vim/'}
-Plug 'joshdick/onedark.vim'
 Plug 'arcticicestudio/nord-vim'
-Plug 'mhartington/oceanic-next'
+" Plug 'mhartington/oceanic-next'
 " }}}
 
 " filetypes {{{
