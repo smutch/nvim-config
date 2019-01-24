@@ -701,7 +701,6 @@ nnoremap Y y$
 " Easy on the fingers save and window manipulation bindings
 nnoremap <leader>s :w<CR>
 nnoremap <leader>w <C-w>
-nnoremap <CR>w <C-w>p
 
 " Fit window height to contents and fix
 command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')
@@ -1185,7 +1184,7 @@ autocmd FileType c,cpp nnoremap <buffer> gd :<C-u>call ncm2_pyclang#goto_declara
 " ncm2-ultisnips {{{
 
 " expand with enter
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>\<C-R>=AutoPairsReturn()<CR>", 'n')
 
 " }}}
 " nerd_commenter {{{
