@@ -65,9 +65,9 @@ setlocal iskeyword-=_
 
 setlocal softtabstop=2
 setlocal shiftwidth=2
-setlocal tw=79 wm=0
+setlocal tw=120 wm=0
 " setlocal fo=tqron2 
-execute "set colorcolumn=" . join(range(80,335), ',')
+execute "set colorcolumn=" . join(range(121,335), ',')
 setlocal norelativenumber nonumber
 
 noremap <localleader>la :set <C-R>=(&fo =~# "a") ? "fo-=a" : "fo+=a"<CR><CR>

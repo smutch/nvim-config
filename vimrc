@@ -73,6 +73,7 @@ endif
 
 " completion {{{
 " Plug 'smutch/ncm2', { 'branch': 'hackfix' }
+
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'  " ncm2 requires nvim-yarp
 
