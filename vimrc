@@ -337,10 +337,12 @@ set vb t_vb=                            " Turn off visual beep
 set laststatus=2                        " Always display a status line
 set cmdheight=1                         " Command line height
 set listchars=tab:▸\ ,eol:↵,trail:·     " Set hidden characters
-" set listchars=tab:▸\ ,trail:·           " Set hidden characters
 set number                              " Show line numbers
-
 set cursorline                          " highlight current line
+
+if has("nvim")
+    set pumblend=20                     " opacity for popupmenu
+endif
 
 " Colorscheme {{{
 
