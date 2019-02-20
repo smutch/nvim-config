@@ -61,13 +61,13 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
 
 # 3rd party libs
 find_package(fmt REQUIRED)
-find_package(range-v3 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS program_options)
 
 set(SRC
-	src/$1.c
+	src/$1.cpp
 	)
 
 add_executable($1 ${SRC})
 set_property(TARGET $1 PROPERTY CXX_STANDARD 17)
-target_link_libraries($1 PRIVATE fmt range-v3)
+target_link_libraries($1 PRIVATE fmt Boost::program_options)
 endsnippet

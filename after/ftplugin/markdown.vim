@@ -1,6 +1,9 @@
 setlocal foldlevel=99
 setlocal concealcursor=nc
 
+" text width
+setlocal tw=120 wm=0
+
 " when pressing enter within a task it creates another task
 setlocal comments-=fb:-
 setlocal comments+=nb:-\ [\ ],fb:-
