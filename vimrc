@@ -43,6 +43,7 @@ if os == "Darwin"
     " set tags+=$HOME/.vim/ctags-system-mac
     let g:cmake_opts = '-DHDF5_ROOT=/usr/local -DMPI_C_COMPILER=/usr/local/bin/mpicc'
 else
+    let g:cmake_opts = ''
     let cscope_cmd="/usr/bin/cscope"
 end
 
@@ -268,7 +269,7 @@ nnoremap <leader>l :<C-u>lvim // % \| lopen<CR>
 
 set wildignore+=*.o,*.obj,*.pyc,
             \*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,
-            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite
+            \Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
@@ -881,8 +882,8 @@ endif
 
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'c' : ['cppcheck', 'clangtidy', 'clangcheck'],
-\   'cpp' : ['cppcheck', 'clangtidy', 'clangcheck'],
+\   'c' : ['cppcheck', 'ccls', 'clangtidy'],
+\   'cpp' : ['cppcheck', 'ccls'],
 \   'cuda': ['cppcheck']
 \}
 
@@ -890,9 +891,10 @@ if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
     let g:ale_cpp_cppcheck_executable="/fred/oz013/smutch/3rd_party/cppcheck/bin/cppcheck"
     let g:ale_c_cppcheck_executable=g:ale_cpp_cppcheck_executable
     let g:ale_cuda_cppcheck_executable=g:ale_cpp_cppcheck_executable
-    let g:ale_cpp_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang++"
-    let g:ale_c_clang_executable="/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/bin/clang"
-    call remove(g:ale_linters['c'], 1, 2)
+    let g:ale_cpp_clang_executable="/home/smutch/.conda/envs/gpu_test/bin/clang++"
+    let g:ale_c_clang_executable="/home/smutch/.conda/envs/gpu_test/bin/clang"
+    let g:ale_c_ccls_executable="/home/smutch/freddos/meraxes/3rd_party/ccls/bin/ccls"
+    " call remove(g:ale_linters['c'], 1, 2)
 endif
 
 let g:ale_c_build_dir_names=['build', 'cmake-build-debug']
@@ -918,8 +920,23 @@ hi! link ALEInfo MoreMsg
 let g:ale_virtualtext_cursor = 1
 let g:ale_virtualtext_prefix = '» '
 
-" }}}
+nmap <leader>ar <Plug>(ale_find_references)
+nmap <leader>af <Plug>(ale_fix)
+nmap <leader>ad <Plug>(ale_go_to_definition)
+nmap <leader>aD <Plug>(ale_go_to_definition_in_split)
+nmap <leader>at <Plug>(ale_go_to_type_definition)
+nmap <leader>aT <Plug>(ale_go_to_type_definition_in_split)
+nmap <leader>ak <Plug>(ale_hover)
 
+" Map movement through errors without wrapping.
+nmap <silent> <leader>a[ <Plug>(ale_previous)
+nmap <silent> <leader>a] <Plug>(ale_next)
+
+" OR map keys to use wrapping.
+nmap <silent> <leader>a{ <Plug>(ale_previous_wrap)
+nmap <silent> <leader>a} <Plug>(ale_next_wrap)
+
+" }}}
 " airline {{{
 
 let g:airline#extensions#tmuxline#enabled = 0
