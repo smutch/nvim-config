@@ -13,6 +13,7 @@ setlocal fo+=ro
 
 " don't auto wrap and use visual linewise motions
 set fo-=t
+set fo-=c
 nnoremap <buffer> $ g$
 nnoremap <buffer> 0 g0
 nnoremap <buffer> j gj
