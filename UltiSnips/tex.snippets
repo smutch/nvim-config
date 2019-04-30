@@ -21,3 +21,13 @@ endsnippet
 snippet tit "textit"
 \textit{$0}
 endsnippet
+
+snippet fig "MNRAS figure"
+\begin{figure}
+  \centering
+  \includegraphics[width=\columnwidth]{plots/$1}
+  \caption{%
+  $0
+  }\label{fig:$2}
+\end{figure}
+endsnippet
