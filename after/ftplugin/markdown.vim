@@ -19,6 +19,9 @@ nnoremap <buffer> 0 g0
 nnoremap <buffer> j gj
 nnoremap <buffer> k gk
 
+" abbreviations
+ab <buffer> -[] - [ ]
+
 " -------------------------------------------------------
 
 " Only do the following when not done yet for this buffer
