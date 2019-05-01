@@ -185,7 +185,7 @@ Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'vim-scripts/scons.vim'
 " Plug 'sheerun/vim-polyglot'
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'sass'] }
 Plug 'vim-pandoc/vim-pandoc-syntax'
 " }}}
 " }}}
@@ -340,7 +340,7 @@ set laststatus=2                        " Always display a status line
 set cmdheight=1                         " Command line height
 set listchars=tab:▸\ ,eol:↵,trail:·     " Set hidden characters
 set number                              " Show line numbers
-set cursorline                          " highlight current line
+" set cursorline                          " highlight current line
 
 if has("nvim") && exists("+pumblend")
     set pumblend=20                     " opacity for popupmenu
@@ -883,10 +883,12 @@ endif
 
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'c' : ['cppcheck', 'ccls', 'clangtidy'],
-\   'cpp' : ['cppcheck', 'ccls'],
+\   'c' : ['cppcheck', 'clangtidy'],
+\   'cpp' : ['cppcheck'],
 \   'cuda': ['cppcheck']
 \}
+" \   'c' : ['cppcheck', 'ccls', 'clangtidy'],
+" \   'cpp' : ['cppcheck', 'ccls'],
 
 if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
     let g:ale_cpp_cppcheck_executable="/fred/oz013/smutch/3rd_party/cppcheck/bin/cppcheck"
