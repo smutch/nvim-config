@@ -137,6 +137,7 @@ Plug 'benmills/vimux'
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'lambdalisue/vim-gista'
+Plug 'rhysd/git-messenger.vim'
 " }}}
 
 " linting {{{
