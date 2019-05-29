@@ -907,7 +907,7 @@ let g:ale_c_build_dir_names=['build', 'cmake-build-debug']
 let g:ale_c_clangtidy_checks=['-*', 'google-*', '-google-runtime-references', '-google-readability-braces-around-statements', 'modernize-*', 'mpi-*', 'performance-*', 'clang-analyzer-*', 'bugprone-*']
 let g:ale_cpp_clangtidy_checks=g:ale_c_clangtidy_checks + ['cppcoreguidelines-*', '-cppcoreguidelines-pro-*']
 
-let g:ale_python_flake8_options = "--ignore=E501,E402,E226,E203"
+let g:ale_python_flake8_options = "--ignore=E501,E402,E226,E203,W503"
 
 let g:ale_tex_chktex_options = "-I -n 35"
 
