@@ -482,19 +482,18 @@ if has("nvim")
     let g:terminal_color_1 = "#d06c76"
     let g:terminal_color_2 = "#99c27c"
     let g:terminal_color_3 = "#FFD740"
-    let g:terminal_color_4 = "#65b0ed"
-    let g:terminal_color_5 = "#c57bdb"
-    let g:terminal_color_6 = "#18FFFF"
+    let g:terminal_color_4 = "#40C4FF"
+    let g:terminal_color_5 = "#FF4081"
+    let g:terminal_color_6 = "#59b3be"
     let g:terminal_color_7 = "#F5F5F5"
     let g:terminal_color_8 = "#708284"
     let g:terminal_color_9 = "#d06c76"
     let g:terminal_color_10 = "#99c27c"
     let g:terminal_color_11 = "#FFD740"
-    let g:terminal_color_12 = "#65b0ed"
-    let g:terminal_color_13 = "#c57bdb"
-    let g:terminal_color_14 = "#18FFFF"
+    let g:terminal_color_12 = "#40C4FF"
+    let g:terminal_color_13 = "#FF4081"
+    let g:terminal_color_14 = "#59b3be"
     let g:terminal_color_15 = "#F5F5F5"
-
 endif
 
 " }}}
