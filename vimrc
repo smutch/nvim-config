@@ -354,6 +354,15 @@ endif
 
 " Colorscheme {{{
 
+function! ReturnHighlightTerm(group, term)
+    " taken from https://vi.stackexchange.com/a/12294
+    " Store output of group to variable
+    let output = execute('hi ' . a:group)
+
+    " Find the term we're looking for
+    return matchstr(output, a:term.'=\zs\S*')
+endfunction
+
 augroup CustomColors
     au!
     au ColorScheme hybrid if &background == 'dark' |
@@ -371,6 +380,7 @@ augroup CustomColors
                 \ endif
     au ColorScheme one if &background == 'dark' |
                 \ hi! Normal guifg=#cccccc |
+                \ nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#282c34") ? '#1a1d23' : '#282c34'<CR><CR> |
                 \ endif
     " au colorscheme one if &background == 'light' |
                 " \ hi! normal guibg=#ffffff |
