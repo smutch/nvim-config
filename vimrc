@@ -115,7 +115,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-obsession'
-" Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/echodoc.vim'
 Plug 'ncm2/float-preview.nvim'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
@@ -987,6 +987,7 @@ nmap ga <Plug>(EasyAlign)
 " }}}
 " echodoc {{{
 
+" N.B. ensure noshowmode has been set above
 let g:echodoc_enable_at_startup = 1
 
 " }}}
