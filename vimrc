@@ -843,7 +843,8 @@ au BufRead,BufNewFile *.slurm set filetype=slurm
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 
 " enable spell checking on certain files
-autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell
+autocmd BufNewFile,BufRead COMMIT_EDITMSG set spell |
+            \ setlocal nofoldenable
 
 " pandoc
 augroup pandoc_syntax
