@@ -1228,7 +1228,9 @@ autocmd FileType c,cpp nnoremap <buffer> gd :<C-u>call ncm2_pyclang#goto_declara
 " ncm2-ultisnips {{{
 
 " expand with enter
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>\<C-R>=AutoPairsReturn()<CR>", 'n')
+let g:AutoPairsMapCR=0
+inoremap <silent> <Plug>(MyCR) <CR><C-R>=AutoPairsReturn()<CR>
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<Plug>(MyCR)", 'im')
 
 " }}}
 " nerd_commenter {{{
