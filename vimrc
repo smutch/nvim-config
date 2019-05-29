@@ -192,7 +192,7 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'vim-scripts/scons.vim'
 " Plug 'sheerun/vim-polyglot'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'sass'] }
-Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 " }}}
 " }}}
 
@@ -467,8 +467,8 @@ function! SetTheme()
             let g:light=1
         else
             set background=dark
-            " Cs hybrid
-            " let g:airline_theme="hybrid"
+            " Cs palenight
+            " let g:airline_theme="tomorrow"
             Cs one
             let g:airline_theme="one"
 
