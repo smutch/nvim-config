@@ -89,6 +89,7 @@ Plug 'ncm2/ncm2-jedi'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'ncm2/ncm2-pyclang'
 Plug 'ncm2/ncm2-tagprefix'
+Plug 'ncm2/ncm2-github'
 " }}}
 
 " movement {{{
@@ -161,10 +162,14 @@ Plug 'w0ng/vim-hybrid'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
-" Plug 'nightsense/stellarized'
-" Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'arcticicestudio/nord-vim'
-" Plug 'mhartington/oceanic-next'
+Plug 'cormacrelf/vim-colors-github'
+Plug 'mhartington/oceanic-next'
+Plug 'rakr/vim-two-firewatch'
+Plug 'dracula/vim'
+Plug 'ayu-theme/ayu-vim'
 " }}}
 
 " filetypes {{{
@@ -361,9 +366,9 @@ augroup CustomColors
                 \ hi! link Folded ColorColumn |
                 \ endif
                 " \ hi! Normal guibg=NONE | 
-    " au ColorScheme one if &background == 'light' |
-                " \ hi! Normal guibg=#ffffff |
-                " \ endif
+    au ColorScheme one if &background == 'light' |
+                \ hi! Normal guibg=white guifg=30 |
+                \ endif
     au ColorScheme one if &background == 'dark' |
                 \ hi! Normal guifg=#cccccc |
                 \ endif
