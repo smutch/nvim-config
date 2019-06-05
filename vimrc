@@ -376,7 +376,7 @@ augroup CustomColors
                 \ endif
                 " \ hi! Normal guibg=NONE | 
     au ColorScheme one if &background == 'light' |
-                \ hi! Normal guibg=white guifg=30 |
+                \ hi! Normal guibg=white |
                 \ endif
     au ColorScheme one if &background == 'dark' |
                 \ hi! Normal guifg=#cccccc |
@@ -693,6 +693,27 @@ command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
 " store the current directory into register d
 command! GrabPWD let @d = system("pwd")
 
+" battery saving
+function! s:SaveBattery()
+    let g:ncm2#auto_popup = 0
+
+    let g:ale_lint_on_text_changed = 0
+    let g:ale_lint_on_enter = 0
+    let g:ale_lint_on_save = 0
+    let g:ale_lint_on_filetype_changed = 0
+endfunction
+command! SaveBattery :call <SID>SaveBattery()
+
+function! s:DrainBattery()
+    let g:ncm2#auto_popup = 1
+
+    let g:ale_lint_on_text_changed = 'normal'
+    let g:ale_lint_on_enter = 1
+    let g:ale_lint_on_save = 1
+    let g:ale_lint_on_filetype_changed = 1
+endfunction
+command! DrainBattery :call <SID>DrainBattery()
+
 " }}}
 " Keybindings {{{
 
@@ -896,6 +917,8 @@ endif
 " }}}
 " Plugin settings {{{
 " ale {{{
+
+let g:ale_lint_on_text_changed = 'normal'
 
 let g:ale_linters = {
 \   'python': ['flake8'],
@@ -1188,7 +1211,9 @@ endif
 " ncm2 {{{
 
 " " enable for all buffers except terminals
-autocmd BufEnter * if &buftype !=# 'terminal' | call ncm2#enable_for_buffer()
+augroup ncm2
+    autocmd BufEnter * if &buftype !=# 'terminal' | call ncm2#enable_for_buffer()
+augroup end
 
 " note that must keep noinsert in completeopt, the others is optional
 set completeopt=noinsert,menuone,noselect
@@ -1208,6 +1233,9 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" if we are using manual completion
+inoremap <silent> <c-space> <c-r>=ncm2#manual_trigger()<cr>
 
 " }}}
 " ncm2-pyclang {{{
@@ -1291,6 +1319,11 @@ autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math
 autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout
 autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
+
+" }}}
+" tagbar {{{
+
+nnoremap <leader>T :TagbarToggle<CR>
 
 " }}}
 " ultisnips {{{
