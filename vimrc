@@ -1027,6 +1027,7 @@ nmap ga <Plug>(EasyAlign)
 
 " N.B. ensure noshowmode has been set above
 let g:echodoc_enable_at_startup = 1
+let g:echodoc#type = "floating"
 
 " }}}
 " float-preview {{{
