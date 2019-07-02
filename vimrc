@@ -467,10 +467,10 @@ function! SetTheme()
             let g:light=1
         else
             set background=dark
-            " Cs palenight
-            " let g:airline_theme="tomorrow"
-            Cs one
-            let g:airline_theme="one"
+            Cs hybrid
+            let g:airline_theme="hybrid"
+            " Cs one
+            " let g:airline_theme="one"
 
             let g:light=0
         endif
@@ -1026,7 +1026,7 @@ nmap ga <Plug>(EasyAlign)
 " echodoc {{{
 
 " N.B. ensure noshowmode has been set above
-let g:echodoc_enable_at_startup = 1
+let g:echodoc_enable_at_startup = 0
 let g:echodoc#type = "floating"
 
 " }}}
@@ -1190,6 +1190,7 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 2  "May be too slow...
 let g:jedi#auto_close_doc = 0
 autocmd FileType python let b:did_ftplugin = 1
+let g:jedi#goto_stubs_command = '<localleader>s'
 let g:jedi#goto_assignments_command = '<localleader>g'
 let g:jedi#goto_command = '<localleader>d'
 let g:jedi#rename_command = '<localleader>r'
