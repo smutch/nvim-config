@@ -13,8 +13,6 @@ set nocompatible
 " Set the encoding
 set encoding=utf-8
 
-py3 pass
-
 " Use virtualenv for python
 " py << EOF
 " import os.path
@@ -41,6 +39,7 @@ if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
     let cscope_cmd="/usr/local/bin/cscope"
     " set tags+=$HOME/.vim/ctags-system-mac
+    let g:python3_host_prog = '/usr/local/Caskroom/miniconda/base/envs/nvim/bin/python'
     let g:cmake_opts = '-DHDF5_ROOT=/usr/local -DMPI_C_COMPILER=/usr/local/bin/mpicc'
 else
     let g:cmake_opts = ''
@@ -50,10 +49,13 @@ end
 " What machine are we on?
 let hostname = substitute(system('hostname'), '\n', '', '')
 
-if (hostname =~ "sstar") || (hostname =~ "gstar")
-    set shell=/home/smutch/.vim/g2shell.sh
-    let &shellpipe="|& tee"
-    set t_ut=
+" if (hostname =~ "sstar") || (hostname =~ "gstar")
+    " set shell=/home/smutch/.vim/g2shell.sh
+    " let &shellpipe="|& tee"
+    " set t_ut=
+" endif
+if (hostname =~ "Rabbie")
+    set shell=/usr/local/bin/zsh
 endif
 
 " GUI settings {{{
@@ -632,7 +634,7 @@ endfun
 command! SoftWrap execute ':g/./,-/\n$/j'
 
 " Edit vimrc
-command! Erc execute ':e ~/.vim/vimrc'
+command! Erc execute ':e ~/.config/nvim/init.vim'
 
 " Capture output from a vim command (like :version or :messages) into a split
 " scratch buffer. (credit: ctechols,
@@ -779,7 +781,7 @@ if has('nvim')
     let $LAUNCHED_FROM_NVIM = 1
     augroup MyTerm
         au!
-        au BufWinEnter,WinEnter term://* startinsert 
+        au BufWinEnter,WinEnter,TermOpen term://* startinsert 
         au TermOpen * setlocal winhighlight=Normal:TermNormal |
                     \ setlocal nocursorline nonumber norelativenumber
     augroup END
@@ -791,37 +793,86 @@ if has('nvim')
         let s:my_terminal_window = -1
     endif
     if !exists('s:my_terminal_command')
-        let s:my_terminal_command = -1
+        let s:my_terminal_command = &shell
     endif
 
+
     function! s:term_create(cmd, mods, bang)
-        let s:cmd = a:bang ? s:my_terminal_command : a:cmd
+        " If we are in our terminal then close it
+        if bufnr('%') == s:my_terminal_buffer
+            wincmd q
+            redraw!
+            return
+        endif
+
+        " get the desired position if we want a floating window
+        let floating_opts = {
+                    \ 'relative': 'editor',
+                    \ 'width': &columns/4 * 3,
+                    \ 'height': &lines/4 * 3,
+                    \ 'col': &columns/8,
+                    \ 'row': &lines/8,
+                    \ 'anchor': 'NW',
+                    \ 'style': 'minimal'
+                    \ }
+
         if !bufexists(s:my_terminal_buffer)
-            exe a:mods . ' split'
-            exe 'terminal ' . s:cmd
+            " our terminal buffer doesn't exist
+
+            if a:bang
+                " here we want a floating window
+                let bufnr = nvim_create_buf(v:false, v:true)
+                call nvim_open_win(bufnr, 1, floating_opts)
+
+                " lots of options to set to make it like a terminal window
+                setlocal winblend=30
+                setlocal foldcolumn=1
+                setlocal bufhidden=hide
+                setlocal signcolumn=no
+                setlocal nobuflisted
+                setlocal nocursorline
+                setlocal nonumber
+                setlocal norelativenumber
+
+                " spin up the terminal in the floating window, optionally with a command
+                exe 'terminal ' . a:cmd
+            else
+                " here we want a standard split
+                exe a:mods . ' split'
+                exe 'terminal ' . a:cmd
+            endif
+
+            " always want to enter into insert mode
+            startinsert
+
+            " store the buffer, window and command info
             let s:my_terminal_command = a:cmd
             let s:my_terminal_window = win_getid()
             let s:my_terminal_buffer = bufnr('%')
-            if a:bang
-                wincmd p
-                stopinsert
-            else
-                startinsert
-            endif
         else
+            " our terminal buffer already exists
             if !win_gotoid(s:my_terminal_window)
-                exe a:mods . ' split'
-                exe 'buffer ' . s:my_terminal_buffer
+                " we can successfully change to our terminal window
+                if a:bang
+                    " we want a floating window so create one
+                    call nvim_open_win(s:my_terminal_buffer, 1, floating_opts)
+                else
+                    " we want a standard split so create one
+                    exe a:mods . ' split'
+                    exe 'buffer ' . s:my_terminal_buffer
+                endif
+
+                " store the, potentially new, window and buffer info
                 let s:my_terminal_window = win_getid()
                 let s:my_terminal_buffer = bufnr('%')
-            endif
-            if s:cmd != ''
-                let s:my_terminal_command = s:cmd
-                put =s:cmd . ''
-            endif
-            if a:bang
-                wincmd p
-                stopinsert
+
+                " if we have also provided a command then run that
+                if a:cmd != ''
+                    let s:my_terminal_command = a:cmd
+                    put =a:cmd . ''
+                else
+                    startinsert
+                endif
             endif
         endif
     endfunction
