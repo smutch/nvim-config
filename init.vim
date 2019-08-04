@@ -68,7 +68,7 @@ endif
 " vim-plug {{{
 
 " Load all plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 if !empty(glob("~/code/note-system"))
     Plug '~/code/note-system'
