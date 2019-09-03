@@ -796,6 +796,19 @@ if has('nvim')
         let s:my_terminal_command = &shell
     endif
 
+    function! s:my_terminal_maps(floating)
+        if a:floating
+            tmap <buffer> <C-h> <C-\><C-n>:Tc!<CR>
+            tmap <buffer> <C-j> <C-\><C-n>:Tc!<CR>
+            tmap <buffer> <C-k> <C-\><C-n>:Tc!<CR>
+            tmap <buffer> <C-l> <C-\><C-n>:Tc!<CR>
+        else
+            tmap <buffer> <C-h> <C-\><C-n><C-w>h
+            tmap <buffer> <C-j> <C-\><C-n><C-w>j
+            tmap <buffer> <C-k> <C-\><C-n><C-w>k
+            tmap <buffer> <C-l> <C-\><C-n><C-w>l
+        endif
+    endfunction
 
     function! s:term_create(cmd, mods, bang)
         " If we are in our terminal then close it
@@ -825,7 +838,7 @@ if has('nvim')
                 call nvim_open_win(bufnr, 1, floating_opts)
 
                 " lots of options to set to make it like a terminal window
-                setlocal winblend=30
+                setlocal winblend=20
                 setlocal foldcolumn=1
                 setlocal bufhidden=hide
                 setlocal signcolumn=no
@@ -836,10 +849,15 @@ if has('nvim')
 
                 " spin up the terminal in the floating window, optionally with a command
                 exe 'terminal ' . a:cmd
+
+                call s:my_terminal_maps(1)
+                
             else
                 " here we want a standard split
                 exe a:mods . ' split'
                 exe 'terminal ' . a:cmd
+
+                call s:my_terminal_maps(0)
             endif
 
             " always want to enter into insert mode
@@ -856,10 +874,14 @@ if has('nvim')
                 if a:bang
                     " we want a floating window so create one
                     call nvim_open_win(s:my_terminal_buffer, 1, floating_opts)
+
+                    call s:my_terminal_maps(1)
                 else
                     " we want a standard split so create one
                     exe a:mods . ' split'
                     exe 'buffer ' . s:my_terminal_buffer
+
+                    call s:my_terminal_maps(0)
                 endif
 
                 " store the, potentially new, window and buffer info
@@ -886,11 +908,11 @@ if has('nvim')
     nnoremap <leader>tt :Tc!<CR>
 
     tnoremap kj <C-\><C-n>
-    tnoremap <C-w> <C-\><C-n><C-w>
     tnoremap <C-h> <C-\><C-n><C-w>h
     tnoremap <C-j> <C-\><C-n><C-w>j
     tnoremap <C-k> <C-\><C-n><C-w>k
     tnoremap <C-l> <C-\><C-n><C-w>l
+    tnoremap <C-w> <C-\><C-n><C-w>
     nnoremap <A-h> <C-w>h
     nnoremap <A-j> <C-w>j
     nnoremap <A-k> <C-w>k

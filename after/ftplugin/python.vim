@@ -1,6 +1,6 @@
-" Comply with PEP 8 (as far as possible)
+" Comply with PEP 8 and black (as far as possible)
 setlocal expandtab
-setlocal textwidth=79
+setlocal textwidth=120
 setlocal tabstop=8
 setlocal softtabstop=4
 setlocal shiftwidth=4
