@@ -1194,6 +1194,7 @@ nnoremap ]h :GitGutterNextHunk<CR>
 nnoremap [h :GitGutterPrevHunk<CR>
 nnoremap ghs :GitGutterStageHunk<CR>
 nnoremap ghr :GitGutterRevertHunk<CR>
+nnoremap ghp :GitGutterPreviewHunk<CR>
 let g:gitgutter_realtime = 0
 
 let g:gitgutter_sign_added = '┃'
