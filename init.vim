@@ -1065,14 +1065,14 @@ nmap <silent> <leader>a} <Plug>(ale_next_wrap)
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline#extensions#tabline#enabled = 0
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+let g:airline_left_sep=''
+let g:airline_right_sep=''
 
 call airline#parts#define_function('winnum', 'WindowNumber')
 function! MyPlugin(...)
     let s:my_part = airline#section#create(['winnum'])
-    let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x)
-    let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . g:airline_right_sep . ' [' . s:my_part . ']'
+    " let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . g:airline_right_sep . ' [' . s:my_part . ']'
+    let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . ' [' . s:my_part . ']'
 endfunction
 silent call airline#add_statusline_func('MyPlugin')
 
