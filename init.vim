@@ -192,8 +192,9 @@ Plug 'roxma/nvim-cm-racer', { 'for': 'rust' }
 Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'vim-scripts/scons.vim'
+Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'html' }
 " Plug 'sheerun/vim-polyglot'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'sass'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'sass', 'jinja.html'] }
 " Plug 'vim-pandoc/vim-pandoc-syntax'
 " }}}
 " }}}
