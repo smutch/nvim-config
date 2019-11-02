@@ -3,3 +3,5 @@
 " setlocal softtabstop=2
 " setlocal tabstop=2
 " setlocal number
+
+EchoDocEnable

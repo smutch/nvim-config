@@ -1,12 +1,26 @@
 setlocal foldlevel=99
 setlocal concealcursor=nc
 
+" text width
+setlocal tw=120 wm=0
+
 " when pressing enter within a task it creates another task
 setlocal comments-=fb:-
-setlocal comments+=nb:-\ [\ ],fb:-
+setlocal comments+=nb:-\ [\ ],nb:-
 setlocal comments-=fb:*
 setlocal comments+=nb:*
 setlocal fo+=ro
+
+" don't auto wrap and use visual linewise motions
+set fo-=t
+set fo-=c
+nnoremap <buffer> $ g$
+nnoremap <buffer> 0 g0
+nnoremap <buffer> j gj
+nnoremap <buffer> k gk
+
+" abbreviations
+ab <buffer> -[] - [ ]
 
 " -------------------------------------------------------
 
