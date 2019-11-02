@@ -108,7 +108,7 @@ Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
 Plug 'tpope/vim-vinegar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'chrisbra/Colorizer'
 Plug 'majutsushi/tagbar'
@@ -1112,6 +1112,10 @@ endfunction
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Commands
+nmap <leader>ca  <Plug>(coc-codeaction)
+nmap <leader>cr  <Plug>(coc-refactor)
 
 " }}}
 " dispatch {{{
