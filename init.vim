@@ -122,7 +122,7 @@ Plug 'benmills/vimux'
 
 " git {{{
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 Plug 'lambdalisue/vim-gista'
 Plug 'rhysd/git-messenger.vim'
 " }}}
@@ -1094,10 +1094,13 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gD <Plug>(coc-definition)
+nmap <silent> gd <Plug>(coc-declaration)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> g> <Plug>(coc-diagnostic-next)
+nmap <silent> g< <Plug>(coc-diagnostic-prev)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -1116,6 +1119,12 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Commands
 nmap <leader>ca  <Plug>(coc-codeaction)
 nmap <leader>cr  <Plug>(coc-refactor)
+nmap <leader>cf  <Plug>(coc-format)
+nmap <leader>cF  <Plug>(coc-format-selected)
+vmap <leader>cf  <Plug>(coc-format-selected)
+
+" Airline integration
+let g:airline#extensions#coc#enabled = 1
 
 " }}}
 " dispatch {{{
