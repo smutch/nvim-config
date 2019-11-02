@@ -75,23 +75,7 @@ if !empty(glob("~/code/note-system"))
 endif
 
 " completion {{{
-" Plug 'smutch/ncm2', { 'branch': 'hackfix' }
-
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'  " ncm2 requires nvim-yarp
-
-" some completion sources
-Plug 'ncm2/ncm2-bufword', { 'for': [] }
-augroup plug_ncm2
-  autocmd FileType * if expand('<amatch>') != 'tex' | call plug#load('ncm2/ncm2-bufword') | execute 'autocmd! plug_ncm2' | endif
-augroup END
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2-pyclang'
-Plug 'ncm2/ncm2-tagprefix'
-Plug 'ncm2/ncm2-github'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " }}}
 
 " movement {{{
@@ -119,7 +103,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-obsession'
 Plug 'Shougo/echodoc.vim'
-Plug 'ncm2/float-preview.nvim'
+" Plug 'ncm2/float-preview.nvim'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
 Plug 'tpope/vim-vinegar'
@@ -138,13 +122,13 @@ Plug 'benmills/vimux'
 
 " git {{{
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'lambdalisue/vim-gista'
 Plug 'rhysd/git-messenger.vim'
 " }}}
 
 " linting {{{
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 " }}}
 
 " looking good {{{
@@ -698,7 +682,7 @@ command! GrabPWD let @d = system("pwd")
 
 " battery saving
 function! s:SaveBattery()
-    let g:ncm2#auto_popup = 0
+    " let g:ncm2#auto_popup = 0
 
     let g:ale_lint_on_text_changed = 0
     let g:ale_lint_on_enter = 0
@@ -709,7 +693,7 @@ endfunction
 command! SaveBattery :call <SID>SaveBattery()
 
 function! s:DrainBattery()
-    let g:ncm2#auto_popup = 1
+    " let g:ncm2#auto_popup = 1
 
     let g:ale_lint_on_text_changed = 'normal'
     let g:ale_lint_on_enter = 1
@@ -1089,6 +1073,47 @@ let g:AutoPairsShortcutToggle = ''
 nnoremap Q :Bdelete<CR>
 
 " }}}
+" coc {{{
+
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" }}}
 " dispatch {{{
 
 let g:dispatch_compilers = {
@@ -1291,60 +1316,6 @@ autocmd FileType python nnoremap <buffer> <localleader>D :exec bufwinnr('__doc__
 if !exists('g:loaded_matchit')
   runtime macros/matchit.vim
 endif
-
-" }}}
-" ncm2 {{{
-
-" " enable for all buffers except terminals
-augroup ncm2
-    autocmd BufEnter * if &buftype !=# 'terminal' | call ncm2#enable_for_buffer()
-augroup end
-
-" note that must keep noinsert in completeopt, the others is optional
-set completeopt=noinsert,menuone,noselect
-
-" supress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
-
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
-
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-" Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" if we are using manual completion
-inoremap <silent> <c-space> <c-r>=ncm2#manual_trigger()<cr>
-
-" }}}
-" ncm2-pyclang {{{
-
-if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
-    let g:ncm2_pyclang#library_path = "/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/lib/libclang.so.5.0"
-else
-    let g:ncm2_pyclang#library_path = "/usr/local/opt/llvm/lib"
-endif
-
-autocmd FileType c,cpp nnoremap <buffer> gd :<C-u>call ncm2_pyclang#goto_declaration()<CR>
-
-" show the preview window
-" let g:cm_completeopt="menu,menuone,noinsert,noselect,preview"
-" automatically close the preview window after completion
-" au CompleteDone * pclose
-
-" }}}
-" ncm2-ultisnips {{{
-
-" expand with enter
-let g:AutoPairsMapCR=0
-inoremap <silent> <Plug>(MyCR) <CR><C-R>=AutoPairsReturn()<CR>
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<Plug>(MyCR)", 'im')
 
 " }}}
 " nerd_commenter {{{
