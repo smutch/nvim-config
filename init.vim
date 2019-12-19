@@ -54,7 +54,9 @@ let hostname = substitute(system('hostname'), '\n', '', '')
     " let &shellpipe="|& tee"
     " set t_ut=
 " endif
-if (hostname =~ "Rabbie")
+if (hostname =~ "farnarkle") || (hostname =~ "ozstar")
+    let $PATH = '/fred/oz013/smutch/conda_envs/nvim/bin' . $PATH
+elseif (hostname =~ "Rabbie")
     set shell=/usr/local/bin/zsh
 endif
 
