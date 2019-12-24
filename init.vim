@@ -1094,13 +1094,14 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Remap keys for gotos
-nmap <silent> gD <Plug>(coc-definition)
-nmap <silent> gd <Plug>(coc-declaration)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gD <Plug>(coc-declaration)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> g> <Plug>(coc-diagnostic-next)
 nmap <silent> g< <Plug>(coc-diagnostic-prev)
+nmap          gs :<C-u>CocList symbols<CR>
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -1117,7 +1118,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Commands
-nmap <leader>ca  <Plug>(coc-codeaction)
+nmap <leader>cd  <Plug>(coc-codeaction)
 nmap <leader>cr  <Plug>(coc-refactor)
 nmap <leader>cf  <Plug>(coc-format)
 nmap <leader>cF  <Plug>(coc-format-selected)
