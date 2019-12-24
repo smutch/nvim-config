@@ -164,7 +164,7 @@ Plug 'ayu-theme/ayu-vim'
 " python {{{
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python'}
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'anntzer/vim-cython', { 'for': ['python', 'cython'] }
 " }}}
