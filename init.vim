@@ -55,7 +55,7 @@ let hostname = substitute(system('hostname'), '\n', '', '')
     " set t_ut=
 " endif
 if (hostname =~ "farnarkle") || (hostname =~ "ozstar")
-    let $PATH = '/fred/oz013/smutch/conda_envs/nvim/bin' . $PATH
+    let $PATH = '/fred/oz013/smutch/conda_envs/nvim/bin:' . $PATH
     let g:coc_node_path = '/fred/oz013/smutch/conda_envs/nvim/bin/node'
 elseif (hostname =~ "Rabbie")
     set shell=/usr/local/bin/zsh
