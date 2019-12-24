@@ -7,5 +7,9 @@
             "filetypes": ["c", "cpp", "objc", "objcpp"]
         }
     },
+    "python.formatting.provider": "black",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Args": ["--max-line-length=120"],
     "codeLens.enable": true
 }
