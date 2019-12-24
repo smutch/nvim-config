@@ -39,7 +39,7 @@ if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
     let cscope_cmd="/usr/local/bin/cscope"
     " set tags+=$HOME/.vim/ctags-system-mac
-    " let g:python3_host_prog = '/usr/local/Caskroom/miniconda/base/envs/nvim/bin/python'
+    let g:python3_host_prog = '/Users/smutch/miniconda3/envs/global/bin/python'
     let g:cmake_opts = '-DHDF5_ROOT=/usr/local -DMPI_C_COMPILER=/usr/local/bin/mpicc'
 else
     let g:cmake_opts = ''
@@ -1119,13 +1119,19 @@ endfunction
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
+	
+" scroll float window
+nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
 
 " Commands
 nmap <leader>cd  <Plug>(coc-codeaction)
-nmap <leader>cr  <Plug>(coc-refactor)
+nmap <leader>cr  <Plug>(coc-references)
+nmap <leader>cR  <Plug>(coc-refactor)
 nmap <leader>cf  <Plug>(coc-format)
 nmap <leader>cF  <Plug>(coc-format-selected)
 vmap <leader>cf  <Plug>(coc-format-selected)
+nmap <leader>cq  <Plug>(coc-fix-current)
 
 " Airline integration
 let g:airline#extensions#coc#enabled = 1
