@@ -1078,6 +1078,8 @@ nnoremap Q :Bdelete<CR>
 " }}}
 " coc {{{
 
+command! Ecoc edit ~/.config/nvim/coc-settings.json
+
 " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -1097,8 +1099,8 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gD <Plug>(coc-declaration)
+nmap <silent> <C-]> <Plug>(coc-definition)
+nmap <silent> g<C-]> <Plug>(coc-declaration)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -1125,13 +1127,12 @@ nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
 
 " Commands
-nmap <leader>cd  <Plug>(coc-codeaction)
-nmap <leader>cr  <Plug>(coc-references)
-nmap <leader>cR  <Plug>(coc-refactor)
-nmap <leader>cf  <Plug>(coc-format)
-nmap <leader>cF  <Plug>(coc-format-selected)
-vmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cq  <Plug>(coc-fix-current)
+nmap <leader>pd  <Plug>(coc-codeaction)
+nmap <leader>pr  <Plug>(coc-references)
+nmap <leader>pR  <Plug>(coc-refactor)
+nmap <leader>pf  <Plug>(coc-format)
+vmap <leader>pf  <Plug>(coc-format-selected)
+nmap <leader>pq  <Plug>(coc-fix-current)
 
 " Airline integration
 let g:airline#extensions#coc#enabled = 1

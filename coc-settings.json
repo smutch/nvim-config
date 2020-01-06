@@ -1,15 +1,19 @@
 {
+    "npm.binPath": "/fred/oz013/smutch/conda_envs/nvim/bin/npm",
     "languageserver": {
         "clangd": {
-            "command": "/usr/local/opt/llvm/bin/clangd",
+            "command": "/fred/oz013/smutch/conda_envs/nvim/bin/clangd",
             "args": ["--background-index"],
             "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
             "filetypes": ["c", "cpp", "objc", "objcpp"]
         }
     },
+    "diagnostic.checkCurrentLine": true,
+    "diagnostic.messageTarget": "echo",
     "python.formatting.provider": "black",
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Args": ["--max-line-length=120"],
-    "codeLens.enable": true
+    "codeLens.enable": true,
+    "python.linting.flake8Path": "/fred/oz013/smutch/conda_envs/nvim/bin/flake8"
 }
