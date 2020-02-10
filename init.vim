@@ -109,12 +109,14 @@ Plug 'Shougo/echodoc.vim'
 " Plug 'ncm2/float-preview.nvim'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'chrisbra/Colorizer'
 Plug 'majutsushi/tagbar'
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " }}}
 
 " tmux {{{
