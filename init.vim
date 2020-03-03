@@ -98,6 +98,7 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 " Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
 Plug 'dyng/ctrlsf.vim'
+Plug 'bfredl/nvim-miniyank'
 " }}}
 
 " utils {{{
@@ -450,12 +451,11 @@ function! SetTheme()
 	" let g:hybrid_custom_term_colors = 1
     
     let g:hybrid_reduced_contrast = 1
-    let g:seoul256_light_background = 255
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
             Cs one
-            let g:airline_theme='one'
+            let g:airline_theme='github'
             let g:light=1
         else
             set background=dark
@@ -1130,8 +1130,7 @@ nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
 
 " Commands
 nmap <leader>pd  <Plug>(coc-codeaction)
-nmap <leader>pr  <Plug>(coc-references)
-nmap <leader>pR  <Plug>(coc-refactor)
+nmap <leader>pr  <Plug>(coc-refactor)
 nmap <leader>pf  <Plug>(coc-format)
 vmap <leader>pf  <Plug>(coc-format-selected)
 nmap <leader>pq  <Plug>(coc-fix-current)
@@ -1365,6 +1364,50 @@ vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 let g:notes_dir = '~/Dropbox/Notes'
 let g:notes_assets_dir = 'img'
+
+" }}}
+" miniyank {{{
+
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+map <leader>ys <Plug>(miniyank-startput)
+map <leader>yS <Plug>(miniyank-startPut)
+map <leader>yn <Plug>(miniyank-cycle)
+map <leader>yN <Plug>(miniyank-cycleback)
+
+function FZFYankList() abort
+  function! KeyValue(key, val)
+    let line = join(a:val[0], '\n')
+    if (a:val[1] ==# 'V')
+      let line = '\n'.line
+    endif
+    return a:key.' '.line
+  endfunction
+  return map(miniyank#read(), function('KeyValue'))
+endfunction
+
+function FZFYankHandler(opt, line) abort
+  let key = substitute(a:line, ' .*', '', '')
+  if !empty(a:line)
+    let yanks = miniyank#read()[key]
+    call miniyank#drop(yanks, a:opt)
+  endif
+endfunction
+
+command YanksAfter call fzf#run(fzf#wrap('YanksAfter', {
+\ 'source':  FZFYankList(),
+\ 'sink':    function('FZFYankHandler', ['p']),
+\ 'options': '--no-sort --prompt="Yanks-p> "',
+\ }))
+
+command YanksBefore call fzf#run(fzf#wrap('YanksBefore', {
+\ 'source':  FZFYankList(),
+\ 'sink':    function('FZFYankHandler', ['P']),
+\ 'options': '--no-sort --prompt="Yanks-P> "',
+\ }))
+
+map <leader>yp :YanksAfter<CR>
+map <leader>yP :YanksBefore<CR>
 
 " }}}
 " polyglot {{{
