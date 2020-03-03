@@ -4,4 +4,4 @@
 " setlocal tabstop=2
 " setlocal number
 
-EchoDocEnable
+" EchoDocEnable
