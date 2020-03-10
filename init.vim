@@ -128,7 +128,7 @@ Plug 'benmills/vimux'
 
 " git {{{
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'lambdalisue/vim-gista'
 Plug 'rhysd/git-messenger.vim'
 " }}}
@@ -138,8 +138,9 @@ Plug 'rhysd/git-messenger.vim'
 " }}}
 
 " looking good {{{
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-" Plug 'ryanoasis/vim-devicons'
+" Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'hardcoreplayers/spaceline.vim'
 " }}}
 
 " prose {{{
@@ -455,12 +456,12 @@ function! SetTheme()
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
             Cs one
-            let g:airline_theme='github'
+            " let g:airline_theme='github'
             let g:light=1
         else
             set background=dark
             Cs hybrid
-            let g:airline_theme="hybrid"
+            " let g:airline_theme="hybrid"
             " Cs one
             " let g:airline_theme="one"
 
@@ -472,7 +473,7 @@ endfunction
 let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_contrast_light='hard'
 
-command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
+command! ToggleTheme let g:light=!g:light | call SetTheme() "| AirlineRefresh
 nnoremap cot :<C-u>ToggleTheme<CR> 
 
 " use the presence of a file to determine if we want to start in light or dark mode
@@ -1052,19 +1053,19 @@ nmap <silent> <leader>a} <Plug>(ale_next_wrap)
 " }}}
 " airline {{{
 
-let g:airline#extensions#tmuxline#enabled = 0
-let g:airline#extensions#tabline#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+" let g:airline#extensions#tmuxline#enabled = 0
+" let g:airline#extensions#tabline#enabled = 0
+" let g:airline_powerline_fonts = 1
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
 
-call airline#parts#define_function('winnum', 'WindowNumber')
-function! MyPlugin(...)
-    let s:my_part = airline#section#create(['winnum'])
-    " let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . g:airline_right_sep . ' [' . s:my_part . ']'
-    let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . ' [' . s:my_part . ']'
-endfunction
-silent call airline#add_statusline_func('MyPlugin')
+" call airline#parts#define_function('winnum', 'WindowNumber')
+" function! MyPlugin(...)
+"     let s:my_part = airline#section#create(['winnum'])
+"     " let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . g:airline_right_sep . ' [' . s:my_part . ']'
+"     let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . ' [' . s:my_part . ']'
+" endfunction
+" silent call airline#add_statusline_func('MyPlugin')
 
 " }}}
 " auto-pairs {{{
@@ -1122,7 +1123,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 	
 " scroll float window
 nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
@@ -1136,7 +1137,13 @@ vmap <leader>pf  <Plug>(coc-format-selected)
 nmap <leader>pq  <Plug>(coc-fix-current)
 
 " Airline integration
-let g:airline#extensions#coc#enabled = 1
+" let g:airline#extensions#coc#enabled = 1
+
+" coc-git
+hi! link SignColumn Normal
+
+nmap ]h <Plug>(coc-git-nextchunk)
+nmap [h <Plug>(coc-git-prevchunk)
 
 " }}}
 " dispatch {{{
@@ -1269,19 +1276,19 @@ nnoremap <leader>fp :FZFProjectFiles<CR>
 " }}}
 " gitgutter {{{
 
-let g:gitgutter_map_keys = 0
-autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
-nnoremap ]h :GitGutterNextHunk<CR>
-nnoremap [h :GitGutterPrevHunk<CR>
-nnoremap ghs :GitGutterStageHunk<CR>
-nnoremap ghr :GitGutterRevertHunk<CR>
-nnoremap ghp :GitGutterPreviewHunk<CR>
-let g:gitgutter_realtime = 0
+" let g:gitgutter_map_keys = 0
+" autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
+" nnoremap ]h :GitGutterNextHunk<CR>
+" nnoremap [h :GitGutterPrevHunk<CR>
+" nnoremap ghs :GitGutterStageHunk<CR>
+" nnoremap ghr :GitGutterRevertHunk<CR>
+" nnoremap ghp :GitGutterPreviewHunk<CR>
+" let g:gitgutter_realtime = 0
 
-let g:gitgutter_sign_added = '┃'
-let g:gitgutter_sign_modified = '┃'
-let g:gitgutter_sign_removed = '┃'
-let g:gitgutter_sign_modified_removed = '┃'
+" let g:gitgutter_sign_added = '┃'
+" let g:gitgutter_sign_modified = '┃'
+" let g:gitgutter_sign_removed = '┃'
+" let g:gitgutter_sign_modified_removed = '┃'
 
 " }}}
 " goyo {{{
@@ -1394,13 +1401,13 @@ function FZFYankHandler(opt, line) abort
   endif
 endfunction
 
-command YanksAfter call fzf#run(fzf#wrap('YanksAfter', {
+command! YanksAfter call fzf#run(fzf#wrap('YanksAfter', {
 \ 'source':  FZFYankList(),
 \ 'sink':    function('FZFYankHandler', ['p']),
 \ 'options': '--no-sort --prompt="Yanks-p> "',
 \ }))
 
-command YanksBefore call fzf#run(fzf#wrap('YanksBefore', {
+command! YanksBefore call fzf#run(fzf#wrap('YanksBefore', {
 \ 'source':  FZFYankList(),
 \ 'sink':    function('FZFYankHandler', ['P']),
 \ 'options': '--no-sort --prompt="Yanks-P> "',
@@ -1433,6 +1440,11 @@ xmap t <Plug>Sneak_t
 xmap T <Plug>Sneak_T
 omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
+
+" }}}
+" spaceline {{{
+
+let g:spaceline_seperate_style= 'slant'
 
 " }}}
 " surround {{{
