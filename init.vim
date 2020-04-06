@@ -374,6 +374,7 @@ augroup CustomColors
                 \ endif
     au ColorScheme one if &background == 'dark' |
                 \ hi! Normal guifg=#cccccc |
+                \ hi! TermNormal guibg=#263238 |
                 \ nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#282c34") ? '#1a1d23' : '#282c34'<CR><CR> |
                 \ endif
     " au colorscheme one if &background == 'light' |
@@ -460,9 +461,10 @@ function! SetTheme()
             let g:light=1
         else
             set background=dark
-            Cs hybrid
+            " Cs hybrid
             " let g:airline_theme="hybrid"
-            " Cs one
+            Cs one
+            let g:term_bg="#3e4452"
             " let g:airline_theme="one"
 
             let g:light=0
@@ -769,6 +771,7 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " nmap ,; gwic
 " nmap ,: gwac
 
+" {{{ terminal
 " Neovim terminal mappings and settings
 if has('nvim')
     let $LAUNCHED_FROM_NVIM = 1
@@ -803,6 +806,8 @@ if has('nvim')
         endif
     endfunction
 
+    let s:float_term_border_win = 0
+    let s:float_term_win = 0
     function! s:term_create(cmd, mods, bang)
         " If we are in our terminal then close it
         if bufnr('%') == s:my_terminal_buffer
@@ -812,13 +817,25 @@ if has('nvim')
         endif
 
         " get the desired position if we want a floating window
+        let width = &columns/4 * 3
+        let height = &lines/4 * 3
+        let col = &columns/8
+        let row = &lines/8
         let floating_opts = {
                     \ 'relative': 'editor',
-                    \ 'width': &columns/4 * 3,
-                    \ 'height': &lines/4 * 3,
-                    \ 'col': &columns/8,
-                    \ 'row': &lines/8,
+                    \ 'width': width,
+                    \ 'height': height,
+                    \ 'col': col,
+                    \ 'row': row,
                     \ 'anchor': 'NW',
+                    \ 'style': 'minimal'
+                    \ }
+        let border_opts = {
+                    \ 'relative': 'editor',
+                    \ 'row': row - 1,
+                    \ 'col': col - 2,
+                    \ 'width': width + 4,
+                    \ 'height': height + 2,
                     \ 'style': 'minimal'
                     \ }
 
@@ -827,24 +844,38 @@ if has('nvim')
 
             if a:bang
                 " here we want a floating window
+
+                " let top = "╭" . repeat("─", width + 2) . "╮"
+                " let mid = "│" . repeat(" ", width + 2) . "│"
+                " let bot = "╰" . repeat("─", width + 2) . "╯"
+                " let lines = [top] + repeat([mid], height) + [bot]
+                let border_bufnr = nvim_create_buf(v:false, v:true)
+                " call nvim_buf_set_lines(border_bufnr, 0, -1, v:true, lines)
+                let s:float_term_border_win = nvim_open_win(border_bufnr, v:true, border_opts)
+
                 let bufnr = nvim_create_buf(v:false, v:true)
-                call nvim_open_win(bufnr, 1, floating_opts)
+                let s:float_term_win = nvim_open_win(bufnr, v:true, floating_opts)
 
                 " lots of options to set to make it like a terminal window
-                setlocal winblend=20
-                setlocal foldcolumn=1
+                " setlocal winblend=20
+                setlocal foldcolumn=0
                 setlocal bufhidden=hide
                 setlocal signcolumn=no
                 setlocal nobuflisted
                 setlocal nocursorline
-                setlocal nonumber
                 setlocal norelativenumber
+                setlocal nonumber
+                setlocal nocursorcolumn
+
+                call setwinvar(s:float_term_border_win, '&winhl', 'Normal:TermNormal')
 
                 " spin up the terminal in the floating window, optionally with a command
                 exe 'terminal ' . a:cmd
 
                 call s:my_terminal_maps(1)
                 
+                " Close border window when terminal window close
+                autocmd TermClose * ++once :bd! | call nvim_win_close(s:float_term_border_win, v:true)
             else
                 " here we want a standard split
                 exe a:mods . ' split'
@@ -911,7 +942,7 @@ if has('nvim')
     nnoremap <A-k> <C-w>k
     nnoremap <A-l> <C-w>l
 endif
-
+" }}}
 
 " }}}
 " Autocommands {{{
