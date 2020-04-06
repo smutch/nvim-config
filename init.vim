@@ -774,7 +774,15 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " {{{ terminal
 " Neovim terminal mappings and settings
 if has('nvim')
-    let $LAUNCHED_FROM_NVIM = 1
+    autocmd VimEnter * if !empty($NVIM_LISTEN_ADDRESS) && $NVIM_LISTEN_ADDRESS !=# v:servername
+                \ |let g:r=jobstart(['nc', '-U', $NVIM_LISTEN_ADDRESS],{'rpc':v:true})
+                \ |let g:f=fnameescape(expand('%:p'))
+                \ |noau bwipe
+                \ |call rpcrequest(g:r, "nvim_command", "edit ".g:f)
+                \ |call rpcrequest(g:r, "nvim_command", "call lib#SetNumberDisplay()")
+                \ |qa
+                \ |endif
+
     augroup MyTerm
         au!
         au BufWinEnter,WinEnter,TermOpen term://* startinsert 
