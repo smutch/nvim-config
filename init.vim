@@ -819,7 +819,8 @@ if has('nvim')
     function! s:term_create(cmd, mods, bang)
         " If we are in our terminal then close it
         if bufnr('%') == s:my_terminal_buffer
-            wincmd q
+            call nvim_win_close(s:my_terminal_border_win, v:true)
+            call nvim_win_close(s:my_terminal_window, v:true)
             redraw!
             return
         endif
@@ -857,12 +858,12 @@ if has('nvim')
                 " let mid = "│" . repeat(" ", width + 2) . "│"
                 " let bot = "╰" . repeat("─", width + 2) . "╯"
                 " let lines = [top] + repeat([mid], height) + [bot]
-                let border_bufnr = nvim_create_buf(v:false, v:true)
+                let s:my_terminal_border_buffer = nvim_create_buf(v:false, v:true)
                 " call nvim_buf_set_lines(border_bufnr, 0, -1, v:true, lines)
-                let s:float_term_border_win = nvim_open_win(border_bufnr, v:true, border_opts)
+                let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
 
-                let bufnr = nvim_create_buf(v:false, v:true)
-                let s:float_term_win = nvim_open_win(bufnr, v:true, floating_opts)
+                let s:my_terminal_buffer  = nvim_create_buf(v:false, v:true)
+                let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
 
                 " lots of options to set to make it like a terminal window
                 " setlocal winblend=20
@@ -875,7 +876,7 @@ if has('nvim')
                 setlocal nonumber
                 setlocal nocursorcolumn
 
-                call setwinvar(s:float_term_border_win, '&winhl', 'Normal:TermNormal')
+                call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
 
                 " spin up the terminal in the floating window, optionally with a command
                 exe 'terminal ' . a:cmd
@@ -883,11 +884,14 @@ if has('nvim')
                 call s:my_terminal_maps(1)
                 
                 " Close border window when terminal window close
-                autocmd TermClose * ++once :bd! | call nvim_win_close(s:float_term_border_win, v:true)
+                autocmd TermClose * ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
             else
                 " here we want a standard split
                 exe a:mods . ' split'
                 exe 'terminal ' . a:cmd
+
+                let s:my_terminal_buffer = bufnr('%')
+                let s:my_terminal_window = win_getid()
 
                 call s:my_terminal_maps(0)
             endif
@@ -895,17 +899,17 @@ if has('nvim')
             " always want to enter into insert mode
             startinsert
 
-            " store the buffer, window and command info
             let s:my_terminal_command = a:cmd
-            let s:my_terminal_window = win_getid()
-            let s:my_terminal_buffer = bufnr('%')
         else
             " our terminal buffer already exists
             if !win_gotoid(s:my_terminal_window)
                 " we can successfully change to our terminal window
                 if a:bang
                     " we want a floating window so create one
-                    call nvim_open_win(s:my_terminal_buffer, 1, floating_opts)
+                    let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
+                    let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
+                    call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
+                    autocmd TermClose * ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
 
                     call s:my_terminal_maps(1)
                 else
@@ -913,12 +917,12 @@ if has('nvim')
                     exe a:mods . ' split'
                     exe 'buffer ' . s:my_terminal_buffer
 
+                    " store the, potentially new, window and buffer info
+                    let s:my_terminal_window = win_getid()
+                    let s:my_terminal_buffer = bufnr('%')
+
                     call s:my_terminal_maps(0)
                 endif
-
-                " store the, potentially new, window and buffer info
-                let s:my_terminal_window = win_getid()
-                let s:my_terminal_buffer = bufnr('%')
 
                 " if we have also provided a command then run that
                 if a:cmd != ''
