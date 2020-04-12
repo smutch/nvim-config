@@ -141,6 +141,7 @@ Plug 'rhysd/git-messenger.vim'
 " Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'hardcoreplayers/spaceline.vim'
+Plug 'gcmt/taboo.vim'
 " }}}
 
 " prose {{{
@@ -221,6 +222,9 @@ let g:netrw_altfile = 1              " Prev buffer command excludes netrw buffer
 
 " I tend to write c rather than c++
 let g:c_syntax_for_h = 1
+
+" What to write in sessions
+set sessionoptions=blank,buffers,curdir,folds,help,tabpages,winsize,globals
 
 " Indent and wrapping {{{
 
@@ -1499,6 +1503,12 @@ autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math
 autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout
 autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
+
+" }}}
+" taboo {{{
+
+let g:taboo_tab_format=" %I|%f|%m "
+let g:taboo_renamed_tab_format=" %I|%l|%m "
 
 " }}}
 " tagbar {{{
