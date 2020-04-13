@@ -888,7 +888,7 @@ if has('nvim')
                 call s:my_terminal_maps(1)
                 
                 " Close border window when terminal window close
-                autocmd TermClose * ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
+                autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
             else
                 " here we want a standard split
                 exe a:mods . ' split'
@@ -913,7 +913,7 @@ if has('nvim')
                     let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
                     let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
                     call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
-                    autocmd TermClose * ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
+                    autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
 
                     call s:my_terminal_maps(1)
                 else
@@ -1507,8 +1507,8 @@ autocmd FileType markdown let b:surround_105 = "*\r*" "italics
 " }}}
 " taboo {{{
 
-let g:taboo_tab_format=" %I|%f|%m "
-let g:taboo_renamed_tab_format=" %I|%l|%m "
+let g:taboo_tab_format=" %I %f%m "
+let g:taboo_renamed_tab_format=" %I %l%m "
 
 " }}}
 " tagbar {{{
