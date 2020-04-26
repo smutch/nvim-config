@@ -379,6 +379,9 @@ augroup CustomColors
     au ColorScheme one if &background == 'dark' |
                 \ hi! Normal guifg=#cccccc |
                 \ hi! TermNormal guibg=#263238 |
+                \ for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText'] |
+                \   exec 'hi! '.group.' guibg=#2c323c' |
+                \ endfor |
                 \ nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#282c34") ? '#1a1d23' : '#282c34'<CR><CR> |
                 \ endif
     " au colorscheme one if &background == 'light' |
