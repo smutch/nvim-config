@@ -364,35 +364,36 @@ endfunction
 
 augroup CustomColors
     au!
-    au ColorScheme hybrid if &background == 'dark' |
-                \ hi! Normal guifg=#d9dbda |
-                \ hi! TermNormal guibg=#1d1f21 |
-                \ endif "|
-                " \ hi! Normal guibg=NONE | 
-                " \ hi! link pythonInclude Include
-    au ColorScheme Tomorrow if &background == 'light' |
-                \ hi! link Folded ColorColumn |
-                \ endif
-                " \ hi! Normal guibg=NONE | 
-    au ColorScheme one if &background == 'light' |
-                \ hi! Normal guibg=white |
-                \ endif
-    au ColorScheme one if &background == 'dark' |
-                \ hi! Normal guifg=#cccccc |
-                \ hi! TermNormal guibg=#263238 |
-                \ for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText'] |
-                \   exec 'hi! '.group.' guibg=#2c323c' |
-                \ endfor |
-                \ nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#282c34") ? '#1a1d23' : '#282c34'<CR><CR> |
-                \ endif
-    " au colorscheme one if &background == 'light' |
-                " \ hi! normal guibg=#ffffff |
-                " \ endif
-                " \ hi! normal guibg=none | 
+    au ColorScheme * hi! link Search DiffAdd
+                \| hi! link Conceal NonText
+    au ColorScheme hybrid if &background == 'dark'
+                \| hi! Normal guifg=#d9dbda
+                \| hi! TermNormal guibg=#1d1f21
+                \| endif "|
+                " \| hi! Normal guibg=NONE
+                " \| hi! link pythonInclude Include
+    au ColorScheme Tomorrow if &background == 'light'
+                \| hi! link Folded ColorColumn
+                \| endif
+                " \| hi! Normal guibg=NONE
+    au ColorScheme one if &background == 'light'
+                \| hi! Normal guibg=white
+                \| endif
+    au ColorScheme one if &background == 'dark'
+                \| hi! Normal guifg=#cccccc
+                \| hi! TermNormal guibg=#263238
+                \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
+                \|   exec 'hi! '.group.' guibg=#2c323c'
+                \| endfor
+                \| hi! Search guifg=white guibg=#3e4452
+                \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#282c34") ? '#1a1d23' : '#282c34'<CR><CR>
+                \| endif
+    " au colorscheme one if &background == 'light'
+                " \| hi! normal guibg=#ffffff
+                " \| endif
+                " \| hi! normal guibg=none
     au ColorScheme seagull,greygull
-                \ hi! NonText ctermfg=7 guifg=#e6eaed
-    au ColorScheme * hi! link Search DiffAdd |
-                \ hi! link Conceal NonText
+                \| hi! NonText ctermfg=7 guifg=#e6eaed
 augroup END
 
 " Properly switch colors {{{
