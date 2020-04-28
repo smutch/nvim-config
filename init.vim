@@ -117,6 +117,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'chrisbra/Colorizer'
 Plug 'majutsushi/tagbar'
+Plug 'kassio/neoterm'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " }}}
 
@@ -797,158 +798,158 @@ if has('nvim')
                     \ setlocal nocursorline nonumber norelativenumber
     augroup END
 
-    if !exists('s:my_terminal_buffer')
-        let s:my_terminal_buffer = -1
-    endif
-    if !exists('s:my_terminal_window')
-        let s:my_terminal_window = -1
-    endif
-    if !exists('s:my_terminal_command')
-        let s:my_terminal_command = &shell
-    endif
+    " if !exists('s:my_terminal_buffer')
+    "     let s:my_terminal_buffer = -1
+    " endif
+    " if !exists('s:my_terminal_window')
+    "     let s:my_terminal_window = -1
+    " endif
+    " if !exists('s:my_terminal_command')
+    "     let s:my_terminal_command = &shell
+    " endif
 
-    function! s:my_terminal_maps(floating)
-        if a:floating
-            tmap <buffer> <C-h> <C-\><C-n>:Tc!<CR>
-            tmap <buffer> <C-j> <C-\><C-n>:Tc!<CR>
-            tmap <buffer> <C-k> <C-\><C-n>:Tc!<CR>
-            tmap <buffer> <C-l> <C-\><C-n>:Tc!<CR>
-        else
-            tmap <buffer> <C-h> <C-\><C-n><C-w>h
-            tmap <buffer> <C-j> <C-\><C-n><C-w>j
-            tmap <buffer> <C-k> <C-\><C-n><C-w>k
-            tmap <buffer> <C-l> <C-\><C-n><C-w>l
-        endif
-    endfunction
+    " function! s:my_terminal_maps(floating)
+    "     if a:floating
+    "         tmap <buffer> <C-h> <C-\><C-n>:Tc!<CR>
+    "         tmap <buffer> <C-j> <C-\><C-n>:Tc!<CR>
+    "         tmap <buffer> <C-k> <C-\><C-n>:Tc!<CR>
+    "         tmap <buffer> <C-l> <C-\><C-n>:Tc!<CR>
+    "     else
+    "         tmap <buffer> <C-h> <C-\><C-n><C-w>h
+    "         tmap <buffer> <C-j> <C-\><C-n><C-w>j
+    "         tmap <buffer> <C-k> <C-\><C-n><C-w>k
+    "         tmap <buffer> <C-l> <C-\><C-n><C-w>l
+    "     endif
+    " endfunction
 
-    let s:float_term_border_win = 0
-    let s:float_term_win = 0
-    function! s:term_create(cmd, mods, bang)
-        " If we are in our terminal then close it
-        if bufnr('%') == s:my_terminal_buffer
-            call nvim_win_close(s:my_terminal_border_win, v:true)
-            call nvim_win_close(s:my_terminal_window, v:true)
-            redraw!
-            return
-        endif
+    " let s:float_term_border_win = 0
+    " let s:float_term_win = 0
+    " function! s:term_create(cmd, mods, bang)
+    "     " If we are in our terminal then close it
+    "     if bufnr('%') == s:my_terminal_buffer
+    "         call nvim_win_close(s:my_terminal_border_win, v:true)
+    "         call nvim_win_close(s:my_terminal_window, v:true)
+    "         redraw!
+    "         return
+    "     endif
 
-        " get the desired position if we want a floating window
-        let width = &columns/4 * 3
-        let height = &lines/4 * 3
-        let col = &columns/8
-        let row = &lines/8
-        let floating_opts = {
-                    \ 'relative': 'editor',
-                    \ 'width': width,
-                    \ 'height': height,
-                    \ 'col': col,
-                    \ 'row': row,
-                    \ 'anchor': 'NW',
-                    \ 'style': 'minimal'
-                    \ }
-        let border_opts = {
-                    \ 'relative': 'editor',
-                    \ 'row': row - 1,
-                    \ 'col': col - 2,
-                    \ 'width': width + 4,
-                    \ 'height': height + 2,
-                    \ 'style': 'minimal'
-                    \ }
+    "     " get the desired position if we want a floating window
+    "     let width = &columns/4 * 3
+    "     let height = &lines/4 * 3
+    "     let col = &columns/8
+    "     let row = &lines/8
+    "     let floating_opts = {
+    "                 \ 'relative': 'editor',
+    "                 \ 'width': width,
+    "                 \ 'height': height,
+    "                 \ 'col': col,
+    "                 \ 'row': row,
+    "                 \ 'anchor': 'NW',
+    "                 \ 'style': 'minimal'
+    "                 \ }
+    "     let border_opts = {
+    "                 \ 'relative': 'editor',
+    "                 \ 'row': row - 1,
+    "                 \ 'col': col - 2,
+    "                 \ 'width': width + 4,
+    "                 \ 'height': height + 2,
+    "                 \ 'style': 'minimal'
+    "                 \ }
 
-        if !bufexists(s:my_terminal_buffer)
-            " our terminal buffer doesn't exist
+    "     if !bufexists(s:my_terminal_buffer)
+    "         " our terminal buffer doesn't exist
 
-            if a:bang
-                " here we want a floating window
+    "         if a:bang
+    "             " here we want a floating window
 
-                " let top = "╭" . repeat("─", width + 2) . "╮"
-                " let mid = "│" . repeat(" ", width + 2) . "│"
-                " let bot = "╰" . repeat("─", width + 2) . "╯"
-                " let lines = [top] + repeat([mid], height) + [bot]
-                let s:my_terminal_border_buffer = nvim_create_buf(v:false, v:true)
-                " call nvim_buf_set_lines(border_bufnr, 0, -1, v:true, lines)
-                let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
+    "             " let top = "╭" . repeat("─", width + 2) . "╮"
+    "             " let mid = "│" . repeat(" ", width + 2) . "│"
+    "             " let bot = "╰" . repeat("─", width + 2) . "╯"
+    "             " let lines = [top] + repeat([mid], height) + [bot]
+    "             let s:my_terminal_border_buffer = nvim_create_buf(v:false, v:true)
+    "             " call nvim_buf_set_lines(border_bufnr, 0, -1, v:true, lines)
+    "             let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
 
-                let s:my_terminal_buffer  = nvim_create_buf(v:false, v:true)
-                let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
+    "             let s:my_terminal_buffer  = nvim_create_buf(v:false, v:true)
+    "             let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
 
-                " lots of options to set to make it like a terminal window
-                " setlocal winblend=20
-                setlocal foldcolumn=0
-                setlocal bufhidden=hide
-                setlocal signcolumn=no
-                setlocal nobuflisted
-                setlocal nocursorline
-                setlocal norelativenumber
-                setlocal nonumber
-                setlocal nocursorcolumn
+    "             " lots of options to set to make it like a terminal window
+    "             " setlocal winblend=20
+    "             setlocal foldcolumn=0
+    "             setlocal bufhidden=hide
+    "             setlocal signcolumn=no
+    "             setlocal nobuflisted
+    "             setlocal nocursorline
+    "             setlocal norelativenumber
+    "             setlocal nonumber
+    "             setlocal nocursorcolumn
 
-                call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
+    "             call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
 
-                " spin up the terminal in the floating window, optionally with a command
-                exe 'terminal ' . a:cmd
+    "             " spin up the terminal in the floating window, optionally with a command
+    "             exe 'terminal ' . a:cmd
 
-                call s:my_terminal_maps(1)
+    "             call s:my_terminal_maps(1)
                 
-                " Close border window when terminal window close
-                autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
-            else
-                " here we want a standard split
-                exe a:mods . ' split'
-                exe 'terminal ' . a:cmd
+    "             " Close border window when terminal window close
+    "             autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
+    "         else
+    "             " here we want a standard split
+    "             exe a:mods . ' split'
+    "             exe 'terminal ' . a:cmd
 
-                let s:my_terminal_buffer = bufnr('%')
-                let s:my_terminal_window = win_getid()
+    "             let s:my_terminal_buffer = bufnr('%')
+    "             let s:my_terminal_window = win_getid()
 
-                call s:my_terminal_maps(0)
-            endif
+    "             call s:my_terminal_maps(0)
+    "         endif
 
-            " always want to enter into insert mode
-            startinsert
+    "         " always want to enter into insert mode
+    "         startinsert
 
-            let s:my_terminal_command = a:cmd
-        else
-            " our terminal buffer already exists
-            if !win_gotoid(s:my_terminal_window)
-                " we can successfully change to our terminal window
-                if a:bang
-                    " we want a floating window so create one
-                    let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
-                    let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
-                    call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
-                    autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
+    "         let s:my_terminal_command = a:cmd
+    "     else
+    "         " our terminal buffer already exists
+    "         if !win_gotoid(s:my_terminal_window)
+    "             " we can successfully change to our terminal window
+    "             if a:bang
+    "                 " we want a floating window so create one
+    "                 let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
+    "                 let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
+    "                 call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
+    "                 autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
 
-                    call s:my_terminal_maps(1)
-                else
-                    " we want a standard split so create one
-                    exe a:mods . ' split'
-                    exe 'buffer ' . s:my_terminal_buffer
+    "                 call s:my_terminal_maps(1)
+    "             else
+    "                 " we want a standard split so create one
+    "                 exe a:mods . ' split'
+    "                 exe 'buffer ' . s:my_terminal_buffer
 
-                    " store the, potentially new, window and buffer info
-                    let s:my_terminal_window = win_getid()
-                    let s:my_terminal_buffer = bufnr('%')
+    "                 " store the, potentially new, window and buffer info
+    "                 let s:my_terminal_window = win_getid()
+    "                 let s:my_terminal_buffer = bufnr('%')
 
-                    call s:my_terminal_maps(0)
-                endif
+    "                 call s:my_terminal_maps(0)
+    "             endif
 
-                " if we have also provided a command then run that
-                if a:cmd != ''
-                    let s:my_terminal_command = a:cmd
-                    put =a:cmd . ''
-                else
-                    startinsert
-                endif
-            endif
-        endif
-    endfunction
+    "             " if we have also provided a command then run that
+    "             if a:cmd != ''
+    "                 let s:my_terminal_command = a:cmd
+    "                 put =a:cmd . ''
+    "             else
+    "                 startinsert
+    "             endif
+    "         endif
+    "     endif
+    " endfunction
 
-    command! -bar -complete=shellcmd -nargs=* -bang Tc call s:term_create(<q-args>, <q-mods>, <bang>0)
-    nnoremap <leader>tv :vertical Tc<CR>
-    nnoremap <leader>ts :belowright Tc<CR>
-    nnoremap <leader>tV :vertical Tc 
-    nnoremap <leader>tS :belowright Tc 
-    nnoremap <leader>tc :Tc 
-    nnoremap <leader>tt :Tc!<CR>
+    " command! -bar -complete=shellcmd -nargs=* -bang Tc call s:term_create(<q-args>, <q-mods>, <bang>0)
+    " nnoremap <leader>tv :vertical Tc<CR>
+    " nnoremap <leader>ts :belowright Tc<CR>
+    " nnoremap <leader>tV :vertical Tc 
+    " nnoremap <leader>tS :belowright Tc 
+    " nnoremap <leader>tc :Tc 
+    " nnoremap <leader>tt :Tc!<CR>
 
     tnoremap kj <C-\><C-n>
     tnoremap <C-h> <C-\><C-n><C-w>h
@@ -1400,29 +1401,6 @@ if !exists('g:loaded_matchit')
 endif
 
 " }}}
-" nerd_commenter {{{
-
-" Custom NERDCommenter mappings
-let g:NERDCustomDelimiters = {
-            \ 'scons': { 'left': '#' },
-            \ 'jinja': { 'left': '<!--', 'right': '-->' },
-            \ }
-
-let g:NERDSpaceDelims = 1
-let g:NERDAltDelims_c = 1
-map <leader><leader> <plug>NERDCommenterToggle
-nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
-nnoremap <leader>cP yy:<C-u>call NERDComment('n', 'comment')<CR>P
-vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
-vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
-
-" }}}
-" note-system {{{
-
-let g:notes_dir = '~/Dropbox/Notes'
-let g:notes_assets_dir = 'img'
-
-" }}}
 " miniyank {{{
 
 map p <Plug>(miniyank-autoput)
@@ -1465,6 +1443,34 @@ command! YanksBefore call fzf#run(fzf#wrap('YanksBefore', {
 
 map <leader>yp :YanksAfter<CR>
 map <leader>yP :YanksBefore<CR>
+
+" }}}
+" neoterm {{{
+
+let g:neoterm_automap_keys = '<LocalLeader>t'
+
+" }}}
+" nerd_commenter {{{
+
+" Custom NERDCommenter mappings
+let g:NERDCustomDelimiters = {
+            \ 'scons': { 'left': '#' },
+            \ 'jinja': { 'left': '<!--', 'right': '-->' },
+            \ }
+
+let g:NERDSpaceDelims = 1
+let g:NERDAltDelims_c = 1
+map <leader><leader> <plug>NERDCommenterToggle
+nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
+nnoremap <leader>cP yy:<C-u>call NERDComment('n', 'comment')<CR>P
+vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
+vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
+
+" }}}
+" note-system {{{
+
+let g:notes_dir = '~/Dropbox/Notes'
+let g:notes_assets_dir = 'img'
 
 " }}}
 " polyglot {{{
