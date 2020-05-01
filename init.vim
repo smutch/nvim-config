@@ -1449,6 +1449,11 @@ map <leader>yP :YanksBefore<CR>
 " neoterm {{{
 
 let g:neoterm_automap_keys = '<LocalLeader>t'
+nnoremap <Leader>tv :vert Tnew<CR><Esc>
+nnoremap <Leader>ts :below Tnew<CR><Esc>
+nnoremap <Leader>tt :Tnew<CR><Esc>
+nnoremap <Leader>tm :Tmap 
+nnoremap <Leader>to :Topen<CR><Esc>
 
 " }}}
 " nerd_commenter {{{
