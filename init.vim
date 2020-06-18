@@ -57,6 +57,7 @@ let hostname = substitute(system('hostname'), '\n', '', '')
 if (hostname =~ "farnarkle") || (hostname =~ "ozstar")
     let $PATH = '/fred/oz013/smutch/conda_envs/nvim/bin:' . $PATH
     let g:coc_node_path = '/fred/oz013/smutch/conda_envs/nvim/bin/node'
+    let g:python3_host_prog = '/fred/oz013/smutch/conda_envs/nvim/bin/python'
 elseif (hostname =~ "Rabbie")
     set shell=/usr/local/bin/zsh
 endif
@@ -115,7 +116,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'chrisbra/Colorizer'
+" Plug 'chrisbra/Colorizer'
 Plug 'majutsushi/tagbar'
 Plug 'kassio/neoterm'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -208,6 +209,7 @@ set autoread                         " Automatically re-read changed files
 set hidden                           " Don't unload a buffer when abandoning it
 set mouse=a                          " enable mouse for all modes settings
 set clipboard=unnamed                " To work in tmux
+let g:loaded_clipboard_provider = 1
 set spelllang=en_gb                  " British spelling
 set noshowmode                         " Don't show the current mode
 " set list                             " Show trailing & tab markers
@@ -1133,6 +1135,10 @@ nnoremap Q :Bdelete<CR>
 " }}}
 " coc {{{
 
+let g:coc_global_extensions = [ "coc-yaml", "coc-vimlsp", "coc-ultisnips",
+            \ "coc-python", "coc-highlight", "coc-github",
+            \ "coc-git", "coc-cmake", "coc-json"]
+
 command! Ecoc edit ~/.config/nvim/coc-settings.json
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -1506,7 +1512,7 @@ omap T <Plug>Sneak_T
 " }}}
 " spaceline {{{
 
-let g:spaceline_seperate_style= 'slant'
+" let g:spaceline_seperate_style= 'slant'
 
 " }}}
 " surround {{{
