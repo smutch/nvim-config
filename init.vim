@@ -1126,6 +1126,7 @@ nmap <silent> <leader>a} <Plug>(ale_next_wrap)
 
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutToggle = ''
+let g:AutoPairsShortcutBackInsert = '<A-b>'
 
 " }}}
 " bbye {{{
