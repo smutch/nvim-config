@@ -14,6 +14,7 @@
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": ["-l 120"],
     "python.linting.flake8Enabled": true,
+    "python.linting.flake8CategorySeverity.E": "Warning",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Args": ["--max-line-length=120"],
     "python.linting.flake8Path": "/fred/oz013/smutch/conda_envs/nvim/bin/flake8",
