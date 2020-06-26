@@ -85,6 +85,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " movement {{{
 Plug 'tpope/vim-rsi'
 Plug 'justinmk/vim-sneak'
+Plug 'danilamihailov/beacon.nvim'
 " }}}
 
 " editing {{{
