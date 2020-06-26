@@ -180,7 +180,6 @@ Plug 'anntzer/vim-cython', { 'for': ['python', 'cython'] }
 
 " rust {{{
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-Plug 'roxma/nvim-cm-racer', { 'for': 'rust' }
 " }}}
 
 " other {{{
