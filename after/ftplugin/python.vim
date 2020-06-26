@@ -19,6 +19,8 @@ nnoremap <buffer> <localleader>b :w<CR>:!black -l120 %<CR>:e<CR>
 
 nmap <leader>pi :CocCommand python.setInterpreter<CR>
 
+" put an f infront of the current string and return to where we were
+imap <M-f> <esc>?(["']<cr>af<esc>``la
 
 " The following isn't as useful now that I've started using vimux
 " let b:repl_window = '1.0'
