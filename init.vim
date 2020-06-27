@@ -178,10 +178,6 @@ Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'anntzer/vim-cython', { 'for': ['python', 'cython'] }
 " }}}
 
-" rust {{{
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-" }}}
-
 " other {{{
 Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
 Plug 'lervag/vimtex', { 'for': 'tex' }
