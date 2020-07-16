@@ -84,7 +84,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " movement {{{
 Plug 'tpope/vim-rsi'
-Plug 'justinmk/vim-sneak'
+Plug 'easymotion/vim-easymotion'
 Plug 'danilamihailov/beacon.nvim'
 " }}}
 
@@ -378,7 +378,7 @@ augroup CustomColors
                 \| hi! Normal guibg=white
                 \| endif
     au ColorScheme one if &background == 'dark'
-                \| hi! Normal guifg=#cccccc
+                \| hi! Normal guifg=#cccccc guibg=None
                 \| hi! TermNormal guibg=#263238
                 \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
                 \|   exec 'hi! '.group.' guibg=#2c323c'
@@ -781,15 +781,7 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " {{{ terminal
 " Neovim terminal mappings and settings
 if has('nvim')
-    autocmd VimEnter * if !empty($NVIM_LISTEN_ADDRESS) && $NVIM_LISTEN_ADDRESS !=# v:servername
-                \ |let g:r=jobstart(['nc', '-U', $NVIM_LISTEN_ADDRESS],{'rpc':v:true})
-                \ |let g:f=fnameescape(expand('%:p'))
-                \ |noau bwipe
-                \ |call rpcrequest(g:r, "nvim_command", "edit ".g:f)
-                \ |call rpcrequest(g:r, "nvim_command", "call lib#SetNumberDisplay()")
-                \ |qa
-                \ |endif
-
+    let $LAUNCHED_FROM_NVIM = 1
     augroup MyTerm
         au!
         au BufWinEnter,WinEnter,TermOpen term://* startinsert 
@@ -1191,6 +1183,10 @@ nmap <leader>pf  <Plug>(coc-format)
 vmap <leader>pf  <Plug>(coc-format-selected)
 nmap <leader>pq  <Plug>(coc-fix-current)
 
+" Navigation
+nmap ]c <Plug>(coc-diagnostic-next-error)
+nmap [c <Plug>(coc-diagnostic-prev-error)
+
 " Airline integration
 " let g:airline#extensions#coc#enabled = 1
 
@@ -1215,6 +1211,14 @@ let g:dispatch_handlers = ['tmux', 'screen', 'windows', 'x11', 'headless']
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+" }}}
+" easymotion {{{
+
+let g:EasyMotion_smartcase = 1
+nmap <leader>e <Plug>(easymotion-prefix)
+
+nmap s <Plug>(easymotion-overwin-f2)
 
 " }}}
 " echodoc {{{
@@ -1487,26 +1491,26 @@ let g:notes_assets_dir = 'img'
  let g:polyglot_disabled = ['tex', 'latex', 'python']
 
 " }}}
-" sneak {{{
+" " sneak {{{
 
-let g:sneak#streak = 1
+" let g:sneak#streak = 1
 
-"replace 'f' with 1-char Sneak
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F
-xmap f <Plug>Sneak_f
-xmap F <Plug>Sneak_F
-omap f <Plug>Sneak_f
-omap F <Plug>Sneak_F
-"replace 't' with 1-char Sneak
-nmap t <Plug>Sneak_t
-nmap T <Plug>Sneak_T
-xmap t <Plug>Sneak_t
-xmap T <Plug>Sneak_T
-omap t <Plug>Sneak_t
-omap T <Plug>Sneak_T
+" "replace 'f' with 1-char Sneak
+" nmap f <Plug>Sneak_f
+" nmap F <Plug>Sneak_F
+" xmap f <Plug>Sneak_f
+" xmap F <Plug>Sneak_F
+" omap f <Plug>Sneak_f
+" omap F <Plug>Sneak_F
+" "replace 't' with 1-char Sneak
+" nmap t <Plug>Sneak_t
+" nmap T <Plug>Sneak_T
+" xmap t <Plug>Sneak_t
+" xmap T <Plug>Sneak_T
+" omap t <Plug>Sneak_t
+" omap T <Plug>Sneak_T
 
-" }}}
+" " }}}
 " spaceline {{{
 
 " let g:spaceline_seperate_style= 'slant'
