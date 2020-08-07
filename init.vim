@@ -56,7 +56,6 @@ let hostname = substitute(system('hostname'), '\n', '', '')
 " endif
 if (hostname =~ "farnarkle") || (hostname =~ "ozstar")
     let $PATH = '/fred/oz013/smutch/conda_envs/nvim/bin:' . $PATH
-    let g:coc_node_path = '/fred/oz013/smutch/conda_envs/nvim/bin/node'
     let g:python3_host_prog = '/fred/oz013/smutch/conda_envs/nvim/bin/python'
 elseif (hostname =~ "Rabbie")
     set shell=/usr/local/bin/zsh
@@ -78,8 +77,11 @@ if !empty(glob("~/code/note-system"))
     Plug '~/code/note-system'
 endif
 
-" completion {{{
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" lsp and completion {{{
+Plug 'neovim/nvim-lsp'
+Plug 'nvim-lua/completion-nvim'
+Plug 'steelsojka/completion-buffers'
+Plug 'nvim-lua/diagnostic-nvim'
 " }}}
 
 " movement {{{
@@ -955,6 +957,20 @@ if has('nvim')
 endif
 " }}}
 
+" LSP {{{
+
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+
+" }}}
+
 " }}}
 " Autocommands {{{
 
@@ -1122,77 +1138,38 @@ let g:AutoPairsShortcutBackInsert = '<A-b>'
 nnoremap Q :Bdelete<CR>
 
 " }}}
-" coc {{{
+" completion-nvim {{{
 
-let g:coc_global_extensions = [ "coc-yaml", "coc-vimlsp", "coc-ultisnips",
-            \ "coc-python", "coc-highlight", "coc-github",
-            \ "coc-git", "coc-cmake", "coc-json"]
+let g:completion_chain_complete_list = [
+    \{'complete_items': ['lsp', 'snippet']},
+    \{'complete_items' : 'buffers'},
+    \{'mode': '<c-p>'},
+    \{'mode': '<c-n>'}
+\]
+let g:completion_auto_change_source = 1
 
-command! Ecoc edit ~/.config/nvim/coc-settings.json
+" enable for all filetypes except blacklist
+let complete_blacklist = ['vim-plug']
+autocmd BufEnter * if index(complete_blacklist, &ft) < 0 | lua require'completion'.on_attach()
 
-" Use tab for trigger completion with characters ahead and navigate.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" Avoid showing message extra message when using completion
+set shortmess+=c
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" use ultisnips
+let g:completion_enable_snippet = 'UltiSnips'
 
-" Remap keys for gotos
-nmap <silent> <C-]> <Plug>(coc-definition)
-nmap <silent> g<C-]> <Plug>(coc-declaration)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap ]c <Plug>(coc-diagnostic-next-error)
-nmap [c <Plug>(coc-diagnostic-prev-error)
-nmap gs :<C-u>CocList symbols<CR>
-nmap <leader>pe :<C-u>CocList diagnostics<CR>
+" }}}
+" diagnostic-nvim {{{
 
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-	
-" scroll float window
-nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
-nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
-
-" Commands
-nmap <leader>pd  <Plug>(coc-codeaction)
-nmap <leader>pr  <Plug>(coc-refactor)
-nmap <leader>pf  <Plug>(coc-format)
-vmap <leader>pf  <Plug>(coc-format-selected)
-nmap <leader>pq  <Plug>(coc-fix-current)
-
-" Airline integration
-" let g:airline#extensions#coc#enabled = 1
-
-" coc-git
-hi! link SignColumn Normal
-
-nmap ]h <Plug>(coc-git-nextchunk)
-nmap [h <Plug>(coc-git-prevchunk)
+let g:diagnostic_insert_delay = 1
+let g:diagnostic_auto_popup_while_jump = 1
 
 " }}}
 " dispatch {{{
@@ -1482,6 +1459,12 @@ vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
 
 let g:notes_dir = '~/Dropbox/Notes'
 let g:notes_assets_dir = 'img'
+
+" }}}
+" nvim-lsp {{{
+
+lua require'nvim_lsp'.rls.setup{on_attach=require'diagnostic'.on_attach}
+autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " }}}
 " polyglot {{{
