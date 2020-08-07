@@ -39,7 +39,7 @@ if os == "Darwin"
     let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
     let cscope_cmd="/usr/local/bin/cscope"
     " set tags+=$HOME/.vim/ctags-system-mac
-    let g:python3_host_prog = '/usr/local/Caskroom/miniconda/base/envs/nvim/bin/python'
+    let g:python3_host_prog = '/Users/smutch/miniconda3/envs/global/bin/python'
     let g:cmake_opts = '-DHDF5_ROOT=/usr/local -DMPI_C_COMPILER=/usr/local/bin/mpicc'
 else
     let g:cmake_opts = ''
@@ -54,7 +54,11 @@ let hostname = substitute(system('hostname'), '\n', '', '')
     " let &shellpipe="|& tee"
     " set t_ut=
 " endif
-if (hostname =~ "Rabbie")
+if (hostname =~ "farnarkle") || (hostname =~ "ozstar")
+    let $PATH = '/fred/oz013/smutch/conda_envs/nvim/bin:' . $PATH
+    let g:coc_node_path = '/fred/oz013/smutch/conda_envs/nvim/bin/node'
+    let g:python3_host_prog = '/fred/oz013/smutch/conda_envs/nvim/bin/python'
+elseif (hostname =~ "Rabbie")
     set shell=/usr/local/bin/zsh
 endif
 
@@ -75,28 +79,13 @@ if !empty(glob("~/code/note-system"))
 endif
 
 " completion {{{
-" Plug 'smutch/ncm2', { 'branch': 'hackfix' }
-
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'  " ncm2 requires nvim-yarp
-
-" some completion sources
-Plug 'ncm2/ncm2-bufword', { 'for': [] }
-augroup plug_ncm2
-  autocmd FileType * if expand('<amatch>') != 'tex' | call plug#load('ncm2/ncm2-bufword') | execute 'autocmd! plug_ncm2' | endif
-augroup END
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2-pyclang'
-Plug 'ncm2/ncm2-tagprefix'
-Plug 'ncm2/ncm2-github'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " }}}
 
 " movement {{{
 Plug 'tpope/vim-rsi'
-Plug 'justinmk/vim-sneak'
+Plug 'easymotion/vim-easymotion'
+Plug 'danilamihailov/beacon.nvim'
 " }}}
 
 " editing {{{
@@ -108,9 +97,10 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
-" Plug 'chrisbra/unicode.vim'
+Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
 Plug 'dyng/ctrlsf.vim'
+Plug 'bfredl/nvim-miniyank'
 " }}}
 
 " utils {{{
@@ -119,15 +109,18 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-obsession'
 Plug 'Shougo/echodoc.vim'
-Plug 'ncm2/float-preview.nvim'
+" Plug 'ncm2/float-preview.nvim'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'chrisbra/Colorizer'
+" Plug 'chrisbra/Colorizer'
 Plug 'majutsushi/tagbar'
+Plug 'kassio/neoterm'
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " }}}
 
 " tmux {{{
@@ -138,18 +131,20 @@ Plug 'benmills/vimux'
 
 " git {{{
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'lambdalisue/vim-gista'
 Plug 'rhysd/git-messenger.vim'
 " }}}
 
 " linting {{{
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 " }}}
 
 " looking good {{{
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-" Plug 'ryanoasis/vim-devicons'
+" Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'hardcoreplayers/spaceline.vim'
+Plug 'gcmt/taboo.vim'
 " }}}
 
 " prose {{{
@@ -178,14 +173,9 @@ Plug 'ayu-theme/ayu-vim'
 " python {{{
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python'}
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'anntzer/vim-cython', { 'for': ['python', 'cython'] }
-" }}}
-
-" rust {{{
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-Plug 'roxma/nvim-cm-racer', { 'for': 'rust' }
 " }}}
 
 " other {{{
@@ -215,6 +205,7 @@ set autoread                         " Automatically re-read changed files
 set hidden                           " Don't unload a buffer when abandoning it
 set mouse=a                          " enable mouse for all modes settings
 set clipboard=unnamed                " To work in tmux
+let g:loaded_clipboard_provider = 1
 set spelllang=en_gb                  " British spelling
 set noshowmode                         " Don't show the current mode
 " set list                             " Show trailing & tab markers
@@ -230,6 +221,9 @@ let g:netrw_altfile = 1              " Prev buffer command excludes netrw buffer
 
 " I tend to write c rather than c++
 let g:c_syntax_for_h = 1
+
+" What to write in sessions
+set sessionoptions=blank,buffers,curdir,folds,help,tabpages,winsize,globals
 
 " Indent and wrapping {{{
 
@@ -368,31 +362,36 @@ endfunction
 
 augroup CustomColors
     au!
-    au ColorScheme hybrid if &background == 'dark' |
-                \ hi! Normal guifg=#d9dbda |
-                \ hi! TermNormal guibg=#1d1f21 |
-                \ endif "|
-                " \ hi! Normal guibg=NONE | 
-                " \ hi! link pythonInclude Include
-    au ColorScheme Tomorrow if &background == 'light' |
-                \ hi! link Folded ColorColumn |
-                \ endif
-                " \ hi! Normal guibg=NONE | 
-    au ColorScheme one if &background == 'light' |
-                \ hi! Normal guibg=white |
-                \ endif
-    au ColorScheme one if &background == 'dark' |
-                \ hi! Normal guifg=#cccccc |
-                \ nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#282c34") ? '#1a1d23' : '#282c34'<CR><CR> |
-                \ endif
-    " au colorscheme one if &background == 'light' |
-                " \ hi! normal guibg=#ffffff |
-                " \ endif
-                " \ hi! normal guibg=none | 
+    au ColorScheme * hi! link Search DiffAdd
+                \| hi! link Conceal NonText
+    au ColorScheme hybrid if &background == 'dark'
+                \| hi! Normal guifg=#d9dbda
+                \| hi! TermNormal guibg=#1d1f21
+                \| endif "|
+                " \| hi! Normal guibg=NONE
+                " \| hi! link pythonInclude Include
+    au ColorScheme Tomorrow if &background == 'light'
+                \| hi! link Folded ColorColumn
+                \| endif
+                " \| hi! Normal guibg=NONE
+    au ColorScheme one if &background == 'light'
+                \| hi! Normal guibg=white
+                \| endif
+    au ColorScheme one if &background == 'dark'
+                \| hi! Normal guifg=#cccccc guibg=None
+                \| hi! TermNormal guibg=#263238
+                \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
+                \|   exec 'hi! '.group.' guibg=#2c323c'
+                \| endfor
+                \| hi! Search guifg=white guibg=#3e4452
+                \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#282c34") ? '#1a1d23' : '#282c34'<CR><CR>
+                \| endif
+    " au colorscheme one if &background == 'light'
+                " \| hi! normal guibg=#ffffff
+                " \| endif
+                " \| hi! normal guibg=none
     au ColorScheme seagull,greygull
-                \ hi! NonText ctermfg=7 guifg=#e6eaed
-    au ColorScheme * hi! link Search DiffAdd |
-                \ hi! link Conceal NonText
+                \| hi! NonText ctermfg=7 guifg=#e6eaed
 augroup END
 
 " Properly switch colors {{{
@@ -461,18 +460,18 @@ function! SetTheme()
 	" let g:hybrid_custom_term_colors = 1
     
     let g:hybrid_reduced_contrast = 1
-    let g:seoul256_light_background = 255
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
             Cs one
-            let g:airline_theme='one'
+            " let g:airline_theme='github'
             let g:light=1
         else
             set background=dark
-            Cs hybrid
-            let g:airline_theme="hybrid"
-            " Cs one
+            " Cs hybrid
+            " let g:airline_theme="hybrid"
+            Cs one
+            let g:term_bg="#3e4452"
             " let g:airline_theme="one"
 
             let g:light=0
@@ -483,7 +482,7 @@ endfunction
 let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_contrast_light='hard'
 
-command! ToggleTheme let g:light=!g:light | call SetTheme() | AirlineRefresh
+command! ToggleTheme let g:light=!g:light | call SetTheme() "| AirlineRefresh
 nnoremap cot :<C-u>ToggleTheme<CR> 
 
 " use the presence of a file to determine if we want to start in light or dark mode
@@ -698,7 +697,7 @@ command! GrabPWD let @d = system("pwd")
 
 " battery saving
 function! s:SaveBattery()
-    let g:ncm2#auto_popup = 0
+    " let g:ncm2#auto_popup = 0
 
     let g:ale_lint_on_text_changed = 0
     let g:ale_lint_on_enter = 0
@@ -709,7 +708,7 @@ endfunction
 command! SaveBattery :call <SID>SaveBattery()
 
 function! s:DrainBattery()
-    let g:ncm2#auto_popup = 1
+    " let g:ncm2#auto_popup = 1
 
     let g:ale_lint_on_text_changed = 'normal'
     let g:ale_lint_on_enter = 1
@@ -779,6 +778,7 @@ nnoremap coa :set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'forma
 " nmap ,; gwic
 " nmap ,: gwac
 
+" {{{ terminal
 " Neovim terminal mappings and settings
 if has('nvim')
     let $LAUNCHED_FROM_NVIM = 1
@@ -789,126 +789,158 @@ if has('nvim')
                     \ setlocal nocursorline nonumber norelativenumber
     augroup END
 
-    if !exists('s:my_terminal_buffer')
-        let s:my_terminal_buffer = -1
-    endif
-    if !exists('s:my_terminal_window')
-        let s:my_terminal_window = -1
-    endif
-    if !exists('s:my_terminal_command')
-        let s:my_terminal_command = &shell
-    endif
+    " if !exists('s:my_terminal_buffer')
+    "     let s:my_terminal_buffer = -1
+    " endif
+    " if !exists('s:my_terminal_window')
+    "     let s:my_terminal_window = -1
+    " endif
+    " if !exists('s:my_terminal_command')
+    "     let s:my_terminal_command = &shell
+    " endif
 
-    function! s:my_terminal_maps(floating)
-        if a:floating
-            tmap <buffer> <C-h> <C-\><C-n>:Tc!<CR>
-            tmap <buffer> <C-j> <C-\><C-n>:Tc!<CR>
-            tmap <buffer> <C-k> <C-\><C-n>:Tc!<CR>
-            tmap <buffer> <C-l> <C-\><C-n>:Tc!<CR>
-        else
-            tmap <buffer> <C-h> <C-\><C-n><C-w>h
-            tmap <buffer> <C-j> <C-\><C-n><C-w>j
-            tmap <buffer> <C-k> <C-\><C-n><C-w>k
-            tmap <buffer> <C-l> <C-\><C-n><C-w>l
-        endif
-    endfunction
+    " function! s:my_terminal_maps(floating)
+    "     if a:floating
+    "         tmap <buffer> <C-h> <C-\><C-n>:Tc!<CR>
+    "         tmap <buffer> <C-j> <C-\><C-n>:Tc!<CR>
+    "         tmap <buffer> <C-k> <C-\><C-n>:Tc!<CR>
+    "         tmap <buffer> <C-l> <C-\><C-n>:Tc!<CR>
+    "     else
+    "         tmap <buffer> <C-h> <C-\><C-n><C-w>h
+    "         tmap <buffer> <C-j> <C-\><C-n><C-w>j
+    "         tmap <buffer> <C-k> <C-\><C-n><C-w>k
+    "         tmap <buffer> <C-l> <C-\><C-n><C-w>l
+    "     endif
+    " endfunction
 
-    function! s:term_create(cmd, mods, bang)
-        " If we are in our terminal then close it
-        if bufnr('%') == s:my_terminal_buffer
-            wincmd q
-            redraw!
-            return
-        endif
+    " let s:float_term_border_win = 0
+    " let s:float_term_win = 0
+    " function! s:term_create(cmd, mods, bang)
+    "     " If we are in our terminal then close it
+    "     if bufnr('%') == s:my_terminal_buffer
+    "         call nvim_win_close(s:my_terminal_border_win, v:true)
+    "         call nvim_win_close(s:my_terminal_window, v:true)
+    "         redraw!
+    "         return
+    "     endif
 
-        " get the desired position if we want a floating window
-        let floating_opts = {
-                    \ 'relative': 'editor',
-                    \ 'width': &columns/4 * 3,
-                    \ 'height': &lines/4 * 3,
-                    \ 'col': &columns/8,
-                    \ 'row': &lines/8,
-                    \ 'anchor': 'NW',
-                    \ 'style': 'minimal'
-                    \ }
+    "     " get the desired position if we want a floating window
+    "     let width = &columns/4 * 3
+    "     let height = &lines/4 * 3
+    "     let col = &columns/8
+    "     let row = &lines/8
+    "     let floating_opts = {
+    "                 \ 'relative': 'editor',
+    "                 \ 'width': width,
+    "                 \ 'height': height,
+    "                 \ 'col': col,
+    "                 \ 'row': row,
+    "                 \ 'anchor': 'NW',
+    "                 \ 'style': 'minimal'
+    "                 \ }
+    "     let border_opts = {
+    "                 \ 'relative': 'editor',
+    "                 \ 'row': row - 1,
+    "                 \ 'col': col - 2,
+    "                 \ 'width': width + 4,
+    "                 \ 'height': height + 2,
+    "                 \ 'style': 'minimal'
+    "                 \ }
 
-        if !bufexists(s:my_terminal_buffer)
-            " our terminal buffer doesn't exist
+    "     if !bufexists(s:my_terminal_buffer)
+    "         " our terminal buffer doesn't exist
 
-            if a:bang
-                " here we want a floating window
-                let bufnr = nvim_create_buf(v:false, v:true)
-                call nvim_open_win(bufnr, 1, floating_opts)
+    "         if a:bang
+    "             " here we want a floating window
 
-                " lots of options to set to make it like a terminal window
-                setlocal winblend=20
-                setlocal foldcolumn=1
-                setlocal bufhidden=hide
-                setlocal signcolumn=no
-                setlocal nobuflisted
-                setlocal nocursorline
-                setlocal nonumber
-                setlocal norelativenumber
+    "             " let top = "╭" . repeat("─", width + 2) . "╮"
+    "             " let mid = "│" . repeat(" ", width + 2) . "│"
+    "             " let bot = "╰" . repeat("─", width + 2) . "╯"
+    "             " let lines = [top] + repeat([mid], height) + [bot]
+    "             let s:my_terminal_border_buffer = nvim_create_buf(v:false, v:true)
+    "             " call nvim_buf_set_lines(border_bufnr, 0, -1, v:true, lines)
+    "             let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
 
-                " spin up the terminal in the floating window, optionally with a command
-                exe 'terminal ' . a:cmd
+    "             let s:my_terminal_buffer  = nvim_create_buf(v:false, v:true)
+    "             let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
 
-                call s:my_terminal_maps(1)
+    "             " lots of options to set to make it like a terminal window
+    "             " setlocal winblend=20
+    "             setlocal foldcolumn=0
+    "             setlocal bufhidden=hide
+    "             setlocal signcolumn=no
+    "             setlocal nobuflisted
+    "             setlocal nocursorline
+    "             setlocal norelativenumber
+    "             setlocal nonumber
+    "             setlocal nocursorcolumn
+
+    "             call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
+
+    "             " spin up the terminal in the floating window, optionally with a command
+    "             exe 'terminal ' . a:cmd
+
+    "             call s:my_terminal_maps(1)
                 
-            else
-                " here we want a standard split
-                exe a:mods . ' split'
-                exe 'terminal ' . a:cmd
+    "             " Close border window when terminal window close
+    "             autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
+    "         else
+    "             " here we want a standard split
+    "             exe a:mods . ' split'
+    "             exe 'terminal ' . a:cmd
 
-                call s:my_terminal_maps(0)
-            endif
+    "             let s:my_terminal_buffer = bufnr('%')
+    "             let s:my_terminal_window = win_getid()
 
-            " always want to enter into insert mode
-            startinsert
+    "             call s:my_terminal_maps(0)
+    "         endif
 
-            " store the buffer, window and command info
-            let s:my_terminal_command = a:cmd
-            let s:my_terminal_window = win_getid()
-            let s:my_terminal_buffer = bufnr('%')
-        else
-            " our terminal buffer already exists
-            if !win_gotoid(s:my_terminal_window)
-                " we can successfully change to our terminal window
-                if a:bang
-                    " we want a floating window so create one
-                    call nvim_open_win(s:my_terminal_buffer, 1, floating_opts)
+    "         " always want to enter into insert mode
+    "         startinsert
 
-                    call s:my_terminal_maps(1)
-                else
-                    " we want a standard split so create one
-                    exe a:mods . ' split'
-                    exe 'buffer ' . s:my_terminal_buffer
+    "         let s:my_terminal_command = a:cmd
+    "     else
+    "         " our terminal buffer already exists
+    "         if !win_gotoid(s:my_terminal_window)
+    "             " we can successfully change to our terminal window
+    "             if a:bang
+    "                 " we want a floating window so create one
+    "                 let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
+    "                 let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
+    "                 call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
+    "                 autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
 
-                    call s:my_terminal_maps(0)
-                endif
+    "                 call s:my_terminal_maps(1)
+    "             else
+    "                 " we want a standard split so create one
+    "                 exe a:mods . ' split'
+    "                 exe 'buffer ' . s:my_terminal_buffer
 
-                " store the, potentially new, window and buffer info
-                let s:my_terminal_window = win_getid()
-                let s:my_terminal_buffer = bufnr('%')
+    "                 " store the, potentially new, window and buffer info
+    "                 let s:my_terminal_window = win_getid()
+    "                 let s:my_terminal_buffer = bufnr('%')
 
-                " if we have also provided a command then run that
-                if a:cmd != ''
-                    let s:my_terminal_command = a:cmd
-                    put =a:cmd . ''
-                else
-                    startinsert
-                endif
-            endif
-        endif
-    endfunction
+    "                 call s:my_terminal_maps(0)
+    "             endif
 
-    command! -bar -complete=shellcmd -nargs=* -bang Tc call s:term_create(<q-args>, <q-mods>, <bang>0)
-    nnoremap <leader>tv :vertical Tc<CR>
-    nnoremap <leader>ts :belowright Tc<CR>
-    nnoremap <leader>tV :vertical Tc 
-    nnoremap <leader>tS :belowright Tc 
-    nnoremap <leader>tc :Tc 
-    nnoremap <leader>tt :Tc!<CR>
+    "             " if we have also provided a command then run that
+    "             if a:cmd != ''
+    "                 let s:my_terminal_command = a:cmd
+    "                 put =a:cmd . ''
+    "             else
+    "                 startinsert
+    "             endif
+    "         endif
+    "     endif
+    " endfunction
+
+    " command! -bar -complete=shellcmd -nargs=* -bang Tc call s:term_create(<q-args>, <q-mods>, <bang>0)
+    " nnoremap <leader>tv :vertical Tc<CR>
+    " nnoremap <leader>ts :belowright Tc<CR>
+    " nnoremap <leader>tV :vertical Tc 
+    " nnoremap <leader>tS :belowright Tc 
+    " nnoremap <leader>tc :Tc 
+    " nnoremap <leader>tt :Tc!<CR>
 
     tnoremap kj <C-\><C-n>
     tnoremap <C-h> <C-\><C-n><C-w>h
@@ -921,7 +953,7 @@ if has('nvim')
     nnoremap <A-k> <C-w>k
     nnoremap <A-l> <C-w>l
 endif
-
+" }}}
 
 " }}}
 " Autocommands {{{
@@ -1063,30 +1095,106 @@ nmap <silent> <leader>a} <Plug>(ale_next_wrap)
 " }}}
 " airline {{{
 
-let g:airline#extensions#tmuxline#enabled = 0
-let g:airline#extensions#tabline#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+" let g:airline#extensions#tmuxline#enabled = 0
+" let g:airline#extensions#tabline#enabled = 0
+" let g:airline_powerline_fonts = 1
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
 
-call airline#parts#define_function('winnum', 'WindowNumber')
-function! MyPlugin(...)
-    let s:my_part = airline#section#create(['winnum'])
-    " let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . g:airline_right_sep . ' [' . s:my_part . ']'
-    let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . ' [' . s:my_part . ']'
-endfunction
-silent call airline#add_statusline_func('MyPlugin')
+" call airline#parts#define_function('winnum', 'WindowNumber')
+" function! MyPlugin(...)
+"     let s:my_part = airline#section#create(['winnum'])
+"     " let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . g:airline_right_sep . ' [' . s:my_part . ']'
+"     let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . ' [' . s:my_part . ']'
+" endfunction
+" silent call airline#add_statusline_func('MyPlugin')
 
 " }}}
 " auto-pairs {{{
 
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutToggle = ''
+let g:AutoPairsShortcutBackInsert = '<A-b>'
 
 " }}}
 " bbye {{{
 
 nnoremap Q :Bdelete<CR>
+
+" }}}
+" coc {{{
+
+let g:coc_global_extensions = [ "coc-yaml", "coc-vimlsp", "coc-ultisnips",
+            \ "coc-python", "coc-highlight", "coc-github",
+            \ "coc-git", "coc-cmake", "coc-json"]
+
+command! Ecoc edit ~/.config/nvim/coc-settings.json
+
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Remap keys for gotos
+nmap <silent> <C-]> <Plug>(coc-definition)
+nmap <silent> g<C-]> <Plug>(coc-declaration)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> g> <Plug>(coc-diagnostic-next)
+nmap <silent> g< <Plug>(coc-diagnostic-prev)
+nmap          gs :<C-u>CocList symbols<CR>
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+	
+" scroll float window
+nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
+
+" Commands
+nmap <leader>pd  <Plug>(coc-codeaction)
+nmap <leader>pr  <Plug>(coc-refactor)
+nmap <leader>pf  <Plug>(coc-format)
+vmap <leader>pf  <Plug>(coc-format-selected)
+nmap <leader>pq  <Plug>(coc-fix-current)
+
+" Navigation
+nmap ]c <Plug>(coc-diagnostic-next-error)
+nmap [c <Plug>(coc-diagnostic-prev-error)
+
+" Airline integration
+" let g:airline#extensions#coc#enabled = 1
+
+" coc-git
+hi! link SignColumn Normal
+
+nmap ]h <Plug>(coc-git-nextchunk)
+nmap [h <Plug>(coc-git-prevchunk)
 
 " }}}
 " dispatch {{{
@@ -1103,6 +1211,14 @@ let g:dispatch_handlers = ['tmux', 'screen', 'windows', 'x11', 'headless']
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+" }}}
+" easymotion {{{
+
+let g:EasyMotion_smartcase = 1
+nmap <leader>e <Plug>(easymotion-prefix)
+
+nmap s <Plug>(easymotion-overwin-f2)
 
 " }}}
 " echodoc {{{
@@ -1219,19 +1335,19 @@ nnoremap <leader>fp :FZFProjectFiles<CR>
 " }}}
 " gitgutter {{{
 
-let g:gitgutter_map_keys = 0
-autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
-nnoremap ]h :GitGutterNextHunk<CR>
-nnoremap [h :GitGutterPrevHunk<CR>
-nnoremap ghs :GitGutterStageHunk<CR>
-nnoremap ghr :GitGutterRevertHunk<CR>
-nnoremap ghp :GitGutterPreviewHunk<CR>
-let g:gitgutter_realtime = 0
+" let g:gitgutter_map_keys = 0
+" autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
+" nnoremap ]h :GitGutterNextHunk<CR>
+" nnoremap [h :GitGutterPrevHunk<CR>
+" nnoremap ghs :GitGutterStageHunk<CR>
+" nnoremap ghr :GitGutterRevertHunk<CR>
+" nnoremap ghp :GitGutterPreviewHunk<CR>
+" let g:gitgutter_realtime = 0
 
-let g:gitgutter_sign_added = '┃'
-let g:gitgutter_sign_modified = '┃'
-let g:gitgutter_sign_removed = '┃'
-let g:gitgutter_sign_modified_removed = '┃'
+" let g:gitgutter_sign_added = '┃'
+" let g:gitgutter_sign_modified = '┃'
+" let g:gitgutter_sign_removed = '┃'
+" let g:gitgutter_sign_modified_removed = '┃'
 
 " }}}
 " goyo {{{
@@ -1293,58 +1409,58 @@ if !exists('g:loaded_matchit')
 endif
 
 " }}}
-" ncm2 {{{
+" miniyank {{{
 
-" " enable for all buffers except terminals
-augroup ncm2
-    autocmd BufEnter * if &buftype !=# 'terminal' | call ncm2#enable_for_buffer()
-augroup end
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+map <leader>ys <Plug>(miniyank-startput)
+map <leader>yS <Plug>(miniyank-startPut)
+map <leader>yn <Plug>(miniyank-cycle)
+map <leader>yN <Plug>(miniyank-cycleback)
 
-" note that must keep noinsert in completeopt, the others is optional
-set completeopt=noinsert,menuone,noselect
+function FZFYankList() abort
+  function! KeyValue(key, val)
+    let line = join(a:val[0], '\n')
+    if (a:val[1] ==# 'V')
+      let line = '\n'.line
+    endif
+    return a:key.' '.line
+  endfunction
+  return map(miniyank#read(), function('KeyValue'))
+endfunction
 
-" supress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
+function FZFYankHandler(opt, line) abort
+  let key = substitute(a:line, ' .*', '', '')
+  if !empty(a:line)
+    let yanks = miniyank#read()[key]
+    call miniyank#drop(yanks, a:opt)
+  endif
+endfunction
 
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
+command! YanksAfter call fzf#run(fzf#wrap('YanksAfter', {
+\ 'source':  FZFYankList(),
+\ 'sink':    function('FZFYankHandler', ['p']),
+\ 'options': '--no-sort --prompt="Yanks-p> "',
+\ }))
 
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+command! YanksBefore call fzf#run(fzf#wrap('YanksBefore', {
+\ 'source':  FZFYankList(),
+\ 'sink':    function('FZFYankHandler', ['P']),
+\ 'options': '--no-sort --prompt="Yanks-P> "',
+\ }))
 
-" Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" if we are using manual completion
-inoremap <silent> <c-space> <c-r>=ncm2#manual_trigger()<cr>
-
-" }}}
-" ncm2-pyclang {{{
-
-if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
-    let g:ncm2_pyclang#library_path = "/apps/skylake/software/compiler/gcc/6.4.0/clang/5.0.1/lib/libclang.so.5.0"
-else
-    let g:ncm2_pyclang#library_path = "/usr/local/opt/llvm/lib"
-endif
-
-autocmd FileType c,cpp nnoremap <buffer> gd :<C-u>call ncm2_pyclang#goto_declaration()<CR>
-
-" show the preview window
-" let g:cm_completeopt="menu,menuone,noinsert,noselect,preview"
-" automatically close the preview window after completion
-" au CompleteDone * pclose
+map <leader>yp :YanksAfter<CR>
+map <leader>yP :YanksBefore<CR>
 
 " }}}
-" ncm2-ultisnips {{{
+" neoterm {{{
 
-" expand with enter
-let g:AutoPairsMapCR=0
-inoremap <silent> <Plug>(MyCR) <CR><C-R>=AutoPairsReturn()<CR>
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<Plug>(MyCR)", 'im')
+let g:neoterm_automap_keys = '<LocalLeader>t'
+nnoremap <Leader>tv :vert Tnew<CR><Esc>
+nnoremap <Leader>ts :below Tnew<CR><Esc>
+nnoremap <Leader>tt :Tnew<CR><Esc>
+nnoremap <Leader>tm :Tmap 
+nnoremap <Leader>to :Topen<CR><Esc>
 
 " }}}
 " nerd_commenter {{{
@@ -1375,24 +1491,29 @@ let g:notes_assets_dir = 'img'
  let g:polyglot_disabled = ['tex', 'latex', 'python']
 
 " }}}
-" sneak {{{
+" " sneak {{{
 
-let g:sneak#streak = 1
+" let g:sneak#streak = 1
 
-"replace 'f' with 1-char Sneak
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F
-xmap f <Plug>Sneak_f
-xmap F <Plug>Sneak_F
-omap f <Plug>Sneak_f
-omap F <Plug>Sneak_F
-"replace 't' with 1-char Sneak
-nmap t <Plug>Sneak_t
-nmap T <Plug>Sneak_T
-xmap t <Plug>Sneak_t
-xmap T <Plug>Sneak_T
-omap t <Plug>Sneak_t
-omap T <Plug>Sneak_T
+" "replace 'f' with 1-char Sneak
+" nmap f <Plug>Sneak_f
+" nmap F <Plug>Sneak_F
+" xmap f <Plug>Sneak_f
+" xmap F <Plug>Sneak_F
+" omap f <Plug>Sneak_f
+" omap F <Plug>Sneak_F
+" "replace 't' with 1-char Sneak
+" nmap t <Plug>Sneak_t
+" nmap T <Plug>Sneak_T
+" xmap t <Plug>Sneak_t
+" xmap T <Plug>Sneak_T
+" omap t <Plug>Sneak_t
+" omap T <Plug>Sneak_T
+
+" " }}}
+" spaceline {{{
+
+" let g:spaceline_seperate_style= 'slant'
 
 " }}}
 " surround {{{
@@ -1404,6 +1525,12 @@ autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math
 autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout
 autocmd FileType markdown let b:surround_98 = "**\r**" "bold
 autocmd FileType markdown let b:surround_105 = "*\r*" "italics
+
+" }}}
+" taboo {{{
+
+let g:taboo_tab_format=" %I %f%m "
+let g:taboo_renamed_tab_format=" %I %l%m "
 
 " }}}
 " tagbar {{{
