@@ -1,7 +1,7 @@
 nvim-setup
 =========
 
-My Neovim setup.  A relatively recent version of Neovim with python support is required.
+My Neovim setup.  As of writing, nvim-nighlty is required.
 
 
 Usage
