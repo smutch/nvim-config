@@ -80,7 +80,7 @@ endif
 " lsp and completion {{{
 Plug 'neovim/nvim-lsp'
 Plug 'nvim-lua/completion-nvim'
-Plug 'steelsojka/completion-buffers'
+" Plug 'steelsojka/completion-buffers'
 Plug 'nvim-lua/diagnostic-nvim'
 " }}}
 
@@ -1140,12 +1140,13 @@ nnoremap Q :Bdelete<CR>
 " }}}
 " completion-nvim {{{
 
-let g:completion_chain_complete_list = [
-    \{'complete_items': ['lsp', 'snippet']},
-    \{'complete_items' : 'buffers'},
-    \{'mode': '<c-p>'},
-    \{'mode': '<c-n>'}
-\]
+" let g:completion_chain_complete_list = [
+"     \{'complete_items': 'lsp'},
+"     \{'complete_items': 'snippet'},
+"     \{'complete_items': 'buffers'},
+"     \{'mode': '<c-p>'},
+"     \{'mode': '<c-n>'}
+" \]
 let g:completion_auto_change_source = 1
 
 " enable for all filetypes except blacklist
@@ -1170,6 +1171,9 @@ let g:completion_enable_snippet = 'UltiSnips'
 
 let g:diagnostic_insert_delay = 1
 let g:diagnostic_auto_popup_while_jump = 1
+nmap <LocalLeader>] :NextDiagnosticCycle<CR>
+nmap <LocalLeader>[ :PrevDiagnosticCycle<CR>
+nmap <LocalLeader>d :OpenDiagnostic<CR>
 
 " }}}
 " dispatch {{{
