@@ -1154,9 +1154,11 @@ nmap <silent> g<C-]> <Plug>(coc-declaration)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> g> <Plug>(coc-diagnostic-next)
-nmap <silent> g< <Plug>(coc-diagnostic-prev)
-nmap          gs :<C-u>CocList symbols<CR>
+nmap ]c <Plug>(coc-diagnostic-next-error)
+nmap [c <Plug>(coc-diagnostic-prev-error)
+nmap gs :<C-u>CocList symbols<CR>
+nmap <leader>pe :<C-u>CocList diagnostics<CR>
+
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -1182,10 +1184,6 @@ nmap <leader>pr  <Plug>(coc-refactor)
 nmap <leader>pf  <Plug>(coc-format)
 vmap <leader>pf  <Plug>(coc-format-selected)
 nmap <leader>pq  <Plug>(coc-fix-current)
-
-" Navigation
-nmap ]c <Plug>(coc-diagnostic-next-error)
-nmap [c <Plug>(coc-diagnostic-prev-error)
 
 " Airline integration
 " let g:airline#extensions#coc#enabled = 1
