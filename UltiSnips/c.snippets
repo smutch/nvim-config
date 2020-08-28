@@ -51,7 +51,7 @@ endsnippet
 
 
 snippet fori "for int (ii) loop (fori)"
-for(int ${2:ii}=0; $2 < ${1:count}; ${3:$2++})
+for(int ${2:ii}=0; $2 < ${1:count}; ${3:++$2})
 {
 	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
 }
