@@ -1566,7 +1566,7 @@ let g:vimtex_fold_enabled = 1
 let g:vimtex_compiler_progname='nvr'
 
 " Quick map for adding a new item to an itemize environment list
-call vimtex#imaps#add_map({
+au! FileType tex call vimtex#imaps#add_map({
   \ 'lhs' : '<A-CR>',
   \ 'rhs' : '\item ',
   \ 'leader' : '',
