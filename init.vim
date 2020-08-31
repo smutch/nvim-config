@@ -1040,75 +1040,6 @@ endif
 
 " }}}
 " Plugin settings {{{
-" ale {{{
-
-let g:ale_lint_on_text_changed = 'normal'
-
-let g:ale_linters = {
-\   'python': ['flake8'],
-\   'c' : ['clangtidy', 'cppcheck', 'clang'],
-\   'cpp' : ['clangtidy', 'cppcheck'],
-\   'cuda': ['cppcheck']
-\}
-" \   'c' : ['cppcheck', 'ccls', 'clangtidy'],
-" \   'cpp' : ['cppcheck', 'ccls'],
-
-let g:ale_fixers = {
-\   'c': ['clang-format']
-\}
-
-if (hostname =~ "farnarkle") || (hostname =~ "swin.edu.au")
-    let g:ale_cpp_cppcheck_executable="/fred/oz013/smutch/3rd_party/cppcheck/bin/cppcheck"
-    let g:ale_c_cppcheck_executable=g:ale_cpp_cppcheck_executable
-    let g:ale_cuda_cppcheck_executable=g:ale_cpp_cppcheck_executable
-    " let g:ale_cpp_clang_executable="/home/smutch/.conda/envs/gpu_test/bin/clang++"
-    " let g:ale_c_clang_executable="/home/smutch/.conda/envs/gpu_test/bin/clang"
-    let g:ale_c_ccls_executable="/home/smutch/freddos/meraxes/3rd_party/ccls/bin/ccls"
-    " call remove(g:ale_linters['c'], 1, 2)
-endif
-
-let g:ale_c_build_dir_names=['build', 'cmake-build-debug']
-
-" let g:ale_cpp_cppcheck_options="--project=compile_commands.json --enable=style"
-let g:ale_c_clangtidy_checks = ['-*', 'google-*', '-google-runtime-references', '-google-readability-braces-around-statements', 'modernize-*', 'mpi-*', 'performance-*', 'clang-analyzer-*', 'bugprone-*']
-let g:ale_cpp_clangtidy_checks = g:ale_c_clangtidy_checks + ['cppcoreguidelines-*', '-cppcoreguidelines-pro-*']
-let g:ale_c_clangformat_options = "-style=WebKit"
-
-let g:ale_python_flake8_options = "--ignore=E501,E402,E226,E203,W503"
-
-let g:ale_tex_chktex_options = "-I -n 35"
-
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '!'
-let g:ale_sign_info = 'ℹ'
-let g:ale_sign_style_error = 'S>'
-let g:ale_sign_style_warning = 's>'
-
-hi! ALEError cterm=underline gui=underline guisp=Red
-hi! link ALEWarning WarningMsg
-hi! link ALEInfo MoreMsg
-
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '» '
-
-nmap <leader>ar <Plug>(ale_find_references)
-nmap <leader>af <Plug>(ale_fix)
-nmap <leader>ad <Plug>(ale_go_to_definition)
-nmap <leader>aD <Plug>(ale_go_to_definition_in_split)
-nmap <leader>at <Plug>(ale_go_to_type_definition)
-nmap <leader>aT <Plug>(ale_go_to_type_definition_in_split)
-nmap <leader>ak <Plug>(ale_hover)
-nmap <leader>al <Plug>(ale_lint)
-
-" Map movement through errors without wrapping.
-nmap <silent> <leader>a[ <Plug>(ale_previous)
-nmap <silent> <leader>a] <Plug>(ale_next)
-
-" OR map keys to use wrapping.
-nmap <silent> <leader>a{ <Plug>(ale_previous_wrap)
-nmap <silent> <leader>a} <Plug>(ale_next_wrap)
-
-" }}}
 " airline {{{
 
 " let g:airline#extensions#tmuxline#enabled = 0
@@ -1467,8 +1398,22 @@ let g:notes_assets_dir = 'img'
 " }}}
 " nvim-lsp {{{
 
-lua require'nvim_lsp'.rls.setup{on_attach=require'diagnostic'.on_attach}
-autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+lua << EOF
+
+nvim_lsp = require('nvim_lsp')
+diagnostic = require('diagnostic')
+
+function registerLSP(name, ...)
+    nvim_lsp[name].setup{on_attach=diagnostic.on_attach, ...}
+    vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+end
+
+registerLSP('rls')
+registerLSP('clangd')
+
+EOF
+
+" see after/ftplugin/python.vim for python setup
 
 " }}}
 " polyglot {{{
@@ -1499,6 +1444,7 @@ autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 " spaceline {{{
 
 " let g:spaceline_seperate_style= 'slant'
+let g:spaceline_lsp_executive = 'nvim_lsp'
 
 " }}}
 " surround {{{
