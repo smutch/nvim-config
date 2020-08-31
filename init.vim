@@ -1149,8 +1149,30 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Remap keys for gotos
-nmap <silent> <C-]> <Plug>(coc-definition)
-nmap <silent> g<C-]> <Plug>(coc-declaration)
+function! s:GoToDefinition()
+  if CocAction('jumpDefinition')
+    return v:true
+  endif
+
+  let ret = execute("silent! normal \<C-]>")
+  if ret =~ "Error"
+    call searchdecl(expand('<cword>'))
+  endif
+endfunction
+
+function! s:GoToDeclaration()
+  if CocAction('jumpDeclaration')
+    return v:true
+  endif
+
+  let ret = execute("silent! normal g]")
+  if ret =~ "Error"
+    call searchdecl(expand('<cword>'))
+  endif
+endfunction
+
+nmap <silent> gd :call <SID>GoToDefinition()<CR>
+nmap <silent> gD :call <SID>GoToDeclaration()<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -1158,7 +1180,6 @@ nmap ]c <Plug>(coc-diagnostic-next-error)
 nmap [c <Plug>(coc-diagnostic-prev-error)
 nmap gs :<C-u>CocList symbols<CR>
 nmap <leader>pe :<C-u>CocList diagnostics<CR>
-
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -1566,13 +1587,17 @@ let g:vimtex_fold_enabled = 1
 let g:vimtex_compiler_progname='nvr'
 
 " Quick map for adding a new item to an itemize environment list
-au! FileType tex call vimtex#imaps#add_map({
-  \ 'lhs' : '<A-CR>',
-  \ 'rhs' : '\item ',
-  \ 'leader' : '',
-  \ 'wrapper' : 'vimtex#imaps#wrap_environment',
-  \ 'context' : ["itemize", "enumerate"],
-  \})
+augroup vimtex
+    au!
+    au FileType tex
+                \ call vimtex#imaps#add_map({
+                \ 'lhs' : '<A-CR>',
+                \ 'rhs' : '\item ',
+                \ 'leader' : '',
+                \ 'wrapper' : 'vimtex#imaps#wrap_environment',
+                \ 'context' : ["itemize", "enumerate"],
+                \})
+augroup END
 
 " }}}
 " vimux {{{
