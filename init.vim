@@ -87,7 +87,7 @@ Plug 'nvim-lua/diagnostic-nvim'
 " movement {{{
 Plug 'tpope/vim-rsi'
 Plug 'easymotion/vim-easymotion'
-Plug 'danilamihailov/beacon.nvim'
+" Plug 'danilamihailov/beacon.nvim'
 " }}}
 
 " editing {{{
@@ -1410,6 +1410,17 @@ end
 
 registerLSP('rls')
 registerLSP('clangd')
+registerLSP('cmake')
+registerLSP('jsonls')
+
+nvim_lsp.sumneko_lua.setup{
+    on_attach = diagnostic.on_attach,
+    cmd = {
+        "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
+        "-E",
+        "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
+    }
+}
 
 EOF
 
