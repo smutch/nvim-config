@@ -20,9 +20,9 @@ local on_attach = function(client, bufnr)
   vim.fn.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>]", "<cmd>lua require 'diagnostic'.jumpLoc.jumpNextLocationCycle()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>[", "<cmd>lua require 'diagnostic'.jumpLoc.jumpPrevLocationCycle()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua require 'diagnostic'.jumpLoc.openDiagnostics()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>]", "<cmd>lua require 'jumpLoc'.jumpNextLocationCycle()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>[", "<cmd>lua require 'jumpLoc'.jumpPrevLocationCycle()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua require 'jumpLoc'.openDiagnostics()<CR>", {noremap = true, silent = true})
 
   vim.api.nvim_command('call sign_define("LspDiagnosticsErrorSign", {"text" : "", "texthl" : "LspDiagnosticsError"})')
   vim.api.nvim_command('call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})')
@@ -35,26 +35,49 @@ nvim_lsp.pyls_ms.setup{
     on_attach = on_attach
 }
 
-nvim_lsp.sumneko_lua.setup{
-  on_attach = on_attach,
-  cmd = {
-      "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
-      "-E",
-      "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
-  }
-}
+do
+  local method = "textDocument/publishDiagnostics"
+  local default_callback = vim.lsp.callbacks[method]
+  vim.lsp.callbacks[method] = function(err, method, result, client_id)
+    default_callback(err, method, result, client_id)
+    if result and result.diagnostics then
+      for _, v in ipairs(result.diagnostics) do
+        v.bufnr = client_id
+        v.lnum = v.range.start.line + 1
+        v.col = v.range.start.character + 1
+        v.text = v.message
+      end
+      vim.lsp.util.set_qflist(result.diagnostics)
+    end
+  end
+end
+
+-- nvim_lsp.jedi_language_server.setup{
+--     on_attach = on_attach,
+--     cmd = {"/home/smutch/freddos/meraxes/conda_envs/nvim/bin/jedi-language-server"}
+-- }
+
+-- nvim_lsp.sumneko_lua.setup{
+--   on_attach = on_attach,
+--   cmd = {
+--       "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
+--       "-E",
+--       "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
+--   }
+-- }
+
 -- nvim_lsp.vimls.setup{
-  -- on_attach = on_attach
+--   on_attach = on_attach
 -- }
 nvim_lsp.clangd.setup{
   on_attach = on_attach
 }
-nvim_lsp.rls.setup{
-  on_attach = on_attach
-}
+-- nvim_lsp.rls.setup{
+--   on_attach = on_attach
+-- }
 nvim_lsp.cmake.setup{
   on_attach = on_attach
 }
 -- nvim_lsp.jsonls.setup{
-  -- on_attach = on_attach
+--   on_attach = on_attach
 -- }

@@ -1373,8 +1373,8 @@ lua require('lsp')
 " let g:spaceline_seperate_style= 'slant'
 let g:spaceline_colorscheme = 'one'
 let g:spaceline_diagnostic_tool = 'nvim_lsp'
-let g:spaceline_diagnostic_errorsign = ''
-let g:spaceline_diagnostic_warnsign = ''
+let g:spaceline_diagnostic_errorsign = ' '
+let g:spaceline_diagnostic_warnsign = ' '
 let g:spaceline_git_branch_icon = ''
 
 " }}}
