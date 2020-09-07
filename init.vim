@@ -1037,23 +1037,6 @@ lua require('treesitter')
 
 " }}}
 " Plugin settings {{{
-" airline {{{
-
-" let g:airline#extensions#tmuxline#enabled = 0
-" let g:airline#extensions#tabline#enabled = 0
-" let g:airline_powerline_fonts = 1
-" let g:airline_left_sep=''
-" let g:airline_right_sep=''
-
-" call airline#parts#define_function('winnum', 'WindowNumber')
-" function! MyPlugin(...)
-"     let s:my_part = airline#section#create(['winnum'])
-"     " let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . g:airline_right_sep . ' [' . s:my_part . ']'
-"     let w:airline_section_x = get(w:, 'airline_section_x', g:airline_section_x) . ' [' . s:my_part . ']'
-" endfunction
-" silent call airline#add_statusline_func('MyPlugin')
-
-" }}}
 " auto-pairs {{{
 
 let g:AutoPairsFlyMode = 0
@@ -1077,6 +1060,9 @@ autocmd BufEnter * if index(complete_blacklist, &ft) < 0 | lua require'completio
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" use ctrl-space for manual completion
+inoremap <silent><expr> <c-space> completion#trigger_completion()
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
@@ -1413,26 +1399,6 @@ let g:notes_assets_dir = 'img'
  let g:polyglot_disabled = ['tex', 'latex', 'python']
 
 " }}}
-" " sneak {{{
-
-" let g:sneak#streak = 1
-
-" "replace 'f' with 1-char Sneak
-" nmap f <Plug>Sneak_f
-" nmap F <Plug>Sneak_F
-" xmap f <Plug>Sneak_f
-" xmap F <Plug>Sneak_F
-" omap f <Plug>Sneak_f
-" omap F <Plug>Sneak_F
-" "replace 't' with 1-char Sneak
-" nmap t <Plug>Sneak_t
-" nmap T <Plug>Sneak_T
-" xmap t <Plug>Sneak_t
-" xmap T <Plug>Sneak_T
-" omap t <Plug>Sneak_t
-" omap T <Plug>Sneak_T
-
-" " }}}
 " spaceline {{{
 
 " let g:spaceline_seperate_style= 'slant'
@@ -1472,12 +1438,6 @@ let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 let g:ultisnips_python_style = 'numpy'
-
-" }}}
-" vimcompletesme {{{
-
-" set noshowmode shortmess+=c
-" autocmd FileType tex,python let b:vcm_tab_complete = "omni"
 
 " }}}
 " vimtex {{{
