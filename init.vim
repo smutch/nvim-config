@@ -957,20 +957,6 @@ if has('nvim')
 endif
 " }}}
 
-" LSP {{{
-
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-
-" }}}
-
 " }}}
 " Autocommands {{{
 
@@ -1039,6 +1025,11 @@ if !has('gui_running')
 endif
 
 " }}}
+" LSP {{{
+
+lua require('lsp')
+
+" }}}
 " Plugin settings {{{
 " airline {{{
 
@@ -1071,13 +1062,6 @@ nnoremap Q :Bdelete<CR>
 " }}}
 " completion-nvim {{{
 
-" let g:completion_chain_complete_list = [
-"     \{'complete_items': 'lsp'},
-"     \{'complete_items': 'snippet'},
-"     \{'complete_items': 'buffers'},
-"     \{'mode': '<c-p>'},
-"     \{'mode': '<c-n>'}
-" \]
 let g:completion_auto_change_source = 1
 
 " enable for all filetypes except blacklist
@@ -1096,15 +1080,6 @@ set shortmess+=c
 
 " use ultisnips
 let g:completion_enable_snippet = 'UltiSnips'
-
-" }}}
-" diagnostic-nvim {{{
-
-let g:diagnostic_insert_delay = 1
-let g:diagnostic_auto_popup_while_jump = 1
-nmap <LocalLeader>] :NextDiagnosticCycle<CR>
-nmap <LocalLeader>[ :PrevDiagnosticCycle<CR>
-nmap <LocalLeader>d :OpenDiagnostic<CR>
 
 " }}}
 " dispatch {{{
@@ -1398,31 +1373,31 @@ let g:notes_assets_dir = 'img'
 " }}}
 " nvim-lsp {{{
 
-lua << EOF
+" lua << EOF
 
-nvim_lsp = require('nvim_lsp')
-diagnostic = require('diagnostic')
+" nvim_lsp = require('nvim_lsp')
+" diagnostic = require('diagnostic')
 
-function registerLSP(name, ...)
-    nvim_lsp[name].setup{on_attach=diagnostic.on_attach, ...}
-    vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-end
+" function registerLSP(name, ...)
+"     nvim_lsp[name].setup{on_attach=diagnostic.on_attach, ...}
+"     vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+" end
 
-registerLSP('rls')
-registerLSP('clangd')
-registerLSP('cmake')
-registerLSP('jsonls')
+" registerLSP('rls')
+" registerLSP('clangd')
+" registerLSP('cmake')
+" registerLSP('jsonls')
 
-nvim_lsp.sumneko_lua.setup{
-    on_attach = diagnostic.on_attach,
-    cmd = {
-        "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
-        "-E",
-        "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
-    }
-}
+" nvim_lsp.sumneko_lua.setup{
+"     on_attach = diagnostic.on_attach,
+"     cmd = {
+"         "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
+"         "-E",
+"         "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
+"     }
+" }
 
-EOF
+" EOF
 
 " see after/ftplugin/python.vim for python setup
 
