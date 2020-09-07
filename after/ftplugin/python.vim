@@ -15,15 +15,7 @@ let g:python_highlight_all = 1
 nnoremap <buffer> <localleader>r :w<CR>:Dispatch python %<CR>
 nnoremap <buffer> <localleader>f :w<CR>:!black -l120 %<CR>:e<CR>
 
-lua << EOF
-local on_attach = function(_, bufnr)
-    require'diagnostic'.on_attach(_, bufnr)
-end
-
-require'nvim_lsp'.pyls_ms.setup{
-    on_attach=on_attach,
-}
-EOF
+" use lsp omnifunc for completion
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " put an f infront of the current string and return to where we were

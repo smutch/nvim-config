@@ -1026,11 +1026,6 @@ if !has('gui_running')
 endif
 
 " }}}
-" LSP {{{
-
-lua require('lsp')
-
-" }}}
 " Treesitter {{{
 
 lua require('treesitter')
@@ -1261,22 +1256,22 @@ let g:gutentags_ctags_exclude = ['build']
 " sys.path.extend(ast.literal_eval(vim.eval("s:custom_sys_paths")))
 " EOF
 
-let g:jedi#force_py_version = 3
-let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = 2  "May be too slow...
-let g:jedi#auto_close_doc = 0
-autocmd FileType python let b:did_ftplugin = 1
-let g:jedi#goto_stubs_command = '<localleader>s'
-let g:jedi#goto_assignments_command = '<localleader>g'
-let g:jedi#goto_command = '<localleader>d'
-let g:jedi#rename_command = '<localleader>r'
-let g:jedi#usages_command = '<localleader>u'
+" let g:jedi#force_py_version = 3
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#show_call_signatures = 2  "May be too slow...
+" let g:jedi#auto_close_doc = 0
+" autocmd FileType python let b:did_ftplugin = 1
+" let g:jedi#goto_stubs_command = '<localleader>s'
+" let g:jedi#goto_assignments_command = '<localleader>g'
+" let g:jedi#goto_command = '<localleader>d'
+" let g:jedi#rename_command = '<localleader>r'
+" let g:jedi#usages_command = '<localleader>u'
 
 " move documentation to the right if the window is big enough
 " au BufAdd * if bufname(expand('<afile>')) ==# "'__doc__'" | silent! wincmd L | endif
 
 " close the documentation window
-autocmd FileType python nnoremap <buffer> <localleader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
+" autocmd FileType python nnoremap <buffer> <localleader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
 
 " }}}
 " matchit {{{
@@ -1365,33 +1360,7 @@ let g:notes_assets_dir = 'img'
 " }}}
 " nvim-lsp {{{
 
-" lua << EOF
-
-" nvim_lsp = require('nvim_lsp')
-" diagnostic = require('diagnostic')
-
-" function registerLSP(name, ...)
-"     nvim_lsp[name].setup{on_attach=diagnostic.on_attach, ...}
-"     vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-" end
-
-" registerLSP('rls')
-" registerLSP('clangd')
-" registerLSP('cmake')
-" registerLSP('jsonls')
-
-" nvim_lsp.sumneko_lua.setup{
-"     on_attach = diagnostic.on_attach,
-"     cmd = {
-"         "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
-"         "-E",
-"         "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
-"     }
-" }
-
-" EOF
-
-" see after/ftplugin/python.vim for python setup
+lua require('lsp')
 
 " }}}
 " polyglot {{{
@@ -1455,7 +1424,7 @@ let g:vimtex_fold_enabled = 1
 let g:vimtex_compiler_progname='nvr'
 
 " Quick map for adding a new item to an itemize environment list
-au! FileType tex call vimtex#imaps#add_map({
+au FileType tex call vimtex#imaps#add_map({
   \ 'lhs' : '<A-CR>',
   \ 'rhs' : '\item ',
   \ 'leader' : '',
@@ -1467,7 +1436,10 @@ au! FileType tex call vimtex#imaps#add_map({
 " vimux {{{
 
  " Run the current file with python
- au! FileType python nnoremap <buffer> <LocalLeader>v :call VimuxRunCommand("clear; python " . bufname("%"))<CR>
+ augroup vimux
+     au!
+     au FileType python nnoremap <buffer> <LocalLeader>v :call VimuxRunCommand("clear; python " . bufname("%"))<CR>
+ augroup END
 
  " Prompt for a command to run
  map <Leader>vc :VimuxPromptCommand<CR>

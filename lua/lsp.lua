@@ -20,9 +20,9 @@ local on_attach = function(client, bufnr)
   vim.fn.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>]", "<cmd>lua diagnostic.jumpLoc.jumpNextLocationCycle()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>[", "<cmd>lua diagnostic.jumpLoc.jumpPrevLocationCycle()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua diagnostic.jumpLoc.openDiagnostics()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>]", "<cmd>lua require 'diagnostic'.jumpLoc.jumpNextLocationCycle()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>[", "<cmd>lua require 'diagnostic'.jumpLoc.jumpPrevLocationCycle()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua require 'diagnostic'.jumpLoc.openDiagnostics()<CR>", {noremap = true, silent = true})
 
   vim.api.nvim_command('call sign_define("LspDiagnosticsErrorSign", {"text" : "", "texthl" : "LspDiagnosticsError"})')
   vim.api.nvim_command('call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})')
@@ -30,9 +30,11 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_command('call sign_define("LspDiagnosticsHintSign", {"text" : "", "texthl" : "LspDiagnosticsHint"})')
 end
 
+
 nvim_lsp.pyls_ms.setup{
     on_attach = on_attach
 }
+
 nvim_lsp.sumneko_lua.setup{
   on_attach = on_attach,
   cmd = {
