@@ -106,6 +106,7 @@ Plug 'bfredl/nvim-miniyank'
 " }}}
 
 " utils {{{
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
@@ -1028,6 +1029,11 @@ endif
 " LSP {{{
 
 lua require('lsp')
+
+" }}}
+" Treesitter {{{
+
+lua require('treesitter')
 
 " }}}
 " Plugin settings {{{
