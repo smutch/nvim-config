@@ -23,12 +23,12 @@ local on_attach = function(client, bufnr)
   vim.fn.nvim_set_keymap("n", "<localleader>]", "<cmd>lua diagnostic.jumpLoc.jumpNextLocationCycle()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "<localleader>[", "<cmd>lua diagnostic.jumpLoc.jumpPrevLocationCycle()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua diagnostic.jumpLoc.openDiagnostics()<CR>", {noremap = true, silent = true})
-end
 
-vim.api.nvim_command('call sign_define("LspDiagnosticsErrorSign", {"text" : "", "texthl" : "LspDiagnosticsError"})')
-vim.api.nvim_command('call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})')
-vim.api.nvim_command('call sign_define("LspDiagnosticsInformationSign", {"text" : "", "texthl" : "LspDiagnosticsInformation"})')
-vim.api.nvim_command('call sign_define("LspDiagnosticsHintSign", {"text" : "", "texthl" : "LspDiagnosticsHint"})')
+  vim.api.nvim_command('call sign_define("LspDiagnosticsErrorSign", {"text" : "", "texthl" : "LspDiagnosticsError"})')
+  vim.api.nvim_command('call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})')
+  vim.api.nvim_command('call sign_define("LspDiagnosticsInformationSign", {"text" : "", "texthl" : "LspDiagnosticsInformation"})')
+  vim.api.nvim_command('call sign_define("LspDiagnosticsHintSign", {"text" : "", "texthl" : "LspDiagnosticsHint"})')
+end
 
 nvim_lsp.pyls_ms.setup{
     on_attach = on_attach

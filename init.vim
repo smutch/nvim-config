@@ -145,7 +145,7 @@ Plug 'rhysd/git-messenger.vim'
 " looking good {{{
 " Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
-Plug 'hardcoreplayers/spaceline.vim'
+Plug 'hardcoreplayers/spaceline.vim', {'commit': 'd5ae1bf8968b504e5ad3a21f97cb73052a5d99e5'}
 Plug 'gcmt/taboo.vim'
 " }}}
 
@@ -1430,7 +1430,11 @@ let g:notes_assets_dir = 'img'
 " spaceline {{{
 
 " let g:spaceline_seperate_style= 'slant'
-let g:spaceline_lsp_executive = 'nvim_lsp'
+let g:spaceline_colorscheme = 'one'
+let g:spaceline_diagnostic_tool = 'nvim_lsp'
+let g:spaceline_diagnostic_errorsign = ''
+let g:spaceline_diagnostic_warnsign = ''
+let g:spaceline_git_branch_icon = ''
 
 " }}}
 " surround {{{
