@@ -1,16 +1,17 @@
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",     -- one of "all", "language", or a list of languages
   highlight = {
-    enable = true,              -- false will disable the whole extension
+    enable = false,              -- false will disable the whole extension
     -- disable = { "c", "rust" },  -- list of language that will be disabled
   },
   incremental_selection = {
       enable = true,
       keymaps = {
           init_selection = "gsi",
-          node_incremental = "gsn",
-          scope_incremental = "gsc",
-          node_decremental = "gsN",
+          node_incremental = "gn",
+          scope_incremental = "gc",
+          node_decremental = "gN",
+          scope_decremental = "gC",
       },
   },
   refactor = {
