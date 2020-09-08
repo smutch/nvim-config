@@ -134,7 +134,7 @@ Plug 'benmills/vimux'
 
 " git {{{
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 Plug 'lambdalisue/vim-gista'
 Plug 'rhysd/git-messenger.vim'
 " }}}
@@ -1207,19 +1207,19 @@ nnoremap <leader>fp :FZFProjectFiles<CR>
 " }}}
 " gitgutter {{{
 
-" let g:gitgutter_map_keys = 0
-" autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
-" nnoremap ]h :GitGutterNextHunk<CR>
-" nnoremap [h :GitGutterPrevHunk<CR>
-" nnoremap ghs :GitGutterStageHunk<CR>
-" nnoremap ghr :GitGutterRevertHunk<CR>
-" nnoremap ghp :GitGutterPreviewHunk<CR>
-" let g:gitgutter_realtime = 0
+let g:gitgutter_map_keys = 0
+autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
+nnoremap ]h :GitGutterNextHunk<CR>
+nnoremap [h :GitGutterPrevHunk<CR>
+nnoremap ghs :GitGutterStageHunk<CR>
+nnoremap ghr :GitGutterRevertHunk<CR>
+nnoremap ghp :GitGutterPreviewHunk<CR>
+let g:gitgutter_realtime = 0
 
-" let g:gitgutter_sign_added = '┃'
-" let g:gitgutter_sign_modified = '┃'
-" let g:gitgutter_sign_removed = '┃'
-" let g:gitgutter_sign_modified_removed = '┃'
+let g:gitgutter_sign_added = ''
+let g:gitgutter_sign_modified = ''
+let g:gitgutter_sign_removed = ''
+let g:gitgutter_sign_modified_removed = '┃'
 
 " }}}
 " goyo {{{

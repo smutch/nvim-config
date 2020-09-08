@@ -2,10 +2,14 @@
 
 local diagnostic = require('diagnostic')
 local nvim_lsp = require('nvim_lsp')
+local util = require('nvim_lsp/util')
 -- local configs = require('nvim_lsp/configs')
 
 vim.g.diagnostic_insert_delay = 1
 vim.g.diagnostic_auto_popup_while_jump = 1
+vim.g.diagnostic_enable_virtual_text = 0
+vim.o.updatetime = 500
+vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()')
 
 local on_attach = function(client, bufnr)
   diagnostic.on_attach(client, bufnr)
@@ -20,8 +24,8 @@ local on_attach = function(client, bufnr)
   vim.fn.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>]", "<cmd>lua require 'jumpLoc'.jumpNextLocationCycle()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>[", "<cmd>lua require 'jumpLoc'.jumpPrevLocationCycle()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "]d", "<cmd>lua require 'jumpLoc'.jumpNextLocationCycle()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "[d", "<cmd>lua require 'jumpLoc'.jumpPrevLocationCycle()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua require 'jumpLoc'.openDiagnostics()<CR>", {noremap = true, silent = true})
 
   vim.api.nvim_command('call sign_define("LspDiagnosticsErrorSign", {"text" : "", "texthl" : "LspDiagnosticsError"})')
@@ -31,26 +35,39 @@ local on_attach = function(client, bufnr)
 end
 
 
+local interpreter_path = vim.env.CONDA_PREFIX .. "/bin/python"
 nvim_lsp.pyls_ms.setup{
-    on_attach = on_attach
+    on_attach = on_attach,
+    root_dir = function(fname)
+      return vim.fn.getcwd()
+    end,
+    InterpreterPath = interpreter_path,
+    init_options={
+        interpreter={
+            properties={
+                InterpreterPath = interpreter_path,
+                Version = "3.8"
+            }
+        }
+    }
 }
 
-do
-  local method = "textDocument/publishDiagnostics"
-  local default_callback = vim.lsp.callbacks[method]
-  vim.lsp.callbacks[method] = function(err, method, result, client_id)
-    default_callback(err, method, result, client_id)
-    if result and result.diagnostics then
-      for _, v in ipairs(result.diagnostics) do
-        v.bufnr = client_id
-        v.lnum = v.range.start.line + 1
-        v.col = v.range.start.character + 1
-        v.text = v.message
-      end
-      vim.lsp.util.set_qflist(result.diagnostics)
-    end
-  end
-end
+-- do
+--   local method = "textDocument/publishDiagnostics"
+--   local default_callback = vim.lsp.callbacks[method]
+--   vim.lsp.callbacks[method] = function(err, method, result, client_id)
+--     default_callback(err, method, result, client_id)
+--     if result and result.diagnostics then
+--       for _, v in ipairs(result.diagnostics) do
+--         v.bufnr = client_id
+--         v.lnum = v.range.start.line + 1
+--         v.col = v.range.start.character + 1
+--         v.text = v.message
+--       end
+--       vim.lsp.util.set_qflist(result.diagnostics)
+--     end
+--   end
+-- end
 
 -- nvim_lsp.jedi_language_server.setup{
 --     on_attach = on_attach,
