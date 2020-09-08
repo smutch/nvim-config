@@ -17,7 +17,7 @@
     "python.linting.flake8CategorySeverity.E": "Warning",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Args": ["--max-line-length=120"],
-    "python.linting.flake8Path": "/fred/oz013/smutch/conda_envs/nvim/bin/flake8",
+    "python.linting.flake8Path": "/fred/oz013/smutch/conda_envs/mhysa38/bin/flake8",
     "git.changedSign.hlGroup": "Conditional", 
     "git.removedSign.hlGroup": "diffRemoved",
     "git.addedSign.hlGroup": "diffAdded",
