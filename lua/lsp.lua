@@ -1,15 +1,20 @@
 -- LSP
 
 local diagnostic = require('diagnostic')
+-- local diagnostic_util = require('diagnostic/util')
 local nvim_lsp = require('nvim_lsp')
-local util = require('nvim_lsp/util')
+-- local util = require('nvim_lsp/util')
 -- local configs = require('nvim_lsp/configs')
 
 vim.g.diagnostic_insert_delay = 1
 vim.g.diagnostic_auto_popup_while_jump = 1
-vim.g.diagnostic_enable_virtual_text = 0
-vim.o.updatetime = 500
-vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()')
+vim.g.diagnostic_enable_virtual_text = 1
+vim.g.space_before_virtual_text = 10
+vim.g.diagnostic_show_sign = 0
+vim.cmd("hi LspDiagnosticsWarning guifg=#7d5500")
+vim.cmd("hi! link SignColumn Normal")
+-- vim.o.updatetime = 500
+-- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()')
 
 local on_attach = function(client, bufnr)
   diagnostic.on_attach(client, bufnr)
@@ -26,7 +31,8 @@ local on_attach = function(client, bufnr)
   vim.fn.nvim_set_keymap("n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "]d", "<cmd>lua require 'jumpLoc'.jumpNextLocationCycle()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "[d", "<cmd>lua require 'jumpLoc'.jumpPrevLocationCycle()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua require 'jumpLoc'.openDiagnostics()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>D", "<cmd>lua require 'jumpLoc'.openDiagnostics()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>", {noremap = true, silent = true})
 
   vim.api.nvim_command('call sign_define("LspDiagnosticsErrorSign", {"text" : "", "texthl" : "LspDiagnosticsError"})')
   vim.api.nvim_command('call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})')
@@ -52,42 +58,40 @@ nvim_lsp.pyls_ms.setup{
     }
 }
 
--- do
---   local method = "textDocument/publishDiagnostics"
---   local default_callback = vim.lsp.callbacks[method]
---   vim.lsp.callbacks[method] = function(err, method, result, client_id)
---     default_callback(err, method, result, client_id)
---     if result and result.diagnostics then
---       for _, v in ipairs(result.diagnostics) do
---         v.bufnr = client_id
---         v.lnum = v.range.start.line + 1
---         v.col = v.range.start.character + 1
---         v.text = v.message
---       end
---       vim.lsp.util.set_qflist(result.diagnostics)
+-- function diagnostic.diagnostics_loclist(local_result)
+--   if local_result then
+--     for _, v in ipairs(local_result) do
+--       v.uri = v.uri
+--       v.lnum = v.range.start.line + 1
+--       v.col = v.range.start.character + 1
+--       v.text = v.message
 --     end
 --   end
+--   vim.lsp.util.set_loclist(diagnostic_util.locations_to_items(local_result))
 -- end
 
--- nvim_lsp.jedi_language_server.setup{
---     on_attach = on_attach,
---     cmd = {"/home/smutch/freddos/meraxes/conda_envs/nvim/bin/jedi-language-server"}
--- }
+local os
+if vim.fn.has('osx') == 1 then
+    os = "MacOS"
+else
+    os = "Linux"
+end
 
--- nvim_lsp.sumneko_lua.setup{
---   on_attach = on_attach,
---   cmd = {
---       "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
---       "-E",
---       "/Users/smutch/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
---   }
--- }
+nvim_lsp.sumneko_lua.setup{
+  on_attach = on_attach,
+  cmd = {
+      vim.env.HOME .. "/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/" .. os .. "/lua-language-server",
+      "-E",
+      vim.env.HOME .. "/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
+  }
+}
 
 -- nvim_lsp.vimls.setup{
 --   on_attach = on_attach
 -- }
 nvim_lsp.clangd.setup{
-  on_attach = on_attach
+  on_attach = on_attach,
+  cmd = {"/fred/oz013/smutch/conda_envs/nvim/bin/clangd", "--background-index"}
 }
 -- nvim_lsp.rls.setup{
 --   on_attach = on_attach
