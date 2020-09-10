@@ -1,5 +1,7 @@
 -- LSP
 
+local M = {}
+
 local diagnostic = require('diagnostic')
 -- local diagnostic_util = require('diagnostic/util')
 local nvim_lsp = require('nvim_lsp')
@@ -15,6 +17,16 @@ vim.cmd("hi LspDiagnosticsWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
 -- vim.o.updatetime = 500
 -- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()')
+
+M.toggle_virtual_text = function()
+    if vim.g.diagnostic_enable_virtual_text == 1 then
+        vim.g.diagnostic_enable_virtual_text = 0
+    else
+        vim.g.diagnostic_enable_virtual_text = 1
+    end
+    vim.cmd("edit")
+end
+vim.cmd("command ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>")
 
 local on_attach = function(client, bufnr)
   diagnostic.on_attach(client, bufnr)
@@ -72,10 +84,16 @@ nvim_lsp.pyls_ms.setup{
 -- end
 
 local os
+local clangd_bin = "clangd"
+local hostname = vim.fn.system('hostname')
 if vim.fn.has('osx') == 1 then
     os = "MacOS"
+    clangd_bin = "/usr/local/Cellar/llvm/10.0.0_3/bin/clangd"
 else
     os = "Linux"
+    if string.match('farnarkle', hostname) or string.match('ozstar', hostname) then
+        clangd_bin = "/fred/oz013/smutch/conda_envs/nvim/bin/clangd"
+    end
 end
 
 nvim_lsp.sumneko_lua.setup{
@@ -92,7 +110,7 @@ nvim_lsp.sumneko_lua.setup{
 -- }
 nvim_lsp.clangd.setup{
   on_attach = on_attach,
-  cmd = {"/fred/oz013/smutch/conda_envs/nvim/bin/clangd", "--background-index"}
+  cmd = {clangd_bin, "--background-index"}
 }
 -- nvim_lsp.rls.setup{
 --   on_attach = on_attach
@@ -103,3 +121,5 @@ nvim_lsp.cmake.setup{
 -- nvim_lsp.jsonls.setup{
 --   on_attach = on_attach
 -- }
+
+return M
