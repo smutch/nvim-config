@@ -54,7 +54,12 @@ local on_attach = function(client, bufnr)
 end
 
 
-local interpreter_path = vim.env.CONDA_PREFIX .. "/bin/python"
+local conda_prefix = "/usr"
+if vim.env.CONDA_PREFIX then
+    conda_prefix = vim.env.CONDA_PREFIX
+end
+
+local interpreter_path = conda_prefix .. "/bin/python"
 nvim_lsp.pyls_ms.setup{
     on_attach = on_attach,
     root_dir = function(fname)
@@ -85,6 +90,7 @@ nvim_lsp.pyls_ms.setup{
 
 local os
 local clangd_bin = "clangd"
+local cmake_langserver_bin = "cmake"
 local hostname = vim.fn.system('hostname')
 if vim.fn.has('osx') == 1 then
     os = "MacOS"
@@ -93,6 +99,7 @@ else
     os = "Linux"
     if string.match('farnarkle', hostname) or string.match('ozstar', hostname) then
         clangd_bin = "/fred/oz013/smutch/conda_envs/nvim/bin/clangd"
+        cmake_langserver_bin = "/fred/oz013/smutch/conda_envs/nvim/bin/cmake-language-server"
     end
 end
 
@@ -116,7 +123,8 @@ nvim_lsp.clangd.setup{
 --   on_attach = on_attach
 -- }
 nvim_lsp.cmake.setup{
-  on_attach = on_attach
+  on_attach = on_attach,
+  cmd = {cmake_langserver_bin}
 }
 -- nvim_lsp.jsonls.setup{
 --   on_attach = on_attach
