@@ -95,6 +95,7 @@ local hostname = vim.fn.system('hostname')
 if vim.fn.has('osx') == 1 then
     os = "MacOS"
     clangd_bin = "/usr/local/Cellar/llvm/10.0.0_3/bin/clangd"
+    cmake_langserver_bin = "/Users/smutch/miniconda3/envs/global/bin/cmake-language-server"
 else
     os = "Linux"
     if string.match('farnarkle', hostname) or string.match('ozstar', hostname) then

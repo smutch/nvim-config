@@ -20,3 +20,6 @@ setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " put an f infront of the current string and return to where we were
 imap <M-f> <esc>?(["']<cr>af<esc>``la
+
+" call neomake#configure#automake('rw', 1000)
+let g:neomake#makers#ft#python#EnabledMakers = ["flake8"]

@@ -140,13 +140,13 @@ Plug 'rhysd/git-messenger.vim'
 " }}}
 
 " linting {{{
-" Plug 'w0rp/ale'
+Plug 'neomake/neomake'
 " }}}
 
 " looking good {{{
 " Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
-Plug 'hardcoreplayers/spaceline.vim', {'commit': 'd5ae1bf8968b504e5ad3a21f97cb73052a5d99e5'}
+Plug 'hardcoreplayers/spaceline.vim' ", {'commit': 'd5ae1bf8968b504e5ad3a21f97cb73052a5d99e5'}
 Plug 'gcmt/taboo.vim'
 " }}}
 
@@ -697,29 +697,6 @@ command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
 
 " store the current directory into register d
 command! GrabPWD let @d = system("pwd")
-
-" battery saving
-function! s:SaveBattery()
-    " let g:ncm2#auto_popup = 0
-
-    let g:ale_lint_on_text_changed = 0
-    let g:ale_lint_on_enter = 0
-    let g:ale_lint_on_save = 0
-    let g:ale_lint_on_filetype_changed = 0
-    let g:ale_lint_on_insert_leave = 0
-endfunction
-command! SaveBattery :call <SID>SaveBattery()
-
-function! s:DrainBattery()
-    " let g:ncm2#auto_popup = 1
-
-    let g:ale_lint_on_text_changed = 'normal'
-    let g:ale_lint_on_enter = 1
-    let g:ale_lint_on_save = 1
-    let g:ale_lint_on_filetype_changed = 1
-    let g:ale_lint_on_insert_leave = 1
-endfunction
-command! DrainBattery :call <SID>DrainBattery()
 
 " }}}
 " Keybindings {{{
