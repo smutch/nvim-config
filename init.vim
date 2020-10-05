@@ -381,7 +381,7 @@ augroup CustomColors
                 \| hi! Normal guibg=white
                 \| endif
     au ColorScheme one if &background == 'dark'
-                \| hi! Normal guifg=#cccccc guibg=None
+                \| hi! Normal guibg=None guifg=#cccccc 
                 \| hi! TermNormal guibg=#263238
                 \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
                 \|   exec 'hi! '.group.' guibg=#2c323c'

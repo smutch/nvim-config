@@ -10,9 +10,9 @@ local nvim_lsp = require('nvim_lsp')
 
 vim.g.diagnostic_insert_delay = 1
 vim.g.diagnostic_auto_popup_while_jump = 1
-vim.g.diagnostic_enable_virtual_text = 1
+vim.g.diagnostic_enable_virtual_text = 0
 vim.g.space_before_virtual_text = 10
-vim.g.diagnostic_show_sign = 0
+vim.g.diagnostic_show_sign = 1
 vim.cmd("hi LspDiagnosticsWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
 -- vim.o.updatetime = 500
@@ -94,7 +94,7 @@ local cmake_langserver_bin = "cmake"
 local hostname = vim.fn.system('hostname')
 if vim.fn.has('osx') == 1 then
     os = "MacOS"
-    clangd_bin = "/usr/local/Cellar/llvm/10.0.0_3/bin/clangd"
+    clangd_bin = "/usr/local/Cellar/llvm/10.0.1_1/bin/clangd"
     cmake_langserver_bin = "/Users/smutch/miniconda3/envs/global/bin/cmake-language-server"
 else
     os = "Linux"
@@ -120,9 +120,9 @@ nvim_lsp.clangd.setup{
   on_attach = on_attach,
   cmd = {clangd_bin, "--background-index"}
 }
--- nvim_lsp.rls.setup{
---   on_attach = on_attach
--- }
+nvim_lsp.rls.setup{
+  on_attach = on_attach
+}
 nvim_lsp.cmake.setup{
   on_attach = on_attach,
   cmd = {cmake_langserver_bin}
