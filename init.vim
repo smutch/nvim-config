@@ -69,7 +69,7 @@ endif
 
 " }}}
 " vim-plug {{{
-source plugins.vim
+runtime plugins.vim
 " }}}
 " Basic settings {{{
 let mapleader="\<Space>"
