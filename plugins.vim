@@ -116,6 +116,7 @@ Plug 'vim-scripts/scons.vim'
 Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'html' }
 " Plug 'sheerun/vim-polyglot'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'sass', 'jinja.html'] }
+Plug 'cespare/vim-toml'
 " Plug 'vim-pandoc/vim-pandoc-syntax'
 " }}}
 " }}}
