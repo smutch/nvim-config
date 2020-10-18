@@ -203,10 +203,14 @@ function vim.lsp.util.fancy_floating_markdown(contents, opts)
   -- Switch to the floating window to apply the syntax highlighting.
   -- This is because the syntax command doesn't accept a target.
   local cwin = vim.api.nvim_get_current_win()
+  local csyn = vim.api.nvim_buf_get_option(0, "syntax"):lower()
   local cft = vim.api.nvim_buf_get_option(0, "filetype")
   vim.api.nvim_set_current_win(winnr)
 
-  vim.cmd("ownsyntax " .. cft)
+  local syntax = "markdown"
+  if csyn == "c" or csyn == "cpp" then syntax = csyn end
+  vim.cmd("ownsyntax " .. syntax)
+
   local idx = 1
   --@private
   local function apply_syntax_to_region(ft, start, finish)
