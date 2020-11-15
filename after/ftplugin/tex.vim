@@ -38,6 +38,14 @@ setlocal scrolloff=5
 " Tex only abbreviations
 ab <buffer> ... \ldots
 
+" completion
+lua require'completion'.addCompletionSource('vimtex', require'vimtex'.complete_item)
+let g:completion_chain_complete_list = {
+            \ 'tex' : [
+            \     {'complete_items': ['vimtex']}, 
+            \   ],
+            \ }
+
 " Select 'chunks'
 " vnoremap <buffer> ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR><Esc>V/<CR>k
 " vnoremap <buffer> ic ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k

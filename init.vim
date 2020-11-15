@@ -218,7 +218,7 @@ set vb t_vb=                            " Turn off visual beep
 set laststatus=2                        " Always display a status line
 set cmdheight=1                         " Command line height
 set listchars=tab:▸\ ,eol:↵,trail:·     " Set hidden characters
-set number                              " Show line numbers
+set nonumber                              " Show line numbers
 " set cursorline                          " highlight current line
 
 if has("nvim") && exists("+pumblend")
@@ -252,6 +252,7 @@ augroup CustomColors
                 " \| hi! Normal guibg=NONE
     au ColorScheme one if &background == 'light'
                 \| hi! Normal guibg=white
+                \| hi! TermNormal guibg=#f4f6f7
                 \| endif
     au ColorScheme one if &background == 'dark'
                 \| hi! Normal guibg=None guifg=#cccccc 

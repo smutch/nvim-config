@@ -86,7 +86,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
 " colorschemes {{{
 Plug 'morhetz/gruvbox'
-Plug 'w0ng/vim-hybrid'
+" Plug 'w0ng/vim-hybrid'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
@@ -94,10 +94,12 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'cormacrelf/vim-colors-github'
-Plug 'mhartington/oceanic-next'
+" Plug 'mhartington/oceanic-next'
 Plug 'rakr/vim-two-firewatch'
-Plug 'dracula/vim'
-Plug 'ayu-theme/ayu-vim'
+" Plug 'dracula/vim'
+" Plug 'ayu-theme/ayu-vim'
+Plug 'owickstrom/vim-colors-paramount'
+Plug 'andreypopp/vim-colors-plain'
 " }}}
 
 " filetypes {{{
