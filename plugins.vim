@@ -9,7 +9,7 @@ endif
 Plug 'neovim/nvim-lsp'
 Plug 'nvim-lua/completion-nvim'
 " Plug 'steelsojka/completion-buffers'
-Plug 'nvim-lua/diagnostic-nvim'
+" Plug 'nvim-lua/diagnostic-nvim'
 " }}}
 
 " movement {{{

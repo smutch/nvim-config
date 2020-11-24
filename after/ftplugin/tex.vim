@@ -42,7 +42,8 @@ ab <buffer> ... \ldots
 lua require'completion'.addCompletionSource('vimtex', require'vimtex'.complete_item)
 let g:completion_chain_complete_list = {
             \ 'tex' : [
-            \     {'complete_items': ['vimtex']}, 
+            \     {'complete_items': ['vimtex', 'snippet']}, 
+            \     {'mode': 'omni'}, 
             \   ],
             \ }
 

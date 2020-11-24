@@ -2,21 +2,38 @@
 
 local M = {}
 
-local diagnostic = require('diagnostic')
--- local diagnostic_util = require('diagnostic/util')
 local lspconfig = require('lspconfig')
 -- local util = require('lspconfig/util')
--- local configs = require('lspconfig/configs')
+local configs = require('lspconfig/configs')
 
-vim.g.diagnostic_insert_delay = 1
-vim.g.diagnostic_auto_popup_while_jump = 1
-vim.g.diagnostic_enable_virtual_text = 0
-vim.g.space_before_virtual_text = 10
-vim.g.diagnostic_show_sign = 1
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
--- vim.o.updatetime = 500
--- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()')
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- Enable underline, use default values
+    underline = true,
+    virtual_text = function(bufnr, client_id)
+      local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, 'diagnostic_enable_virtual_text')
+      -- No buffer local variable set, so just disable by default
+      if not ok then
+        return false
+      end
+
+      if result then
+          return {
+              spacing = 4,
+              prefix = '⇏',
+          }
+      end
+
+      return result
+    end,
+    signs = true,
+    -- Disable a feature
+    update_in_insert = false,
+  }
+)
 
 M.toggle_virtual_text = function()
     if vim.g.diagnostic_enable_virtual_text == 1 then
@@ -28,9 +45,11 @@ M.toggle_virtual_text = function()
 end
 vim.cmd("command ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>")
 
-local on_attach = function(client, bufnr)
-  diagnostic.on_attach(client, bufnr)
+-- vim.o.updatetime = 500
+-- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
 
+
+local on_attach = function(client, bufnr)
   -- Keybindings for LSPs
   -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
   vim.fn.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", {noremap = true, silent = true})
@@ -44,7 +63,7 @@ local on_attach = function(client, bufnr)
   vim.fn.nvim_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "<localleader>D", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", {noremap = true, silent = true})
 
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignError", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextError"})')
