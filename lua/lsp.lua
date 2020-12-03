@@ -5,6 +5,9 @@ local M = {}
 local lspconfig = require('lspconfig')
 -- local util = require('lspconfig/util')
 local configs = require('lspconfig/configs')
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
+
 
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
@@ -48,7 +51,6 @@ vim.cmd("command ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>"
 -- vim.o.updatetime = 500
 -- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
 
-
 local on_attach = function(client, bufnr)
   -- Keybindings for LSPs
   -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
@@ -71,7 +73,9 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignInformation", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextInformation"})')
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignHint", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextHint"})')
 
-  vim.g.lsp_diagnositc_sign_priority = 80;
+  vim.g.lsp_diagnositc_sign_priority = 80
+
+  lsp_status.on_attach(client)
 end
 
 local conda_prefix = "/usr"
@@ -81,6 +85,9 @@ end
 
 local interpreter_path = conda_prefix .. "/bin/python"
 lspconfig.pyls_ms.setup{
+    handlers = lsp_status.extensions.pyls_ms.setup(),
+    settings = { python = { workspaceSymbols = { enabled = true }}},
+    capabilities = lsp_status.capabilities,
     on_attach = on_attach,
     root_dir = function(fname)
       return vim.fn.getcwd()
