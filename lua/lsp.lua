@@ -36,10 +36,10 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 M.toggle_virtual_text = function()
-    if vim.g.diagnostic_enable_virtual_text == 1 then
-        vim.g.diagnostic_enable_virtual_text = 0
+    if vim.b.diagnostic_enable_virtual_text == 1 then
+        vim.b.diagnostic_enable_virtual_text = 0
     else
-        vim.g.diagnostic_enable_virtual_text = 1
+        vim.b.diagnostic_enable_virtual_text = 1
     end
     vim.cmd("edit")
 end
@@ -70,6 +70,8 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignWarning", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextWarning"})')
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignInformation", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextInformation"})')
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignHint", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextHint"})')
+
+  vim.g.lsp_diagnositc_sign_priority = 80;
 end
 
 local conda_prefix = "/usr"

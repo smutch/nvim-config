@@ -1056,6 +1056,11 @@ command! -bang FZFProjectFiles call fzf#vim#files(s:find_git_root(), <bang>0)
 nnoremap <leader>fp :FZFProjectFiles<CR>
 
 " }}}
+" galaxyline {{{
+
+lua require('statusline')
+
+" }}}
 " gitgutter {{{
 
 let g:gitgutter_map_keys = 0
@@ -1211,22 +1216,15 @@ let g:notes_assets_dir = 'img'
 " }}}
 " nvim-lsp {{{
 
+" TEMPORARY HACK!!!
+lua package.path = package.path .. ';/Users/smutch/.config/nvim/lua/lsp.lua'
+
 lua require('lsp')
 
 " }}}
 " polyglot {{{
 
  let g:polyglot_disabled = ['tex', 'latex', 'python']
-
-" }}}
-" spaceline {{{
-
-" let g:spaceline_seperate_style= 'slant'
-let g:spaceline_colorscheme = 'one'
-let g:spaceline_diagnostic_tool = 'nvim_lsp'
-let g:spaceline_diagnostic_errorsign = ' '
-let g:spaceline_diagnostic_warnsign = ' '
-let g:spaceline_git_branch_icon = ''
 
 " }}}
 " surround {{{
@@ -1263,14 +1261,11 @@ let g:ultisnips_python_style = 'numpy'
 " vimtex {{{
 
 " Latex options
-let g:vimtex_latexmk_build_dir = './build'
-let g:vimtex_latexmk_continuous = 1
-let g:vimtex_latexmk_background = 1
-let g:vimtex_quickfix_mode = 1
-let g:vimtex_quickfix_latexlog = {'default' : 0}
+let g:vimtex_compiler_latexmk = {
+            \ 'build_dir' : './build',
+            \}
+let g:vimtex_quickfix_mode = 0
 let g:vimtex_view_method = 'skim'
-" let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-" let g:vimtex_view_general_options = '@line @pdf @tex'
 let g:vimtex_fold_enabled = 1
 let g:vimtex_compiler_progname='nvr'
 

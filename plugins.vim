@@ -74,7 +74,8 @@ Plug 'neomake/neomake'
 " looking good {{{
 " Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
-Plug 'hardcoreplayers/spaceline.vim' ", {'commit': 'd5ae1bf8968b504e5ad3a21f97cb73052a5d99e5'}
+" Plug 'hardcoreplayers/spaceline.vim' ", {'commit': 'd5ae1bf8968b504e5ad3a21f97cb73052a5d99e5'}
+Plug 'glepnir/galaxyline.nvim'
 Plug 'gcmt/taboo.vim'
 " }}}
 

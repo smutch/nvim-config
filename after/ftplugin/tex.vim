@@ -47,6 +47,9 @@ let g:completion_chain_complete_list = {
             \   ],
             \ }
 
+" syntax
+hi! link Folded texStyleBold
+
 " Select 'chunks'
 " vnoremap <buffer> ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR><Esc>V/<CR>k
 " vnoremap <buffer> ic ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k
