@@ -46,6 +46,7 @@ Plug 'moll/vim-bbye'
 " Plug 'tpope/vim-vinegar'
 Plug 'justinmk/vim-dirvish'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
 " Plug 'chrisbra/Colorizer'
@@ -93,15 +94,16 @@ Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
-Plug 'drewtempelmeyer/palenight.vim'
+" Plug 'drewtempelmeyer/palenight.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'cormacrelf/vim-colors-github'
 " Plug 'mhartington/oceanic-next'
-Plug 'rakr/vim-two-firewatch'
+" Plug 'rakr/vim-two-firewatch'
 " Plug 'dracula/vim'
 " Plug 'ayu-theme/ayu-vim'
 Plug 'owickstrom/vim-colors-paramount'
 Plug 'andreypopp/vim-colors-plain'
+Plug 'ulwlu/elly.vim'
 " }}}
 
 " filetypes {{{

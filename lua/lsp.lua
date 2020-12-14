@@ -8,6 +8,7 @@ local configs = require('lspconfig/configs')
 local lsp_status = require('lsp-status')
 lsp_status.register_progress()
 
+require('lspfuzzy').setup {}
 
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
