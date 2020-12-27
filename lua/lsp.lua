@@ -110,7 +110,7 @@ local cmake_langserver_bin = "cmake"
 local hostname = vim.fn.system('hostname')
 if vim.fn.has('osx') == 1 then
     os = "MacOS"
-    clangd_bin = "/usr/local/Cellar/llvm/10.0.1_1/bin/clangd"
+    clangd_bin = "/usr/local/Cellar/llvm/11.0.0/bin/clangd"
     cmake_langserver_bin = "/Users/smutch/miniconda3/envs/global/bin/cmake-language-server"
 else
     os = "Linux"

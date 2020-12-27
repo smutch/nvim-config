@@ -75,7 +75,13 @@ gls.left[5] = {
 }
 gls.left[6] = {
   GitBranch = {
-    provider = function() return vcs.get_git_branch() .. ' | ' end,
+    provider = function()
+        local branch = vcs.get_git_branch()
+        if branch then
+            branch = branch .. ' | '
+        end
+        return branch
+    end,
     condition = require('galaxyline.provider_vcs').check_git_workspace,
     highlight = {'#8FBCBB',colors.line_bg,'bold'},
   }
@@ -176,7 +182,6 @@ local lsp_messages = function()
                 if #filename > space then
                     filename = vim.fn.pathshorten(filename)
                 end
-
                 contents = '(' .. filename .. ') ' .. contents
             end
         else

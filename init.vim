@@ -1363,3 +1363,8 @@ au FileType tex call vimtex#imaps#add_map({
 
 " }}}
 " }}}
+" post plugin setup {{{
+
+lua require'colorizer'.setup()
+
+" }}}

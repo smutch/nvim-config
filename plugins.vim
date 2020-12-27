@@ -50,6 +50,7 @@ Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
 " Plug 'chrisbra/Colorizer'
+Plug 'norcalli/nvim-colorizer.lua' 
 Plug 'majutsushi/tagbar'
 Plug 'kassio/neoterm'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
