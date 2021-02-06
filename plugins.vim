@@ -8,7 +8,6 @@ endif
 " lsp and completion {{{
 Plug 'neovim/nvim-lsp'
 " Plug 'nvim-lua/completion-nvim'
-Plug 'glepnir/lspsaga.nvim'
 Plug 'hrsh7th/nvim-compe'
 " Plug 'steelsojka/completion-buffers'
 " Plug 'nvim-lua/diagnostic-nvim'
