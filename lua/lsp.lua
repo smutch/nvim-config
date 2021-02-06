@@ -7,8 +7,32 @@ local lspconfig = require('lspconfig')
 local configs = require('lspconfig/configs')
 local lsp_status = require('lsp-status')
 lsp_status.register_progress()
+vim.lsp.set_log_level("debug")
 
-require('lspfuzzy').setup {}
+-- require('lspfuzzy').setup {}
+require'compe'.setup {
+    enabled = true;
+    debug = false;
+    min_length = 1;
+    -- preselect = 'enable' || 'disable' || 'always';
+    -- throttle_time = ... number ...;
+    -- source_timeout = ... number ...;
+    -- incomplete_delay = ... number ...;
+    -- allow_prefix_unmatch = false;
+
+    source = {
+        nvim_lsp = true;
+        ultisnips = true;
+        path = true;
+        buffer = true;
+        nvim_lua = true;
+        -- tags = true;
+        -- nvim_lua = { ... overwrite source configuration ... };
+    };
+}
+
+require'lspsaga'.init_lsp_saga()
+
 
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
@@ -55,16 +79,16 @@ vim.cmd("command ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>"
 local on_attach = function(client, bufnr)
   -- Keybindings for LSPs
   -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
-  vim.fn.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "gd", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "gh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "gk", "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "ga", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("v", "ga", "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", {noremap = true, silent = true})
-  vim.fn.nvim_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "gr", "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "]d", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>", {noremap = true, silent = true})
+  vim.fn.nvim_set_keymap("n", "[d", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "<localleader>D", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "<localleader>d", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", {noremap = true, silent = true})
   vim.fn.nvim_set_keymap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", {noremap = true, silent = true})
@@ -85,20 +109,16 @@ if vim.env.CONDA_PREFIX then
 end
 
 local interpreter_path = conda_prefix .. "/bin/python"
-lspconfig.pyls_ms.setup{
-    handlers = lsp_status.extensions.pyls_ms.setup(),
-    settings = { python = { workspaceSymbols = { enabled = true }}},
-    capabilities = lsp_status.capabilities,
-    on_attach = on_attach,
-    root_dir = function(fname)
-      return vim.fn.getcwd()
-    end,
-    InterpreterPath = interpreter_path,
-    init_options={
-        interpreter={
-            properties={
-                InterpreterPath = interpreter_path,
-                Version = "3.8"
+lspconfig.pyright.setup{
+    on_attach = on_attach;
+    cmd = {"/fred/oz013/smutch/conda_envs/nvim/bin/pyright-langserver", "--stdio"};
+    settings = {
+        python = {
+            analysis = {
+                autoSearchPaths = true;
+                useLibraryCodeForTypes = true;
+                venvPath = string.match(conda_prefix, "^(.*)/.*$");
+                venv = string.match(conda_prefix, "^.*/(.*)$");
             }
         }
     }
@@ -119,15 +139,6 @@ else
         cmake_langserver_bin = "/fred/oz013/smutch/conda_envs/nvim/bin/cmake-language-server"
     end
 end
-
-lspconfig.sumneko_lua.setup{
-  on_attach = on_attach,
-  cmd = {
-      vim.env.HOME .. "/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/" .. os .. "/lua-language-server",
-      "-E",
-      vim.env.HOME .. "/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/main.lua"
-  }
-}
 
 -- lspconfig.vimls.setup{
 --   on_attach = on_attach

@@ -7,7 +7,9 @@ endif
 
 " lsp and completion {{{
 Plug 'neovim/nvim-lsp'
-Plug 'nvim-lua/completion-nvim'
+" Plug 'nvim-lua/completion-nvim'
+Plug 'glepnir/lspsaga.nvim'
+Plug 'hrsh7th/nvim-compe'
 " Plug 'steelsojka/completion-buffers'
 " Plug 'nvim-lua/diagnostic-nvim'
 " }}}
@@ -46,7 +48,7 @@ Plug 'moll/vim-bbye'
 " Plug 'tpope/vim-vinegar'
 Plug 'justinmk/vim-dirvish'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
+" Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
 " Plug 'chrisbra/Colorizer'

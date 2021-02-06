@@ -895,29 +895,20 @@ let g:AutoPairsShortcutBackInsert = '<A-b>'
 nnoremap Q :Bdelete<CR>
 
 " }}}
-" completion-nvim {{{
-
-let g:completion_auto_change_source = 1
-
-" enable for all filetypes except blacklist
-let complete_blacklist = ['vim-plug']
-autocmd BufEnter * if index(complete_blacklist, &ft) < 0 | lua require'completion'.on_attach()
+" compe {{{
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " use ctrl-space for manual completion
-inoremap <silent><expr> <c-space> completion#trigger_completion()
+inoremap <silent><expr> <C-Space> compe#complete()
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
-
-" use ultisnips
-let g:completion_enable_snippet = 'UltiSnips'
 
 " }}}
 " dispatch {{{
