@@ -1111,6 +1111,11 @@ let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--c-kinds=-p', '--fields=
 let g:gutentags_ctags_exclude = ['build']
 
 " }}}
+" indent-blankline {{{
+
+    let g:indent_blankline_char = '|'
+
+" }}}
 " jedi {{{
 
 " ---
