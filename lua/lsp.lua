@@ -95,7 +95,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignInformation", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextInformation"})')
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignHint", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextHint"})')
 
-  vim.g.lsp_diagnositc_sign_priority = 80
+  vim.g.lsp_diagnositc_sign_priority = 100
 
   lsp_status.on_attach(client)
 end
@@ -108,13 +108,14 @@ end
 local interpreter_path = conda_prefix .. "/bin/python"
 lspconfig.pyright.setup{
     on_attach = on_attach;
-    cmd = {"/usr/local/bin/pyright-langserver", "--stdio"};
+    cmd = {"pyright-langserver", "--stdio"};
     settings = {
         python = {
             pythonPath = interpreter_path;
             analysis = {
                 autoSearchPaths = true;
                 useLibraryCodeForTypes = true;
+                extraPaths = {vim.env.PYTHONPATH};
             }
         }
     }
