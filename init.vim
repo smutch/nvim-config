@@ -239,6 +239,7 @@ augroup CustomColors
     au!
     au ColorScheme * hi! link Search DiffAdd
                 \| hi! link Conceal NonText
+                \| hi! Comment cterm=italic gui=italic
     au ColorScheme hybrid if &background == 'dark'
                 \| hi! Normal guifg=#d9dbda
                 \| hi! TermNormal guibg=#1d1f21
@@ -254,13 +255,14 @@ augroup CustomColors
                 \| hi! TermNormal guibg=#f4f6f7
                 \| endif
     au ColorScheme one if &background == 'dark'
-                \| hi! Normal guibg=None guifg=#cccccc 
+                \| hi! Normal guifg=#d9dbda guibg=#263238
                 \| hi! TermNormal guibg=#263238
                 \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
                 \|   exec 'hi! '.group.' guibg=#2c323c'
                 \| endfor
                 \| hi! Search guifg=white guibg=#3e4452
-                \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#282c34") ? '#1a1d23' : '#282c34'<CR><CR>
+                \| hi! CursorLine guibg=#1e2529
+                \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#263238") ? '#1a1d23' : '#263238'<CR><CR>
                 \| endif
     " au colorscheme one if &background == 'light'
                 " \| hi! normal guibg=#ffffff
