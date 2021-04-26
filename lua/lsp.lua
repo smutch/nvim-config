@@ -24,11 +24,14 @@ require'compe'.setup {
         nvim_lsp = true;
         ultisnips = true;
         path = true;
-        buffer = true;
+        buffer = function() if not vim.o.filetype == 'tex' then return true else return false end end;
         nvim_lua = true;
         -- tags = true;
         -- nvim_lua = { ... overwrite source configuration ... };
     };
+}
+
+require("trouble").setup {
 }
 
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
@@ -48,7 +51,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       if result then
           return {
               spacing = 4,
-              prefix = '⇏',
+              -- prefix = '⇏',
           }
       end
 
