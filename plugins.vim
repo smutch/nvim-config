@@ -11,6 +11,7 @@ Plug 'neovim/nvim-lsp'
 Plug 'hrsh7th/nvim-compe'
 " Plug 'steelsojka/completion-buffers'
 " Plug 'nvim-lua/diagnostic-nvim'
+Plug 'folke/lsp-trouble.nvim'
 " }}}
 
 " movement {{{
@@ -72,11 +73,14 @@ Plug 'rhysd/git-messenger.vim'
 
 " linting {{{
 Plug 'neomake/neomake'
+" Plug 'dense-analysis/ale'
 " }}}
 
 " looking good {{{
 " Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/lsp-colors.nvim'
 " Plug 'hardcoreplayers/spaceline.vim' ", {'commit': 'd5ae1bf8968b504e5ad3a21f97cb73052a5d99e5'}
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'glepnir/galaxyline.nvim'
@@ -107,6 +111,7 @@ Plug 'cormacrelf/vim-colors-github'
 Plug 'owickstrom/vim-colors-paramount'
 Plug 'andreypopp/vim-colors-plain'
 Plug 'ulwlu/elly.vim'
+Plug 'folke/tokyonight.nvim'
 " }}}
 
 " filetypes {{{

@@ -1,11 +1,11 @@
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",     -- one of "all", "language", or a list of languages
   highlight = {
-    enable = false,              -- false will disable the whole extension
+    enable = true,              -- false will disable the whole extension
     -- disable = { "c", "rust" },  -- list of language that will be disabled
   },
   incremental_selection = {
-      enable = true,
+      enable = false,
       keymaps = {
           init_selection = "gsi",
           node_incremental = "gn",
@@ -15,8 +15,8 @@ require'nvim-treesitter.configs'.setup {
       },
   },
   refactor = {
-    highlight_definitions = { enable = false },
-    highlight_current_scope = { enable = false },
+    highlight_definitions = { enable = true },
+    highlight_current_scope = { enable = true },
     smart_rename = {
         enable = true,
         keymaps = {
@@ -24,13 +24,4 @@ require'nvim-treesitter.configs'.setup {
         },
     },
   },
-  navigation = {
-      enable = true,
-      keymaps = {
-        goto_definition_lsp_fallback = "gsd",
-        list_definitions = "gsD",
-        goto_next_usage = "<a-*>",
-        goto_previous_usage = "<a-#>",
-      },
-    },
-}
+  }
