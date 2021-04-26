@@ -513,6 +513,8 @@ command! SoftWrap execute ':g/./,-/\n$/j'
 
 " Edit vimrc
 command! Erc execute ':e ~/.config/nvim/init.vim'
+command! Eplug execute ':e ~/.config/nvim/plugins.vim'
+command! Elua execute ':e ~/.config/nvim/lua'
 
 " Capture output from a vim command (like :version or :messages) into a split
 " scratch buffer. (credit: ctechols,
@@ -952,18 +954,18 @@ let g:float_preview#docked = 0
 
 " Useful shortcut for git commands
 nnoremap git :Git
-nmap <leader>gc :Gcommit<CR>
-nnoremap <leader>ga :Gcommit -a<CR>
+nmap <leader>gc :Git commit<CR>
+nnoremap <leader>ga :Git commit -a<CR>
 nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gm :Gmerge<CR>
-nnoremap <leader>gP :Gpull<CR>
-nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gf :Gfetch<CR>
-nnoremap <leader>gg :Ggrep<CR>
-nnoremap <leader>gw :Gwrite<CR>
-nnoremap <leader>gr :Gread<CR>
-nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gd :Git diff<CR>
+nnoremap <leader>gm :Git merge<CR>
+nnoremap <leader>gP :Git pull<CR>
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gf :Git fetch<CR>
+nnoremap <leader>gg :Git grep<CR>
+nnoremap <leader>gw :Git write<CR>
+nnoremap <leader>gr :Git read<CR>
+nnoremap <leader>gb :Git blame<CR>
 
 " }}}
 " fzf {{{
