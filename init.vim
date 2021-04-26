@@ -80,8 +80,7 @@ set wildmenu                         " show list instead of just completing
 set autoread                         " Automatically re-read changed files
 set hidden                           " Don't unload a buffer when abandoning it
 set mouse=a                          " enable mouse for all modes settings
-set clipboard=unnamed                " To work in tmux
-let g:loaded_clipboard_provider = 1
+set clipboard+=unnamedplus           " To work in tmux
 set spelllang=en_gb                  " British spelling
 set noshowmode                         " Don't show the current mode
 " set list                             " Show trailing & tab markers
