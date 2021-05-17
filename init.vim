@@ -886,6 +886,9 @@ lua require('treesitter')
 
 " }}}
 " Plugin settings {{{
+
+lua require('misc')
+
 " auto-pairs {{{
 
 let g:AutoPairsFlyMode = 0
@@ -928,14 +931,6 @@ let g:dispatch_handlers = ['tmux', 'screen', 'windows', 'x11', 'headless']
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-
-" }}}
-" easymotion {{{
-
-let g:EasyMotion_smartcase = 1
-nmap <leader>e <Plug>(easymotion-prefix)
-
-nmap s <Plug>(easymotion-overwin-f2)
 
 " }}}
 " echodoc {{{
@@ -1113,6 +1108,13 @@ let g:gutentags_enabled = 1
 
 let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--c-kinds=-p', '--fields=+iaS', '--extra=+q']
 let g:gutentags_ctags_exclude = ['build']
+
+" }}}
+" hop {{{
+
+nmap s :HopChar2<CR>
+nmap S :HopWord<CR>
+nmap gs :HopLine<CR>
 
 " }}}
 " indent-blankline {{{

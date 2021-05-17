@@ -31,9 +31,6 @@ require'compe'.setup {
     };
 }
 
-require("trouble").setup {
-}
-
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
 

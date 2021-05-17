@@ -6,6 +6,7 @@ gl.short_line_list = {'LuaTree','vista','dbui'}
 local lsp_status = require('lsp-status')
 lsp_status.register_progress()
 
+-- one
 local colors = {
   bg = '#282c34',
   line_bg = '#353644',
@@ -22,6 +23,24 @@ local colors = {
   blue = '#51afef',
   red = '#ec5f67'
 }
+
+-- tokyonight
+-- local colors = {
+  -- bg = '#24283b',
+  -- line_bg = '#414868',
+  -- fg = '#a9b1d6',
+  -- fg_green = '#9ece6a',
+
+  -- yellow = '#e0af68',
+  -- cyan = '#b4f9f8',
+  -- darkblue = '#7aa2f7',
+  -- green = '#9ece6a',
+  -- orange = '#ff9e64',
+  -- purple = '#bb9af7',
+  -- magenta = '#c0caf5',
+  -- blue = '#7dcfff',
+  -- red = '#f7768e'
+-- }
 
 local buffer_not_empty = function()
   if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then

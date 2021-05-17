@@ -16,7 +16,8 @@ Plug 'folke/lsp-trouble.nvim'
 
 " movement {{{
 Plug 'tpope/vim-rsi'
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
+Plug 'phaazon/hop.nvim'
 " Plug 'danilamihailov/beacon.nvim'
 " }}}
 
@@ -48,6 +49,8 @@ Plug 'moll/vim-bbye'
 " Plug 'tpope/vim-vinegar'
 Plug 'justinmk/vim-dirvish'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'folke/todo-comments.nvim'
 " Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
@@ -112,6 +115,8 @@ Plug 'owickstrom/vim-colors-paramount'
 Plug 'andreypopp/vim-colors-plain'
 Plug 'ulwlu/elly.vim'
 Plug 'folke/tokyonight.nvim'
+Plug 'tjdevries/colorbuddy.nvim'
+Plug 'folke/material.nvim'
 " }}}
 
 " filetypes {{{
@@ -121,6 +126,8 @@ Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python'}
 " Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'anntzer/vim-cython', { 'for': ['python', 'cython'] }
+Plug 'tikhomirov/vim-glsl'
+Plug 'DingDean/wgsl.vim'
 " }}}
 
 " other {{{
