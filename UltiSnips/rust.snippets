@@ -1,0 +1,20 @@
+snippet nannou_static "Static Nannou template"
+use nannou::prelude::*;
+
+fn main() {
+	nannou::sketch(view).run()
+}
+
+fn view(app: &App, frame: Frame) {
+	app.set_loop_mode(LoopMode::NTimes {
+		number_of_updates: 1,
+	});
+
+	let win_rect = app.main_window().rect();
+	let draw = app.draw().scale(win_rect.h().min(win_rect.w()));
+
+	draw.background().color(WHITE);
+
+	draw.to_frame(app, &frame).unwrap();
+}
+endsnippet
