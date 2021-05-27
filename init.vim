@@ -239,7 +239,9 @@ augroup CustomColors
     au!
     au ColorScheme * hi! link Search DiffAdd
                 \| hi! link Conceal NonText
+                \| if !match($TERM, "screen") 
                 \| hi! Comment cterm=italic gui=italic
+                \| endif
     au ColorScheme hybrid if &background == 'dark'
                 \| hi! Normal guifg=#d9dbda
                 \| hi! TermNormal guibg=#1d1f21
@@ -949,9 +951,9 @@ let g:float_preview#docked = 0
 
 " Useful shortcut for git commands
 nnoremap git :Git
-nmap <leader>gc :Git commit<CR>
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gc :Git commit<CR>
 nnoremap <leader>ga :Git commit -a<CR>
-nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Git diff<CR>
 nnoremap <leader>gm :Git merge<CR>
 nnoremap <leader>gP :Git pull<CR>
