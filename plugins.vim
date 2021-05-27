@@ -9,6 +9,7 @@ endif
 Plug 'neovim/nvim-lsp'
 " Plug 'nvim-lua/completion-nvim'
 Plug 'hrsh7th/nvim-compe'
+Plug 'ray-x/lsp_signature.nvim'
 " Plug 'steelsojka/completion-buffers'
 " Plug 'nvim-lua/diagnostic-nvim'
 Plug 'folke/lsp-trouble.nvim'
@@ -89,6 +90,7 @@ Plug 'nvim-lua/lsp-status.nvim'
 Plug 'glepnir/galaxyline.nvim'
 Plug 'gcmt/taboo.vim'
 Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
+Plug 'folke/zen-mode.nvim'
 " }}}
 
 " prose {{{

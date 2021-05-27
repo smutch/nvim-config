@@ -81,14 +81,16 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", {noremap = true, silent = true})
-  vim.api.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {noremap = true, silent = true})
+  -- vim.api.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {noremap = true, silent = true})
+  vim.api.nvim_set_keymap("n", "gr", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
   vim.api.nvim_set_keymap("n", "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "g\\", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", {noremap = true, silent = true})
   -- vim.api.nvim_set_keymap("n", "<localleader>D", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "<localleader>D", "<cmd>LspTroubleToggle<cr>", {silent = true, noremap = true})
-  vim.api.nvim_set_keymap("n", "<localleader>d", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", {noremap = true, silent = true})
+  vim.api.nvim_set_keymap("n", "<localleader>d", "<cmd>Trouble lsp_document_diagnostics<cr>", {silent = true, noremap = true})
+  vim.api.nvim_set_keymap("n", "<localleader>i", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", {noremap = true, silent = true})
 
   vim.api.nvim_command('call sign_define("LspDiagnosticsSignError", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextError"})')
@@ -145,9 +147,13 @@ lspconfig.clangd.setup{
   on_attach = on_attach,
   cmd = {clangd_bin, "--background-index"}
 }
-lspconfig.rls.setup{
-  on_attach = on_attach
+-- lspconfig.rls.setup{
+--   on_attach = on_attach
+-- }
+lspconfig.rust_analyzer.setup{
+    on_attach = on_attach
 }
+
 lspconfig.cmake.setup{
   on_attach = on_attach,
   cmd = {cmake_langserver_bin}
