@@ -55,7 +55,6 @@ Plug 'folke/todo-comments.nvim'
 " Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
-" Plug 'chrisbra/Colorizer'
 Plug 'norcalli/nvim-colorizer.lua' 
 Plug 'majutsushi/tagbar'
 Plug 'kassio/neoterm'
@@ -77,15 +76,11 @@ Plug 'rhysd/git-messenger.vim'
 
 " linting {{{
 Plug 'neomake/neomake'
-" Plug 'dense-analysis/ale'
 " }}}
 
 " looking good {{{
-" Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-" Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/lsp-colors.nvim'
-" Plug 'hardcoreplayers/spaceline.vim' ", {'commit': 'd5ae1bf8968b504e5ad3a21f97cb73052a5d99e5'}
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'glepnir/galaxyline.nvim'
 Plug 'gcmt/taboo.vim'
@@ -106,19 +101,15 @@ Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
-" Plug 'drewtempelmeyer/palenight.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'cormacrelf/vim-colors-github'
-" Plug 'mhartington/oceanic-next'
-" Plug 'rakr/vim-two-firewatch'
-" Plug 'dracula/vim'
-" Plug 'ayu-theme/ayu-vim'
 Plug 'owickstrom/vim-colors-paramount'
 Plug 'andreypopp/vim-colors-plain'
 Plug 'ulwlu/elly.vim'
 Plug 'folke/tokyonight.nvim'
 Plug 'tjdevries/colorbuddy.nvim'
 Plug 'folke/material.nvim'
+Plug 'navarasu/onedark.nvim'
 " }}}
 
 " filetypes {{{

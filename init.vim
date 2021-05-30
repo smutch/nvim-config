@@ -256,15 +256,16 @@ augroup CustomColors
                 \| hi! Normal guibg=white
                 \| hi! TermNormal guibg=#f4f6f7
                 \| endif
-    au ColorScheme one if &background == 'dark'
+    au ColorScheme onedark if &background == 'dark'
                 \| hi! Normal guifg=#d9dbda guibg=#263238
                 \| hi! TermNormal guibg=#263238
-                \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
-                \|   exec 'hi! '.group.' guibg=#2c323c'
-                \| endfor
-                \| hi! Search guifg=white guibg=#3e4452
-                \| hi! CursorLine guibg=#1e2529
-                \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#263238") ? '#1a1d23' : '#263238'<CR><CR>
+                \| hi! EndOfBuffer guibg=#263238
+                " \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
+                " \|   exec 'hi! '.group.' guibg=#2c323c'
+                " \| endfor
+                " \| hi! Search guifg=white guibg=#3e4452
+                " \| hi! CursorLine guibg=#1e2529
+                " \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#263238") ? '#1a1d23' : '#263238'<CR><CR>
                 \| endif
     " au colorscheme one if &background == 'light'
                 " \| hi! normal guibg=#ffffff
@@ -343,16 +344,12 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs one
-            " let g:airline_theme='github'
+            Cs onedark
             let g:light=1
         else
             set background=dark
-            " Cs hybrid
-            " let g:airline_theme="hybrid"
-            Cs one
+            Cs onedark
             let g:term_bg="#3e4452"
-            " let g:airline_theme="one"
 
             let g:light=0
         endif
