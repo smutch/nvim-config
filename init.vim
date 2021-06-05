@@ -49,11 +49,6 @@ end
 " What machine are we on?
 let hostname = substitute(system('hostname'), '\n', '', '')
 
-" if (hostname =~ "sstar") || (hostname =~ "gstar")
-    " set shell=/home/smutch/.vim/g2shell.sh
-    " let &shellpipe="|& tee"
-    " set t_ut=
-" endif
 if (hostname =~ "farnarkle") || (hostname =~ "ozstar")
     let $PATH = '/fred/oz013/smutch/conda_envs/nvim/bin:' . $PATH
     let g:python3_host_prog = '/fred/oz013/smutch/conda_envs/nvim/bin/python'
@@ -61,16 +56,12 @@ elseif (hostname =~ "Rabbie")
     set shell=/usr/local/bin/zsh
 endif
 
-" GUI settings {{{
-if exists('g:vv')
-  VVset fontfamily=Hack
-endif
 " }}}
 
-" }}}
 " vim-plug {{{
 runtime plugins.vim
 " }}}
+
 " Basic settings {{{
 let mapleader="\<Space>"
 let localleader='\'
@@ -242,37 +233,17 @@ augroup CustomColors
                 \| if !match($TERM, "screen") 
                 \| hi! Comment cterm=italic gui=italic
                 \| endif
-    au ColorScheme hybrid if &background == 'dark'
-                \| hi! Normal guifg=#d9dbda
-                \| hi! TermNormal guibg=#1d1f21
-                \| endif "|
-                " \| hi! Normal guibg=NONE
-                " \| hi! link pythonInclude Include
-    au ColorScheme Tomorrow if &background == 'light'
-                \| hi! link Folded ColorColumn
-                \| endif
-                " \| hi! Normal guibg=NONE
-    au ColorScheme one if &background == 'light'
-                \| hi! Normal guibg=white
-                \| hi! TermNormal guibg=#f4f6f7
-                \| endif
     au ColorScheme onedark if &background == 'dark'
                 \| hi! Normal guifg=#d9dbda guibg=#263238
                 \| hi! TermNormal guibg=#263238
-                \| hi! EndOfBuffer guibg=#263238
-                " \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
-                " \|   exec 'hi! '.group.' guibg=#2c323c'
-                " \| endfor
-                " \| hi! Search guifg=white guibg=#3e4452
-                " \| hi! CursorLine guibg=#1e2529
+                \| hi! link EndOfBuffer Comment
+                \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
+                \|   exec 'hi! '.group.' guibg=#2c323c'
+                \| endfor
+                \| hi! Search guifg=white guibg=#3e4452
+                \| hi! CursorLine guibg=#263238
                 " \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#263238") ? '#1a1d23' : '#263238'<CR><CR>
                 \| endif
-    " au colorscheme one if &background == 'light'
-                " \| hi! normal guibg=#ffffff
-                " \| endif
-                " \| hi! normal guibg=none
-    au ColorScheme seagull,greygull
-                \| hi! NonText ctermfg=7 guifg=#e6eaed
 augroup END
 
 " Properly switch colors {{{
@@ -344,12 +315,12 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs onedark
+            Cs one
             let g:light=1
         else
             set background=dark
             Cs onedark
-            let g:term_bg="#3e4452"
+            " let g:term_bg="#3e4452"
 
             let g:light=0
         endif
@@ -394,9 +365,7 @@ endif
 
 " Cursor configuration {{{
 " ====================================================================
-if has("nvim")
-    " set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-else
+if !has("nvim")
     let &t_SI = "\<Esc>[5 q"
     if exists("&t_SR")
         let &t_SR = "\<Esc>[3 q"
@@ -422,38 +391,7 @@ endfunction
 " Custom commands and functions {{{
 
 " Edit remote files locally
-command! -nargs=1 G2 execute ':e scp://g2/<args>'
 command! -nargs=1 F1 execute ':e scp://f1/<args>'
-
-" Yank and paste lines to a temp file
-function! YankToTemp() range
-    let s:save_cpoptions = &cpoptions
-    set cpoptions-=A
-    '<,'>write! ~/.vimbuffer
-    let &cpoptions = s:save_cpoptions
-    execute "silent !cat ~/.vimbuffer | ssh -p 4325 localhost pbcopy"
-    redraw!
-endfunction
-
-function! PasteFromTemp()
-    let s:save_cpoptions = &cpoptions
-    set cpoptions-=a
-    read ~/.vimbuffer
-    let &cpoptions = s:save_cpoptions
-endfunction
-
-vmap <leader>Y :<C-u>call YankToTemp()<CR>
-nmap <leader>Y V:<C-u>call YankToTemp()<CR>
-nmap <leader>P :<C-u>call PasteFromTemp()<CR>
-
-" Show syntax highlighting groups for word under cursor
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-command! SynStack call <SID>SynStack()
 
 " Remove trailing whitespace
 command! TrimWhitespace execute ':%s/\s\+$// | :noh'
@@ -469,7 +407,7 @@ function! WindowNumber()
     return str
 endfunction
 
-" Allow <CR> to be prefixed by a window number to use for the jump
+" Allow `e` to be prefixed by a window number to use for the jump
 function! QFOpenInWindow()
     if v:count is 0
         .cc
@@ -510,14 +448,15 @@ endfun
 " Softwrap
 command! SoftWrap execute ':g/./,-/\n$/j'
 
-" Edit vimrc
+" Edit rc files
 command! Erc execute ':e ~/.config/nvim/init.vim'
+command! Ezrc execute ':e ~/.zshrc'
 command! Eplug execute ':e ~/.config/nvim/plugins.vim'
 command! Elua execute ':e ~/.config/nvim/lua'
 
-" Capture output from a vim command (like :version or :messages) into a split
-" scratch buffer. (credit: ctechols,
-" https://gist.github.com/ctechols/c6f7c900b09be5a31dc8)
+" Capture output from a vim command (like :version or :messages) into a split scratch buffer. {{{
+
+" (credit: ctechols, https://gist.github.com/ctechols/c6f7c900b09be5a31dc8)
 " Examples:
 ":Page version
 ":Page messages
@@ -553,8 +492,8 @@ endfunction
 
 command! -nargs=+ -complete=command Page :call <SID>Page(<q-args>)
 
-" quickly edit recorded macros
-nnoremap <leader>m :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+
+" }}}
 
 " make something like <c-l> that does more than just redraw the screen
 nnoremap <leader>L :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
@@ -581,10 +520,6 @@ imap <C-@> <C-Space>
 
 " Quick escape from insert mode
 inoremap kj <ESC>
-
-" Cycle through buffers quickly
-nnoremap <silent> gbn :bn<CR>
-nnoremap <silent> gbp :bp<CR>
 
 " Quick switch to directory of current file
 nnoremap gcd :lcd %:p:h<CR>:pwd<CR>
@@ -619,8 +554,6 @@ nmap <C-a> <Nop>
 nmap <C-x> <Nop>
 
 " Turn off highlighting
-" nmap ,h <Esc>:noh<CR>
-" nmap <backspace> <Esc>:noh<CR>
 noremap \| <Esc>:<C-u>noh<CR>
 
 " Paste without auto indent
@@ -644,159 +577,6 @@ if has('nvim')
         au TermOpen * setlocal winhighlight=Normal:TermNormal |
                     \ setlocal nocursorline nonumber norelativenumber
     augroup END
-
-    " if !exists('s:my_terminal_buffer')
-    "     let s:my_terminal_buffer = -1
-    " endif
-    " if !exists('s:my_terminal_window')
-    "     let s:my_terminal_window = -1
-    " endif
-    " if !exists('s:my_terminal_command')
-    "     let s:my_terminal_command = &shell
-    " endif
-
-    " function! s:my_terminal_maps(floating)
-    "     if a:floating
-    "         tmap <buffer> <C-h> <C-\><C-n>:Tc!<CR>
-    "         tmap <buffer> <C-j> <C-\><C-n>:Tc!<CR>
-    "         tmap <buffer> <C-k> <C-\><C-n>:Tc!<CR>
-    "         tmap <buffer> <C-l> <C-\><C-n>:Tc!<CR>
-    "     else
-    "         tmap <buffer> <C-h> <C-\><C-n><C-w>h
-    "         tmap <buffer> <C-j> <C-\><C-n><C-w>j
-    "         tmap <buffer> <C-k> <C-\><C-n><C-w>k
-    "         tmap <buffer> <C-l> <C-\><C-n><C-w>l
-    "     endif
-    " endfunction
-
-    " let s:float_term_border_win = 0
-    " let s:float_term_win = 0
-    " function! s:term_create(cmd, mods, bang)
-    "     " If we are in our terminal then close it
-    "     if bufnr('%') == s:my_terminal_buffer
-    "         call nvim_win_close(s:my_terminal_border_win, v:true)
-    "         call nvim_win_close(s:my_terminal_window, v:true)
-    "         redraw!
-    "         return
-    "     endif
-
-    "     " get the desired position if we want a floating window
-    "     let width = &columns/4 * 3
-    "     let height = &lines/4 * 3
-    "     let col = &columns/8
-    "     let row = &lines/8
-    "     let floating_opts = {
-    "                 \ 'relative': 'editor',
-    "                 \ 'width': width,
-    "                 \ 'height': height,
-    "                 \ 'col': col,
-    "                 \ 'row': row,
-    "                 \ 'anchor': 'NW',
-    "                 \ 'style': 'minimal'
-    "                 \ }
-    "     let border_opts = {
-    "                 \ 'relative': 'editor',
-    "                 \ 'row': row - 1,
-    "                 \ 'col': col - 2,
-    "                 \ 'width': width + 4,
-    "                 \ 'height': height + 2,
-    "                 \ 'style': 'minimal'
-    "                 \ }
-
-    "     if !bufexists(s:my_terminal_buffer)
-    "         " our terminal buffer doesn't exist
-
-    "         if a:bang
-    "             " here we want a floating window
-
-    "             " let top = "╭" . repeat("─", width + 2) . "╮"
-    "             " let mid = "│" . repeat(" ", width + 2) . "│"
-    "             " let bot = "╰" . repeat("─", width + 2) . "╯"
-    "             " let lines = [top] + repeat([mid], height) + [bot]
-    "             let s:my_terminal_border_buffer = nvim_create_buf(v:false, v:true)
-    "             " call nvim_buf_set_lines(border_bufnr, 0, -1, v:true, lines)
-    "             let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
-
-    "             let s:my_terminal_buffer  = nvim_create_buf(v:false, v:true)
-    "             let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
-
-    "             " lots of options to set to make it like a terminal window
-    "             " setlocal winblend=20
-    "             setlocal foldcolumn=0
-    "             setlocal bufhidden=hide
-    "             setlocal signcolumn=no
-    "             setlocal nobuflisted
-    "             setlocal nocursorline
-    "             setlocal norelativenumber
-    "             setlocal nonumber
-    "             setlocal nocursorcolumn
-
-    "             call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
-
-    "             " spin up the terminal in the floating window, optionally with a command
-    "             exe 'terminal ' . a:cmd
-
-    "             call s:my_terminal_maps(1)
-                
-    "             " Close border window when terminal window close
-    "             autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
-    "         else
-    "             " here we want a standard split
-    "             exe a:mods . ' split'
-    "             exe 'terminal ' . a:cmd
-
-    "             let s:my_terminal_buffer = bufnr('%')
-    "             let s:my_terminal_window = win_getid()
-
-    "             call s:my_terminal_maps(0)
-    "         endif
-
-    "         " always want to enter into insert mode
-    "         startinsert
-
-    "         let s:my_terminal_command = a:cmd
-    "     else
-    "         " our terminal buffer already exists
-    "         if !win_gotoid(s:my_terminal_window)
-    "             " we can successfully change to our terminal window
-    "             if a:bang
-    "                 " we want a floating window so create one
-    "                 let s:my_terminal_border_win = nvim_open_win(s:my_terminal_border_buffer, v:true, border_opts)
-    "                 let s:my_terminal_window = nvim_open_win(s:my_terminal_buffer, v:true, floating_opts)
-    "                 call setwinvar(s:my_terminal_border_win, '&winhl', 'Normal:TermNormal')
-    "                 autocmd TermClose <buffer> ++once :bd! | call nvim_win_close(s:my_terminal_border_win, v:true)
-
-    "                 call s:my_terminal_maps(1)
-    "             else
-    "                 " we want a standard split so create one
-    "                 exe a:mods . ' split'
-    "                 exe 'buffer ' . s:my_terminal_buffer
-
-    "                 " store the, potentially new, window and buffer info
-    "                 let s:my_terminal_window = win_getid()
-    "                 let s:my_terminal_buffer = bufnr('%')
-
-    "                 call s:my_terminal_maps(0)
-    "             endif
-
-    "             " if we have also provided a command then run that
-    "             if a:cmd != ''
-    "                 let s:my_terminal_command = a:cmd
-    "                 put =a:cmd . ''
-    "             else
-    "                 startinsert
-    "             endif
-    "         endif
-    "     endif
-    " endfunction
-
-    " command! -bar -complete=shellcmd -nargs=* -bang Tc call s:term_create(<q-args>, <q-mods>, <bang>0)
-    " nnoremap <leader>tv :vertical Tc<CR>
-    " nnoremap <leader>ts :belowright Tc<CR>
-    " nnoremap <leader>tV :vertical Tc 
-    " nnoremap <leader>tS :belowright Tc 
-    " nnoremap <leader>tc :Tc 
-    " nnoremap <leader>tt :Tc!<CR>
 
     tnoremap kj <C-\><C-n>
     tnoremap <C-h> <C-\><C-n><C-w>h
@@ -858,25 +638,6 @@ autocmd BufNewFile,BufRead *.{qsub,pbs} set ft=sh
 " set marks to jump between header and source files
 autocmd BufLeave *.{c,cpp,cc} mark C
 autocmd BufLeave *.{h,hpp,hh} mark H
-
-" When switching colorscheme in terminal vim change the profile in iTerm as well.
-" from: <https://github.com/vheon/home/blob/ea91f443b33bc15d0deaa34e172a0317db63a53d/.vim/vimrc#L330-L348>
-if !has('gui_running')
-  function! s:change_iterm2_profile()
-      if &background == 'light'
-          let profile = 'Light'
-      else
-          let profile = 'Local'
-      endif
-      let escape = '\033]50;SetProfile='.profile.'\x7'
-      if exists('$TMUX')
-        let escape = '\033Ptmux;'.substitute(escape, '\\033', '\\033\\033', 'g').'\033\\'
-      endif
-      silent call system("printf '".escape."' > /dev/tty")
-  endfunction
-
-  " autocmd VimEnter,ColorScheme * call s:change_iterm2_profile()
-endif
 
 " }}}
 " Treesitter {{{

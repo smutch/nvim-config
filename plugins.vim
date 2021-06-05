@@ -7,19 +7,14 @@ endif
 
 " lsp and completion {{{
 Plug 'neovim/nvim-lsp'
-" Plug 'nvim-lua/completion-nvim'
 Plug 'hrsh7th/nvim-compe'
 Plug 'ray-x/lsp_signature.nvim'
-" Plug 'steelsojka/completion-buffers'
-" Plug 'nvim-lua/diagnostic-nvim'
 Plug 'folke/lsp-trouble.nvim'
 " }}}
 
 " movement {{{
 Plug 'tpope/vim-rsi'
-" Plug 'easymotion/vim-easymotion'
 Plug 'phaazon/hop.nvim'
-" Plug 'danilamihailov/beacon.nvim'
 " }}}
 
 " editing {{{
@@ -44,33 +39,23 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-obsession'
 Plug 'Shougo/echodoc.vim'
-" Plug 'ncm2/float-preview.nvim'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
-" Plug 'tpope/vim-vinegar'
 Plug 'justinmk/vim-dirvish'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
-" Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'norcalli/nvim-colorizer.lua' 
 Plug 'majutsushi/tagbar'
 Plug 'kassio/neoterm'
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-" }}}
-
-" tmux {{{
-Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'benmills/vimux'
 " }}}
 
 " git {{{
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'lambdalisue/vim-gista'
 Plug 'rhysd/git-messenger.vim'
 " }}}
 
@@ -85,27 +70,21 @@ Plug 'nvim-lua/lsp-status.nvim'
 Plug 'glepnir/galaxyline.nvim'
 Plug 'gcmt/taboo.vim'
 Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
-Plug 'folke/zen-mode.nvim'
 " }}}
 
 " prose {{{
 Plug 'reedes/vim-wordy', { 'for': ['markdown', 'tex', 'latex'] }
 Plug 'davidbeckingsale/writegood.vim', { 'for': ['tex', 'markdown', 'latex'] }
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'folke/zen-mode.nvim'
 " }}}
 
 " colorschemes {{{
 Plug 'morhetz/gruvbox'
-" Plug 'w0ng/vim-hybrid'
-Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'arcticicestudio/nord-vim'
-Plug 'cormacrelf/vim-colors-github'
 Plug 'owickstrom/vim-colors-paramount'
 Plug 'andreypopp/vim-colors-plain'
-Plug 'ulwlu/elly.vim'
 Plug 'folke/tokyonight.nvim'
 Plug 'tjdevries/colorbuddy.nvim'
 Plug 'folke/material.nvim'
@@ -116,11 +95,8 @@ Plug 'navarasu/onedark.nvim'
 " python {{{
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python'}
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'anntzer/vim-cython', { 'for': ['python', 'cython'] }
-Plug 'tikhomirov/vim-glsl'
-Plug 'DingDean/wgsl.vim'
 " }}}
 
 " other {{{
@@ -128,10 +104,10 @@ Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'vim-scripts/scons.vim'
 Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'html' }
-" Plug 'sheerun/vim-polyglot'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'sass', 'jinja.html'] }
-Plug 'cespare/vim-toml'
-" Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'cespare/vim-toml', { 'for': ['toml'] }
+Plug 'tikhomirov/vim-glsl'
+Plug 'DingDean/wgsl.vim'
 " }}}
 " }}}
 
