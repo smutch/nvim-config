@@ -241,7 +241,8 @@ augroup CustomColors
                 \|   exec 'hi! '.group.' guibg=#2c323c'
                 \| endfor
                 \| hi! Search guifg=white guibg=#3e4452
-                \| hi! CursorLine guibg=#263238
+                \| hi! IndentBlanklineChar guifg=#2e3c44
+                " \| hi! CursorLine guibg=#263238
                 " \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#263238") ? '#1a1d23' : '#263238'<CR><CR>
                 \| endif
     au ColorScheme tokyonight if &background == 'dark'
@@ -321,11 +322,11 @@ function! SetTheme()
     if (&t_Co >= 256)
         if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
             set background=light
-            Cs tokyonight
+            Cs onedark
             let g:light=1
         else
             set background=dark
-            Cs tokyonight
+            Cs onedark
             " let g:term_bg="#3e4452"
 
             let g:light=0
