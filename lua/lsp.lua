@@ -21,11 +21,12 @@ require'compe'.setup {
     -- allow_prefix_unmatch = false;
 
     source = {
-        nvim_lsp = true;
-        ultisnips = true;
-        path = true;
-        buffer = function() if not vim.o.filetype == 'tex' then return true else return false end end;
-        nvim_lua = true;
+        nvim_lsp = true,
+        ultisnips = true,
+        path = true,
+        buffer = function() if not vim.o.filetype == 'tex' then return true else return false end end,
+        nvim_lua = true,
+        emoji = true,
         -- tags = true;
         -- nvim_lua = { ... overwrite source configuration ... };
     };
@@ -82,7 +83,8 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_set_keymap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", {noremap = true, silent = true})
   -- vim.api.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {noremap = true, silent = true})
-  vim.api.nvim_set_keymap("n", "gr", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
+  vim.api.nvim_set_keymap("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", {silent = true, noremap = true})
+  vim.api.nvim_set_keymap("n", "gr", "<cmd>Trouble lsp_references<CR>", {silent = true, noremap = true})
   vim.api.nvim_set_keymap("n", "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "g\\", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", {noremap = true, silent = true})
