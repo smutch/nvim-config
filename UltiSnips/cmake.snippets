@@ -1,14 +1,14 @@
 snippet mpi "Link against mpi"
 find_package(MPI REQUIRED)
-target_link_libraries($0 MPI::MPI_C)
+target_link_libraries($0 PRIVATE MPI::MPI_C)
 endsnippet
 
 snippet gsl "Link against gsl"
 find_package(GSL REQUIRED)
-target_link_libraries($1 GSL::gsl GSL::gslcblas)
+target_link_libraries($0 PRIVATE GSL::gsl GSL::gslcblas)
 endsnippet
 
-snippet hdf5 "Link against hdf5"
+snippet hdf5 "Link against hdf5 [OLD]"
 find_package(hdf5 REQUIRED COMPONENTS C HL)
 include_directories(${HDF5_INCLUDE_DIRS})
 link_libraries(${HDF5_C_LIBRARIES} ${HDF5_C_HL_LIBRARIES})
@@ -22,52 +22,71 @@ endif()
 endsnippet
 
 snippet basic "A basic cmake template"
-cmake_minimum_required(VERSION 3.0)
-project(${1:name})
-
-# output paths
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+cmake_minimum_required(VERSION 3.18)
+project($1 VERSION 0.1 LANGUAGES C)
 
 # write compile_commands.json file
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-# compile flags
-set(CMAKE_C_FLAGS_RELEASE "-O3 -march=native")
+# Set a default build type if none was specified
+set(default_build_type "Debug")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+      STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
 
 set(SRC
-	src/$1.c
-	)
+    src/main.c
+    )
 
 add_executable($1 ${SRC})
-set_property(TARGET $1 PROPERTY C_STANDARD 99)
+set_property(TARGET $1 PROPERTY C_STANDARD 17)
+
+# compile flags
+target_compile_options(
+    TARGET $1
+    $<$<CONFIG:RELEASE>:-O3 -march=native>
+    $<$<CONFIG:DEBUG>:-O0 -Wall -Werror>
+    )
 endsnippet
 
 snippet basic++ "A basic cmake template for c++"
-cmake_minimum_required(VERSION 3.0)
-project(${1:name})
-
-# output paths
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+cmake_minimum_required(VERSION 3.18)
+project($1 VERSION 0.1 LANGUAGES C)
 
 # write compile_commands.json file
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
+# Set a default build type if none was specified
+set(default_build_type "Debug")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+      STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+set(SRC
+    src/$1.cpp
+    )
+
+add_executable($1 ${SRC})
+set_property(TARGET $1 PROPERTY C_STANDARD 17)
+
 # compile flags
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
+target_compile_options(
+    TARGET assignment_tests
+    $<$<CONFIG:RELEASE>:-O3 -march=native>
+    $<$<CONFIG:DEBUG>:-O0 -Wall -Werror>
+    )
 
 # 3rd party libs
 find_package(fmt REQUIRED)
-find_package(Boost REQUIRED COMPONENTS program_options)
-
-set(SRC
-	src/$1.cpp
-	)
-
-add_executable($1 ${SRC})
-set_property(TARGET $1 PROPERTY CXX_STANDARD 17)
-target_link_libraries($1 PRIVATE fmt Boost::program_options)
+target_link_libraries($1 PRIVATE fmt)
 endsnippet

@@ -34,6 +34,7 @@ Plug 'bfredl/nvim-miniyank'
 
 " utils {{{
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/playground'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
