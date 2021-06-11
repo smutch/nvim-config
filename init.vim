@@ -35,27 +35,12 @@ endif
 
 " Do system specific settings
 let os = substitute(system('uname'), "\n", "", "")
-if os == "Darwin"
-    let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
-    let cscope_cmd="/usr/local/bin/cscope"
-    " set tags+=$HOME/.vim/ctags-system-mac
-    let g:python3_host_prog = '/Users/smutch/miniconda3/envs/global/bin/python'
-    let g:cmake_opts = '-DHDF5_ROOT=/usr/local -DMPI_C_COMPILER=/usr/local/bin/mpicc'
-else
-    let g:cmake_opts = ''
-    let cscope_cmd="/usr/bin/cscope"
-end
-
-" What machine are we on?
 let hostname = substitute(system('hostname'), '\n', '', '')
 
-if (hostname =~ "farnarkle") || (hostname =~ "ozstar")
-    let $PATH = '/fred/oz013/smutch/conda_envs/nvim/bin:' . $PATH
-    let g:python3_host_prog = '/fred/oz013/smutch/conda_envs/nvim/bin/python'
-elseif (hostname =~ "Rabbie")
-    set shell=/usr/local/bin/zsh
-endif
-
+try
+    runtime system.vim
+catch
+endtry
 " }}}
 
 " vim-plug {{{

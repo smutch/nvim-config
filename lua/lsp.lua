@@ -9,6 +9,10 @@ local lsp_status = require('lsp-status')
 lsp_status.register_progress()
 vim.lsp.set_log_level("debug")
 
+require'lsp_signature'.on_attach({
+    hint_prefix = "🎯 ",
+})
+
 -- require('lspfuzzy').setup {}
 require'compe'.setup {
     enabled = true;
@@ -127,20 +131,14 @@ lspconfig.pyright.setup{
     }
 }
 
-local os
 local clangd_bin = "clangd"
+if vim.g.clangd_bin then
+    clangd_bin = vim.g.clangd_bin
+end
+
 local cmake_langserver_bin = "cmake"
-local hostname = vim.fn.system('hostname')
-if vim.fn.has('osx') == 1 then
-    os = "MacOS"
-    clangd_bin = "/usr/local/Cellar/llvm/11.0.1/bin/clangd"
-    cmake_langserver_bin = "/Users/smutch/miniconda3/envs/global/bin/cmake-language-server"
-else
-    os = "Linux"
-    if string.match('farnarkle', hostname) or string.match('ozstar', hostname) then
-        clangd_bin = "/fred/oz013/smutch/conda_envs/nvim/bin/clangd"
-        cmake_langserver_bin = "/fred/oz013/smutch/conda_envs/nvim/bin/cmake-language-server"
-    end
+if vim.g.cmake_langserver_bin then
+    cmake_langserver_bin = vim.g.cmake_langserver_bin
 end
 
 -- lspconfig.vimls.setup{
