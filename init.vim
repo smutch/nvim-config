@@ -131,7 +131,9 @@ set suffixes=.bak,~,.o,.info,.swp,.obj
 
 " cscope
 if has("cscope")
-    let &csprg = cscope_cmd
+    if exists('g:cscope_cmd')
+        let &csprg = cscope_cmd
+    endif
     set csto=0
     " set cst
     set nocsverb

@@ -10,7 +10,7 @@ lsp_status.register_progress()
 vim.lsp.set_log_level("debug")
 
 require'lsp_signature'.on_attach({
-    hint_prefix = "🎯 ",
+    hint_prefix = " ",
 })
 
 -- require('lspfuzzy').setup {}
@@ -115,10 +115,25 @@ if vim.env.CONDA_PREFIX then
     conda_prefix = vim.env.CONDA_PREFIX
 end
 
+local clangd_bin = "clangd"
+if vim.g.clangd_bin then
+    clangd_bin = vim.g.clangd_bin
+end
+
+local cmake_langserver_bin = "cmake"
+if vim.g.cmake_langserver_bin then
+    cmake_langserver_bin = vim.g.cmake_langserver_bin
+end
+
+local pyright_bin = "pyright-langserver"
+if vim.g.pyright_bin then
+    pyright_bin = vim.g.pyright_bin
+end
+
 local interpreter_path = conda_prefix .. "/bin/python"
 lspconfig.pyright.setup{
     on_attach = on_attach;
-    cmd = {"pyright-langserver", "--stdio"};
+    cmd = {pyright_bin, "--stdio"};
     settings = {
         python = {
             pythonPath = interpreter_path;
@@ -130,16 +145,6 @@ lspconfig.pyright.setup{
         }
     }
 }
-
-local clangd_bin = "clangd"
-if vim.g.clangd_bin then
-    clangd_bin = vim.g.clangd_bin
-end
-
-local cmake_langserver_bin = "cmake"
-if vim.g.cmake_langserver_bin then
-    cmake_langserver_bin = vim.g.cmake_langserver_bin
-end
 
 -- lspconfig.vimls.setup{
 --   on_attach = on_attach
