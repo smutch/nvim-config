@@ -4,8 +4,6 @@ setlocal textwidth=120
 setlocal tabstop=8
 setlocal softtabstop=4
 setlocal shiftwidth=4
-" setlocal autoindent
-" setlocal number
 setlocal noshowmode  " Allows jedi to show function call signatures
 setlocal concealcursor=nic
 setlocal nofoldenable  " Don't fold by default
@@ -14,15 +12,14 @@ setlocal nofoldenable  " Don't fold by default
 let g:python_highlight_all = 1
 
 " Set some useful keybindings
-nnoremap <buffer> <localleader>p :w<CR>:Dispatch python %<CR>
-nnoremap <buffer> <localleader>b :w<CR>:!black -l120 %<CR>:e<CR>
+nnoremap <buffer> <localleader>r :w<CR>:Dispatch python %<CR>
+nnoremap <buffer> <localleader>f :w<CR>:!black -l120 %<CR>:e<CR>
 
-nmap <leader>pi :CocCommand python.setInterpreter<CR>
+" use lsp omnifunc for completion
+setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " put an f infront of the current string and return to where we were
 imap <M-f> <esc>?(["']<cr>af<esc>``la
 
-" The following isn't as useful now that I've started using vimux
-" let b:repl_window = '1.0'
-" command! -range Send silent exec "<line1>,<line2>Twrite" b:repl_window "| Tmux send-keys -t" b:repl_window "M-Enter"
-" noremap <buffer><localleader>r :Send<CR>
+" call neomake#configure#automake('rw', 1000)
+let g:neomake#makers#ft#python#EnabledMakers = ["flake8"]
