@@ -114,59 +114,42 @@ local conda_prefix = "/usr"
 if vim.env.CONDA_PREFIX then
     conda_prefix = vim.env.CONDA_PREFIX
 end
-
-local clangd_bin = "clangd"
-if vim.g.clangd_bin then
-    clangd_bin = vim.g.clangd_bin
-end
-
-local cmake_langserver_bin = "cmake"
-if vim.g.cmake_langserver_bin then
-    cmake_langserver_bin = vim.g.cmake_langserver_bin
-end
-
-local pyright_bin = "pyright-langserver"
-if vim.g.pyright_bin then
-    pyright_bin = vim.g.pyright_bin
-end
-
 local interpreter_path = conda_prefix .. "/bin/python"
-lspconfig.pyright.setup{
-    on_attach = on_attach;
-    cmd = {pyright_bin, "--stdio"};
-    settings = {
-        python = {
-            pythonPath = interpreter_path;
-            analysis = {
-                autoSearchPaths = true;
-                useLibraryCodeForTypes = true;
-                extraPaths = {vim.env.PYTHONPATH};
-            }
-        }
-    }
-}
 
--- lspconfig.vimls.setup{
---   on_attach = on_attach
--- }
-lspconfig.clangd.setup{
-  on_attach = on_attach,
-  cmd = {clangd_bin, "--background-index"}
-}
--- lspconfig.rls.setup{
---   on_attach = on_attach
--- }
+-- Us LspInstall to set up automatically installed servers
+local function setup_servers()
+  require'lspinstall'.setup()
+  local servers = require'lspinstall'.installed_servers()
+  for _, server in pairs(servers) do
+      if server == 'python' then
+          require 'lspconfig'[server].setup{
+              on_attach = on_attach;
+              settings = {
+                  python = {
+                      pythonPath = interpreter_path;
+                      analysis = {
+                          autoSearchPaths = true;
+                          useLibraryCodeForTypes = true;
+                          extraPaths = {vim.env.PYTHONPATH};
+                      }
+                  }
+              }
+          }
+      end
+    require'lspconfig'[server].setup{on_attach = on_attach}
+  end
+end
+
+setup_servers()
+
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require'lspinstall'.post_install_hook = function ()
+  setup_servers() -- reload installed servers
+  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+end
+
 lspconfig.rust_analyzer.setup{
     on_attach = on_attach
 }
-
-lspconfig.cmake.setup{
-  on_attach = on_attach,
-  cmd = {cmake_langserver_bin}
-}
--- lspconfig.jsonls.setup{
---   on_attach = on_attach
--- }
-
 
 return M

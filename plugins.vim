@@ -10,6 +10,7 @@ Plug 'neovim/nvim-lsp'
 Plug 'hrsh7th/nvim-compe'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'folke/lsp-trouble.nvim'
+Plug 'kabouzeid/nvim-lspinstall'
 " }}}
 
 " movement {{{
