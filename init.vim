@@ -13,18 +13,6 @@ set nocompatible
 " Set the encoding
 set encoding=utf-8
 
-" Use virtualenv for python
-" py << EOF
-" import os.path
-" import sys
-" import vim
-" if 'VIRTUAL_ENV' in os.environ:
-"     project_base_dir = os.environ['VIRTUAL_ENV']
-"     sys.path.insert(0, project_base_dir)
-"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"     execfile(activate_this, dict(__file__=activate_this))
-" EOF
-
 " Deal with gnu screen
 if (match($TERM, "screen")!=-1) && !exists('&termguicolors')
     set term=screen-256color
@@ -128,31 +116,6 @@ set wildignore+=*.o,*.obj,*.pyc,
 
 " Set suffixes that are ignored with multiple match
 set suffixes=.bak,~,.o,.info,.swp,.obj
-
-" cscope
-if has("cscope")
-    if exists('g:cscope_cmd')
-        let &csprg = cscope_cmd
-    endif
-    set csto=0
-    " set cst
-    set nocsverb
-    " add any database in current directory
-    if filereadable("cscope.out")
-        cs add cscope.out
-    " else add database pointed to by environment
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
-    endif
-    set csverb
-
-    " put the cscope output in the quickfix window
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-
-    " map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
-    " map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
-    " map g<C-/> :cs find s <C-R>=expand("<cword>")<CR><CR>
-endif
 
 " handy mapping to fold around previous search results
 " taken from http://vim.wikia.com/wiki/Folding_with_Regular_Expression
@@ -321,10 +284,7 @@ function! SetTheme()
     end
 endfunction
 
-let g:gruvbox_contrast_dark='medium'
-let g:gruvbox_contrast_light='hard'
-
-command! ToggleTheme let g:light=!g:light | call SetTheme() "| AirlineRefresh
+command! ToggleTheme let g:light=!g:light | call SetTheme()
 nnoremap cot :<C-u>ToggleTheme<CR> 
 
 " use the presence of a file to determine if we want to start in light or dark mode
@@ -997,9 +957,6 @@ let g:notes_assets_dir = 'img'
 
 " }}}
 " nvim-lsp {{{
-
-" TEMPORARY HACK!!!
-lua package.path = package.path .. ';/Users/smutch/.config/nvim/lua/lsp.lua'
 
 lua require('lsp')
 

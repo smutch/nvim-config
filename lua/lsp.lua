@@ -18,17 +18,12 @@ require'compe'.setup {
     enabled = true;
     debug = false;
     min_length = 1;
-    -- preselect = 'enable' || 'disable' || 'always';
-    -- throttle_time = ... number ...;
-    -- source_timeout = ... number ...;
-    -- incomplete_delay = ... number ...;
-    -- allow_prefix_unmatch = false;
 
     source = {
         nvim_lsp = true,
         ultisnips = true,
         path = true,
-        buffer = function() if not vim.o.filetype == 'tex' then return true else return false end end,
+        buffer = true,
         nvim_lua = true,
         emoji = true,
         -- tags = true;
@@ -123,7 +118,7 @@ local function setup_servers()
   for _, server in pairs(servers) do
       if server == 'python' then
           require 'lspconfig'[server].setup{
-              on_attach = on_attach;
+              on_attach = on_attach,
               settings = {
                   python = {
                       pythonPath = interpreter_path;
@@ -135,8 +130,20 @@ local function setup_servers()
                   }
               }
           }
+      elseif server == 'lua' then
+          require 'lspconfig'[server].setup{
+              on_attach = on_attach,
+              settings = {
+                  Lua = {
+                      diagnostics = {
+                          globals = { 'vim' }
+                      }
+                  }
+              }
+          }
+      else
+          require'lspconfig'[server].setup{on_attach = on_attach}
       end
-    require'lspconfig'[server].setup{on_attach = on_attach}
   end
 end
 
