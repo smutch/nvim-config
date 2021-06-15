@@ -110,6 +110,7 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'sass', 'jinja.html'] }
 Plug 'cespare/vim-toml', { 'for': ['toml'] }
 Plug 'tikhomirov/vim-glsl'
 Plug 'DingDean/wgsl.vim'
+Plug 'NoahTheDuke/vim-just'
 " }}}
 " }}}
 
