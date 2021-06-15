@@ -15,7 +15,7 @@ Plug 'kabouzeid/nvim-lspinstall'
 
 " movement {{{
 Plug 'tpope/vim-rsi'
-Plug 'phaazon/hop.nvim'
+Plug 'ggandor/lightspeed.nvim'
 " }}}
 
 " editing {{{

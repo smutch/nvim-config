@@ -824,13 +824,6 @@ let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--c-kinds=-p', '--fields=
 let g:gutentags_ctags_exclude = ['build']
 
 " }}}
-" hop {{{
-
-nmap s :HopChar2<CR>
-nmap S :HopWord<CR>
-nmap gs :HopLine<CR>
-
-" }}}
 " indent-blankline {{{
 
     let g:indent_blankline_char = '│'
@@ -871,6 +864,14 @@ nmap gs :HopLine<CR>
 " close the documentation window
 " autocmd FileType python nnoremap <buffer> <localleader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
 
+" }}}
+" lightspeed {{{
+" These dummy mappings prevent lightspeed from implementing multi-line f/F/t/F
+" jumps and breaking ; and ,
+nmap f f
+nmap F F
+nmap t t
+nmap T T
 " }}}
 " matchit {{{
 
