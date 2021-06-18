@@ -13,7 +13,11 @@ let g:python_highlight_all = 1
 
 " Set some useful keybindings
 nnoremap <buffer> <localleader>r :w<CR>:Dispatch python %<CR>
-nnoremap <buffer> <localleader>f :w<CR>:!black -l120 %<CR>:e<CR>
+nnoremap <buffer> <localleader>f :w<CR>:!black %<CR>:e<CR>
+nnoremap <buffer> <localleader>F :w<CR>:!black -l 120 %<CR>:e<CR>
+nnoremap <buffer> <localleader>t :UltestNearest<CR>
+nnoremap <buffer> <localleader>T :Ultest<CR>
+nnoremap <buffer> <localleader>s :UltestSummary<CR>
 
 " use lsp omnifunc for completion
 setlocal omnifunc=v:lua.vim.lsp.omnifunc
