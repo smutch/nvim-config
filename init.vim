@@ -93,7 +93,7 @@ endif
 
 " Use ripgrep if possible, if not then ack, and fall back to grep if all else fails
 if executable('rg')
-    set grepprg=set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ --trim
+    set grepprg=set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ --trim\ -g\ '!*.ipynb'
 elseif executable('ack')
     set grepprg=ack\ -s\ -H\ --nocolor\ --nogroup\ --column
     set grepformat=%f:%l:%c:%m,%f:%l:%m
@@ -101,7 +101,7 @@ else
     " Grep will sometimes skip displaying the file name if you
     " search in a singe file. Set grep
     " program to always generate a file-name.
-    set grepprg=grep\ -nHRI\ $*\ .
+    set grepprg=grep\ -nHRI\ --exclude='*.ipynb'\ $*\ .
 endif
 nnoremap <leader>* :silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>
 command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!
