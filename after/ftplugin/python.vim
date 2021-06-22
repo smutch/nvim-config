@@ -13,8 +13,8 @@ let g:python_highlight_all = 1
 
 " Set some useful keybindings
 nnoremap <buffer> <localleader>r :w<CR>:Dispatch python %<CR>
-nnoremap <buffer> <localleader>f :w<CR>:!black %<CR>:e<CR>
-nnoremap <buffer> <localleader>F :w<CR>:!black -l 120 %<CR>:e<CR>
+nnoremap <buffer> <localleader>f :w<CR>:!black % && isort --profile black %<CR>:e<CR>
+nnoremap <buffer> <localleader>F :w<CR>:!black -l 120 % && isort -l 120 %<CR>:e<CR>
 nnoremap <buffer> <localleader>t :UltestNearest<CR>
 nnoremap <buffer> <localleader>T :Ultest<CR>
 nnoremap <buffer> <localleader>s :UltestSummary<CR>
@@ -25,5 +25,4 @@ setlocal omnifunc=v:lua.vim.lsp.omnifunc
 " put an f infront of the current string and return to where we were
 imap <M-f> <esc>?(["']<cr>af<esc>``la
 
-" call neomake#configure#automake('rw', 1000)
-let g:neomake#makers#ft#python#EnabledMakers = ["flake8"]
+" let g:neomake_python_enabled_makers = ["flake8"]
