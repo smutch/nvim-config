@@ -149,6 +149,15 @@ end
 
 setup_servers()
 
+-- This is for systems (like OzSTAR) where glibc is too old to be compatible
+-- with binary releases of clangd...
+if vim.g.clangd_bin then
+    lspconfig.clangd.setup{
+        on_attach = on_attach,
+        cmd = {vim.g.clangd_bin, "--background-index"}
+    }
+end
+
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
 require'lspinstall'.post_install_hook = function ()
   setup_servers() -- reload installed servers

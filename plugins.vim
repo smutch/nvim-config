@@ -54,7 +54,7 @@ Plug 'majutsushi/tagbar'
 Plug 'kassio/neoterm'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-test/vim-test'
-Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }
+" Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins', 'for': 'python' }
 " }}}
 
 " git {{{
