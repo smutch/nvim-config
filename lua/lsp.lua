@@ -4,8 +4,9 @@ local M = {}
 
 local lspconfig = require('lspconfig')
 -- local util = require('lspconfig/util')
-local configs = require('lspconfig/configs')
+-- local configs = require('lspconfig/configs')
 local lsp_status = require('lsp-status')
+local Path = require('plenary.path')
 lsp_status.register_progress()
 vim.lsp.set_log_level("debug")
 
@@ -105,11 +106,15 @@ local on_attach = function(client, bufnr)
   lsp_status.on_attach(client)
 end
 
-local conda_prefix = "/usr"
-if vim.env.CONDA_PREFIX then
-    conda_prefix = vim.env.CONDA_PREFIX
+local python_prefix = "/usr"
+if vim.env.VIRTUAL_ENV then
+    python_prefix = vim.env.VIRTUAL_ENV
+elseif Path:new("./poetry.lock"):exists() then
+    python_prefix = string.sub(vim.fn.system('poetry env info --path'), 0, -2)
+elseif vim.env.CONDA_PREFIX then
+    python_prefix = vim.env.CONDA_PREFIX
 end
-local interpreter_path = conda_prefix .. "/bin/python"
+local interpreter_path = python_prefix .. "/bin/python"
 
 -- Us LspInstall to set up automatically installed servers
 local function setup_servers()
@@ -163,9 +168,5 @@ require'lspinstall'.post_install_hook = function ()
   setup_servers() -- reload installed servers
   vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
-
-lspconfig.rust_analyzer.setup{
-    on_attach = on_attach
-}
 
 return M
