@@ -154,6 +154,13 @@ set undofile                         " Save undo's after file closes
 " }}}
 " Visual settings {{{
 
+" Neovide {{{
+
+set guifont=JetBrainsMono\ Nerd\ Font:h12
+let g:neovide_cursor_animation_length=0.07
+let g:neovide_cursor_vfx_mode = "railgun"
+
+" }}}
 set vb t_vb=                            " Turn off visual beep
 set laststatus=2                        " Always display a status line
 set cmdheight=1                         " Command line height
