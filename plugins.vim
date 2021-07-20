@@ -73,7 +73,7 @@ Plug 'folke/lsp-colors.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'glepnir/galaxyline.nvim'
 Plug 'gcmt/taboo.vim'
-Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
+Plug 'lukas-reineke/indent-blankline.nvim'
 " }}}
 
 " prose {{{
