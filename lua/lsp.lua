@@ -115,6 +115,7 @@ elseif vim.env.CONDA_PREFIX then
     python_prefix = vim.env.CONDA_PREFIX
 end
 local interpreter_path = python_prefix .. "/bin/python"
+print("Set LSP python interpreter to: " .. interpreter_path)
 
 -- Us LspInstall to set up automatically installed servers
 local function setup_servers()
