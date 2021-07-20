@@ -35,3 +35,29 @@ endsnippet
 snippet outline "outline modeline"
 <!-- vim:set fde=OutlineFolding(v\:lnum) fdm=expr: -->
 endsnippet
+
+snippet stacked-fragment "marpit stacked fragments"
+<div style="overflow: hidden; display: content;">
+<div style="position: absolute;" data-marpit-fragment>
+$1
+</div>
+<div style="position: absolute;" data-marpit-fragment>
+$2
+</div>
+</div>
+$0
+endsnippet
+
+snippet fragment "marpit fragment"
+<div data-marpit-fragment>
+$1
+</div>
+$0
+endsnippet
+
+snippet style-scoped "marpit scoped style block"
+<style scoped>
+$1
+</style>
+$0
+endsnippet
