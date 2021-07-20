@@ -191,7 +191,7 @@ augroup CustomColors
                 \| hi! Comment cterm=italic gui=italic
                 \| endif
     au ColorScheme onedark if &background == 'dark'
-                \| hi! Normal guifg=#d9dbda guibg=#263238
+                \| hi! Normal guifg=#d9dbda guibg=#212d33
                 \| hi! TermNormal guibg=#263238
                 \| hi! link EndOfBuffer Comment
                 \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
@@ -199,9 +199,10 @@ augroup CustomColors
                 \| endfor
                 \| hi! Search guifg=white guibg=#3e4452
                 \| hi! IndentBlanklineChar guifg=#2e3c44
+                \| endif
                 " \| hi! CursorLine guibg=#263238
                 " \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#263238") ? '#1a1d23' : '#263238'<CR><CR>
-                \| endif
+                " \| hi! Normal guifg=#d9dbda guibg=#263238
     au ColorScheme tokyonight if &background == 'dark'
                 \| hi! Normal guifg=#d9dbda guibg=#263238
                 \| hi! NormalNC guifg=#d9dbda guibg=#2e3c44
