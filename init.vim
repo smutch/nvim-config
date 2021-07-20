@@ -187,27 +187,10 @@ augroup CustomColors
     au!
     au ColorScheme * hi! link Search DiffAdd
                 \| hi! link Conceal NonText
-                \| if !match($TERM, "screen") 
                 \| hi! Comment cterm=italic gui=italic
-                \| endif
     au ColorScheme onedark if &background == 'dark'
-                \| hi! Normal guifg=#d9dbda guibg=#212d33
-                \| hi! TermNormal guibg=#263238
-                \| hi! link EndOfBuffer Comment
-                \| for group in ['DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText']
-                \|   exec 'hi! '.group.' guibg=#2c323c'
-                \| endfor
-                \| hi! Search guifg=white guibg=#3e4452
+                \| hi! Normal guifg=#d9dbda
                 \| hi! IndentBlanklineChar guifg=#2e3c44
-                \| endif
-                " \| hi! CursorLine guibg=#263238
-                " \| nnoremap <leader>cd :hi Normal guibg=<C-R>=(ReturnHighlightTerm('Normal', 'guibg') =~# "#263238") ? '#1a1d23' : '#263238'<CR><CR>
-                " \| hi! Normal guifg=#d9dbda guibg=#263238
-    au ColorScheme tokyonight if &background == 'dark'
-                \| hi! Normal guifg=#d9dbda guibg=#263238
-                \| hi! NormalNC guifg=#d9dbda guibg=#2e3c44
-                \| hi! TermNormal guibg=#263238
-                \| hi! Search guifg=white guibg=#3e4452
                 \| endif
 augroup END
 
