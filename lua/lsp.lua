@@ -11,6 +11,8 @@ lsp_status.register_progress()
 vim.lsp.set_log_level("debug")
 
 require'lsp_signature'.on_attach({
+    fix_pos=true,
+    hint_enable = false,
     hint_prefix = " ",
 })
 
