@@ -59,7 +59,7 @@ Plug 'vim-test/vim-test'
 
 " git {{{
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-git' | Plug 'junegunn/gv.vim'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'rhysd/git-messenger.vim'
 " }}}
 
@@ -69,7 +69,7 @@ Plug 'neomake/neomake'
 
 " looking good {{{
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'folke/lsp-colors.nvim'
+" Plug 'folke/lsp-colors.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'glepnir/galaxyline.nvim'
 Plug 'gcmt/taboo.vim'
@@ -90,9 +90,10 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'owickstrom/vim-colors-paramount'
 Plug 'andreypopp/vim-colors-plain'
 Plug 'folke/tokyonight.nvim'
-Plug 'tjdevries/colorbuddy.nvim'
+" Plug 'tjdevries/colorbuddy.nvim'
 Plug 'folke/material.nvim'
 Plug 'navarasu/onedark.nvim'
+Plug 'KeitaNakamura/neodark.vim'
 " }}}
 
 " filetypes {{{

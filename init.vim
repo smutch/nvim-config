@@ -191,6 +191,7 @@ augroup CustomColors
     au ColorScheme onedark if &background == 'dark'
                 \| hi! Normal guifg=#d9dbda
                 \| hi! IndentBlanklineChar guifg=#2e3c44
+                \| hi! NormalNC guibg=#31353f
                 \| endif
 augroup END
 
@@ -276,7 +277,9 @@ function! SetTheme()
 endfunction
 
 command! ToggleTheme let g:light=!g:light | call SetTheme()
-nnoremap cot :<C-u>ToggleTheme<CR> 
+nnoremap yot :<C-u>ToggleTheme<CR> 
+
+nnoremap <silent> <leader>cS :lua require('onedark').toggle()<CR>
 
 " use the presence of a file to determine if we want to start in light or dark mode
 if !empty(glob(expand("~") . "/.vimlight"))
@@ -580,9 +583,8 @@ autocmd BufNewFile,BufRead *.tex set ft=tex
 " make sure pbs scripts are set to the right filetype
 autocmd BufNewFile,BufRead *.{qsub,pbs} set ft=sh
 
-" set marks to jump between header and source files
-autocmd BufLeave *.{c,cpp,cc} mark C
-autocmd BufLeave *.{h,hpp,hh} mark H
+" c/c++ switching between source and header using clangd
+autocmd FileType c,cpp noremap gH :ClangdSwitchSourceHeader<CR>
 
 " }}}
 " Treesitter {{{
@@ -781,22 +783,9 @@ endif
 lua require('statusline')
 
 " }}}
-" gitgutter {{{
+" git-signs {{{
 
-let g:gitgutter_map_keys = 0
-autocmd BufNewFile,BufRead /Volumes/* let g:gitgutter_enabled = 0
-nnoremap ]h :GitGutterNextHunk<CR>
-nnoremap [h :GitGutterPrevHunk<CR>
-nnoremap ghs :GitGutterStageHunk<CR>
-nnoremap ghr :GitGutterRevertHunk<CR>
-nnoremap ghp :GitGutterPreviewHunk<CR>
-let g:gitgutter_realtime = 0
-let g:gitgutter_sign_priority = 9
-
-let g:gitgutter_sign_added = ''
-let g:gitgutter_sign_modified = ''
-let g:gitgutter_sign_removed = ''
-let g:gitgutter_sign_modified_removed = '⊝'
+lua require('gitsigns').setup()
 
 " }}}
 " goyo {{{
