@@ -172,15 +172,17 @@ gls.left[11] = {
   }
 }
 gls.left[12] = {
-  Space = {
-    provider = function () return ' ' end
-  }
-}
-gls.left[13] = {
   DiagnosticWarn = {
     provider = 'DiagnosticWarn',
     icon = '   ',
     highlight = {colors.blue,colors.bg},
+  }
+}
+gls.left[13] = {
+  DiagnosticHint = {
+      provider = 'DiagnosticHint',
+      icon = '  ',
+      highlight = {colors.purple,colors.bg}
   }
 }
 
