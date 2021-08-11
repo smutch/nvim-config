@@ -30,11 +30,9 @@ try
 catch
 endtry
 " }}}
-
 " vim-plug {{{
 runtime plugins.vim
 " }}}
-
 " Basic settings {{{
 let mapleader="\<Space>"
 let localleader='\'
@@ -640,13 +638,6 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
-" echodoc {{{
-
-" N.B. ensure noshowmode has been set above
-let g:echodoc_enable_at_startup = 0
-let g:echodoc#type = "floating"
-
-" }}}
 " float-preview {{{
 
 let g:float_preview#docked = 0
@@ -809,42 +800,6 @@ let g:gutentags_ctags_exclude = ['build']
     let g:indent_blankline_char = '│'
 
 " }}}
-" jedi {{{
-
-" ---
-" UNCOMMENT TO DISABLE
-" let g:jedi#auto_initialization = 0
-" ---
-
-" These two are required for neocomplete
-" let g:jedi#completions_enabled = 0
-" let g:jedi#auto_vim_configuration = 0
-
-" Ensure conda paths are being used (see https://github.com/cjrh/vim-conda/issues/15)
-" let s:custom_sys_paths = system('~/miniconda3/bin/python -c "import sys; print(sys.path)"') 
-" py3 << EOF
-" import vim, sys, ast
-" sys.path.extend(ast.literal_eval(vim.eval("s:custom_sys_paths")))
-" EOF
-
-" let g:jedi#force_py_version = 3
-" let g:jedi#popup_on_dot = 0
-" let g:jedi#show_call_signatures = 2  "May be too slow...
-" let g:jedi#auto_close_doc = 0
-" autocmd FileType python let b:did_ftplugin = 1
-" let g:jedi#goto_stubs_command = '<localleader>s'
-" let g:jedi#goto_assignments_command = '<localleader>g'
-" let g:jedi#goto_command = '<localleader>d'
-" let g:jedi#rename_command = '<localleader>r'
-" let g:jedi#usages_command = '<localleader>u'
-
-" move documentation to the right if the window is big enough
-" au BufAdd * if bufname(expand('<afile>')) ==# "'__doc__'" | silent! wincmd L | endif
-
-" close the documentation window
-" autocmd FileType python nnoremap <buffer> <localleader>D :exec bufwinnr('__doc__') . "wincmd c"<CR>
-
-" }}}
 " lightspeed {{{
 " These dummy mappings prevent lightspeed from implementing multi-line f/F/t/F
 " jumps and breaking ; and ,
@@ -853,13 +808,13 @@ nmap F F
 nmap t t
 nmap T T
 " }}}
-" matchit {{{
+" " matchit {{{
 
-if !exists('g:loaded_matchit')
-  runtime macros/matchit.vim
-endif
+" if !exists('g:loaded_matchit')
+"   runtime macros/matchit.vim
+" endif
 
-" }}}
+" " }}}
 " miniyank {{{
 
 map p <Plug>(miniyank-autoput)
@@ -920,6 +875,7 @@ nnoremap <Leader>to :Topen<CR><Esc>
 let g:NERDCustomDelimiters = {
             \ 'scons': { 'left': '#' },
             \ 'jinja': { 'left': '<!--', 'right': '-->' },
+            \ 'just': { 'left': '#' },
             \ }
 
 let g:NERDSpaceDelims = 1
@@ -940,11 +896,6 @@ let g:notes_assets_dir = 'img'
 " nvim-lsp {{{
 
 lua require('lsp')
-
-" }}}
-" polyglot {{{
-
- let g:polyglot_disabled = ['tex', 'latex', 'python']
 
 " }}}
 " surround {{{
@@ -997,63 +948,6 @@ au FileType tex call vimtex#imaps#add_map({
   \ 'wrapper' : 'vimtex#imaps#wrap_environment',
   \ 'context' : ["itemize", "enumerate"],
   \})
-
-" }}}
-" vimux {{{
-
- " Run the current file with python
- augroup vimux
-     au!
-     au FileType python nnoremap <buffer> <LocalLeader>v :call VimuxRunCommand("clear; python " . bufname("%"))<CR>
- augroup END
-
- " Prompt for a command to run
- map <Leader>vc :VimuxPromptCommand<CR>
-
- " Run last command executed by VimuxRunCommand
- map <Leader>vl :VimuxRunLastCommand<CR>
-
- " Inspect runner pane
- map <Leader>vi :VimuxInspectRunner<CR>
-
- " Close vim tmux runner opened by VimuxRunCommand
- map <Leader>vq :VimuxCloseRunner<CR>
-
- " Interrupt any command running in the runner pane
- map <Leader>vx :VimuxInterruptRunner<CR>
-
- " Zoom the runner pane (use <bind-key> z to restore runner pane)
- map <Leader>vz :call VimuxZoomRunner()<CR>
-
- function! VimuxSlime()
-  call VimuxSendText(@v)
-  " call VimuxSendKeys("Enter")
- endfunction
-
- " If text is selected, save it in the v buffer and send that buffer it to tmux
- vnoremap <Leader>vs "vy :call VimuxSlime()<CR>
-
- " Select current paragraph and send it to tmux
- nnoremap <Leader>vs vip"vy :call VimuxSlime()<CR>
-
- " Select current line and send it to tmux
- nnoremap <Leader>vS ^v$"vy :call VimuxSlime()<CR>
-
- " Call OpenRunner to assign pane if not already
- nnoremap <Leader>vo :call VimuxOpenRunner()<CR>
-
- function! VimuxIPython()
-     call VimuxSendText("%cpaste")
-     call VimuxSendKeys("Enter")
-     call VimuxSendText(@v."--")
-     " call VimuxSendKeys("Enter")
- endfunction
-
- " If text is selected, save it in the v buffer and send that buffer it to ipython
- vnoremap <Leader>vi "vy :call VimuxIPython()<CR>
-
- " Select current paragraph and send it to ipython
- nnoremap <Leader>vi vip"vy :call VimuxIPython()<CR>
 
 " }}}
 " }}}

@@ -29,7 +29,7 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'chrisbra/unicode.vim'
 Plug 'wellle/targets.vim'
-Plug 'dyng/ctrlsf.vim'
+" Plug 'dyng/ctrlsf.vim'
 Plug 'bfredl/nvim-miniyank'
 " }}}
 
@@ -40,7 +40,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-obsession'
-Plug 'Shougo/echodoc.vim'
+" Plug 'Shougo/echodoc.vim'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'moll/vim-bbye'
 Plug 'justinmk/vim-dirvish'
@@ -83,17 +83,17 @@ Plug 'folke/zen-mode.nvim'
 " }}}
 
 " colorschemes {{{
-Plug 'morhetz/gruvbox'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'rakr/vim-one'
-Plug 'arcticicestudio/nord-vim'
-Plug 'owickstrom/vim-colors-paramount'
-Plug 'andreypopp/vim-colors-plain'
-Plug 'folke/tokyonight.nvim'
+" Plug 'morhetz/gruvbox'
+" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'rakr/vim-one'
+" Plug 'arcticicestudio/nord-vim'
+" Plug 'owickstrom/vim-colors-paramount'
+" Plug 'andreypopp/vim-colors-plain'
+" Plug 'folke/tokyonight.nvim'
 " Plug 'tjdevries/colorbuddy.nvim'
-Plug 'folke/material.nvim'
+" Plug 'folke/material.nvim'
 Plug 'navarasu/onedark.nvim'
-Plug 'KeitaNakamura/neodark.vim'
+" Plug 'KeitaNakamura/neodark.vim'
 " }}}
 
 " filetypes {{{
@@ -107,7 +107,7 @@ Plug 'anntzer/vim-cython', { 'for': ['python', 'cython'] }
 " other {{{
 Plug 'adamclaxon/taskpaper.vim', { 'for': ['taskpaper', 'tp'] }
 Plug 'lervag/vimtex', { 'for': 'tex' }
-Plug 'vim-scripts/scons.vim'
+Plug 'vim-scripts/scons.vim', { 'for': 'scons' }
 Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'html' }
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'sass', 'jinja.html'] }
 Plug 'cespare/vim-toml', { 'for': ['toml'] }
