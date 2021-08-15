@@ -31,7 +31,8 @@ catch
 endtry
 " }}}
 " vim-plug {{{
-runtime plugins.vim
+" runtime plugins.vim
+lua require('plugins')
 " }}}
 " Basic settings {{{
 let mapleader="\<Space>"
@@ -594,73 +595,6 @@ lua require('treesitter')
 
 lua require('misc')
 
-" auto-pairs {{{
-
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutToggle = ''
-let g:AutoPairsShortcutBackInsert = '<A-b>'
-
-" }}}
-" bbye {{{
-
-nnoremap Q :Bdelete<CR>
-
-" }}}
-" compe {{{
-
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" use ctrl-space for manual completion
-inoremap <silent><expr> <C-Space> compe#complete()
-
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing message extra message when using completion
-set shortmess+=c
-
-" }}}
-" dispatch {{{
-
-let g:dispatch_compilers = {
-      \ 'markdown': 'doit',
-      \ 'python': 'python %'}
-
-" remove iterm from the list of handlers (don't like it removing focus when run)
-let g:dispatch_handlers = ['tmux', 'screen', 'windows', 'x11', 'headless']
-
-" }}}
-" easy-align {{{
-
-vmap <Enter> <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
-" }}}
-" float-preview {{{
-
-let g:float_preview#docked = 0
-
-" }}}
-" fugitive {{{
-
-" Useful shortcut for git commands
-nnoremap git :Git
-nnoremap <leader>gs :Git<CR>
-nnoremap <leader>gc :Git commit<CR>
-nnoremap <leader>ga :Git commit -a<CR>
-nnoremap <leader>gd :Git diff<CR>
-nnoremap <leader>gm :Git merge<CR>
-nnoremap <leader>gP :Git pull<CR>
-nnoremap <leader>gp :Git push<CR>
-nnoremap <leader>gf :Git fetch<CR>
-nnoremap <leader>gg :Git grep<CR>
-nnoremap <leader>gw :Git write<CR>
-nnoremap <leader>gr :Git read<CR>
-nnoremap <leader>gb :Git blame<CR>
-
-" }}}
 " fzf {{{
 
 " Advanced customization using autoload functions
