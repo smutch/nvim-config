@@ -605,42 +605,6 @@ lua require('statusline')
 lua require('gitsigns').setup()
 
 " }}}
-" goyo {{{
-
-let g:goyo_width = 82
-
-" }}}
-" {{{ gutentags
-
-let g:gutentags_resolve_symlinks = 0
-let g:gutentags_project_root = [".tagme"]
-let g:gutentags_ctags_tagfile = ".tags"
-let g:gutentags_enabled = 1
-
-let g:gutentags_ctags_extra_args = ['--c++-kinds=+p', '--c-kinds=-p', '--fields=+iaS', '--extra=+q']
-let g:gutentags_ctags_exclude = ['build']
-
-" }}}
-" indent-blankline {{{
-
-    let g:indent_blankline_char = '│'
-
-" }}}
-" lightspeed {{{
-" These dummy mappings prevent lightspeed from implementing multi-line f/F/t/F
-" jumps and breaking ; and ,
-nmap f f
-nmap F F
-nmap t t
-nmap T T
-" }}}
-" " matchit {{{
-
-" if !exists('g:loaded_matchit')
-"   runtime macros/matchit.vim
-" endif
-
-" " }}}
 " miniyank {{{
 
 map p <Plug>(miniyank-autoput)

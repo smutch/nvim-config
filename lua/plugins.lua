@@ -48,7 +48,17 @@ return require('packer').startup(function(use)
 
     -- movement
     use 'tpope/vim-rsi'
-    use 'ggandor/lightspeed.nvim'
+    use {
+        'ggandor/lightspeed.nvim',
+        config = function()
+            -- These dummy mappings prevent lightspeed from implementing multi-line f/F/t/F
+            -- jumps and breaking ; and ,
+            vim.api.nvim_set_keymap('n', 'f', 'f', {})
+            vim.api.nvim_set_keymap('n', 'F', 'F', {})
+            vim.api.nvim_set_keymap('n', 't', 't', {})
+            vim.api.nvim_set_keymap('n', 'T', 'T', {})
+        end
+    }
 
     -- editing
     use 'tpope/vim-repeat'
@@ -226,6 +236,7 @@ return require('packer').startup(function(use)
         config = function()
             vim.api.nvim_set_keymap('n', 'git', ':Git ', {noremap = true})
             vim.api.nvim_set_keymap('n', '<leader>git', ':Git<CR>', {noremap = true})
+            vim.api.nvim_set_keymap('n', '<leader>gs', ':Gstatus<CR>', {noremap = true})
             vim.api.nvim_set_keymap('n', '<leader>ga', ':Git commit -a<CR>', {noremap = true})
             vim.api.nvim_set_keymap('n', '<leader>gd', ':Git diff<CR>', {noremap = true})
             vim.api.nvim_set_keymap('n', '<leader>gP', ':Git pull<CR>', {noremap = true})
@@ -246,7 +257,12 @@ return require('packer').startup(function(use)
     use 'nvim-lua/lsp-status.nvim'
     use 'glepnir/galaxyline.nvim'
     use 'gcmt/taboo.vim'
-    use 'lukas-reineke/indent-blankline.nvim'
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            vim.g.indent_blankline_char = '│'
+        end
+    }
 
 
     -- prose
