@@ -83,7 +83,54 @@ return require('packer').startup(function(use)
     use 'jeffkreeftmeijer/vim-numbertoggle'
     use 'chrisbra/unicode.vim'
     use 'wellle/targets.vim'
-    use 'bfredl/nvim-miniyank'
+    use {
+        'bfredl/nvim-miniyank',
+        requires='junegunn/fzf.vim',
+        config = function()
+            vim.api.nvim_set_keymap('', 'p', '<Plug>(miniyank-autoput)', {})
+            vim.api.nvim_set_keymap('', 'P', '<Plug>(miniyank-autoPut)', {})
+            vim.api.nvim_set_keymap('', '<leader>ys', '<Plug>(miniyank-startput)', {})
+            vim.api.nvim_set_keymap('', '<leader>yS', '<Plug>(miniyank-startPut)', {})
+            vim.api.nvim_set_keymap('', '<leader>yn', '<Plug>(miniyank-cycle)', {})
+            vim.api.nvim_set_keymap('', '<leader>yN', '<Plug>(miniyank-cycleback)', {})
+
+            vim.cmd([[
+                function! FZFYankList() abort
+                  function! KeyValue(key, val)
+                    let line = join(a:val[0], '\n')
+                    if (a:val[1] ==# 'V')
+                      let line = '\n'.line
+                    endif
+                    return a:key.' '.line
+                  endfunction
+                  return map(miniyank#read(), function('KeyValue'))
+                endfunction
+
+                function! FZFYankHandler(opt, line) abort
+                  let key = substitute(a:line, ' .*', '', '')
+                  if !empty(a:line)
+                    let yanks = miniyank#read()[key]
+                    call miniyank#drop(yanks, a:opt)
+                  endif
+                endfunction
+                ]])
+
+                vim.cmd([[command! YanksAfter call fzf#run(fzf#wrap('YanksAfter', {]]
+                    .. [['source':  FZFYankList(),]]
+                    .. [['sink':    function('FZFYankHandler', ['p']),]]
+                    .. [['options': '--no-sort --prompt="Yanks-p> "' }))]]
+                )
+
+                vim.cmd([[command! YanksBefore call fzf#run(fzf#wrap('YanksBefore', {]]
+                    .. [['source':  FZFYankList(),]]
+                    .. [['sink':    function('FZFYankHandler', ['P']),]]
+                    .. [['options': '--no-sort --prompt="Yanks-P> "', }))]]
+                )
+
+                vim.api.nvim_set_keymap('', '<leader>yp', ':YanksAfter<CR>', {})
+                vim.api.nvim_set_keymap('', '<leader>yP', ':YanksBefore<CR>', {})
+        end
+    }
 
 
     -- utils
@@ -224,7 +271,19 @@ return require('packer').startup(function(use)
     use 'michaeljsmith/vim-indent-object'
     use 'norcalli/nvim-colorizer.lua'
     use 'majutsushi/tagbar'
-    use 'kassio/neoterm'
+    use {
+        'kassio/neoterm',
+        config = function()
+            vim.g.neoterm_automap_keys = '<LocalLeader>t'
+            vim.api.nvim_set_keymap('n', '<Leader>tv', ':vert Tnew<CR><Esc>', {})
+            vim.api.nvim_set_keymap('n', '<Leader>ts', ':below Tnew<CR><Esc>', {})
+            vim.api.nvim_set_keymap('n', '<Leader>tt', ':Tnew<CR><Esc>', {})
+            vim.api.nvim_set_keymap('n', '<Leader>tm', ':Tmap', {})
+            vim.api.nvim_set_keymap('n', '<Leader>to', ':Topen<CR><Esc>', {})
+        end
+
+}
+
     use 'christoomey/vim-tmux-navigator'
     use 'vim-test/vim-test'
     -- use 'rcarriga/vim-ultest', { 'do': ':UpdateRemoteuseins', 'for': 'python' }
@@ -244,7 +303,10 @@ return require('packer').startup(function(use)
             vim.api.nvim_set_keymap('n', '<leader>g/', ':Git grep<CR>', {noremap = true})
         end
     }
-    use 'lewis6991/gitsigns.nvim'
+    use {
+        'lewis6991/gitsigns.nvim',
+        config = function() require('gitsigns').setup() end
+    }
     use 'rhysd/git-messenger.vim'
 
 
@@ -255,7 +317,10 @@ return require('packer').startup(function(use)
     -- looking good
     use 'kyazdani42/nvim-web-devicons'
     use 'nvim-lua/lsp-status.nvim'
-    use 'glepnir/galaxyline.nvim'
+    use {
+        'glepnir/galaxyline.nvim',
+        config = function() require 'statusline' end
+    }
     use 'gcmt/taboo.vim'
     use {
         'lukas-reineke/indent-blankline.nvim',
