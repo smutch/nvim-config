@@ -126,8 +126,14 @@ return require('packer').startup(function(use)
             vim.g.ultisnips_python_style = 'google'
         end
     }
-    use 'jeffkreeftmeijer/vim-numbertoggle'
-    use 'chrisbra/unicode.vim'
+    use {
+        'jeffkreeftmeijer/vim-numbertoggle',
+        opt = true
+    }
+    use {
+        'chrisbra/unicode.vim',
+        opt = true
+    }
     use 'wellle/targets.vim'
     use {
         'bfredl/nvim-miniyank',
@@ -180,7 +186,36 @@ return require('packer').startup(function(use)
 
 
     -- utils
-    use 'nvim-treesitter/nvim-treesitter'
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                ensure_installed = "maintained",     -- one of "all", "language", or a list of languages
+                highlight = {
+                    enable = true,              -- false will disable the whole extension
+                    -- disable = { "c", "rust" },  -- list of language that will be disabled
+                    custom_captures = {
+                        ["variable"] = "Normal",
+                    },
+                    additional_vim_regex_highlighting = false,
+                },
+                incremental_selection = {
+                    enable = false,
+                },
+                refactor = {
+                    highlight_definitions = { enable = true },
+                    highlight_current_scope = { enable = true },
+                    smart_rename = {
+                        enable = true,
+                        keymaps = {
+                            smart_rename = "gR",
+                        },
+                    },
+                },
+            }
+        end
+    }
     use 'nvim-treesitter/playground'
     use {
         'tpope/vim-dispatch',
@@ -207,8 +242,8 @@ return require('packer').startup(function(use)
     use 'justinmk/vim-dirvish'
     use {
         'junegunn/fzf.vim',
-        run = function() vim.fn['fzf#install']() end,
         requires = 'junegunn/fzf',
+        run = 'cd ~/.fzf && ./install --all',
         config = function()
             -- Advanced customization using autoload functions
             vim.api.nvim_set_keymap('i', '<C-x><C-k>', 'fzf#vim#complete#word({"left": "15%"})', {noremap = true, expr = true})
@@ -329,7 +364,8 @@ return require('packer').startup(function(use)
         'majutsushi/tagbar',
         config = function()
             vim.api.nvim_set_keymap('n', '<leader>T', ':TagbarToggle<CR>', {})
-        end
+        end,
+        opt = true
     }
     use {
         'kassio/neoterm',
@@ -366,7 +402,10 @@ return require('packer').startup(function(use)
         'lewis6991/gitsigns.nvim',
         config = function() require('gitsigns').setup() end
     }
-    use 'rhysd/git-messenger.vim'
+    use {
+        'rhysd/git-messenger.vim',
+        opt = true
+    }
 
 
     -- linting
@@ -416,6 +455,7 @@ return require('packer').startup(function(use)
 
     -- colorschemes
     use 'navarasu/onedark.nvim'
+    use 'Shatur/neovim-ayu'
     -- use 'KeitaNakamura/neodark.vim'
 
 

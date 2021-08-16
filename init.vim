@@ -30,8 +30,7 @@ try
 catch
 endtry
 " }}}
-" vim-plug {{{
-" runtime plugins.vim
+" plugins {{{
 lua require('plugins')
 " }}}
 " Basic settings {{{
@@ -255,38 +254,17 @@ command! -nargs=1 -complete=color Cs call <SID>AccurateColorscheme(<q-args>)
 " }}}
 
 syntax on " Use syntax highlighting
-function! SetTheme()
-    " Setting this will turn off the guibg color
-	" let g:hybrid_custom_term_colors = 1
-    
-    let g:hybrid_reduced_contrast = 1
-    if (&t_Co >= 256)
-        if (exists('g:light') && g:light==1) || (exists('$LIGHT') && $LIGHT==1)
-            set background=light
-            Cs onedark
-            let g:light=1
-        else
-            set background=dark
-            Cs onedark
-            " let g:term_bg="#3e4452"
-
-            let g:light=0
-        endif
-    end
-endfunction
-
-command! ToggleTheme let g:light=!g:light | call SetTheme()
-nnoremap yot :<C-u>ToggleTheme<CR> 
-
 nnoremap <silent> <leader>cS :lua require('onedark').toggle()<CR>
 
 " use the presence of a file to determine if we want to start in light or dark mode
-if !empty(glob(expand("~") . "/.vimlight"))
-    let g:light=1
+if !empty(glob(expand("~") . "/.vimlight")) || ($LIGHT == 1)
+    set background=light
+    colorscheme Ayu
 else
-    let g:light=0
+    set background=dark
+    colorscheme onedark
 endif
-call SetTheme()
+
 
 " Neovim terminal colors
 if has("nvim")
@@ -398,7 +376,7 @@ command! SoftWrap execute ':g/./,-/\n$/j'
 " Edit rc files
 command! Erc execute ':e ~/.config/nvim/init.vim'
 command! Ezrc execute ':e ~/.zshrc'
-command! Eplug execute ':e ~/.config/nvim/plugins.vim'
+command! Eplug execute ':e ~/.config/nvim/lua/plugins.lua'
 command! Elua execute ':e ~/.config/nvim/lua'
 
 " Capture output from a vim command (like :version or :messages) into a split scratch buffer. {{{
@@ -584,11 +562,6 @@ autocmd BufNewFile,BufRead *.{qsub,pbs} set ft=sh
 
 " c/c++ switching between source and header using clangd
 autocmd FileType c,cpp noremap gH :ClangdSwitchSourceHeader<CR>
-
-" }}}
-" Treesitter {{{
-
-lua require('treesitter')
 
 " }}}
 " Plugin settings {{{
