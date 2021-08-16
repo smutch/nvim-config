@@ -15,7 +15,11 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- lsp and completion
-    use 'neovim/nvim-lsp'
+    use {
+        'neovim/nvim-lsp',
+        requires = {'kabouzeid/nvim-lspinstall', 'ray-x/lsp_signature.nvim', 'nvim-lua/plenary.nvim'},
+        config = function() require 'lsp' end
+    }
     use {
         'hrsh7th/nvim-compe',
         config = function()
@@ -42,14 +46,12 @@ return require('packer').startup(function(use)
             vim.opt.shortmess:append({ c = true })
         end
     }
-    use 'ray-x/lsp_signature.nvim'
     use {
         'folke/lsp-trouble.nvim',
         config = function()
             require("trouble").setup {}
         end
     }
-    use 'kabouzeid/nvim-lspinstall'
 
     -- movement
     use 'tpope/vim-rsi'
@@ -310,7 +312,6 @@ return require('packer').startup(function(use)
                 vim.g.fzf_layout = { window = 'call v:lua.FloatingFZF()' }
         end
     }
-    use 'nvim-lua/plenary.nvim'
     use {
         'folke/todo-comments.nvim',
         config = function()
