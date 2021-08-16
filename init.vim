@@ -593,92 +593,10 @@ lua require('treesitter')
 " }}}
 " Plugin settings {{{
 
-lua require('misc')
-
-" nerd_commenter {{{
-
-" Custom NERDCommenter mappings
-let g:NERDCustomDelimiters = {
-            \ 'scons': { 'left': '#' },
-            \ 'jinja': { 'left': '<!--', 'right': '-->' },
-            \ 'just': { 'left': '#' },
-            \ }
-
-let g:NERDSpaceDelims = 1
-let g:NERDAltDelims_c = 1
-map <leader><leader> <plug>NERDCommenterToggle
-nnoremap <leader>cp yy:<C-u>call NERDComment('n', 'comment')<CR>p
-nnoremap <leader>cP yy:<C-u>call NERDComment('n', 'comment')<CR>P
-vnoremap <leader>cp ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p
-vnoremap <leader>cP ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P
-
-" }}}
 " note-system {{{
 
 let g:notes_dir = '~/Dropbox/Notes'
 let g:notes_assets_dir = 'img'
 
 " }}}
-" nvim-lsp {{{
-
-lua require('lsp')
-
-" }}}
-" surround {{{
-
-" Extra surround mappings for particular filetypes
-
-" Markdown
-autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math
-autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout
-autocmd FileType markdown let b:surround_98 = "**\r**" "bold
-autocmd FileType markdown let b:surround_105 = "*\r*" "italics
-
-" }}}
-" taboo {{{
-
-let g:taboo_tab_format=" %I %f%m "
-let g:taboo_renamed_tab_format=" %I %l%m "
-
-" }}}
-" tagbar {{{
-
-nnoremap <leader>T :TagbarToggle<CR>
-
-" }}}
-" ultisnips {{{
-
-let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsExpandTrigger = '<C-k>'
-let g:UltiSnipsJumpForwardTrigger = '<C-k>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
-let g:ultisnips_python_style = 'numpy'
-
-" }}}
-" vimtex {{{
-
-" Latex options
-let g:vimtex_compiler_latexmk = {
-            \ 'build_dir' : './build',
-            \}
-let g:vimtex_quickfix_mode = 0
-let g:vimtex_view_method = 'skim'
-let g:vimtex_fold_enabled = 1
-let g:vimtex_compiler_progname='nvr'
-
-" Quick map for adding a new item to an itemize environment list
-au FileType tex call vimtex#imaps#add_map({
-  \ 'lhs' : '<A-CR>',
-  \ 'rhs' : '\item ',
-  \ 'leader' : '',
-  \ 'wrapper' : 'vimtex#imaps#wrap_environment',
-  \ 'context' : ["itemize", "enumerate"],
-  \})
-
-" }}}
-" }}}
-" post plugin setup {{{
-
-lua require'colorizer'.setup()
-
 " }}}

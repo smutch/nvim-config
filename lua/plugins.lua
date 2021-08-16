@@ -43,7 +43,12 @@ return require('packer').startup(function(use)
         end
     }
     use 'ray-x/lsp_signature.nvim'
-    use 'folke/lsp-trouble.nvim'
+    use {
+        'folke/lsp-trouble.nvim',
+        config = function()
+            require("trouble").setup {}
+        end
+    }
     use 'kabouzeid/nvim-lspinstall'
 
     -- movement
@@ -62,7 +67,25 @@ return require('packer').startup(function(use)
 
     -- editing
     use 'tpope/vim-repeat'
-    use 'scrooloose/nerdcommenter'
+    use {
+        'scrooloose/nerdcommenter',
+        config = function()
+            -- Custom NERDCommenter mappings
+            vim.g.NERDCustomDelimiters = {
+                scons = { left = '#' },
+                jinja = { left = '<!--', right = '-->' },
+                just = { left = '#' },
+            }
+
+            vim.g.NERDSpaceDelims = 1
+            vim.g.NERDAltDelims_c = 1
+            vim.api.nvim_set_keymap('', '<leader><leader>', '<plug>NERDCommenterToggle', {})
+            vim.api.nvim_set_keymap('n', '<leader>cp', "yy:<C-u>call NERDComment('n', 'comment')<CR>p", {})
+            vim.api.nvim_set_keymap('n', '<leader>cP', "yy:<C-u>call NERDComment('n', 'comment')<CR>P", {})
+            vim.api.nvim_set_keymap('v', '<leader>cp', "ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p", {})
+            vim.api.nvim_set_keymap('v', '<leader>cP', "ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P", {})
+        end
+    }
     use {
         'junegunn/vim-easy-align',
         config = function()
@@ -78,8 +101,29 @@ return require('packer').startup(function(use)
             vim.g.AutoPairsShortcutBackInsert = '<A-b>'
         end
     }
-    use 'tpope/vim-surround'
-    use {'SirVer/ultisnips', requires = 'honza/vim-snippets'}
+    use {
+        'tpope/vim-surround',
+        config = function()
+            -- Extra surround mappings for particular filetypes
+
+            -- Markdown
+            vim.cmd([[autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math]])
+            vim.cmd([[autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout]])
+            vim.cmd([[autocmd FileType markdown let b:surround_98 = "**\r**" "bold]])
+            vim.cmd([[autocmd FileType markdown let b:surround_105 = "*\r*" "italics]])
+        end
+    }
+    use {
+        'SirVer/ultisnips',
+        requires = 'honza/vim-snippets',
+        config = function()
+            vim.g.UltiSnipsUsePythonVersion = 3
+            vim.g.UltiSnipsExpandTrigger = '<C-k>'
+            vim.g.UltiSnipsJumpForwardTrigger = '<C-k>'
+            vim.g.UltiSnipsJumpBackwardTrigger = '<C-j>'
+            vim.g.ultisnips_python_style = 'google'
+        end
+    }
     use 'jeffkreeftmeijer/vim-numbertoggle'
     use 'chrisbra/unicode.vim'
     use 'wellle/targets.vim'
@@ -267,10 +311,25 @@ return require('packer').startup(function(use)
         end
     }
     use 'nvim-lua/plenary.nvim'
-    use 'folke/todo-comments.nvim'
+    use {
+        'folke/todo-comments.nvim',
+        config = function()
+            require("todo-comments").setup {}
+        end
+    }
     use 'michaeljsmith/vim-indent-object'
-    use 'norcalli/nvim-colorizer.lua'
-    use 'majutsushi/tagbar'
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function()
+            require'colorizer'.setup()
+        end
+    }
+    use {
+        'majutsushi/tagbar',
+        config = function()
+            vim.api.nvim_set_keymap('n', '<leader>T', ':TagbarToggle<CR>', {})
+        end
+    }
     use {
         'kassio/neoterm',
         config = function()
@@ -281,8 +340,7 @@ return require('packer').startup(function(use)
             vim.api.nvim_set_keymap('n', '<Leader>tm', ':Tmap', {})
             vim.api.nvim_set_keymap('n', '<Leader>to', ':Topen<CR><Esc>', {})
         end
-
-}
+    }
 
     use 'christoomey/vim-tmux-navigator'
     use 'vim-test/vim-test'
@@ -316,12 +374,21 @@ return require('packer').startup(function(use)
 
     -- looking good
     use 'kyazdani42/nvim-web-devicons'
-    use 'nvim-lua/lsp-status.nvim'
+    use {
+        'nvim-lua/lsp-status.nvim',
+        config = function() require 'lsp' end
+    }
     use {
         'glepnir/galaxyline.nvim',
         config = function() require 'statusline' end
     }
-    use 'gcmt/taboo.vim'
+    use {
+        'gcmt/taboo.vim',
+        config = function()
+            vim.g.taboo_tab_format=" %I %f%m "
+            vim.g.taboo_renamed_tab_format=" %I %l%m "
+        end
+    }
     use {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
@@ -343,6 +410,9 @@ return require('packer').startup(function(use)
     }
     use {
         'folke/zen-mode.nvim',
+        config = function()
+            require("zen-mode").setup {}
+        end
     }
 
 
@@ -379,7 +449,15 @@ return require('packer').startup(function(use)
     }
     use {
         'lervag/vimtex',
-        ft = { 'tex' }
+        ft = { 'tex' },
+        config = function()
+            -- Latex options
+            vim.g.vimtex_compiler_latexmk = { build_dir = './build' }
+            vim.g.vimtex_quickfix_mode = 0
+            vim.g.vimtex_view_method = 'skim'
+            vim.g.vimtex_fold_enabled = 1
+            vim.g.vimtex_compiler_progname='nvr'
+        end
     }
     use {
         'vim-scripts/scons.vim',
