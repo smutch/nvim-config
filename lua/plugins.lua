@@ -375,12 +375,9 @@ return require('packer').startup(function(use)
     -- looking good
     use 'kyazdani42/nvim-web-devicons'
     use {
-        'nvim-lua/lsp-status.nvim',
-        config = function() require 'lsp' end
-    }
-    use {
         'glepnir/galaxyline.nvim',
-        config = function() require 'statusline' end
+        config = function() require 'statusline' end,
+        requires = 'nvim-lua/lsp-status.nvim',
     }
     use {
         'gcmt/taboo.vim',
