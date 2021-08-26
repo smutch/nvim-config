@@ -1,7 +1,4 @@
--- initialisation
-vim.o.termguicolors = true
-vim.o.encoding = 'utf-8'
-
+-- system specific config
 if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then
     require 'system'
 end
@@ -10,7 +7,10 @@ end
 require 'plugins'
 require 'helpers'
 
--- basic setting
+-- basic setting {{{
+vim.o.termguicolors = true
+vim.o.encoding = 'utf-8'
+
 vim.g.mapleader = " "
 vim.g.localleader = "\\"
 
@@ -51,6 +51,7 @@ vim.opt.listchars={tab= [[▸\ ]], eol='↵', trail='·'}        -- Set hidden c
 vim.o.number=false                                          -- Don't show line numbers
 vim.o.pumblend=20                                           -- opacity for popupmenu
 
+vim.o.inccommand = "nosplit"                                -- Live substitution
 vim.o.incsearch  = true                                     -- Highlight matches as you type
 vim.o.hlsearch   = true                                     -- Highlight matches
 vim.o.showmatch  = true                                     -- Show matching paren
@@ -63,12 +64,121 @@ vim.o.directory = os.getenv('HOME') .. "/.nvim_backup"
 vim.o.undodir= os.getenv('HOME') .. "/.nvim_backup/undo"    -- where to save undo histories
 vim.o.undofile = true                                       -- Save undo's after file closes
 
+
 -- ignores
 vim.o.wildignore = vim.o.wildignore .. '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
 vim.o.suffixes = '.bak,.o,.info,.swp,.obj'
 
--- Live substitution
-vim.o.inccommand="nosplit"
+-- }}}
+
+-- general keybindings {{{
+
+noremap('i', 'kj', '<ESC>')
+
+-- Switch back to alternate file
+noremap('n', '<CR><CR>', '<C-S-^>')
+
+-- Make Y behave like other capital
+noremap('n', 'Y', 'y$')
+
+-- Easy on the fingers save and window manipulation bindings
+noremap('n', '<leader>s', ':w<CR>')
+noremap('n', '<leader>w', '<C-w>')
+
+-- Quick switch to directory of current file
+noremap('n', 'gcd', ':lcd %:p:h<CR>:pwd<CR>')
+
+-- Quickly create a file in the directory of the current buffer
+map('n', '<leader>e', ':<C-u>e <C-R>=expand("%:p:h") . "/" <CR>')
+
+-- Leave cursor at end of yank after yanking text with lowercase y in visual mode
+noremap('v', 'y', 'y`>')
+
+-- Fit window height to contents and fix
+vim.cmd([[command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')]])
+
+-- Toggle to last active tab
+vim.g.lasttab = 1
+noremap('n', '<CR>t', ':exe "tabn ".g:lasttab<CR>')
+vim.cmd([[au TabLeave * let g:lasttab = tabpagenr()]])
+
+-- Disable increment number up / down - *way* too dangerous...
+map('n', '<C-a>', '<Nop>')
+map('n', '<C-x>', '<Nop>')
+
+-- Turn off search highlighting
+noremap('', [[\|]], '<Esc>:<C-u>noh<CR>')
+
+-- Paste without auto indent
+noremap('n', '<F2>', ':set invpaste paste?<CR>', {})
+vim.opt.pastetoggle='<F2>'
+
+-- Toggle auto paragraph formatting
+noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]], {})
+
+-- terminal stuff
+vim.env.LAUNCHED_FROM_NVIM = 1
+vim.cmd([[
+    augroup MyTerm
+        au!
+        au BufWinEnter,WinEnter,TermOpen term://* startinsert 
+        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber
+    augroup END
+]])
+
+map('t', 'kj', [[<C-\><C-n>]])
+map('t', '<C-h>', [[<C-\><C-n><C-w>h]])
+map('t', '<C-j>', [[<C-\><C-n><C-w>j]])
+map('t', '<C-k>', [[<C-\><C-n><C-w>k]])
+map('t', '<C-l>', [[<C-\><C-n><C-w>l]])
+map('t', '<C-w>', [[<C-\><C-n><C-w>]])
+noremap('n', '<A-h>', '<C-w>h', {})
+noremap('n', '<A-j>', '<C-w>j', {})
+noremap('n', '<A-k>', '<C-w>k', {})
+noremap('n', '<A-l>', '<C-w>l', {})
+    
+-- }}}
+
+-- colors {{{
+
+vim.cmd([[
+    augroup CustomColors
+        au!
+        au ColorScheme * hi! link Search DiffAdd | hi! link Conceal NonText | hi! Comment cterm=italic gui=italic
+        au ColorScheme onedark if &background == 'dark' | hi! Normal guifg=#d9dbda | hi! IndentBlanklineChar guifg=#2e3c44 | hi! NormalNC guibg=#31353f | endif
+    augroup END
+]])
+
+-- use the presence of a file to determine if we want to start in light or dark mode
+if file_exists("~/.vimlight") or vim.env.LIGHT then
+    vim.o.background = 'light'
+    vim.cmd 'packadd neovim-ayu | colorscheme Ayu'
+else
+    vim.o.background = 'dark'
+    vim.cmd 'colorscheme onedark'
+end
+
+-- terminal colors
+vim.g.terminal_color_0 = "#252525"
+vim.g.terminal_color_1 = "#d06c76"
+vim.g.terminal_color_2 = "#99c27c"
+vim.g.terminal_color_3 = "#FFD740"
+vim.g.terminal_color_4 = "#40C4FF"
+vim.g.terminal_color_5 = "#FF4081"
+vim.g.terminal_color_6 = "#59b3be"
+vim.g.terminal_color_7 = "#F5F5F5"
+vim.g.terminal_color_8 = "#708284"
+vim.g.terminal_color_9 = "#d06c76"
+vim.g.terminal_color_10 = "#99c27c"
+vim.g.terminal_color_11 = "#FFD740"
+vim.g.terminal_color_12 = "#40C4FF"
+vim.g.terminal_color_13 = "#FF4081"
+vim.g.terminal_color_14 = "#59b3be"
+vim.g.terminal_color_15 = "#F5F5F5"
+    
+-- }}}
+
+-- searching {{{
 
 -- Use ripgrep if possible, if not then ack, and fall back to grep if all else fails
 if vim.fn.executable('rg') then
@@ -81,12 +191,12 @@ else
     -- singe file. Set grep program to always generate a file-name.
     vim.o.grepprg="grep -nHRI $* ."
 end
-nnoremap('<leader>*', ':silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>')
+noremap('n', '<leader>*', ':silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>')
 vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!')
-nnoremap('<leader>/', ':Grep')
+noremap('n', '<leader>/', ':Grep')
 
 -- Load up last search in buffer into the location list and open it
-nnoremap('<leader>l', ':<C-u>lvim // % \\| lopen<CR>')
+noremap('n', '<leader>l', ':<C-u>lvim // % \\| lopen<CR>')
 
 -- handy mapping to fold around previous search results
 -- taken from http://vim.wikia.com/wiki/Folding_with_Regular_Expression
@@ -113,57 +223,18 @@ function SearchFold()
     end
 end
 vim.cmd('command! SearchFold call s:SearchFold()')
-nnoremap('<localleader>z', ':SearchFold<CR>')
+noremap('n', '<localleader>z', ':SearchFold<CR>')
 
--- colorschemes
-vim.cmd([[
-    augroup CustomColors
-        au!
-        au ColorScheme * hi! link Search DiffAdd | hi! link Conceal NonText | hi! Comment cterm=italic gui=italic
-        au ColorScheme onedark if &background == 'dark' | hi! Normal guifg=#d9dbda | hi! IndentBlanklineChar guifg=#2e3c44 | hi! NormalNC guibg=#31353f | endif
-    augroup END
-]])
+-- }}}
 
--- use the presence of a file to determine if we want to start in light or dark mode
-local function file_exists(name)
-   local f=io.open(name,"r")
-   if f~=nil then io.close(f) return true else return false end
-end
-
-if file_exists("~/.vimlight") or vim.env.LIGHT then
-    vim.o.background = 'light'
-    vim.cmd 'packadd neovim-ayu | colorscheme Ayu'
-else
-    vim.o.background = 'dark'
-    vim.cmd 'colorscheme onedark'
-end
-
--- terminal colors
-vim.g.terminal_color_0 = "#252525"
-vim.g.terminal_color_1 = "#d06c76"
-vim.g.terminal_color_2 = "#99c27c"
-vim.g.terminal_color_3 = "#FFD740"
-vim.g.terminal_color_4 = "#40C4FF"
-vim.g.terminal_color_5 = "#FF4081"
-vim.g.terminal_color_6 = "#59b3be"
-vim.g.terminal_color_7 = "#F5F5F5"
-vim.g.terminal_color_8 = "#708284"
-vim.g.terminal_color_9 = "#d06c76"
-vim.g.terminal_color_10 = "#99c27c"
-vim.g.terminal_color_11 = "#FFD740"
-vim.g.terminal_color_12 = "#40C4FF"
-vim.g.terminal_color_13 = "#FF4081"
-vim.g.terminal_color_14 = "#59b3be"
-vim.g.terminal_color_15 = "#F5F5F5"
-
--- custom commands and functions
+-- custom commands and functions {{{
 
 -- Remove trailing whitespace
 vim.cmd([[command! TrimWhitespace execute ':%s/\s\+$// | :noh']])
 
 -- Allow us to move to windows by number using the leader key
 for ii=1,9 do
-    nnoremap('<Leader>' .. ii, ':' .. ii .. 'wincmd w<CR>')
+    noremap('n', '<Leader>' .. ii, ':' .. ii .. 'wincmd w<CR>')
 end
 
 -- Allow `e` to be prefixed by a window number to use for the jump
@@ -233,73 +304,10 @@ vim.cmd([[
     command! -bar -nargs=* Scratch call ScratchEdit('split', <q-args>)
     command! -bar -nargs=* ScratchV call ScratchEdit('vsplit', <q-args>)
 ]])
+    
+-- }}}
 
--- keybindings
-inoremap('kj', '<ESC>')
-
--- Switch back to alternate file
-nnoremap('<CR><CR>', '<C-S-^>')
-
--- Make Y behave like other capital
-nnoremap('Y', 'y$')
-
--- Easy on the fingers save and window manipulation bindings
-nnoremap('<leader>s', ':w<CR>')
-nnoremap('<leader>w', '<C-w>')
-
--- Quick switch to directory of current file
-nnoremap('gcd', ':lcd %:p:h<CR>:pwd<CR>')
-
--- Quickly create a file in the directory of the current buffer
-vim.api.nvim_set_keymap('n', '<leader>e', ':<C-u>e <C-R>=expand("%:p:h") . "/" <CR>', {})
-
--- Leave cursor at end of yank after yanking text with lowercase y in visual mode
-vim.api.nvim_set_keymap('v', 'y', 'y`>', {noremap = true})
-
--- Fit window height to contents and fix
-vim.cmd([[command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')]])
-
--- Toggle to last active tab
-vim.g.lasttab = 1
-nnoremap('<CR>t', ':exe "tabn ".g:lasttab<CR>')
-vim.cmd([[au TabLeave * let g:lasttab = tabpagenr()]])
-
--- Disable increment number up / down - *way* too dangerous...
-vim.api.nvim_set_keymap('n', '<C-a>', '<Nop>', {})
-vim.api.nvim_set_keymap('n', '<C-x>', '<Nop>', {})
-
--- Turn off search highlighting
-vim.api.nvim_set_keymap('', [[\|]], '<Esc>:<C-u>noh<CR>', {noremap = true})
-
--- Paste without auto indent
-nnoremap('<F2>', ':set invpaste paste?<CR>', {})
-vim.opt.pastetoggle='<F2>'
-
--- Toggle auto paragraph formatting
-nnoremap('coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]], {})
-
--- terminal stuff
-vim.env.LAUNCHED_FROM_NVIM = 1
-vim.cmd([[
-    augroup MyTerm
-        au!
-        au BufWinEnter,WinEnter,TermOpen term://* startinsert 
-        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber
-    augroup END
-]])
-
-vim.api.nvim_set_keymap('t', 'kj', [[<C-\><C-n>]], {})
-vim.api.nvim_set_keymap('t', '<C-h>', [[<C-\><C-n><C-w>h]], {})
-vim.api.nvim_set_keymap('t', '<C-j>', [[<C-\><C-n><C-w>j]], {})
-vim.api.nvim_set_keymap('t', '<C-k>', [[<C-\><C-n><C-w>k]], {})
-vim.api.nvim_set_keymap('t', '<C-l>', [[<C-\><C-n><C-w>l]], {})
-vim.api.nvim_set_keymap('t', '<C-w>', [[<C-\><C-n><C-w>]], {})
-nnoremap('<A-h>', '<C-w>h', {})
-nnoremap('<A-j>', '<C-w>j', {})
-nnoremap('<A-k>', '<C-w>k', {})
-nnoremap('<A-l>', '<C-w>l', {})
-
--- autocommands
+-- autocommands {{{
 
 -- Scons files
 vim.cmd([[au BufNewFile,BufRead SConscript,SConstruct set filetype=scons]])
@@ -337,3 +345,7 @@ vim.cmd([[au BufNewFile,BufRead *.{qsub,pbs} set ft=sh]])
 
 -- c/c++ switching between source and header using clangd
 vim.cmd([[au FileType c,cpp noremap gH :ClangdSwitchSourceHeader<CR>]])
+
+-- }}}
+
+-- vim: set fdm=marker:
