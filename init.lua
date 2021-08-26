@@ -2,6 +2,10 @@
 vim.o.termguicolors = true
 vim.o.encoding = 'utf-8'
 
+if vim.fn.exists("system.lua") then
+    require 'system'
+end
+
 -- plugins
 require 'plugins'
 require 'helpers'
