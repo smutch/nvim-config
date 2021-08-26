@@ -130,11 +130,11 @@ local function file_exists(name)
    if f~=nil then io.close(f) return true else return false end
 end
 
-if file_exists("~/.vimlight") or (vim.env.LIGHT == 1) then
-    vim.opt.background = 'light'
-    vim.cmd 'colorscheme Ayu'
+if file_exists("~/.vimlight") or vim.env.LIGHT then
+    vim.o.background = 'light'
+    vim.cmd 'packadd neovim-ayu | colorscheme Ayu'
 else
-    vim.opt.background = 'dark'
+    vim.o.background = 'dark'
     vim.cmd 'colorscheme onedark'
 end
 
