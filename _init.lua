@@ -184,3 +184,160 @@ vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e :<C-u>call QFOpenInWi
 vim.cmd([[Erc execute ':e ~/.config/nvim/init.lua']])
 vim.cmd([[Ezrc execute ':e ~/.zshrc']])
 vim.cmd([[Eplug execute ':e ~/.config/nvim/lua/plugins.lua']])
+
+-- Capture output from a vim command (like :version or :messages) into a split scratch buffer.
+--  (credit: ctechols, https://gist.github.com/ctechols/c6f7c900b09be5a31dc8)
+--  Examples:
+-- :Page version
+-- :Page messages
+-- :Page ls
+-- It also works with the :!cmd command and Ex special characters like % (cmdline-special)
+-- :Page !wc %
+-- Capture and return the long output of a verbose command.
+vim.api.nvim_exec([[
+    function! s:Redir(cmd)
+       let output = ""
+       redir =>> output
+       silent exe a:cmd
+       redir END
+       return output
+    endfunction
+
+    "A command to open a scratch buffer.
+    function! s:Scratch()
+       split Scratch
+       setlocal buftype=nofile
+       setlocal bufhidden=wipe
+       setlocal noswapfile
+       setlocal nobuflisted
+       return bufnr("%")
+    endfunction
+
+    "Put the output of a command into a scratch buffer.
+    function! s:Page(command)
+       let output = s:Redir(a:command)
+       call s:Scratch()
+       normal gg
+       call append(1, split(output, "\n"))
+    endfunction
+
+    command! -nargs=+ -complete=command Page :call <SID>Page(<q-args>)
+]], false)
+
+-- scrach buffers (taken from <http://dhruvasagar.com/2014/03/11/creating-custom-scratch-buffers-in-vim>)
+vim.api.nvim_exec([[
+    function! ScratchEdit(cmd, options)
+        exe a:cmd tempname()
+        setl buftype=nofile bufhidden=wipe nobuflisted
+        if !empty(a:options) | exe 'setl' a:options | endif
+    endfunction
+
+    command! -bar -nargs=* Scratch call ScratchEdit('split', <q-args>)
+    command! -bar -nargs=* ScratchV call ScratchEdit('vsplit', <q-args>)
+]])
+
+-- keybindings
+inoremap('kj', '<ESC>', {})
+
+-- Switch back to alternate file
+nnoremap('<CR><CR>', '<C-S-^>', {})
+
+-- Make Y behave like other capital
+nnoremap('Y', 'y$', {})
+
+-- Easy on the fingers save and window manipulation bindings
+nnoremap('<leader>s', ':w<CR>', {})
+nnoremap('<leader>w', '<C-w>', {})
+
+-- Quick switch to directory of current file
+nnoremap('gcd', ':lcd %:p:h<CR>:pwd<CR>', {})
+
+-- Quickly create a file in the directory of the current buffer
+vim.api.nvim_set_keymap('n', '<leader>e', ':<C-u>e <C-R>=expand("%:p:h") . "/" <CR>', {})
+
+-- Leave cursor at end of yank after yanking text with lowercase y in visual mode
+vim.api.nvim_set_keymap('v', 'y', 'y`>', {noremap = true})
+
+-- Fit window height to contents and fix
+vim.cmd([[command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')]])
+
+-- Toggle to last active tab
+vim.g.lasttab = 1
+nnoremap('<CR>t', ':exe "tabn ".g:lasttab<CR>', {})
+vim.cmd([[au TabLeave * let g:lasttab = tabpagenr()]])
+
+-- Disable increment number up / down - *way* too dangerous...
+vim.api.nvim.set_nvim_keymap('n', '<C-a>', '<Nop>')
+vim.api.nvim.set_nvim_keymap('n', '<C-x>', '<Nop>')
+
+-- Turn off search highlighting
+vim.api.nvim_set_keymap('', [[\|]], '<Esc>:<C-u>noh<CR>', {noremap = true})
+
+-- Paste without auto indent
+nnoremap('<F2>', ':set invpaste paste?<CR>', {})
+vim.opt.pastetoggle='<F2>'
+
+-- Toggle auto paragraph formatting
+nnoremap('coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]], {})
+
+-- terminal stuff
+vim.env.LAUNCHED_FROM_NVIM = 1
+vim.cmd([[
+    augroup MyTerm
+        au!
+        au BufWinEnter,WinEnter,TermOpen term://* startinsert 
+        au TermOpen * setlocal winhighlight=Normal:TermNormal |
+                    \ setlocal nocursorline nonumber norelativenumber
+    augroup END
+]])
+
+vim.api.nvim_set_keymap('t', 'kj', [[<C-\><C-n>]], {})
+vim.api.nvim_set_keymap('t', '<C-h>', [[<C-\><C-n><C-w>h]], {})
+vim.api.nvim_set_keymap('t', '<C-j>', [[<C-\><C-n><C-w>j]], {})
+vim.api.nvim_set_keymap('t', '<C-k>', [[<C-\><C-n><C-w>k]], {})
+vim.api.nvim_set_keymap('t', '<C-l>', [[<C-\><C-n><C-w>l]], {})
+vim.api.nvim_set_keymap('t', '<C-w>', [[<C-\><C-n><C-w>]], {})
+nnoremap('<A-h>', '<C-w>h', {})
+nnoremap('<A-j>', '<C-w>j', {})
+nnoremap('<A-k>', '<C-w>k', {})
+nnoremap('<A-l>', '<C-w>l', {})
+
+-- autocommands
+
+-- Scons files
+vim.cmd([[au BufNewFile,BufRead SConscript,SConstruct set filetype=scons]])
+
+-- cython files
+vim.cmd([[au BufRead,BufNewFile *.pxd,*.pxi,*.pyx set filetype=cython]])
+
+-- slurm files
+vim.cmd([[au BufRead,BufNewFile *.slurm set filetype=slurm]])
+
+-- Trim trailing whitespace when saving python file
+vim.cmd([[au BufWritePre *.py normal m`:%s/\s\+$//e``]])
+
+-- enable spell checking on certain files
+vim.cmd([[au BufNewFile,BufRead COMMIT_EDITMSG set spell | setlocal nofoldenable]])
+
+-- pandoc
+vim.cmd([[
+    augroup pandoc_syntax
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc |
+                    \ setlocal cole=0
+    augroup END
+]])
+
+-- If we have a wide window then put the preview window on the right
+vim.cmd([[au BufAdd * if &previewwindow && &columns >= 160 && winnr("$") == 2 | silent! wincmd L | endif]])
+
+-- web related languages
+vim.cmd([[au FileType javascript,coffee,html,css,scss,sass setlocal ts=2 sw=2]])
+
+-- make sure all tex files are set to correct filetype
+vim.cmd([[au BufNewFile,BufRead *.tex set ft=tex]])
+
+-- make sure pbs scripts are set to the right filetype
+vim.cmd([[au BufNewFile,BufRead *.{qsub,pbs} set ft=sh]])
+
+-- c/c++ switching between source and header using clangd
+vim.cmd([[au FileType c,cpp noremap gH :ClangdSwitchSourceHeader<CR>]])
