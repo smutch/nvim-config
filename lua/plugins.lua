@@ -14,7 +14,7 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
-    -- lsp and completion
+    -- lsp and completion {{{
     use {
         'neovim/nvim-lsp',
         requires = {'kabouzeid/nvim-lspinstall', 'ray-x/lsp_signature.nvim', 'nvim-lua/plenary.nvim'},
@@ -52,8 +52,9 @@ return require('packer').startup(function(use)
             require("trouble").setup {}
         end
     }
+    -- }}}
 
-    -- movement
+    -- editing {{{
     use 'tpope/vim-rsi'
     use {
         'ggandor/lightspeed.nvim',
@@ -67,7 +68,6 @@ return require('packer').startup(function(use)
         end
     }
 
-    -- editing
     use 'tpope/vim-repeat'
     use {
         'scrooloose/nerdcommenter',
@@ -103,6 +103,7 @@ return require('packer').startup(function(use)
             vim.g.AutoPairsShortcutBackInsert = '<A-b>'
         end
     }
+    use 'michaeljsmith/vim-indent-object'
     use {
         'tpope/vim-surround',
         config = function()
@@ -183,9 +184,10 @@ return require('packer').startup(function(use)
                 vim.api.nvim_set_keymap('', '<leader>yP', ':YanksBefore<CR>', {})
         end
     }
+    -- }}}
 
 
-    -- utils
+    -- treesitter {{{
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
@@ -229,6 +231,9 @@ return require('packer').startup(function(use)
             vim.g.dispatch_handlers = {'tmux', 'screen', 'windows', 'x11', 'headless'}
         end
     }
+    -- }}}
+
+    -- utils {{{
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-eunuch'
     use 'tpope/vim-obsession'
@@ -353,7 +358,7 @@ return require('packer').startup(function(use)
             require("todo-comments").setup {}
         end
     }
-    use 'michaeljsmith/vim-indent-object'
+
     use {
         'norcalli/nvim-colorizer.lua',
         config = function()
@@ -425,12 +430,18 @@ return require('packer').startup(function(use)
         opt = true
     }
 
-
     -- linting
     use 'neomake/neomake'
 
+    -- }}}
 
-    -- looking good
+    -- looking good {{{
+
+    -- colorschemes {{{
+    use 'navarasu/onedark.nvim'
+    use {'Shatur/neovim-ayu', opt = true}
+    -- }}}
+
     use 'kyazdani42/nvim-web-devicons'
     use {
         'glepnir/galaxyline.nvim',
@@ -450,9 +461,11 @@ return require('packer').startup(function(use)
             vim.g.indent_blankline_char = '│'
         end
     }
+    use {'metakirby5/codi.vim', opt = true}
+    -- }}}
 
 
-    -- prose
+    -- prose {{{
     use {
         'reedes/vim-wordy',
         opt = true,
@@ -469,16 +482,13 @@ return require('packer').startup(function(use)
             require("zen-mode").setup {}
         end
     }
+    -- }}}
 
 
-    -- colorschemes
-    use 'navarasu/onedark.nvim'
-    use 'Shatur/neovim-ayu'
-    -- use 'KeitaNakamura/neodark.vim'
 
+    -- filetypes {{{
 
-    -- filetypes
-    -- python
+    -- python {{{
     use {
         'vim-python/python-syntax',
         ft = { 'python' }
@@ -495,12 +505,10 @@ return require('packer').startup(function(use)
         'anntzer/vim-cython',
         ft = { 'python', 'cython' }
     }
+    -- }}}
 
-
-    -- other
     use {
         'adamclaxon/taskpaper.vim',
-        opt = true,
         ft = { 'taskpaper', 'tp' }
     }
     use {
@@ -517,7 +525,6 @@ return require('packer').startup(function(use)
     }
     use {
         'vim-scripts/scons.vim',
-        opt = true,
         ft = { 'scons' }
     }
     use {
@@ -535,6 +542,7 @@ return require('packer').startup(function(use)
     use {'tikhomirov/vim-glsl', opt = true}
     use {'DingDean/wgsl.vim', opt = true}
     use 'NoahTheDuke/vim-just'
+    -- }}}
 
 
 end)
