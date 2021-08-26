@@ -7,7 +7,7 @@ require 'plugins'
 require 'helpers'
 
 -- basic setting
-vim.g.mapleader = "\\<space>"
+vim.g.mapleader = " "
 vim.g.localleader = "\\"
 
 vim.o.history = 1000                                 -- Store a ton of history (default is 20)
@@ -15,7 +15,7 @@ vim.o.wildmenu = true                                -- show list instead of jus
 vim.o.autoread = true                                -- Automatically re-read changed files
 vim.o.hidden = true                                  -- Don't unload a buffer when abandoning it
 vim.o.mouse="a"                                      -- enable mouse for all modes settings
-vim.o.clipboard = vim.o.clipboard .. ',unnamedplus'  -- To work in tmux
+vim.opt.clipboard:append {unnamedplus=true}            -- To work in tmux
 vim.o.spelllang="en_gb"                              -- British spelling
 vim.o.showmode = false                               -- Don't show the current mode
 
@@ -25,7 +25,7 @@ vim.o.exrc = true                                    -- Allow the use of folder 
 vim.g.netrw_altfile = 1                              -- Prev buffer command excludes netrw buffers
 
 -- What to write in sessions
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,globals"
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,globals"
 
 vim.o.backspace="indent,eol,start"                  -- Sane backspace
 vim.o.autoindent = true                             -- Autoindent
@@ -43,8 +43,8 @@ vim.o.shiftwidth=4                                  -- 4 spaces for tabs
 vim.o.vb = false                                    -- Turn off visual beep
 vim.o.laststatus=2                                  -- Always display a status line
 vim.o.cmdheight=1                                   -- Command line height
-vim.o.listchars={tab= [[▸\ ]], eol='↵', trail='·'}    -- Set hidden characters
-vim.o.nonumber=1                                    -- Don't show line numbers
+vim.opt.listchars={tab= [[▸\ ]], eol='↵', trail='·'}    -- Set hidden characters
+vim.o.number=false                                  -- Don't show line numbers
 vim.o.pumblend=20                                   -- opacity for popupmenu
 
 vim.o.incsearch  = true                             -- Highlight matches as you type
@@ -56,11 +56,11 @@ vim.o.gdefault   = true                             -- g flag on sed subs automa
 
 vim.o.backupdir="~/.nvim_backup"
 vim.o.directory="~/.nvim_backup"
-vim.o.undodir="/.nvim_backup/undo"                  -- where to save undo histories
+vim.o.undodir="~/.nvim_backup/undo"                  -- where to save undo histories
 vim.o.undofile = true                               -- Save undo's after file closes
-
+ 
 -- ignores
-vim.o.wildignore:append '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
+vim.o.wildignore = vim.o.wildignore .. '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
 vim.o.suffixes = '.bak,~,.o,.info,.swp,.obj'
 
 -- Live substitution
@@ -115,14 +115,8 @@ nnoremap('<localleader>z', ':SearchFold<CR>')
 vim.cmd([[
     augroup CustomColors
         au!
-        au ColorScheme * hi! link Search DiffAdd
-                    \| hi! link Conceal NonText
-                    \| hi! Comment cterm=italic gui=italic
-        au ColorScheme onedark if &background == 'dark'
-                    \| hi! Normal guifg=#d9dbda
-                    \| hi! IndentBlanklineChar guifg=#2e3c44
-                    \| hi! NormalNC guibg=#31353f
-                    \| endif
+        au ColorScheme * hi! link Search DiffAdd | hi! link Conceal NonText | hi! Comment cterm=italic gui=italic
+        au ColorScheme onedark if &background == 'dark' | hi! Normal guifg=#d9dbda | hi! IndentBlanklineChar guifg=#2e3c44 | hi! NormalNC guibg=#31353f | endif
     augroup END
 ]])
 
@@ -132,12 +126,12 @@ local function file_exists(name)
    if f~=nil then io.close(f) return true else return false end
 end
 
-if not file_exists("~/.vimlight") or (vim.env.LIGHT == 1) then
+if file_exists("~/.vimlight") or (vim.env.LIGHT == 1) then
     vim.opt.background = 'light'
-    vim.g.colors_name = 'Ayu'
+    vim.cmd 'colorscheme Ayu'
 else
     vim.opt.background = 'dark'
-    vim.g.colors_name = 'onedark'
+    vim.cmd 'colorscheme onedark'
 end
 
 -- terminal colors
@@ -165,7 +159,7 @@ vim.cmd([[command! TrimWhitespace execute ':%s/\s\+$// | :noh']])
 
 -- Allow us to move to windows by number using the leader key
 for ii=1,9 do
-    nnoremap('<Leader>' .. ii .. ' :' .. ii .. 'wincmd w<CR>')
+    nnoremap('<Leader>' .. ii, ':' .. ii .. 'wincmd w<CR>')
 end
 
 -- Allow `e` to be prefixed by a window number to use for the jump
@@ -181,9 +175,9 @@ end
 vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e :<C-u>call QFOpenInWindow()<CR>]])
 
 -- Edit rc files
-vim.cmd([[Erc execute ':e ~/.config/nvim/init.lua']])
-vim.cmd([[Ezrc execute ':e ~/.zshrc']])
-vim.cmd([[Eplug execute ':e ~/.config/nvim/lua/plugins.lua']])
+vim.cmd([[command! Erc execute ':e ~/.config/nvim/init.lua']])
+vim.cmd([[command! Ezrc execute ':e ~/.zshrc']])
+vim.cmd([[command! Eplug execute ':e ~/.config/nvim/lua/plugins.lua']])
 
 -- Capture output from a vim command (like :version or :messages) into a split scratch buffer.
 --  (credit: ctechols, https://gist.github.com/ctechols/c6f7c900b09be5a31dc8)
@@ -194,8 +188,8 @@ vim.cmd([[Eplug execute ':e ~/.config/nvim/lua/plugins.lua']])
 -- It also works with the :!cmd command and Ex special characters like % (cmdline-special)
 -- :Page !wc %
 -- Capture and return the long output of a verbose command.
-vim.api.nvim_exec([[
-    function! s:Redir(cmd)
+vim.cmd([[
+    function! Redir(cmd)
        let output = ""
        redir =>> output
        silent exe a:cmd
@@ -203,8 +197,8 @@ vim.api.nvim_exec([[
        return output
     endfunction
 
-    "A command to open a scratch buffer.
-    function! s:Scratch()
+    " A command to open a scratch buffer.
+    function! Scratch()
        split Scratch
        setlocal buftype=nofile
        setlocal bufhidden=wipe
@@ -213,19 +207,19 @@ vim.api.nvim_exec([[
        return bufnr("%")
     endfunction
 
-    "Put the output of a command into a scratch buffer.
-    function! s:Page(command)
-       let output = s:Redir(a:command)
-       call s:Scratch()
+    " Put the output of a command into a scratch buffer.
+    function! Page(command)
+       let output = Redir(a:command)
+       call Scratch()
        normal gg
        call append(1, split(output, "\n"))
     endfunction
 
-    command! -nargs=+ -complete=command Page :call <SID>Page(<q-args>)
-]], false)
+    command! -nargs=+ -complete=command Page :call Page(<q-args>)
+]])
 
 -- scrach buffers (taken from <http://dhruvasagar.com/2014/03/11/creating-custom-scratch-buffers-in-vim>)
-vim.api.nvim_exec([[
+vim.cmd([[
     function! ScratchEdit(cmd, options)
         exe a:cmd tempname()
         setl buftype=nofile bufhidden=wipe nobuflisted
@@ -237,20 +231,20 @@ vim.api.nvim_exec([[
 ]])
 
 -- keybindings
-inoremap('kj', '<ESC>', {})
+inoremap('kj', '<ESC>')
 
 -- Switch back to alternate file
-nnoremap('<CR><CR>', '<C-S-^>', {})
+nnoremap('<CR><CR>', '<C-S-^>')
 
 -- Make Y behave like other capital
-nnoremap('Y', 'y$', {})
+nnoremap('Y', 'y$')
 
 -- Easy on the fingers save and window manipulation bindings
-nnoremap('<leader>s', ':w<CR>', {})
-nnoremap('<leader>w', '<C-w>', {})
+nnoremap('<leader>s', ':w<CR>')
+nnoremap('<leader>w', '<C-w>')
 
 -- Quick switch to directory of current file
-nnoremap('gcd', ':lcd %:p:h<CR>:pwd<CR>', {})
+nnoremap('gcd', ':lcd %:p:h<CR>:pwd<CR>')
 
 -- Quickly create a file in the directory of the current buffer
 vim.api.nvim_set_keymap('n', '<leader>e', ':<C-u>e <C-R>=expand("%:p:h") . "/" <CR>', {})
@@ -263,12 +257,12 @@ vim.cmd([[command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')]]
 
 -- Toggle to last active tab
 vim.g.lasttab = 1
-nnoremap('<CR>t', ':exe "tabn ".g:lasttab<CR>', {})
+nnoremap('<CR>t', ':exe "tabn ".g:lasttab<CR>')
 vim.cmd([[au TabLeave * let g:lasttab = tabpagenr()]])
 
 -- Disable increment number up / down - *way* too dangerous...
-vim.api.nvim.set_nvim_keymap('n', '<C-a>', '<Nop>')
-vim.api.nvim.set_nvim_keymap('n', '<C-x>', '<Nop>')
+vim.api.nvim_set_keymap('n', '<C-a>', '<Nop>', {})
+vim.api.nvim_set_keymap('n', '<C-x>', '<Nop>', {})
 
 -- Turn off search highlighting
 vim.api.nvim_set_keymap('', [[\|]], '<Esc>:<C-u>noh<CR>', {noremap = true})
@@ -286,8 +280,7 @@ vim.cmd([[
     augroup MyTerm
         au!
         au BufWinEnter,WinEnter,TermOpen term://* startinsert 
-        au TermOpen * setlocal winhighlight=Normal:TermNormal |
-                    \ setlocal nocursorline nonumber norelativenumber
+        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber
     augroup END
 ]])
 
@@ -322,8 +315,7 @@ vim.cmd([[au BufNewFile,BufRead COMMIT_EDITMSG set spell | setlocal nofoldenable
 -- pandoc
 vim.cmd([[
     augroup pandoc_syntax
-        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc |
-                    \ setlocal cole=0
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc | setlocal cole=0
     augroup END
 ]])
 

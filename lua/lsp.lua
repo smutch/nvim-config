@@ -145,6 +145,9 @@ local function setup_servers()
                   Lua = {
                       diagnostics = {
                           globals = { 'vim' }
+                      },
+                      workspace = {
+                          preloadFileSize = 500
                       }
                   }
               }
