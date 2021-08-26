@@ -10,58 +10,58 @@ require 'helpers'
 vim.g.mapleader = " "
 vim.g.localleader = "\\"
 
-vim.o.history = 1000                                 -- Store a ton of history (default is 20)
-vim.o.wildmenu = true                                -- show list instead of just completing
-vim.o.autoread = true                                -- Automatically re-read changed files
-vim.o.hidden = true                                  -- Don't unload a buffer when abandoning it
-vim.o.mouse="a"                                      -- enable mouse for all modes settings
-vim.opt.clipboard:append {unnamedplus=true}            -- To work in tmux
-vim.o.spelllang="en_gb"                              -- British spelling
-vim.o.showmode = false                               -- Don't show the current mode
+vim.o.history = 1000                                        -- Store a ton of history (default is 20)
+vim.o.wildmenu = true                                       -- show list instead of just completing
+vim.o.autoread = true                                       -- Automatically re-read changed files
+vim.o.hidden = true                                         -- Don't unload a buffer when abandoning it
+vim.o.mouse="a"                                             -- enable mouse for all modes settings
+vim.opt.clipboard:append {unnamedplus=true}                 -- To work in tmux
+vim.o.spelllang="en_gb"                                     -- British spelling
+vim.o.showmode = false                                      -- Don't show the current mode
 
-vim.o.secure = true                                  -- Secure mode for reading vimrc, exrc files etc. in current dir
-vim.o.exrc = true                                    -- Allow the use of folder dependent settings
+vim.o.secure = true                                         -- Secure mode for reading vimrc, exrc files etc. in current dir
+vim.o.exrc = true                                           -- Allow the use of folder dependent settings
 
-vim.g.netrw_altfile = 1                              -- Prev buffer command excludes netrw buffers
+vim.g.netrw_altfile = 1                                     -- Prev buffer command excludes netrw buffers
 
 -- What to write in sessions
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,globals"
 
-vim.o.backspace="indent,eol,start"                  -- Sane backspace
-vim.o.autoindent = true                             -- Autoindent
-vim.o.smartindent = false                           -- Turning this off as messes with python comment indents.
-vim.o.wrap = true                                   -- Wrap lines
-vim.o.linebreak = true                              -- Wrap at breaks
+vim.o.backspace="indent,eol,start"                          -- Sane backspace
+vim.o.autoindent = true                                     -- Autoindent
+vim.o.smartindent = false                                   -- Turning this off as messes with python comment indents.
+vim.o.wrap = true                                           -- Wrap lines
+vim.o.linebreak = true                                      -- Wrap at breaks
 vim.o.textwidth=0
 vim.o.wrapmargin=0
 vim.o.display="lastline"
-vim.o.formatoptions = vim.o.formatoptions .. "l"    -- Dont mess with the wrapping of existing lines
+vim.o.formatoptions = vim.o.formatoptions .. "l"            -- Dont mess with the wrapping of existing lines
 vim.o.expandtab = true
 vim.o.tabstop=4
-vim.o.shiftwidth=4                                  -- 4 spaces for tabs
+vim.o.shiftwidth=4                                          -- 4 spaces for tabs
 
-vim.o.vb = false                                    -- Turn off visual beep
-vim.o.laststatus=2                                  -- Always display a status line
-vim.o.cmdheight=1                                   -- Command line height
-vim.opt.listchars={tab= [[▸\ ]], eol='↵', trail='·'}    -- Set hidden characters
-vim.o.number=false                                  -- Don't show line numbers
-vim.o.pumblend=20                                   -- opacity for popupmenu
+vim.o.vb = false                                            -- Turn off visual beep
+vim.o.laststatus=2                                          -- Always display a status line
+vim.o.cmdheight=1                                           -- Command line height
+vim.opt.listchars={tab= [[▸\ ]], eol='↵', trail='·'}        -- Set hidden characters
+vim.o.number=false                                          -- Don't show line numbers
+vim.o.pumblend=20                                           -- opacity for popupmenu
 
-vim.o.incsearch  = true                             -- Highlight matches as you type
-vim.o.hlsearch   = true                             -- Highlight matches
-vim.o.showmatch  = true                             -- Show matching paren
-vim.o.ignorecase = true                             -- case insensitive search
-vim.o.smartcase  = true                             -- case sensitive when uc present
-vim.o.gdefault   = true                             -- g flag on sed subs automatically
+vim.o.incsearch  = true                                     -- Highlight matches as you type
+vim.o.hlsearch   = true                                     -- Highlight matches
+vim.o.showmatch  = true                                     -- Show matching paren
+vim.o.ignorecase = true                                     -- case insensitive search
+vim.o.smartcase  = true                                     -- case sensitive when uc present
+vim.o.gdefault   = true                                     -- g flag on sed subs automatically
 
-vim.o.backupdir="~/.nvim_backup"
-vim.o.directory="~/.nvim_backup"
-vim.o.undodir="~/.nvim_backup/undo"                  -- where to save undo histories
-vim.o.undofile = true                               -- Save undo's after file closes
- 
+vim.o.backupdir = os.getenv('HOME') .. "/.nvim_backup"
+vim.o.directory = os.getenv('HOME') .. "/.nvim_backup"
+vim.o.undodir= os.getenv('HOME') .. "/.nvim_backup/undo"    -- where to save undo histories
+vim.o.undofile = true                                       -- Save undo's after file closes
+
 -- ignores
 vim.o.wildignore = vim.o.wildignore .. '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
-vim.o.suffixes = '.bak,~,.o,.info,.swp,.obj'
+vim.o.suffixes = '.bak,.o,.info,.swp,.obj'
 
 -- Live substitution
 vim.o.inccommand="nosplit"
