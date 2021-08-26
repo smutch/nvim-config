@@ -186,7 +186,6 @@ return require('packer').startup(function(use)
     }
     -- }}}
 
-
     -- treesitter {{{
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -461,9 +460,19 @@ return require('packer').startup(function(use)
             vim.g.indent_blankline_char = '│'
         end
     }
-    use {'metakirby5/codi.vim', opt = true}
+    use {
+        'metakirby5/codi.vim',
+        cmd = 'Codi',
+        setup = function()
+            vim.g['codi#interpreters'] = {
+                python = {
+                    bin='/usr/local/Caskroom/mambaforge/base/envs/std/bin/python'
+                }
+            }
+            vim.g['codi#virtual_text'] = 0
+        end
+    }
     -- }}}
-
 
     -- prose {{{
     use {
@@ -483,8 +492,6 @@ return require('packer').startup(function(use)
         end
     }
     -- }}}
-
-
 
     -- filetypes {{{
 
@@ -544,5 +551,6 @@ return require('packer').startup(function(use)
     use 'NoahTheDuke/vim-just'
     -- }}}
 
-
 end)
+
+-- vim: set fdm=marker:
