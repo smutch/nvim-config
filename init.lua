@@ -107,7 +107,7 @@ map('n', '<C-a>', '<Nop>')
 map('n', '<C-x>', '<Nop>')
 
 -- Turn off search highlighting
-noremap('', [[\|]], '<Esc>:<C-u>noh<CR>')
+noremap('', [[|]], '<Esc>:<C-u>noh<CR>', { silent = true })
 
 -- Paste without auto indent
 noremap('n', '<F2>', ':set invpaste paste?<CR>', {})
