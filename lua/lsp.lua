@@ -136,6 +136,7 @@ local function setup_servers()
             }
         elseif server == 'efm' then
             require"lspconfig"[server].setup {
+                filetypes = { 'python', 'lua' },
                 init_options = { documentFormatting = true },
                 settings = {
                     rootMarkers = { ".git/" },
@@ -143,6 +144,12 @@ local function setup_servers()
                         lua = {
                             {
                                 formatCommand = "lua-format --column-limit=120 --spaces-inside-table-braces -i",
+                                formatStdin = true
+                            }
+                        },
+                        python = {
+                            {
+                                formatCommand = 'if [ -e pyproject.toml ]; then "${cmd[@]}" isort --quiet --profile black - | "${cmd[@]}" black --quiet -; else isort --quiet -l 120 - | black --quiet -l 120 -; fi',
                                 formatStdin = true
                             }
                         }
