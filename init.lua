@@ -182,7 +182,7 @@ vim.g.terminal_color_15 = "#F5F5F5"
 
 -- Use ripgrep if possible, if not then ack, and fall back to grep if all else fails
 if vim.fn.executable('rg') then
-    vim.o.grepprg="set grepprg=rg --vimgrep --no-heading --smart-case --trim"
+    vim.o.grepprg="rg --vimgrep --no-heading --smart-case --trim"
 elseif vim.fn.executable('ack') then
     vim.o.grepprg="ack -s -H --nocolor --nogroup --column"
     vim.o.grepformat="%f:%l:%c:%m,%f:%l:%m"
@@ -191,7 +191,7 @@ else
     -- singe file. Set grep program to always generate a file-name.
     vim.o.grepprg="grep -nHRI $* ."
 end
-noremap('n', '<leader>*', ':silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>')
+noremap('n', '<leader>*', [[:silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>]])
 vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!')
 noremap('n', '<leader>/', ':Grep')
 

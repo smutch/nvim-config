@@ -1,5 +1,5 @@
 local gl = require('galaxyline')
-local vcs = require('galaxyline.provider_vcs')
+local vcs = require('galaxyline.providers.vcs')
 local gls = gl.section
 gl.short_line_list = {'LuaTree','vista','dbui'}
 
@@ -92,7 +92,7 @@ gls.left[3] ={
   FileIcon = {
     provider = 'FileIcon',
     condition = buffer_not_empty,
-    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color,colors.line_bg},
+    highlight = {require('galaxyline.providers.fileinfo').get_file_icon_color,colors.line_bg},
   },
 }
 gls.left[4] = {
@@ -106,7 +106,7 @@ gls.left[4] = {
 gls.left[5] = {
   GitIcon = {
     provider = function() return '  ' end,
-    condition = require('galaxyline.provider_vcs').check_git_workspace,
+    condition = vcs.check_git_workspace,
     highlight = {colors.orange,colors.line_bg},
   }
 }
@@ -119,7 +119,7 @@ gls.left[6] = {
         end
         return branch
     end,
-    condition = require('galaxyline.provider_vcs').check_git_workspace,
+    condition = vcs.check_git_workspace,
     highlight = {'#8FBCBB',colors.line_bg,'bold'},
   }
 }

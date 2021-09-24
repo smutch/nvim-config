@@ -10,23 +10,6 @@ vim.lsp.set_log_level("debug")
 
 require'lsp_signature'.on_attach({ fix_pos = true, hint_enable = false, hint_prefix = " " })
 
-require'compe'.setup {
-    enabled = true,
-    debug = false,
-    min_length = 1,
-
-    source = {
-        nvim_lsp = true,
-        ultisnips = true,
-        path = true,
-        buffer = true,
-        nvim_lua = true,
-        emoji = true
-        -- tags = true;
-        -- nvim_lua = { ... overwrite source configuration ... };
-    }
-}
-
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
 
@@ -157,7 +140,10 @@ local function setup_servers()
                 }
             }
         else
-            require'lspconfig'[server].setup { on_attach = on_attach }
+            require'lspconfig'[server].setup {
+                on_attach = on_attach,
+                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+            }
         end
     end
 end

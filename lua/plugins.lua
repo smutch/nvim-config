@@ -21,24 +21,38 @@ return require('packer').startup(function(use)
         config = function() require 'lsp' end
     }
     use {
-        'hrsh7th/nvim-compe',
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'quangnguyen30192/cmp-nvim-ultisnips', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path',
+            'andersevenrud/compe-tmux', 'hrsh7th/cmp-calc', 'kdheepak/cmp-latex-symbols'
+        },
         config = function()
+            local cmp = require 'cmp'
+
+            cmp.setup({
+                snippet = { expand = function(args) vim.fn["vsnip#anonymous"](args.body) end },
+                mapping = {
+                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.close(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true })
+                },
+                sources = {
+                    { name = 'nvim_lsp' }, { name = 'ultisnips' }, { name = 'path' }, { name = 'buffer' },
+                    { name = 'tmux' }, { name = 'calc' }, { name = 'latex_symbols' }
+                }
+            })
+
+            -------------------------------------------------
             -- Use <Tab> and <S-Tab> to navigate through popup menu
             local function t(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
             function _G.smart_tab() return vim.fn.pumvisible() == 1 and t '<C-n>' or t '<Tab>' end
             function _G.smart_shift_tab() return vim.fn.pumvisible() == 1 and t '<C-p>' or t '<S-Tab>' end
             vim.api.nvim_set_keymap('i', '<TAB>', 'v:lua.smart_tab()', { expr = true, noremap = true })
             vim.api.nvim_set_keymap('i', '<S-TAB>', 'v:lua.smart_shift_tab()', { expr = true, noremap = true })
+            ----------------------------------------------
 
-            -- use ctrl-space for manual completion
-            vim.api
-                .nvim_set_keymap('i', '<C-Space>', 'compe#complete()', { expr = true, noremap = true, silent = true })
-
-            -- Set completeopt to have a better completion experience
-            vim.go.completeopt = 'menuone,noinsert,noselect'
-
-            -- Avoid showing message extra message when using completion
-            vim.opt.shortmess:append({ c = true })
         end
     }
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup {} end }
@@ -384,10 +398,15 @@ return require('packer').startup(function(use)
     -- colorschemes {{{
     use 'navarasu/onedark.nvim'
     use { 'Shatur/neovim-ayu', opt = true }
+    use {
+        'projekt0n/github-nvim-theme',
+        opt = true,
+        config = function() require'github-theme'.setup { theme_style = 'dark' } end
+    }
     -- }}}
 
     use 'kyazdani42/nvim-web-devicons'
-    use { 'glepnir/galaxyline.nvim', config = function() require 'statusline' end, requires = 'nvim-lua/lsp-status.nvim' }
+    use { 'NTBBloodbath/galaxyline.nvim', config = function() require 'statusline' end, requires = 'nvim-lua/lsp-status.nvim' }
     use {
         'gcmt/taboo.vim',
         config = function()
