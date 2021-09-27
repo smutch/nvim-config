@@ -121,6 +121,7 @@ local function setup_servers()
             require"lspconfig"[server].setup {
                 filetypes = { 'python', 'lua' },
                 init_options = { documentFormatting = true },
+                on_attach = on_attach,
                 settings = {
                     rootMarkers = { ".git/" },
                     languages = {

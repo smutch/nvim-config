@@ -21,38 +21,22 @@ return require('packer').startup(function(use)
         config = function() require 'lsp' end
     }
     use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'quangnguyen30192/cmp-nvim-ultisnips', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path',
-            'andersevenrud/compe-tmux', 'hrsh7th/cmp-calc', 'kdheepak/cmp-latex-symbols'
-        },
+        'ms-jpq/coq_nvim',
+        branch = 'coq',
         config = function()
-            local cmp = require 'cmp'
-
-            cmp.setup({
-                snippet = { expand = function(args) vim.fn["vsnip#anonymous"](args.body) end },
-                mapping = {
-                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.close(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true })
-                },
-                sources = {
-                    { name = 'nvim_lsp' }, { name = 'ultisnips' }, { name = 'path' }, { name = 'buffer' },
-                    { name = 'tmux' }, { name = 'calc' }, { name = 'latex_symbols' }
-                }
-            })
-
-            -------------------------------------------------
-            -- Use <Tab> and <S-Tab> to navigate through popup menu
-            local function t(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
-            function _G.smart_tab() return vim.fn.pumvisible() == 1 and t '<C-n>' or t '<Tab>' end
-            function _G.smart_shift_tab() return vim.fn.pumvisible() == 1 and t '<C-p>' or t '<S-Tab>' end
-            vim.api.nvim_set_keymap('i', '<TAB>', 'v:lua.smart_tab()', { expr = true, noremap = true })
-            vim.api.nvim_set_keymap('i', '<S-TAB>', 'v:lua.smart_shift_tab()', { expr = true, noremap = true })
-            ----------------------------------------------
-
+            vim.g.coq_settings = {
+                keymap = { jump_to_mark = '<c-k>', bigger_preview = '<c-h>' },
+                display = { pum = { fast_close = false } },
+                auto_start = true
+            }
+        end
+    }
+    use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
+    use {
+        'ms-jpq/coq.thirdparty',
+        branch = '3p',
+        config = function()
+            require("coq_3p") { { src = "nvimlua", short_name = "nLUA" }, { src = "vimtex", short_name = "vTEX" } }
         end
     }
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup {} end }
@@ -105,6 +89,7 @@ return require('packer').startup(function(use)
             vim.g.AutoPairsFlyMode = 0
             vim.g.AutoPairsShortcutToggle = ''
             vim.g.AutoPairsShortcutBackInsert = '<A-b>'
+            vim.g.AutoPairsMapCR = 0
         end
     }
     use 'michaeljsmith/vim-indent-object'
@@ -118,17 +103,6 @@ return require('packer').startup(function(use)
             vim.cmd([[autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout]])
             vim.cmd([[autocmd FileType markdown let b:surround_98 = "**\r**" "bold]])
             vim.cmd([[autocmd FileType markdown let b:surround_105 = "*\r*" "italics]])
-        end
-    }
-    use {
-        'SirVer/ultisnips',
-        requires = 'honza/vim-snippets',
-        config = function()
-            vim.g.UltiSnipsUsePythonVersion = 3
-            vim.g.UltiSnipsExpandTrigger = '<C-k>'
-            vim.g.UltiSnipsJumpForwardTrigger = '<C-k>'
-            vim.g.UltiSnipsJumpBackwardTrigger = '<C-j>'
-            vim.g.ultisnips_python_style = 'google'
         end
     }
     use { 'jeffkreeftmeijer/vim-numbertoggle', opt = true }
@@ -406,7 +380,11 @@ return require('packer').startup(function(use)
     -- }}}
 
     use 'kyazdani42/nvim-web-devicons'
-    use { 'NTBBloodbath/galaxyline.nvim', config = function() require 'statusline' end, requires = 'nvim-lua/lsp-status.nvim' }
+    use {
+        'NTBBloodbath/galaxyline.nvim',
+        config = function() require 'statusline' end,
+        requires = 'nvim-lua/lsp-status.nvim'
+    }
     use {
         'gcmt/taboo.vim',
         config = function()
@@ -444,7 +422,7 @@ return require('packer').startup(function(use)
     use { 'adamclaxon/taskpaper.vim', ft = { 'taskpaper', 'tp' } }
     use {
         'lervag/vimtex',
-        ft = { 'tex' },
+        ft = 'tex',
         config = function()
             -- Latex options
             vim.g.vimtex_compiler_latexmk = { build_dir = './build' }
