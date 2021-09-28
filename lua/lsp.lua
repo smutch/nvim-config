@@ -4,9 +4,10 @@ local M = {}
 local lspconfig = require 'lspconfig'
 local lsp_status = require 'lsp-status'
 local Path = require 'plenary.path'
+local coq = require 'coq'
 require 'helpers'
 lsp_status.register_progress()
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 
 require'lsp_signature'.on_attach({ fix_pos = true, hint_enable = false, hint_prefix = " " })
 
@@ -69,13 +70,13 @@ local on_attach = function(client, bufnr)
     noremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
 
     vim.api.nvim_command(
-        'call sign_define("LspDiagnosticsSignError", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextError"})')
+        'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticVirtualTextError"})')
     vim.api.nvim_command(
-        'call sign_define("LspDiagnosticsSignWarning", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextWarning"})')
+        'call sign_define("DiagnosticSignWarning", {"text" : "", "texthl" : "DiagnosticVirtualTextWarning"})')
     vim.api.nvim_command(
-        'call sign_define("LspDiagnosticsSignInformation", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextInformation"})')
+        'call sign_define("DiagnosticSignInformation", {"text" : "", "texthl" : "DiagnosticVirtualTextInformation"})')
     vim.api.nvim_command(
-        'call sign_define("LspDiagnosticsSignHint", {"text" : "", "texthl" : "LspDiagnosticsVirtualTextHint"})')
+        'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticVirtualTextHint"})')
 
     vim.g.lsp_diagnositc_sign_priority = 100
 
@@ -99,7 +100,7 @@ local function setup_servers()
     local servers = require'lspinstall'.installed_servers()
     for _, server in pairs(servers) do
         if server == 'python' then
-            require'lspconfig'[server].setup {
+            require'lspconfig'[server].setup(coq.lsp_ensure_capabilities({
                 on_attach = on_attach,
                 settings = {
                     python = {
@@ -111,14 +112,14 @@ local function setup_servers()
                         }
                     }
                 }
-            }
+            }))
         elseif server == 'lua' then
-            require'lspconfig'[server].setup {
+            require'lspconfig'[server].setup(coq.lsp_ensure_capabilities({
                 on_attach = on_attach,
                 settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } }
-            }
+            }))
         elseif server == 'efm' then
-            require"lspconfig"[server].setup {
+            require"lspconfig"[server].setup(coq.lsp_ensure_capabilities({
                 filetypes = { 'python', 'lua' },
                 init_options = { documentFormatting = true },
                 on_attach = on_attach,
@@ -139,12 +140,11 @@ local function setup_servers()
                         }
                     }
                 }
-            }
+            }))
         else
-            require'lspconfig'[server].setup {
-                on_attach = on_attach,
-                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-            }
+            require'lspconfig'[server].setup(coq.lsp_ensure_capabilities({
+                on_attach = on_attach
+            }))
         end
     end
 end
