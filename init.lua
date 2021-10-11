@@ -1,7 +1,5 @@
 -- system specific config
-if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then
-    require 'system'
-end
+if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then require 'system' end
 
 -- plugins
 require 'plugins'
@@ -14,59 +12,59 @@ vim.o.encoding = 'utf-8'
 vim.g.mapleader = " "
 vim.g.localleader = "\\"
 
-vim.o.history = 1000                                        -- Store a ton of history (default is 20)
-vim.o.wildmenu = true                                       -- show list instead of just completing
-vim.o.autoread = true                                       -- Automatically re-read changed files
-vim.o.hidden = true                                         -- Don't unload a buffer when abandoning it
-vim.o.mouse="a"                                             -- enable mouse for all modes settings
-vim.opt.clipboard:append {unnamedplus=true}                 -- To work in tmux
-vim.o.spelllang="en_gb"                                     -- British spelling
-vim.o.showmode = false                                      -- Don't show the current mode
+vim.o.history = 1000 -- Store a ton of history (default is 20)
+vim.o.wildmenu = true -- show list instead of just completing
+vim.o.autoread = true -- Automatically re-read changed files
+vim.o.hidden = true -- Don't unload a buffer when abandoning it
+vim.o.mouse = "a" -- enable mouse for all modes settings
+vim.opt.clipboard:append{ unnamedplus = true } -- To work in tmux
+vim.o.spelllang = "en_gb" -- British spelling
+vim.o.showmode = false -- Don't show the current mode
 
-vim.o.secure = true                                         -- Secure mode for reading vimrc, exrc files etc. in current dir
-vim.o.exrc = true                                           -- Allow the use of folder dependent settings
+vim.o.secure = true -- Secure mode for reading vimrc, exrc files etc. in current dir
+vim.o.exrc = true -- Allow the use of folder dependent settings
 
-vim.g.netrw_altfile = 1                                     -- Prev buffer command excludes netrw buffers
+vim.g.netrw_altfile = 1 -- Prev buffer command excludes netrw buffers
 
 -- What to write in sessions
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,globals"
 
-vim.o.backspace="indent,eol,start"                          -- Sane backspace
-vim.o.autoindent = true                                     -- Autoindent
-vim.o.smartindent = false                                   -- Turning this off as messes with python comment indents.
-vim.o.wrap = true                                           -- Wrap lines
-vim.o.linebreak = true                                      -- Wrap at breaks
-vim.o.textwidth=0
-vim.o.wrapmargin=0
-vim.o.display="lastline"
-vim.o.formatoptions = vim.o.formatoptions .. "l"            -- Dont mess with the wrapping of existing lines
+vim.o.backspace = "indent,eol,start" -- Sane backspace
+vim.o.autoindent = true -- Autoindent
+vim.o.smartindent = false -- Turning this off as messes with python comment indents.
+vim.o.wrap = true -- Wrap lines
+vim.o.linebreak = true -- Wrap at breaks
+vim.o.textwidth = 0
+vim.o.wrapmargin = 0
+vim.o.display = "lastline"
+vim.o.formatoptions = vim.o.formatoptions .. "l" -- Dont mess with the wrapping of existing lines
 vim.o.expandtab = true
-vim.o.tabstop=4
-vim.o.shiftwidth=4                                          -- 4 spaces for tabs
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4 -- 4 spaces for tabs
 
-vim.o.vb = false                                            -- Turn off visual beep
-vim.o.laststatus=2                                          -- Always display a status line
-vim.o.cmdheight=1                                           -- Command line height
-vim.opt.listchars={tab= [[▸\ ]], eol='↵', trail='·'}        -- Set hidden characters
-vim.o.number=false                                          -- Don't show line numbers
-vim.o.pumblend=20                                           -- opacity for popupmenu
+vim.o.vb = false -- Turn off visual beep
+vim.o.laststatus = 2 -- Always display a status line
+vim.o.cmdheight = 1 -- Command line height
+vim.opt.listchars = { tab = [[▸\ ]], eol = '↵', trail = '·' } -- Set hidden characters
+vim.o.number = false -- Don't show line numbers
+vim.o.pumblend = 20 -- opacity for popupmenu
 
-vim.o.inccommand = "nosplit"                                -- Live substitution
-vim.o.incsearch  = true                                     -- Highlight matches as you type
-vim.o.hlsearch   = true                                     -- Highlight matches
-vim.o.showmatch  = true                                     -- Show matching paren
-vim.o.ignorecase = true                                     -- case insensitive search
-vim.o.smartcase  = true                                     -- case sensitive when uc present
-vim.o.gdefault   = true                                     -- g flag on sed subs automatically
+vim.o.inccommand = "nosplit" -- Live substitution
+vim.o.incsearch = true -- Highlight matches as you type
+vim.o.hlsearch = true -- Highlight matches
+vim.o.showmatch = true -- Show matching paren
+vim.o.ignorecase = true -- case insensitive search
+vim.o.smartcase = true -- case sensitive when uc present
+vim.o.gdefault = true -- g flag on sed subs automatically
 
 vim.o.backupdir = os.getenv('HOME') .. "/.nvim_backup"
 vim.o.directory = os.getenv('HOME') .. "/.nvim_backup"
-vim.o.undodir= os.getenv('HOME') .. "/.nvim_backup/undo"    -- where to save undo histories
-vim.o.undofile = true                                       -- Save undo's after file closes
-
+vim.o.undodir = os.getenv('HOME') .. "/.nvim_backup/undo" -- where to save undo histories
+vim.o.undofile = true -- Save undo's after file closes
 
 -- ignores
-vim.o.wildignore = vim.o.wildignore .. '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
+vim.o.wildignore = vim.o.wildignore ..
+                       '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
 vim.o.suffixes = '.bak,.o,.info,.swp,.obj'
 
 -- }}}
@@ -111,7 +109,7 @@ noremap('', [[|]], '<Esc>:<C-u>noh<CR>', { silent = true })
 
 -- Paste without auto indent
 noremap('n', '<F2>', ':set invpaste paste?<CR>', {})
-vim.opt.pastetoggle='<F2>'
+vim.opt.pastetoggle = '<F2>'
 
 -- Toggle auto paragraph formatting
 noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]], {})
@@ -136,7 +134,11 @@ noremap('n', '<A-h>', '<C-w>h', {})
 noremap('n', '<A-j>', '<C-w>j', {})
 noremap('n', '<A-k>', '<C-w>k', {})
 noremap('n', '<A-l>', '<C-w>l', {})
-    
+
+-- }}}
+
+-- gui specific {{{
+vim.o.guifont = "JetBrainsMono Nerd Font:h11"
 -- }}}
 
 -- colors {{{
@@ -175,21 +177,21 @@ vim.g.terminal_color_12 = "#40C4FF"
 vim.g.terminal_color_13 = "#FF4081"
 vim.g.terminal_color_14 = "#59b3be"
 vim.g.terminal_color_15 = "#F5F5F5"
-    
+
 -- }}}
 
 -- searching {{{
 
 -- Use ripgrep if possible, if not then ack, and fall back to grep if all else fails
 if vim.fn.executable('rg') then
-    vim.o.grepprg="rg --vimgrep --no-heading --smart-case --trim"
+    vim.o.grepprg = "rg --vimgrep --no-heading --smart-case --trim"
 elseif vim.fn.executable('ack') then
-    vim.o.grepprg="ack -s -H --nocolor --nogroup --column"
-    vim.o.grepformat="%f:%l:%c:%m,%f:%l:%m"
+    vim.o.grepprg = "ack -s -H --nocolor --nogroup --column"
+    vim.o.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 else
     -- Grep will sometimes skip displaying the file name if you search in a
     -- singe file. Set grep program to always generate a file-name.
-    vim.o.grepprg="grep -nHRI $* ."
+    vim.o.grepprg = "grep -nHRI $* ."
 end
 noremap('n', '<leader>*', [[:silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>]])
 vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!')
@@ -210,9 +212,9 @@ function SearchFold()
         vim.w.old_foldlevel = vim.w.foldlevel
         vim.w.old_foldcolumn = vim.w.foldcolumn
         vim.wo.foldexpr = '(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2'
-        vim.wo.foldmethod='expr'
-        vim.wo.foldlevel=0
-        vim.wo.foldcolumn=2
+        vim.wo.foldmethod = 'expr'
+        vim.wo.foldlevel = 0
+        vim.wo.foldcolumn = 2
         vim.w.searchfold_on = 1
     else
         vim.w.foldexpr = vim.w.old_foldexpr
@@ -233,9 +235,7 @@ noremap('n', '<localleader>z', ':SearchFold<CR>')
 vim.cmd([[command! TrimWhitespace execute ':%s/\s\+$// | :noh']])
 
 -- Allow us to move to windows by number using the leader key
-for ii=1,9 do
-    noremap('n', '<Leader>' .. ii, ':' .. ii .. 'wincmd w<CR>')
-end
+for ii = 1, 9 do noremap('n', '<Leader>' .. ii, ':' .. ii .. 'wincmd w<CR>') end
 
 -- Allow `e` to be prefixed by a window number to use for the jump
 function QFOpenInWindow()
@@ -304,7 +304,7 @@ vim.cmd([[
     command! -bar -nargs=* Scratch call ScratchEdit('split', <q-args>)
     command! -bar -nargs=* ScratchV call ScratchEdit('vsplit', <q-args>)
 ]])
-    
+
 -- }}}
 
 -- autocommands {{{

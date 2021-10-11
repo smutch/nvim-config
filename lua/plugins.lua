@@ -25,7 +25,7 @@ return require('packer').startup(function(use)
         branch = 'coq',
         config = function()
             vim.g.coq_settings = {
-                keymap = { jump_to_mark = '<c-k>', bigger_preview = '<c-h>' },
+                -- keymap = { jump_to_mark = '<c-k>', bigger_preview = '<c-p>' },
                 display = { pum = { fast_close = false } },
                 auto_start = true
             }
@@ -58,22 +58,11 @@ return require('packer').startup(function(use)
 
     use 'tpope/vim-repeat'
     use {
-        'scrooloose/nerdcommenter',
+        'numToStr/Comment.nvim',
         config = function()
-            -- Custom NERDCommenter mappings
-            vim.g.NERDCustomDelimiters = {
-                scons = { left = '#' },
-                jinja = { left = '<!--', right = '-->' },
-                just = { left = '#' }
-            }
-
-            vim.g.NERDSpaceDelims = 1
-            vim.g.NERDAltDelims_c = 1
-            vim.api.nvim_set_keymap('', '<leader><leader>', '<plug>NERDCommenterToggle', {})
-            vim.api.nvim_set_keymap('n', '<leader>cp', "yy:<C-u>call NERDComment('n', 'comment')<CR>p", {})
-            vim.api.nvim_set_keymap('n', '<leader>cP', "yy:<C-u>call NERDComment('n', 'comment')<CR>P", {})
-            vim.api.nvim_set_keymap('v', '<leader>cp', "ygv:<C-u>call NERDComment('x', 'comment')<CR>`>p", {})
-            vim.api.nvim_set_keymap('v', '<leader>cP', "ygv:<C-u>call NERDComment('x', 'comment')<CR>`<P", {})
+            require('Comment').setup()
+            vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
+            vim.api.nvim_set_keymap('v', '<leader><leader>', 'gc', {})
         end
     }
     use {
@@ -90,6 +79,7 @@ return require('packer').startup(function(use)
             vim.g.AutoPairsShortcutToggle = ''
             vim.g.AutoPairsShortcutBackInsert = '<A-b>'
             vim.g.AutoPairsMapCR = 0
+            vim.g.AutoPairsMapCh = 0
         end
     }
     use 'michaeljsmith/vim-indent-object'
@@ -402,6 +392,7 @@ return require('packer').startup(function(use)
             vim.g['codi#virtual_text'] = 0
         end
     }
+    use { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = function() require('pqf').setup() end }
     -- }}}
 
     -- prose {{{
