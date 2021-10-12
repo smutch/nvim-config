@@ -62,7 +62,11 @@ return require('packer').startup(function(use)
         config = function()
             require('Comment').setup()
             vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
+            vim.api.nvim_set_keymap('n', 'gcp', 'yygccp', {})
+            vim.api.nvim_set_keymap('n', 'gcP', 'yygccP', {})
             vim.api.nvim_set_keymap('v', '<leader><leader>', 'gc', {})
+            vim.api.nvim_set_keymap('v', 'gp', 'ygvgcp', {})
+            vim.api.nvim_set_keymap('v', 'gP', 'ygvgcP', {})
         end
     }
     use {
