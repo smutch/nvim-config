@@ -1,6 +1,7 @@
 -- begin by ensure packer is actually installed!
 local execute = vim.api.nvim_command
 local fn = vim.fn
+require 'helpers'
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -103,47 +104,11 @@ return require('packer').startup(function(use)
     use { 'chrisbra/unicode.vim', opt = true }
     use 'wellle/targets.vim'
     use {
-        'bfredl/nvim-miniyank',
-        requires = 'junegunn/fzf.vim',
+        'edluffy/specs.nvim',
         config = function()
-            vim.api.nvim_set_keymap('', 'p', '<Plug>(miniyank-autoput)', {})
-            vim.api.nvim_set_keymap('', 'P', '<Plug>(miniyank-autoPut)', {})
-            vim.api.nvim_set_keymap('', '<leader>ys', '<Plug>(miniyank-startput)', {})
-            vim.api.nvim_set_keymap('', '<leader>yS', '<Plug>(miniyank-startPut)', {})
-            vim.api.nvim_set_keymap('', '<leader>yn', '<Plug>(miniyank-cycle)', {})
-            vim.api.nvim_set_keymap('', '<leader>yN', '<Plug>(miniyank-cycleback)', {})
-
-            vim.cmd([[
-                function! FZFYankList() abort
-                  function! KeyValue(key, val)
-                    let line = join(a:val[0], '\n')
-                    if (a:val[1] ==# 'V')
-                      let line = '\n'.line
-                    endif
-                    return a:key.' '.line
-                  endfunction
-                  return map(miniyank#read(), function('KeyValue'))
-                endfunction
-
-                function! FZFYankHandler(opt, line) abort
-                  let key = substitute(a:line, ' .*', '', '')
-                  if !empty(a:line)
-                    let yanks = miniyank#read()[key]
-                    call miniyank#drop(yanks, a:opt)
-                  endif
-                endfunction
-                ]])
-
-            vim.cmd([[command! YanksAfter call fzf#run(fzf#wrap('YanksAfter', {]] .. [['source':  FZFYankList(),]] ..
-                        [['sink':    function('FZFYankHandler', ['p']),]] ..
-                        [['options': '--no-sort --prompt="Yanks-p> "' }))]])
-
-            vim.cmd([[command! YanksBefore call fzf#run(fzf#wrap('YanksBefore', {]] .. [['source':  FZFYankList(),]] ..
-                        [['sink':    function('FZFYankHandler', ['P']),]] ..
-                        [['options': '--no-sort --prompt="Yanks-P> "', }))]])
-
-            vim.api.nvim_set_keymap('', '<leader>yp', ':YanksAfter<CR>', {})
-            vim.api.nvim_set_keymap('', '<leader>yP', ':YanksBefore<CR>', {})
+            require('specs').setup {
+                popup = { inc_ms = 10, width = 50, winhl = "WildMenu", resizer = require('specs').slide_resizer }
+            }
         end
     }
     -- }}}
@@ -192,110 +157,38 @@ return require('packer').startup(function(use)
         config = function() vim.api.nvim_set_keymap('n', 'Q', ':Bdelete<CR>', { noremap = true, silent = true }) end
     }
     use 'justinmk/vim-dirvish'
+
     use {
-        'junegunn/fzf.vim',
-        requires = 'junegunn/fzf',
-        run = 'cd ~/.fzf && ./install --all',
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            { 'nvim-lua/plenary.nvim' }, { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+            { 'xiyaowong/telescope-emoji.nvim' }
+        },
         config = function()
-            -- Advanced customization using autoload functions
-            vim.api.nvim_set_keymap('i', '<C-x><C-k>', 'fzf#vim#complete#word({"left": "15%"})',
-                                    { noremap = true, expr = true })
-            -- This is the default extra key bindings
-            vim.g.fzf_action = { ['ctrl-t'] = 'tab split', ['ctrl-o'] = 'split', ['ctrl-v'] = 'vsplit' }
+            local telescope = require 'telescope'
+            telescope.setup { pickers = { find_files = { theme = "dropdown" } } }
 
-            -- Default fzf layout
-            vim.g.fzf_layout = { up = '~40%' }
-
-            -- Customize fzf colors to match your color scheme
-            vim.g.fzf_colors = {
-                fg = { 'fg', 'Normal' },
-                bg = { 'bg', 'Normal' },
-                hl = { 'fg', 'Comment' },
-                ['fg+'] = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
-                ['bg+'] = { 'bg', 'CursorLine', 'CursorColumn' },
-                ['hl+'] = { 'fg', 'Statement' },
-                info = { 'fg', 'PreProc' },
-                border = { 'fg', 'Ignore' },
-                prompt = { 'fg', 'Conditional' },
-                pointer = { 'fg', 'Exception' },
-                marker = { 'fg', 'Keyword' },
-                spinner = { 'fg', 'Label' },
-                header = { 'fg', 'Comment' }
-            }
-
-            -- For Commits and BCommits to customize the options used by 'git log':
-            vim.g.fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-
-            -- Mappings and commands
-            vim.api.nvim_set_keymap('n', '<leader>fm', '<plug>(fzf-maps-n)', {})
-            vim.api.nvim_set_keymap('x', '<leader>fm', '<plug>(fzf-maps-x)', {})
-            vim.api.nvim_set_keymap('o', '<leader>fm', '<plug>(fzf-maps-o)', {})
-
-            -- local function t(str)
-            -- return vim.api.nvim_replace_termcodes(str, true, true, true)
-            -- end
-            -- vim.api.nvim_exec([[
-            -- command! -bang -nargs=* Rg
-            -- call fzf#vim#grep(
-            -- 'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-            -- <bang>0 ? fzf#vim#with_preview('up:60%')
-            -- : fzf#vim#with_preview('right:50%:hidden', '?'),
-            -- <bang>0)
-            -- ]], false)
-
-            vim.api.nvim_set_keymap('n', '<leader>fb', ':Buffers<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>ff', ':Files %:p:h<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fhf', ':History<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fh:', ' :History:<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fh/', ':History/<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>f:', ':Commands<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fw', ':Windows<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fs', ':Snippets<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>f?', ':Helptags<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fg', ':GitFiles?<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fl', ':Lines<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fL', ':BLines<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>ft', ':Tags<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>fT', ':BTags<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>f/', ':Rg<CR>', { noremap = true })
-
-            vim.api.nvim_set_keymap('i', '<c-x><c-k>', '<plug>(fzf-complete-word)', {})
-            vim.api.nvim_set_keymap('i', '<c-x><c-f>', '<plug>(fzf-complete-path)', {})
-            vim.api.nvim_set_keymap('i', '<c-x><c-j>', '<plug>(fzf-complete-file-ag)', {})
-            vim.api.nvim_set_keymap('i', '<c-x><c-l>', '<plug>(fzf-complete-line)', {})
-
-            -- project files
-            function _G.find_git_root()
-                return vim.cmd('system("git rev-parse --show-toplevel 2> /dev/null")[:-2]')
-            end
-            vim.cmd('command! -bang FZFProjectFiles call fzf#vim#files(v:lua.find_git_root(), <bang>0)')
-            vim.api.nvim_set_keymap('n', '<leader>fp', ':FZFProjectFiles<CR>', { noremap = true })
-
-            -- floating fzf
-            -- taken from https://github.com/junegunn/fzf.vim/issues/664#issuecomment-564267298
-            vim.env.FZF_DEFAULT_OPTS = vim.env.FZF_DEFAULT_OPTS .. ' --layout=reverse'
-
-            function _G.FloatingFZF()
-                local height = vim.go.lines
-                local width = vim.go.columns - (vim.go.columns * 2 / 10)
-                local col = (vim.go.columns - width) / 2
-                local col_offset = vim.go.columns / 10
-                local opts = {
-                    relative = 'editor',
-                    row = 1,
-                    col = math.floor(col + col_offset),
-                    width = math.floor(width * 2 / 1),
-                    height = math.floor(height / 2),
-                    style = 'minimal'
-                }
-                local buf = vim.api.nvim_create_buf(false, true)
-                local win = vim.api.nvim_open_win(buf, true, opts)
-                vim.api.nvim_win_set_var(win, 'winhl', 'NormalFloat:TabLine')
+            local extensions = { "fzf", "emoji" }
+            for _, extension in ipairs(extensions) do
+                telescope.load_extension(extension)
+                telescope.load_extension(extension)
             end
 
-            vim.g.fzf_layout = { window = 'call v:lua.FloatingFZF()' }
+            noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
+            noremap('n', '<leader>fg', '<cmd>Telescope git_files<cr>')
+            noremap('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
+            noremap('n', '<leader>f?', '<cmd>Telescope help_tags<cr>')
+            noremap('n', '<leader>f:', '<cmd>Telescope commands<cr>')
+            noremap('n', '<leader>fm', '<cmd>Telescope marks<cr>')
+            noremap('n', '<leader>fl', '<cmd>Telescope loclist<cr>')
+            noremap('n', '<leader>fq', '<cmd>Telescope quickfix<cr>')
+            noremap('n', [[<leader>f"]], '<cmd>Telescope registers<cr>')
+            noremap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>')
+            noremap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>')
+            noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
         end
     }
+
     use { 'folke/todo-comments.nvim', config = function() require("todo-comments").setup {} end }
 
     use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
@@ -357,7 +250,7 @@ return require('packer').startup(function(use)
     use { 'rhysd/git-messenger.vim', opt = true }
 
     -- linting
-    use 'neomake/neomake'
+    use { 'neomake/neomake', opt = true }
 
     -- }}}
 
