@@ -9,8 +9,6 @@ require 'helpers'
 lsp_status.register_progress()
 -- vim.lsp.set_log_level("debug")
 
-require'lsp_signature'.on_attach({ fix_pos = true, hint_enable = false, hint_prefix = " " })
-
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
 
@@ -44,7 +42,7 @@ M.toggle_virtual_text = function()
     end
     vim.cmd("edit")
 end
-vim.cmd("command ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>")
+vim.cmd("command! ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>")
 
 -- vim.o.updatetime = 500
 -- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
@@ -66,7 +64,7 @@ local on_attach = function(client, bufnr)
     noremap("n", "<localleader>D", "<cmd>LspTroubleToggle<cr>", { silent = true })
     noremap("n", "<localleader>d", "<cmd>Trouble lsp_document_diagnostics<cr>", { silent = true })
     noremap("n", "<localleader>i", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", { silent = true })
-    noremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", { silent = true })
+    noremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", {})
     noremap("n", "ga", "<cmd>Telescope lsp_code_actions<CR>", { silent = true })
 
     vim.api.nvim_command(
@@ -141,10 +139,24 @@ local function setup_servers()
                     }
                 }
             }))
-        else
-            require'lspconfig'[server].setup(coq.lsp_ensure_capabilities({
-                on_attach = on_attach
+        elseif server == 'rust' then
+            require"lspconfig"[server].setup(coq.lsp_ensure_capabilities({
+                on_attach = on_attach,
+                settings = {
+                    ['rust-analyzer'] = {
+                        checkOnSave = {
+                            allFeatures = true,
+                            overrideCommand = {
+                                'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets',
+                                '--all-features'
+                            }
+                            -- command = { "cargo", "clippy" }
+                        }
+                    }
+                }
             }))
+        else
+            require'lspconfig'[server].setup(coq.lsp_ensure_capabilities({ on_attach = on_attach }))
         end
     end
 end

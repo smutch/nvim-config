@@ -18,7 +18,15 @@ return require('packer').startup(function(use)
     -- lsp and completion {{{
     use {
         'neovim/nvim-lsp',
-        requires = { 'kabouzeid/nvim-lspinstall', 'ray-x/lsp_signature.nvim', 'nvim-lua/plenary.nvim' },
+        requires = {
+            'kabouzeid/nvim-lspinstall', {
+                'ray-x/lsp_signature.nvim',
+                config = function()
+                    require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
+                    vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
+                end
+            }, 'nvim-lua/plenary.nvim'
+        },
         config = function() require 'lsp' end
     }
     use {
@@ -177,6 +185,7 @@ return require('packer').startup(function(use)
             noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
             noremap('n', '<leader>fg', '<cmd>Telescope git_files<cr>')
             noremap('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
+            noremap('n', '<leader>fh', '<cmd>Telescope oldfiles<cr>')
             noremap('n', '<leader>f?', '<cmd>Telescope help_tags<cr>')
             noremap('n', '<leader>f:', '<cmd>Telescope commands<cr>')
             noremap('n', '<leader>fm', '<cmd>Telescope marks<cr>')
