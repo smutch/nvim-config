@@ -4,7 +4,6 @@ local M = {}
 local lspconfig = require 'lspconfig'
 local lsp_status = require 'lsp-status'
 local Path = require 'plenary.path'
-local coq = require 'coq'
 require 'helpers'
 lsp_status.register_progress()
 -- vim.lsp.set_log_level("debug")
@@ -92,13 +91,13 @@ end
 local interpreter_path = python_prefix .. "/bin/python"
 print("Set LSP python interpreter to: " .. interpreter_path)
 
--- Us LspInstall to set up automatically installed servers
+-- Use LspInstall to set up automatically installed servers
 local function setup_servers()
     require'lspinstall'.setup()
     local servers = require'lspinstall'.installed_servers()
     for _, server in pairs(servers) do
         if server == 'python' then
-            require'lspconfig'[server].setup(coq.lsp_ensure_capabilities({
+            require'lspconfig'[server].setup({
                 on_attach = on_attach,
                 settings = {
                     python = {
@@ -109,15 +108,17 @@ local function setup_servers()
                             extraPaths = { vim.env.PYTHONPATH }
                         }
                     }
-                }
-            }))
+                },
+                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+            })
         elseif server == 'lua' then
-            require'lspconfig'[server].setup(coq.lsp_ensure_capabilities({
+            require'lspconfig'[server].setup({
                 on_attach = on_attach,
-                settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } }
-            }))
+                settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } },
+                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+            })
         elseif server == 'efm' then
-            require"lspconfig"[server].setup(coq.lsp_ensure_capabilities({
+            require"lspconfig"[server].setup({
                 filetypes = { 'python', 'lua' },
                 init_options = { documentFormatting = true },
                 on_attach = on_attach,
@@ -137,10 +138,11 @@ local function setup_servers()
                             }
                         }
                     }
-                }
-            }))
+                },
+                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+            })
         elseif server == 'rust' then
-            require"lspconfig"[server].setup(coq.lsp_ensure_capabilities({
+            require"lspconfig"[server].setup({
                 on_attach = on_attach,
                 settings = {
                     ['rust-analyzer'] = {
@@ -153,10 +155,14 @@ local function setup_servers()
                             -- command = { "cargo", "clippy" }
                         }
                     }
-                }
-            }))
+                },
+                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+            })
         else
-            require'lspconfig'[server].setup(coq.lsp_ensure_capabilities({ on_attach = on_attach }))
+            require'lspconfig'[server].setup({
+                on_attach = on_attach,
+                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+            })
         end
     end
 end

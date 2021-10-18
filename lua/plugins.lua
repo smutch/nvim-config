@@ -11,6 +11,9 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- configure plugins
+require'packer'.init({
+  max_jobs=50
+})
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
@@ -30,22 +33,84 @@ return require('packer').startup(function(use)
         config = function() require 'lsp' end
     }
     use {
-        'ms-jpq/coq_nvim',
-        branch = 'coq',
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'neovim/nvim-lspconfig',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'Saecki/crates.nvim',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lua',
+            {'andersevenrud/compe-tmux', branch='cmp'},
+            'kdheepak/cmp-latex-symbols',
+            'f3fora/cmp-spell',
+            'hrsh7th/cmp-calc',
+            'ray-x/cmp-treesitter',
+            'hrsh7th/cmp-emoji',
+            'hrsh7th/cmp-omni',
+            'L3MON4D3/LuaSnip',
+            'saadparwaiz1/cmp_luasnip'
+        },
         config = function()
-            vim.g.coq_settings = {
-                -- keymap = { jump_to_mark = '<c-k>', bigger_preview = '<c-p>' },
-                display = { pum = { fast_close = false } },
-                auto_start = true
-            }
-        end
-    }
-    use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
-    use {
-        'ms-jpq/coq.thirdparty',
-        branch = '3p',
-        config = function()
-            require("coq_3p") { { src = "nvimlua", short_name = "nLUA" }, { src = "vimtex", short_name = "vTEX" } }
+            vim.o.completeopt='menu,menuone,noselect'
+            local cmp = require'cmp'
+            local luasnip = require'luasnip'
+
+            local has_words_before = function()
+                local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+                return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+            end
+
+            cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        require('luasnip').lsp_expand(args.body)
+                    end,
+                },
+                mapping = {
+                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.close(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif luasnip.jumpable(1) then
+                            luasnip.jump(1)
+                        elseif has_words_before() then
+                            cmp.complete()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        elseif luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+                },
+                sources = {
+                    { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
+                    { name = 'buffer' },
+                    { name = 'crates' },
+                    { name = 'nvim_lua' },
+                    { name = 'tmux' },
+                    { name = 'latex_symbols' },
+                    { name = 'spell' },
+                    { name = 'calc' },
+                    { name = 'treesitter' },
+                    { name = 'emoji' },
+                    { name = 'omni' },
+                },
+            })
         end
     }
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup {} end }
