@@ -105,13 +105,15 @@ return require('packer').startup(function(use)
                     { name = 'nvim_lua' },
                     { name = 'tmux' },
                     { name = 'latex_symbols' },
-                    { name = 'spell' },
+                    -- { name = 'spell' },
                     { name = 'calc' },
                     { name = 'treesitter' },
                     { name = 'emoji' },
-                    { name = 'omni' },
+                    -- { name = 'omni' },
                 },
             })
+
+            vim.cmd([[autocmd FileType tex lua require'cmp'.setup.buffer {sources = {{ name = 'omni' }, { name = 'luasnip' }}}]])
         end
     }
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup {} end }
