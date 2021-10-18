@@ -77,10 +77,10 @@ return require('packer').startup(function(use)
                     ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 
                     ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif luasnip.jumpable(1) then
+                        if luasnip.jumpable(1) then
                             luasnip.jump(1)
+                        elseif cmp.visible() then
+                            cmp.select_next_item()
                         elseif has_words_before() then
                             cmp.complete()
                         else
@@ -89,10 +89,10 @@ return require('packer').startup(function(use)
                     end, { "i", "s" }),
 
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif luasnip.jumpable(-1) then
+                        if luasnip.jumpable(-1) then
                             luasnip.jump(-1)
+                        elseif cmp.visible() then
+                            cmp.select_prev_item()
                         else
                             fallback()
                         end
@@ -113,7 +113,7 @@ return require('packer').startup(function(use)
                     -- { name = 'omni' },
                 },
                 formatting = {
-                    format = require 'lspkind'.cmp_format({with_text = false, maxwidth = 50})
+                    format = require 'lspkind'.cmp_format({with_text = true, maxwidth = 50})
                 }
             })
 
