@@ -50,7 +50,8 @@ return require('packer').startup(function(use)
             'hrsh7th/cmp-omni',
             'L3MON4D3/LuaSnip',
             'saadparwaiz1/cmp_luasnip',
-            'rafamadriz/friendly-snippets'
+            'rafamadriz/friendly-snippets',
+            'onsails/lspkind-nvim'
         },
         config = function()
             vim.o.completeopt='menu,menuone,noselect'
@@ -73,7 +74,7 @@ return require('packer').startup(function(use)
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-e>'] = cmp.mapping.close(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
@@ -111,6 +112,9 @@ return require('packer').startup(function(use)
                     { name = 'emoji' },
                     -- { name = 'omni' },
                 },
+                formatting = {
+                    format = require 'lspkind'.cmp_format({with_text = false, maxwidth = 50})
+                }
             })
 
             vim.cmd([[autocmd FileType tex lua require'cmp'.setup.buffer {sources = {{ name = 'omni' }, { name = 'luasnip' }}}]])
