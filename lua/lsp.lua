@@ -11,37 +11,37 @@ lsp_status.register_progress()
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- Enable underline, use default values
-    underline = true,
-    virtual_text = function(bufnr, client_id)
-        local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, 'diagnostic_enable_virtual_text')
-        -- No buffer local variable set, so just disable by default
-        if not ok then return false end
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+--     -- Enable underline, use default values
+--     underline = true,
+--     virtual_text = function(bufnr, client_id)
+--         local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, 'diagnostic_enable_virtual_text')
+--         -- No buffer local variable set, so just disable by default
+--         if not ok then return false end
+--
+--         if result then
+--             return {
+--                 spacing = 4
+--                 -- prefix = '⇏',
+--             }
+--         end
+--
+--         return result
+--     end,
+--     signs = true,
+--     -- Disable a feature
+--     update_in_insert = false
+-- })
 
-        if result then
-            return {
-                spacing = 4
-                -- prefix = '⇏',
-            }
-        end
-
-        return result
-    end,
-    signs = true,
-    -- Disable a feature
-    update_in_insert = false
-})
-
-M.toggle_virtual_text = function()
-    if vim.b.diagnostic_enable_virtual_text == 1 then
-        vim.b.diagnostic_enable_virtual_text = 0
-    else
-        vim.b.diagnostic_enable_virtual_text = 1
-    end
-    vim.cmd("edit")
-end
-vim.cmd("command! ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>")
+-- M.toggle_virtual_text = function()
+--     if vim.b.diagnostic_enable_virtual_text == 1 then
+--         vim.b.diagnostic_enable_virtual_text = 0
+--     else
+--         vim.b.diagnostic_enable_virtual_text = 1
+--     end
+--     vim.cmd("edit")
+-- end
+-- vim.cmd("command! ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>")
 
 -- vim.o.updatetime = 500
 -- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
@@ -92,93 +92,70 @@ local interpreter_path = python_prefix .. "/bin/python"
 print("Set LSP python interpreter to: " .. interpreter_path)
 
 -- Use LspInstall to set up automatically installed servers
-local function setup_servers()
-    require'lspinstall'.setup()
-    local servers = require'lspinstall'.installed_servers()
-    for _, server in pairs(servers) do
-        if server == 'python' then
-            require'lspconfig'[server].setup({
-                on_attach = on_attach,
-                settings = {
-                    python = {
-                        pythonPath = interpreter_path,
-                        analysis = {
-                            autoSearchPaths = true,
-                            useLibraryCodeForTypes = true,
-                            extraPaths = { vim.env.PYTHONPATH }
-                        }
+local lsp_installer = require("nvim-lsp-installer")
+lsp_installer.on_server_ready(function(server)
+    local opts = {
+        on_attach = on_attach,
+        capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    }
+
+    -- Customize the options passed to the server
+    if server.name == "pyright" then
+        opts.settings = {
+            python = {
+                pythonPath = interpreter_path,
+                analysis = {
+                    autoSearchPaths = true,
+                    useLibraryCodeForTypes = true,
+                    extraPaths = { vim.env.PYTHONPATH }
+                }
+            }
+        }
+    elseif server.name == "sumneko_lua" then
+        opts.settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } }
+    elseif server.name == "efm" then
+        opts.filetypes = { 'python', 'lua' }
+        opts.init_options = { documentFormatting = true }
+        opts.settings = {
+            rootMarkers = { ".git/" },
+            languages = {
+                lua = {
+                    {
+                        formatCommand = "lua-format --column-limit=120 --spaces-inside-table-braces -i",
+                        formatStdin = true
                     }
                 },
-                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-            })
-        elseif server == 'lua' then
-            require'lspconfig'[server].setup({
-                on_attach = on_attach,
-                settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } },
-                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-            })
-        elseif server == 'efm' then
-            require"lspconfig"[server].setup({
-                filetypes = { 'python', 'lua' },
-                init_options = { documentFormatting = true },
-                on_attach = on_attach,
-                settings = {
-                    rootMarkers = { ".git/" },
-                    languages = {
-                        lua = {
-                            {
-                                formatCommand = "lua-format --column-limit=120 --spaces-inside-table-braces -i",
-                                formatStdin = true
-                            }
-                        },
-                        python = {
-                            {
-                                formatCommand = 'if [ -e pyproject.toml ]; then "${cmd[@]}" isort --quiet --profile black - | "${cmd[@]}" black --quiet -; else isort --quiet -l 120 - | black --quiet -l 120 -; fi',
-                                formatStdin = true
-                            }
-                        }
+                python = {
+                    {
+                        formatCommand = 'if [ -e pyproject.toml ]; then "${cmd[@]}" isort --quiet --profile black - | "${cmd[@]}" black --quiet -; else isort --quiet -l 120 - | black --quiet -l 120 -; fi',
+                        formatStdin = true
                     }
-                },
-                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-            })
-        elseif server == 'rust' then
-            require"lspconfig"[server].setup({
-                on_attach = on_attach,
-                settings = {
-                    ['rust-analyzer'] = {
-                        checkOnSave = {
-                            allFeatures = true,
-                            overrideCommand = {
-                                'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets',
-                                '--all-features'
-                            }
-                            -- command = { "cargo", "clippy" }
-                        }
+                }
+            }
+        }
+    elseif server.name == "rust_analyzer" then
+        opts.settings = {
+            ['rust-analyzer'] = {
+                checkOnSave = {
+                    allFeatures = true,
+                    overrideCommand = {
+                        'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets',
+                        '--all-features'
                     }
-                },
-                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-            })
-        else
-            require'lspconfig'[server].setup({
-                on_attach = on_attach,
-                capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-            })
+                }
+            }
+        }
+    elseif server.name == "clangd" then
+        -- This is for systems (like OzSTAR) where glibc is too old to be compatible
+        -- with binary releases of clangd...
+        if vim.g.clangd_bin then
+            opts.cmd = { vim.g.clangd_bin, "--background-index" }
         end
     end
-end
 
-setup_servers()
-
--- This is for systems (like OzSTAR) where glibc is too old to be compatible
--- with binary releases of clangd...
-if vim.g.clangd_bin then
-    lspconfig.clangd.setup { on_attach = on_attach, cmd = { vim.g.clangd_bin, "--background-index" } }
-end
-
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function()
-    setup_servers() -- reload installed servers
-    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-end
+    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+    server:setup(opts)
+    vim.cmd [[ do User LspAttachBuffers ]]
+end)
 
 return M

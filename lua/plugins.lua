@@ -22,7 +22,8 @@ return require('packer').startup(function(use)
     use {
         'neovim/nvim-lsp',
         requires = {
-            'kabouzeid/nvim-lspinstall', {
+            'williamboman/nvim-lsp-installer',
+            {
                 'ray-x/lsp_signature.nvim',
                 config = function()
                     require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
@@ -56,7 +57,6 @@ return require('packer').startup(function(use)
         config = function()
             vim.o.completeopt='menu,menuone,noselect'
             local cmp = require'cmp'
-            local luasnip = require'luasnip'
 
             local has_words_before = function()
                 local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
@@ -77,9 +77,7 @@ return require('packer').startup(function(use)
                     ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 
                     ["<Tab>"] = cmp.mapping(function(fallback)
-                        if luasnip.jumpable(1) then
-                            luasnip.jump(1)
-                        elseif cmp.visible() then
+                        if cmp.visible() then
                             cmp.select_next_item()
                         elseif has_words_before() then
                             cmp.complete()
@@ -89,9 +87,7 @@ return require('packer').startup(function(use)
                     end, { "i", "s" }),
 
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        elseif cmp.visible() then
+                        if cmp.visible() then
                             cmp.select_prev_item()
                         else
                             fallback()
