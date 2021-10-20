@@ -1,15 +1,19 @@
-function noremap(mode, keys, command, opts)
+M = {}
+
+M.noremap = function(mode, keys, command, opts)
     opts = opts or {}
     opts['noremap'] = true
     vim.api.nvim_set_keymap(mode, keys, command, opts)
 end
 
-function map(mode, keys, command, opts)
+M.map = function(mode, keys, command, opts)
     opts = opts or {}
     vim.api.nvim_set_keymap(mode, keys, command, opts)
 end
 
-function file_exists(name)
+M.file_exists = function(name)
    local f=io.open(name,"r")
    if f~=nil then io.close(f) return true else return false end
 end
+
+return M

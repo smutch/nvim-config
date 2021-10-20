@@ -1,47 +1,22 @@
 -- LSP
 local M = {}
 
-local lspconfig = require 'lspconfig'
 local lsp_status = require 'lsp-status'
 local Path = require 'plenary.path'
-require 'helpers'
+local h = require 'helpers'
 lsp_status.register_progress()
 -- vim.lsp.set_log_level("debug")
 
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
 
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
---     -- Enable underline, use default values
---     underline = true,
---     virtual_text = function(bufnr, client_id)
---         local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, 'diagnostic_enable_virtual_text')
---         -- No buffer local variable set, so just disable by default
---         if not ok then return false end
---
---         if result then
---             return {
---                 spacing = 4
---                 -- prefix = '⇏',
---             }
---         end
---
---         return result
---     end,
---     signs = true,
---     -- Disable a feature
---     update_in_insert = false
--- })
-
--- M.toggle_virtual_text = function()
---     if vim.b.diagnostic_enable_virtual_text == 1 then
---         vim.b.diagnostic_enable_virtual_text = 0
---     else
---         vim.b.diagnostic_enable_virtual_text = 1
---     end
---     vim.cmd("edit")
--- end
--- vim.cmd("command! ToggleVirtualText :lua require 'lsp'.toggle_virtual_text()<CR>")
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    virtual_text ={ spacing = 4 },
+    signs = true,
+    update_in_insert = false,
+    severity_sort = true
+})
 
 -- vim.o.updatetime = 500
 -- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
@@ -49,22 +24,22 @@ vim.cmd("hi! link SignColumn Normal")
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
-    noremap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { silent = true })
-    noremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
-    noremap("n", "gD", "<cmd>Telescope lsp_implementations<CR>", { silent = true })
-    noremap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { silent = true })
-    noremap("n", "1gD", "<cmd>Telescope lsp_type_definitions<CR>", { silent = true })
-    noremap("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
-    noremap("n", "gr", "<cmd>Telescope lsp_references<CR>", { silent = true })
-    noremap("n", "1g/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true })
-    noremap("n", "g/", "<cmd>Telescope lsp_workspace_symbols<CR>", { silent = true })
-    noremap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { silent = true })
-    noremap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { silent = true })
-    noremap("n", "<localleader>D", "<cmd>LspTroubleToggle<cr>", { silent = true })
-    noremap("n", "<localleader>d", "<cmd>Trouble lsp_document_diagnostics<cr>", { silent = true })
-    noremap("n", "<localleader>i", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", { silent = true })
-    noremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", {})
-    noremap("n", "ga", "<cmd>Telescope lsp_code_actions<CR>", { silent = true })
+    h.noremap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { silent = true })
+    h.noremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
+    h.noremap("n", "gD", "<cmd>Telescope lsp_implementations<CR>", { silent = true })
+    h.noremap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { silent = true })
+    h.noremap("n", "1gD", "<cmd>Telescope lsp_type_definitions<CR>", { silent = true })
+    h.noremap("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
+    h.noremap("n", "gr", "<cmd>Telescope lsp_references<CR>", { silent = true })
+    h.noremap("n", "1g/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true })
+    h.noremap("n", "g/", "<cmd>Telescope lsp_workspace_symbols<CR>", { silent = true })
+    h.noremap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { silent = true })
+    h.noremap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { silent = true })
+    h.noremap("n", "<localleader>D", "<cmd>LspTroubleToggle<cr>", { silent = true })
+    h.noremap("n", "<localleader>d", "<cmd>Trouble lsp_document_diagnostics<cr>", { silent = true })
+    h.noremap("n", "<localleader>i", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", { silent = true })
+    h.noremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", {})
+    h.noremap("n", "ga", "<cmd>Telescope lsp_code_actions<CR>", { silent = true })
 
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticVirtualTextError"})')

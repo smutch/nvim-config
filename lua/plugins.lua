@@ -1,7 +1,6 @@
 -- begin by ensure packer is actually installed!
 local execute = vim.api.nvim_command
 local fn = vim.fn
-require 'helpers'
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -242,6 +241,7 @@ return require('packer').startup(function(use)
         },
         config = function()
             local telescope = require 'telescope'
+            local h = require 'helpers'
             telescope.setup { pickers = { find_files = { theme = "dropdown" } } }
 
             local extensions = { "fzf", "emoji" }
@@ -250,19 +250,19 @@ return require('packer').startup(function(use)
                 telescope.load_extension(extension)
             end
 
-            noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
-            noremap('n', '<leader>fg', '<cmd>Telescope git_files<cr>')
-            noremap('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
-            noremap('n', '<leader>fh', '<cmd>Telescope oldfiles<cr>')
-            noremap('n', '<leader>f?', '<cmd>Telescope help_tags<cr>')
-            noremap('n', '<leader>f:', '<cmd>Telescope commands<cr>')
-            noremap('n', '<leader>fm', '<cmd>Telescope marks<cr>')
-            noremap('n', '<leader>fl', '<cmd>Telescope loclist<cr>')
-            noremap('n', '<leader>fq', '<cmd>Telescope quickfix<cr>')
-            noremap('n', [[<leader>f"]], '<cmd>Telescope registers<cr>')
-            noremap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>')
-            noremap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>')
-            noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
+            h.noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
+            h.noremap('n', '<leader>fg', '<cmd>Telescope git_files<cr>')
+            h.noremap('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
+            h.noremap('n', '<leader>fh', '<cmd>Telescope oldfiles<cr>')
+            h.noremap('n', '<leader>f?', '<cmd>Telescope help_tags<cr>')
+            h.noremap('n', '<leader>f:', '<cmd>Telescope commands<cr>')
+            h.noremap('n', '<leader>fm', '<cmd>Telescope marks<cr>')
+            h.noremap('n', '<leader>fl', '<cmd>Telescope loclist<cr>')
+            h.noremap('n', '<leader>fq', '<cmd>Telescope quickfix<cr>')
+            h.noremap('n', [[<leader>f"]], '<cmd>Telescope registers<cr>')
+            h.noremap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>')
+            h.noremap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>')
+            h.noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
         end
     }
 

@@ -3,7 +3,7 @@ if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then 
 
 -- plugins
 require 'plugins'
-require 'helpers'
+local h = require 'helpers'
 
 -- basic setting {{{
 vim.o.termguicolors = true
@@ -71,48 +71,48 @@ vim.o.suffixes = '.bak,.o,.info,.swp,.obj'
 
 -- general keybindings {{{
 
-noremap('i', 'kj', '<ESC>')
+h.noremap('i', 'kj', '<ESC>')
 
 -- Switch back to alternate file
-noremap('n', '<CR><CR>', '<C-S-^>')
+h.noremap('n', '<CR><CR>', '<C-S-^>')
 
 -- Make Y behave like other capital
-noremap('n', 'Y', 'y$')
+h.noremap('n', 'Y', 'y$')
 
 -- Easy on the fingers save and window manipulation bindings
-noremap('n', '<leader>s', ':w<CR>')
-noremap('n', '<leader>w', '<C-w>')
+h.noremap('n', '<leader>s', ':w<CR>')
+h.noremap('n', '<leader>w', '<C-w>')
 
 -- Quick switch to directory of current file
-noremap('n', 'gcd', ':lcd %:p:h<CR>:pwd<CR>')
+h.noremap('n', 'gcd', ':lcd %:p:h<CR>:pwd<CR>')
 
 -- Quickly create a file in the directory of the current buffer
-map('n', '<leader>e', ':<C-u>e <C-R>=expand("%:p:h") . "/" <CR>')
+h.map('n', '<leader>e', ':<C-u>e <C-R>=expand("%:p:h") . "/" <CR>')
 
 -- Leave cursor at end of yank after yanking text with lowercase y in visual mode
-noremap('v', 'y', 'y`>')
+h.noremap('v', 'y', 'y`>')
 
 -- Fit window height to contents and fix
 vim.cmd([[command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')]])
 
 -- Toggle to last active tab
 vim.g.lasttab = 1
-noremap('n', '<CR>t', ':exe "tabn ".g:lasttab<CR>')
+h.noremap('n', '<CR>t', ':exe "tabn ".g:lasttab<CR>')
 vim.cmd([[au TabLeave * let g:lasttab = tabpagenr()]])
 
 -- Disable increment number up / down - *way* too dangerous...
-map('n', '<C-a>', '<Nop>')
-map('n', '<C-x>', '<Nop>')
+h.map('n', '<C-a>', '<Nop>')
+h.map('n', '<C-x>', '<Nop>')
 
 -- Turn off search highlighting
-noremap('', [[|]], '<Esc>:<C-u>noh<CR>', { silent = true })
+h.noremap('', [[|]], '<Esc>:<C-u>noh<CR>', { silent = true })
 
 -- Paste without auto indent
-noremap('n', '<F2>', ':set invpaste paste?<CR>', {})
+h.noremap('n', '<F2>', ':set invpaste paste?<CR>', {})
 vim.opt.pastetoggle = '<F2>'
 
 -- Toggle auto paragraph formatting
-noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]], {})
+h.noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]], {})
 
 -- terminal stuff
 vim.env.LAUNCHED_FROM_NVIM = 1
@@ -124,16 +124,16 @@ vim.cmd([[
     augroup END
 ]])
 
-map('t', 'kj', [[<C-\><C-n>]])
-map('t', '<C-h>', [[<C-\><C-n><C-w>h]])
-map('t', '<C-j>', [[<C-\><C-n><C-w>j]])
-map('t', '<C-k>', [[<C-\><C-n><C-w>k]])
-map('t', '<C-l>', [[<C-\><C-n><C-w>l]])
-map('t', '<C-w>', [[<C-\><C-n><C-w>]])
-noremap('n', '<A-h>', '<C-w>h', {})
-noremap('n', '<A-j>', '<C-w>j', {})
-noremap('n', '<A-k>', '<C-w>k', {})
-noremap('n', '<A-l>', '<C-w>l', {})
+h.map('t', 'kj', [[<C-\><C-n>]])
+h.map('t', '<C-h>', [[<C-\><C-n><C-w>h]])
+h.map('t', '<C-j>', [[<C-\><C-n><C-w>j]])
+h.map('t', '<C-k>', [[<C-\><C-n><C-w>k]])
+h.map('t', '<C-l>', [[<C-\><C-n><C-w>l]])
+h.map('t', '<C-w>', [[<C-\><C-n><C-w>]])
+h.noremap('n', '<A-h>', '<C-w>h', {})
+h.noremap('n', '<A-j>', '<C-w>j', {})
+h.noremap('n', '<A-k>', '<C-w>k', {})
+h.noremap('n', '<A-l>', '<C-w>l', {})
 
 -- }}}
 
@@ -152,7 +152,7 @@ vim.cmd([[
 ]])
 
 -- use the presence of a file to determine if we want to start in light or dark mode
-if file_exists("~/.vimlight") or vim.env.LIGHT then
+if h.file_exists("~/.vimlight") or vim.env.LIGHT then
     vim.o.background = 'light'
     vim.cmd 'packadd neovim-ayu | colorscheme Ayu'
 else
@@ -193,12 +193,12 @@ else
     -- singe file. Set grep program to always generate a file-name.
     vim.o.grepprg = "grep -nHRI $* ."
 end
-noremap('n', '<leader>*', [[:silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>]])
+h.noremap('n', '<leader>*', [[:silent grep! "<C-r><C-w>"<CR>:copen<CR>:redraw!<CR>]])
 vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args>|copen|redraw!')
-noremap('n', '<leader>/', ':Grep')
+h.noremap('n', '<leader>/', ':Grep')
 
 -- Load up last search in buffer into the location list and open it
-noremap('n', '<leader>l', ':<C-u>lvim // % \\| lopen<CR>')
+h.noremap('n', '<leader>l', ':<C-u>lvim // % \\| lopen<CR>')
 
 -- handy mapping to fold around previous search results
 -- taken from http://vim.wikia.com/wiki/Folding_with_Regular_Expression
@@ -225,7 +225,7 @@ function SearchFold()
     end
 end
 vim.cmd('command! SearchFold call s:SearchFold()')
-noremap('n', '<localleader>z', ':SearchFold<CR>')
+h.noremap('n', '<localleader>z', ':SearchFold<CR>')
 
 -- }}}
 
@@ -235,7 +235,7 @@ noremap('n', '<localleader>z', ':SearchFold<CR>')
 vim.cmd([[command! TrimWhitespace execute ':%s/\s\+$// | :noh']])
 
 -- Allow us to move to windows by number using the leader key
-for ii = 1, 9 do noremap('n', '<Leader>' .. ii, ':' .. ii .. 'wincmd w<CR>') end
+for ii = 1, 9 do h.noremap('n', '<Leader>' .. ii, ':' .. ii .. 'wincmd w<CR>') end
 
 -- Allow `e` to be prefixed by a window number to use for the jump
 function QFOpenInWindow()
