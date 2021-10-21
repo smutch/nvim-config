@@ -102,7 +102,7 @@ lsp_installer.on_server_ready(function(server)
                 },
                 python = {
                     {
-                        formatCommand = 'if [ -e pyproject.toml ]; then "${cmd[@]}" isort --quiet --profile black - | "${cmd[@]}" black --quiet -; else isort --quiet -l 120 - | black --quiet -l 120 -; fi',
+                        formatCommand = 'if [ -e pyproject.toml ]; then '.. python_prefix ..'/bin/isort --quiet --profile black - | '.. python_prefix ..'/bin/black --quiet -; else isort --quiet -l 120 - | black --quiet -l 120 -; fi',
                         formatStdin = true
                     }
                 }
