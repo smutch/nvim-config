@@ -34,6 +34,8 @@ return require('packer').startup(function(use)
     }
     use {
         'hrsh7th/nvim-cmp',
+        opt = true,
+        event = 'InsertEnter',
         requires = {
             'neovim/nvim-lspconfig',
             'hrsh7th/cmp-nvim-lsp',
@@ -41,7 +43,7 @@ return require('packer').startup(function(use)
             'Saecki/crates.nvim',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-nvim-lua',
-            {'andersevenrud/compe-tmux', branch='cmp'},
+            -- {'andersevenrud/compe-tmux', branch='cmp'},
             'kdheepak/cmp-latex-symbols',
             'f3fora/cmp-spell',
             'hrsh7th/cmp-calc',
@@ -135,6 +137,8 @@ return require('packer').startup(function(use)
     use 'tpope/vim-repeat'
     use {
         'numToStr/Comment.nvim',
+        opt = true,
+        event = 'InsertEnter',
         config = function()
             require('Comment').setup()
             vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
@@ -147,6 +151,8 @@ return require('packer').startup(function(use)
     }
     use {
         'junegunn/vim-easy-align',
+        opt = true,
+        event = 'InsertEnter',
         config = function()
             vim.api.nvim_set_keymap('v', '<Enter>', '<Plug>(EasyAlign)', {})
             vim.api.nvim_set_keymap('n', 'gA', '<Plug>(EasyAlign)', {})
@@ -154,6 +160,8 @@ return require('packer').startup(function(use)
     }
     use {
         'jiangmiao/auto-pairs',
+        opt = true,
+        event = 'InsertEnter',
         config = function()
             vim.g.AutoPairsFlyMode = 0
             vim.g.AutoPairsShortcutToggle = ''
@@ -210,11 +218,14 @@ return require('packer').startup(function(use)
             }
         end
     }
-    use 'nvim-treesitter/playground'
+    use {
+      'nvim-treesitter/playground',
+      opt = true
+    }
     use {
         'tpope/vim-dispatch',
         config = function()
-            vim.g.dispatch_compilers = { markdown = 'doit', python = 'python %' }
+            vim.g.dispatch_compilers = { python = 'python %' }
 
             -- remove iterm from the list of handlers (don't like it removing focus when run)
             vim.g.dispatch_handlers = { 'tmux', 'screen', 'windows', 'x11', 'headless' }
@@ -225,7 +236,7 @@ return require('packer').startup(function(use)
     -- utils {{{
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-eunuch'
-    use 'tpope/vim-obsession'
+    use { 'tpope/vim-obsession', opt = true }
     use 'chrisbra/vim-diff-enhanced'
     use {
         'moll/vim-bbye',
@@ -268,7 +279,7 @@ return require('packer').startup(function(use)
 
     use { 'folke/todo-comments.nvim', config = function() require("todo-comments").setup {} end }
 
-    use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
+    use { 'norcalli/nvim-colorizer.lua', opt = true, config = function() require'colorizer'.setup() end }
     use {
         'majutsushi/tagbar',
         config = function() vim.api.nvim_set_keymap('n', '<leader>T', ':TagbarToggle<CR>', {}) end,
@@ -306,7 +317,7 @@ return require('packer').startup(function(use)
     }
 
     use 'christoomey/vim-tmux-navigator'
-    use 'vim-test/vim-test'
+    use { 'vim-test/vim-test', opt = true }
     -- use 'rcarriga/vim-ultest', { 'do': ':UpdateRemoteuseins', 'for': 'python' }
 
     -- git
@@ -372,7 +383,7 @@ return require('packer').startup(function(use)
     -- prose {{{
     use { 'reedes/vim-wordy', opt = true, ft = { 'markdown', 'tex', 'latex' } }
     use { 'davidbeckingsale/writegood.vim', opt = true, ft = { 'tex', 'markdown', 'latex' } }
-    use { 'folke/zen-mode.nvim', config = function() require("zen-mode").setup {} end }
+    use { 'folke/zen-mode.nvim', opt = true, cmd = 'ZenMode', config = function() require("zen-mode").setup {} end }
     -- }}}
 
     -- filetypes {{{
@@ -384,9 +395,10 @@ return require('packer').startup(function(use)
     use { 'anntzer/vim-cython', ft = { 'python', 'cython' } }
     -- }}}
 
-    use { 'adamclaxon/taskpaper.vim', ft = { 'taskpaper', 'tp' } }
+    use { 'adamclaxon/taskpaper.vim', opt = true, ft = { 'taskpaper', 'tp' } }
     use {
         'lervag/vimtex',
+        opt = true,
         ft = 'tex',
         config = function()
             -- Latex options
@@ -397,10 +409,10 @@ return require('packer').startup(function(use)
             vim.g.vimtex_compiler_progname = 'nvr'
         end
     }
-    use { 'vim-scripts/scons.vim', ft = { 'scons' } }
-    use { 'Glench/Vim-Jinja2-Syntax', ft = { 'html' } }
-    use { 'mattn/emmet-vim', ft = { 'html', 'css', 'sass', 'jinja.html' } }
-    use { 'cespare/vim-toml', ft = { 'toml' } }
+    use { 'vim-scripts/scons.vim', opt = true, ft = { 'scons' } }
+    use { 'Glench/Vim-Jinja2-Syntax', opt = true, ft = { 'html' } }
+    use { 'mattn/emmet-vim', opt = true, ft = { 'html', 'css', 'sass', 'jinja.html' } }
+    use { 'cespare/vim-toml', opt = true, ft = { 'toml' } }
     use { 'tikhomirov/vim-glsl', opt = true }
     use { 'DingDean/wgsl.vim', opt = true }
     use 'NoahTheDuke/vim-just'
