@@ -19,7 +19,7 @@ return require('packer').startup(function(use)
 
     -- Utility stuff used by lots of plugins
     use 'nvim-lua/plenary.nvim'
-    
+
     -- lsp and completion {{{
     use {
         'neovim/nvim-lsp',
@@ -59,7 +59,7 @@ return require('packer').startup(function(use)
                     local cmp = require'cmp'
 
                     local has_words_before = function()
-                        local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+                        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
                         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
                     end
 
@@ -95,25 +95,29 @@ return require('packer').startup(function(use)
                             end, { "i", "s" }),
                         },
                         sources = {
+                            { name = 'latex_symbols' },
+                            { name = 'calc' },
                             { name = 'nvim_lsp' },
                             { name = 'luasnip' },
-                            { name = 'buffer' },
                             { name = 'crates' },
                             { name = 'nvim_lua' },
                             -- { name = 'tmux' },
-                            { name = 'latex_symbols' },
                             -- { name = 'spell' },
-                            { name = 'calc' },
                             { name = 'treesitter' },
                             { name = 'emoji' },
+                            { name = 'buffer', keyword_length = 5 },
                             -- { name = 'omni' },
                         },
                         formatting = {
                             format = require 'lspkind'.cmp_format({with_text = true, maxwidth = 50})
+                        },
+                        experimental = {
+                          native_menu = false,
+                          ghost_text = true,
                         }
                     })
 
-                    vim.cmd([[autocmd FileType tex lua require'cmp'.setup.buffer {sources = {{ name = 'omni' }, { name = 'luasnip' }}}]])
+                    vim.cmd([[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } } }]])
                 end
             }
         },
@@ -161,15 +165,21 @@ return require('packer').startup(function(use)
         end
     }
     use {
-        'jiangmiao/auto-pairs',
+        'windwp/nvim-autopairs',
         opt = true,
         event = 'InsertEnter',
         config = function()
-            vim.g.AutoPairsFlyMode = 0
-            vim.g.AutoPairsShortcutToggle = ''
-            vim.g.AutoPairsShortcutBackInsert = '<A-b>'
-            vim.g.AutoPairsMapCR = 0
-            vim.g.AutoPairsMapCh = 0
+            require'nvim-autopairs'.setup{}
+            require("nvim-autopairs.completion.cmp").setup({
+                map_cr = true, --  map <CR> on insert mode
+                map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
+                auto_select = true, -- automatically select the first item
+                insert = false, -- use insert confirm behavior instead of replace
+                map_char = { -- modifies the function or method delimiter by filetypes
+                all = '(',
+                tex = '{'
+            }
+        })
         end
     }
     use 'michaeljsmith/vim-indent-object'
@@ -348,6 +358,18 @@ return require('packer').startup(function(use)
 
     -- colorschemes {{{
     use 'navarasu/onedark.nvim'
+    use 'EdenEast/nightfox.nvim'
+    use {
+        'shaunsingh/nord.nvim',
+        opt = true,
+        config = function()
+            vim.g.nord_contrast = true
+            vim.g.nord_borders = true
+            vim.g.nord_disable_background = false
+            vim.g.nord_italic = false
+            require'nord'.set()
+        end
+    }
     use { 'Shatur/neovim-ayu', opt = true }
     use {
         'projekt0n/github-nvim-theme',
