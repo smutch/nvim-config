@@ -97,6 +97,7 @@ return require('packer').startup(function(use)
                         sources = {
                             { name = 'latex_symbols' },
                             { name = 'calc' },
+                            { name = 'path' },
                             { name = 'nvim_lsp' },
                             { name = 'luasnip' },
                             { name = 'crates' },
