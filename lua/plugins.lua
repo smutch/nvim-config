@@ -332,6 +332,27 @@ return require('packer').startup(function(use)
     use { 'vim-test/vim-test', opt = true }
     -- use 'rcarriga/vim-ultest', { 'do': ':UpdateRemoteuseins', 'for': 'python' }
 
+    use {
+        'rcarriga/nvim-notify',
+        config = function()
+            vim.notify = require'notify'
+        end
+    }
+
+    use { 'dccsillag/magma-nvim', run = ':UpdateRemotePlugins', ft = 'python',
+        config = function()
+            local h = require 'helpers'
+            h.noremap('n', '<LocalLeader>r', 'nvim_exec("MagmaEvaluateOperator", v:true)', {silent = true, expr = true})
+            h.noremap('n', '<LocalLeader>rr', ':MagmaEvaluateLine<CR>', {silent = true})
+            h.noremap('x', '<LocalLeader>r', ':<c-u>MagmaEvaluateVisual<CR>', {silent = true})
+            h.noremap('n', '<LocalLeader>rc', ':MagmaReevaluateCell<CR>', {silent = true})
+            h.noremap('n', '<LocalLeader>rd', ':MagmaDelete<CR>', {silent = true})
+            h.noremap('n', '<LocalLeader>ro', ':MagmaShowOutput<CR>', {silent = true})
+
+            vim.g.magma_automatically_open_output = false
+        end
+    }
+
     -- git
     use {
         'tpope/vim-fugitive',
