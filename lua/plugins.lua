@@ -52,7 +52,22 @@ return require('packer').startup(function(use)
                     'L3MON4D3/LuaSnip',
                     'saadparwaiz1/cmp_luasnip',
                     'rafamadriz/friendly-snippets',
-                    'onsails/lspkind-nvim'
+                    'onsails/lspkind-nvim',
+                    {
+                        'windwp/nvim-autopairs',
+                        config = function()
+                            require'nvim-autopairs'.setup{}
+                            -- require("nvim-autopairs.completion.cmp").setup({
+                                --     map_cr = true, --  map <CR> on insert mode
+                                --     map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
+                                --     auto_select = true, -- automatically select the first item
+                                --     insert = false, -- use insert confirm behavior instead of replace
+                                --     map_char = { -- modifies the function or method delimiter by filetypes
+                                --     all = '(',
+                                --     tex = '{'
+                                -- })
+                            end
+                        }
                 },
                 config = function()
                     vim.o.completeopt='menu,menuone,noselect'
@@ -118,6 +133,9 @@ return require('packer').startup(function(use)
                         }
                     })
 
+                    local cmp_autopairs = require'nvim-autopairs.completion.cmp'
+                    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done( { map_char = { tex = '{' } }))
+
                     vim.cmd([[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } } }]])
                 end
             }
@@ -163,24 +181,6 @@ return require('packer').startup(function(use)
         config = function()
             vim.api.nvim_set_keymap('v', '<Enter>', '<Plug>(EasyAlign)', {})
             vim.api.nvim_set_keymap('n', 'gA', '<Plug>(EasyAlign)', {})
-        end
-    }
-    use {
-        'windwp/nvim-autopairs',
-        opt = true,
-        event = 'InsertEnter',
-        config = function()
-            require'nvim-autopairs'.setup{}
-            require("nvim-autopairs.completion.cmp").setup({
-                map_cr = true, --  map <CR> on insert mode
-                map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
-                auto_select = true, -- automatically select the first item
-                insert = false, -- use insert confirm behavior instead of replace
-                map_char = { -- modifies the function or method delimiter by filetypes
-                all = '(',
-                tex = '{'
-            }
-        })
         end
     }
     use 'michaeljsmith/vim-indent-object'
