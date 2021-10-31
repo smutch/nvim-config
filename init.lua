@@ -157,7 +157,7 @@ if h.file_exists("~/.vimlight") or vim.env.LIGHT then
     vim.cmd 'packadd neovim-ayu | colorscheme Ayu'
 else
     vim.o.background = 'dark'
-    vim.cmd 'colorscheme onedark'
+    vim.cmd 'colorscheme onenord'
 end
 
 -- terminal colors

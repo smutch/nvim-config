@@ -384,24 +384,14 @@ return require('packer').startup(function(use)
 
     -- colorschemes {{{
     use 'navarasu/onedark.nvim'
-    use 'EdenEast/nightfox.nvim'
-    use {
-        'shaunsingh/nord.nvim',
-        opt = true,
-        config = function()
-            vim.g.nord_contrast = true
-            vim.g.nord_borders = true
-            vim.g.nord_disable_background = false
-            vim.g.nord_italic = false
-            require'nord'.set()
-        end
-    }
+    use { 'EdenEast/nightfox.nvim', opt = true }
     use { 'Shatur/neovim-ayu', opt = true }
     use {
         'projekt0n/github-nvim-theme',
         opt = true,
         config = function() require'github-theme'.setup { theme_style = 'dark' } end
     }
+    use { 'rmehri01/onenord.nvim' }
     -- }}}
 
     use 'kyazdani42/nvim-web-devicons'
