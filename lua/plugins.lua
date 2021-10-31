@@ -39,7 +39,12 @@ return require('packer').startup(function(use)
                 requires = {
                     'hrsh7th/cmp-nvim-lsp',
                     'hrsh7th/cmp-buffer',
-                    'Saecki/crates.nvim',
+                    {
+                        'Saecki/crates.nvim',
+                        config = function()
+                            require('crates').setup()
+                        end
+                    },
                     'hrsh7th/cmp-path',
                     'hrsh7th/cmp-nvim-lua',
                     -- {'andersevenrud/compe-tmux', branch='cmp'},
@@ -110,13 +115,10 @@ return require('packer').startup(function(use)
                             end, { "i", "s" }),
                         },
                         sources = {
-                            { name = 'latex_symbols' },
                             { name = 'calc' },
                             { name = 'path' },
                             { name = 'nvim_lsp' },
                             { name = 'luasnip' },
-                            { name = 'crates' },
-                            { name = 'nvim_lua' },
                             -- { name = 'tmux' },
                             -- { name = 'spell' },
                             { name = 'treesitter' },
@@ -136,7 +138,9 @@ return require('packer').startup(function(use)
                     local cmp_autopairs = require'nvim-autopairs.completion.cmp'
                     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done( { map_char = { tex = '{' } }))
 
-                    vim.cmd([[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } } }]])
+                    vim.cmd([[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
+                    vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
+                    vim.cmd([[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
                 end
             }
         },
