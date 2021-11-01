@@ -166,16 +166,14 @@ return require('packer').startup(function(use)
     use 'tpope/vim-repeat'
     use {
         'numToStr/Comment.nvim',
-        opt = true,
-        event = 'InsertEnter',
         config = function()
             require('Comment').setup()
             vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
             vim.api.nvim_set_keymap('n', 'gcp', 'yygccp', {})
             vim.api.nvim_set_keymap('n', 'gcP', 'yygccP', {})
             vim.api.nvim_set_keymap('v', '<leader><leader>', 'gc', {})
-            vim.api.nvim_set_keymap('v', 'gp', 'ygvgcp', {})
-            vim.api.nvim_set_keymap('v', 'gP', 'ygvgcP', {})
+            vim.api.nvim_set_keymap('v', 'gp', 'ypgvgc', {})
+            vim.api.nvim_set_keymap('v', 'gP', 'ygvgc`<P', {})
         end
     }
     use {

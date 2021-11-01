@@ -146,7 +146,7 @@ vim.o.guifont = "JetBrainsMono Nerd Font:h11"
 vim.cmd([[
     augroup CustomColors
         au!
-        au ColorScheme * hi! link Search DiffAdd | hi! link Conceal NonText | hi! Comment cterm=italic gui=italic
+        au ColorScheme * hi! link Search DiffAdd | hi! link Conceal NonText | hi! Keyword cterm=italic gui=italic
         au ColorScheme onedark if &background == 'dark' | hi! Normal guifg=#d9dbda | hi! IndentBlanklineChar guifg=#2e3c44 | hi! NormalNC guibg=#31353f | hi! Search guibg=#93691d | endif
     augroup END
 ]])
