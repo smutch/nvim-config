@@ -10,9 +10,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- configure plugins
-require'packer'.init({
-  max_jobs=50
-})
+require'packer'.init({ max_jobs = 50 })
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
@@ -25,70 +23,51 @@ return require('packer').startup(function(use)
         'neovim/nvim-lsp',
         event = 'InsertEnter',
         requires = {
-            'neovim/nvim-lspconfig',
-            'williamboman/nvim-lsp-installer',
-            {
+            'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer', {
                 'ray-x/lsp_signature.nvim',
                 config = function()
                     require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
                     vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
                 end
-            },
-            {
+            }, {
                 'hrsh7th/nvim-cmp',
                 requires = {
-                    'hrsh7th/cmp-nvim-lsp',
-                    'hrsh7th/cmp-buffer',
-                    {
-                        'Saecki/crates.nvim',
-                        config = function()
-                            require('crates').setup()
-                        end
-                    },
-                    'hrsh7th/cmp-path',
-                    'hrsh7th/cmp-nvim-lua',
-                    -- {'andersevenrud/compe-tmux', branch='cmp'},
-                    'kdheepak/cmp-latex-symbols',
-                    'f3fora/cmp-spell',
-                    'hrsh7th/cmp-calc',
-                    'ray-x/cmp-treesitter',
-                    'hrsh7th/cmp-emoji',
-                    'hrsh7th/cmp-omni',
-                    'L3MON4D3/LuaSnip',
-                    'saadparwaiz1/cmp_luasnip',
-                    'rafamadriz/friendly-snippets',
-                    'onsails/lspkind-nvim',
-                    {
+                    'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer',
+                    { 'Saecki/crates.nvim', config = function() require('crates').setup() end }, 'hrsh7th/cmp-path',
+                    'hrsh7th/cmp-nvim-lua', -- {'andersevenrud/compe-tmux', branch='cmp'},
+                    'kdheepak/cmp-latex-symbols', 'f3fora/cmp-spell', 'hrsh7th/cmp-calc', 'ray-x/cmp-treesitter',
+                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
+                    'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim', {
                         'windwp/nvim-autopairs',
                         config = function()
-                            require'nvim-autopairs'.setup{}
+                            require'nvim-autopairs'.setup {}
                             -- require("nvim-autopairs.completion.cmp").setup({
-                                --     map_cr = true, --  map <CR> on insert mode
-                                --     map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
-                                --     auto_select = true, -- automatically select the first item
-                                --     insert = false, -- use insert confirm behavior instead of replace
-                                --     map_char = { -- modifies the function or method delimiter by filetypes
-                                --     all = '(',
-                                --     tex = '{'
-                                -- })
-                            end
-                        }
+                            --     map_cr = true, --  map <CR> on insert mode
+                            --     map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
+                            --     auto_select = true, -- automatically select the first item
+                            --     insert = false, -- use insert confirm behavior instead of replace
+                            --     map_char = { -- modifies the function or method delimiter by filetypes
+                            --     all = '(',
+                            --     tex = '{'
+                            -- })
+                        end
+                    }
                 },
                 config = function()
-                    vim.o.completeopt='menu,menuone,noselect'
-                    local cmp = require'cmp'
+                    vim.o.completeopt = 'menu,menuone,noselect'
+                    local cmp = require 'cmp'
 
                     local has_words_before = function()
                         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-                        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+                        return col ~= 0 and
+                                   vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") ==
+                                   nil
                     end
 
                     cmp.setup({
-                        snippet = {
-                            expand = function(args)
-                                require('luasnip').lsp_expand(args.body)
-                            end,
-                        },
+                        snippet = { expand = function(args)
+                            require('luasnip').lsp_expand(args.body)
+                        end },
                         mapping = {
                             ['<C-d>'] = cmp.mapping.scroll_docs(-4),
                             ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -112,41 +91,41 @@ return require('packer').startup(function(use)
                                 else
                                     fallback()
                                 end
-                            end, { "i", "s" }),
+                            end, { "i", "s" })
                         },
                         sources = {
-                            { name = 'calc' },
-                            { name = 'path' },
-                            { name = 'nvim_lsp' },
-                            { name = 'luasnip' },
+                            { name = 'calc' }, { name = 'path' }, { name = 'nvim_lsp' }, { name = 'luasnip' },
                             -- { name = 'tmux' },
                             -- { name = 'spell' },
-                            { name = 'treesitter' },
-                            { name = 'emoji' },
-                            { name = 'buffer', keyword_length = 5 },
+                            { name = 'treesitter' }, { name = 'emoji' }, { name = 'buffer', keyword_length = 5 }
                             -- { name = 'omni' },
                         },
-                        formatting = {
-                            format = require 'lspkind'.cmp_format({with_text = true, maxwidth = 50})
-                        },
-                        experimental = {
-                          native_menu = false,
-                          ghost_text = true,
-                        }
+                        formatting = { format = require'lspkind'.cmp_format({ with_text = true, maxwidth = 50 }) },
+                        experimental = { native_menu = false, ghost_text = true }
                     })
 
-                    local cmp_autopairs = require'nvim-autopairs.completion.cmp'
-                    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done( { map_char = { tex = '{' } }))
+                    local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+                    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '{' } }))
 
-                    vim.cmd([[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
+                    vim.cmd(
+                        [[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
                     vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
-                    vim.cmd([[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
+                    vim.cmd(
+                        [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
                 end
             }
         },
         config = function() require 'lsp' end
     }
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup {} end }
+    use {
+        'github/copilot.vim',
+        opt = true,
+        config = function()
+            vim.api.nvim_set_keymap('i', [[<C-j>]], [[copilot#Accept("<CR>")]], { silent = true, script = true, expr = true })
+            vim.g.copilot_no_tab_map = true
+        end
+    }
     -- }}}
 
     -- editing {{{
@@ -233,10 +212,7 @@ return require('packer').startup(function(use)
             }
         end
     }
-    use {
-      'nvim-treesitter/playground',
-      opt = true
-    }
+    use { 'nvim-treesitter/playground', opt = true }
     use {
         'tpope/vim-dispatch',
         config = function()
@@ -261,10 +237,7 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim',
-        requires = {
-            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-            { 'xiyaowong/telescope-emoji.nvim' }
-        },
+        requires = { { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }, { 'xiyaowong/telescope-emoji.nvim' } },
         config = function()
             local telescope = require 'telescope'
             local h = require 'helpers'
@@ -335,22 +308,21 @@ return require('packer').startup(function(use)
     use { 'vim-test/vim-test', opt = true }
     -- use 'rcarriga/vim-ultest', { 'do': ':UpdateRemoteuseins', 'for': 'python' }
 
-    use {
-        'rcarriga/nvim-notify',
-        config = function()
-            vim.notify = require'notify'
-        end
-    }
+    use { 'rcarriga/nvim-notify', config = function() vim.notify = require 'notify' end }
 
-    use { 'dccsillag/magma-nvim', run = ':UpdateRemotePlugins', ft = 'python',
+    use {
+        'dccsillag/magma-nvim',
+        run = ':UpdateRemotePlugins',
+        ft = 'python',
         config = function()
             local h = require 'helpers'
-            h.noremap('n', '<LocalLeader>r', 'nvim_exec("MagmaEvaluateOperator", v:true)', {silent = true, expr = true})
-            h.noremap('n', '<LocalLeader>rr', ':MagmaEvaluateLine<CR>', {silent = true})
-            h.noremap('x', '<LocalLeader>r', ':<c-u>MagmaEvaluateVisual<CR>', {silent = true})
-            h.noremap('n', '<LocalLeader>rc', ':MagmaReevaluateCell<CR>', {silent = true})
-            h.noremap('n', '<LocalLeader>rd', ':MagmaDelete<CR>', {silent = true})
-            h.noremap('n', '<LocalLeader>ro', ':MagmaShowOutput<CR>', {silent = true})
+            h.noremap('n', '<LocalLeader>r', 'nvim_exec("MagmaEvaluateOperator", v:true)',
+                      { silent = true, expr = true })
+            h.noremap('n', '<LocalLeader>rr', ':MagmaEvaluateLine<CR>', { silent = true })
+            h.noremap('x', '<LocalLeader>r', ':<c-u>MagmaEvaluateVisual<CR>', { silent = true })
+            h.noremap('n', '<LocalLeader>rc', ':MagmaReevaluateCell<CR>', { silent = true })
+            h.noremap('n', '<LocalLeader>rd', ':MagmaDelete<CR>', { silent = true })
+            h.noremap('n', '<LocalLeader>ro', ':MagmaShowOutput<CR>', { silent = true })
 
             vim.g.magma_automatically_open_output = false
         end
