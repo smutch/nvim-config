@@ -251,8 +251,9 @@ vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e :<C-u>call QFOpenInWi
 
 -- Edit rc files
 vim.cmd([[command! Erc execute ':e ~/.config/nvim/init.lua']])
-vim.cmd([[command! Ezrc execute ':e ~/.zshrc']])
 vim.cmd([[command! Eplug execute ':e ~/.config/nvim/lua/plugins.lua']])
+vim.cmd([[command! Elsp execute ':e ~/.config/nvim/lua/lsp.lua']])
+vim.cmd([[command! Esnip execute ':e ~/.config/nvim/lua/snippets.lua']])
 
 -- Capture output from a vim command (like :version or :messages) into a split scratch buffer.
 --  (credit: ctechols, https://gist.github.com/ctechols/c6f7c900b09be5a31dc8)

@@ -36,7 +36,8 @@ return require('packer').startup(function(use)
                     { 'Saecki/crates.nvim', config = function() require('crates').setup() end }, 'hrsh7th/cmp-path',
                     'hrsh7th/cmp-nvim-lua', -- {'andersevenrud/compe-tmux', branch='cmp'},
                     'kdheepak/cmp-latex-symbols', 'f3fora/cmp-spell', 'hrsh7th/cmp-calc', 'ray-x/cmp-treesitter',
-                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
+                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni',
+                    { 'L3MON4D3/LuaSnip', config = function() require 'snippets' end }, 'saadparwaiz1/cmp_luasnip',
                     'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim', {
                         'windwp/nvim-autopairs',
                         config = function()
@@ -122,7 +123,8 @@ return require('packer').startup(function(use)
         'github/copilot.vim',
         opt = true,
         setup = function()
-            vim.api.nvim_set_keymap('i', [[<C-j>]], [[copilot#Accept("<CR>")]], { silent = true, script = true, expr = true })
+            vim.api.nvim_set_keymap('i', [[<C-j>]], [[copilot#Accept("<CR>")]],
+                                    { silent = true, script = true, expr = true })
             vim.g.copilot_no_tab_map = true
         end
     }
