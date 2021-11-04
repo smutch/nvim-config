@@ -52,7 +52,7 @@ return require('packer').startup(function(use)
                             --     tex = '{'
                             -- })
                         end
-                    }
+                    }, 'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
                 },
                 config = function()
                     vim.o.completeopt = 'menu,menuone,noselect'
@@ -113,6 +113,12 @@ return require('packer').startup(function(use)
                     vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
                     vim.cmd(
                         [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
+
+                    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+                    vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl="", numhl="" })
+
+                    vim.cmd(
+                    [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
                 end
             }
         },
@@ -199,6 +205,8 @@ return require('packer').startup(function(use)
         config = function()
             require'nvim-treesitter.configs'.setup {
                 ensure_installed = "maintained", -- one of "all", "language", or a list of languages
+                -- { "python", "c", "cpp", "bash", "lua", "cuda", "latex", "rst", "rust", "toml", "vim", "yaml", "json",
+                -- "json5", "cmake", "glsl", "docker", "bibtex", "javascript", "html", "css" },
                 highlight = {
                     enable = true, -- false will disable the whole extension
                     -- disable = { "c", "rust" },  -- list of language that will be disabled
