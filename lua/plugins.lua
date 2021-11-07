@@ -36,23 +36,21 @@ return require('packer').startup(function(use)
                     { 'Saecki/crates.nvim', config = function() require('crates').setup() end }, 'hrsh7th/cmp-path',
                     'hrsh7th/cmp-nvim-lua', -- {'andersevenrud/compe-tmux', branch='cmp'},
                     'kdheepak/cmp-latex-symbols', 'f3fora/cmp-spell', 'hrsh7th/cmp-calc', 'ray-x/cmp-treesitter',
-                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni',
+                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'hrsh7th/cmp-cmdline',
                     { 'L3MON4D3/LuaSnip', config = function() require 'snippets' end }, 'saadparwaiz1/cmp_luasnip',
                     'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim', {
                         'windwp/nvim-autopairs',
                         config = function()
                             require'nvim-autopairs'.setup {}
-                            -- require("nvim-autopairs.completion.cmp").setup({
-                            --     map_cr = true, --  map <CR> on insert mode
-                            --     map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
-                            --     auto_select = true, -- automatically select the first item
-                            --     insert = false, -- use insert confirm behavior instead of replace
-                            --     map_char = { -- modifies the function or method delimiter by filetypes
-                            --     all = '(',
-                            --     tex = '{'
-                            -- })
                         end
-                    }, 'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
+                    }, 'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb', {
+                        'aspeddro/cmp-pandoc.nvim',
+                        ft = 'markdown',
+                        config = function()
+                            require'cmp_pandoc'.setup()
+                        end
+                    },
+                    'lukas-reineke/cmp-under-comparator',
                 },
                 config = function()
                     vim.o.completeopt = 'menu,menuone,noselect'
@@ -70,10 +68,13 @@ return require('packer').startup(function(use)
                             require('luasnip').lsp_expand(args.body)
                         end },
                         mapping = {
-                            ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-                            ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                            ['<C-Space>'] = cmp.mapping.complete(),
-                            ['<C-e>'] = cmp.mapping.close(),
+                            ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+                            ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+                            ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+                            ['<C-e>'] = cmp.mapping({
+                                i = cmp.mapping.abort(),
+                                c = cmp.mapping.close(),
+                            }),
                             ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 
                             ["<Tab>"] = cmp.mapping(function(fallback)
@@ -96,13 +97,42 @@ return require('packer').startup(function(use)
                         },
                         sources = {
                             { name = 'calc' }, { name = 'path' }, { name = 'nvim_lsp' }, { name = 'luasnip' },
-                            -- { name = 'tmux' },
-                            -- { name = 'spell' },
                             { name = 'treesitter' }, { name = 'emoji' }, { name = 'buffer', keyword_length = 5 }
-                            -- { name = 'omni' },
                         },
                         formatting = { format = require'lspkind'.cmp_format({ with_text = true, maxwidth = 50 }) },
-                        experimental = { native_menu = false, ghost_text = true }
+                        experimental = { native_menu = false, ghost_text = true },
+                        sorting = {
+                            comparators = {
+                                cmp.config.compare.offset,
+                                cmp.config.compare.exact,
+                                cmp.config.compare.score,
+                                require "cmp-under-comparator".under,
+                                cmp.config.compare.kind,
+                                cmp.config.compare.sort_text,
+                                cmp.config.compare.length,
+                                cmp.config.compare.order,
+                            },
+                        }
+                    })
+
+                    -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+                    cmp.setup.cmdline('/', {
+                        sources = {
+                            { name = 'buffer' }
+                        }
+                    })
+
+                    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+                    cmp.setup.cmdline(':', {
+                        sources = cmp.config.sources({
+                            { name = 'path' }
+                        }, {
+                            { name = 'cmdline' }
+                        }),
+                        completion = {
+                            -- Use <c-space> to request completion
+                            autocomplete = false
+                        }
                     })
 
                     local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
@@ -111,6 +141,7 @@ return require('packer').startup(function(use)
                     vim.cmd(
                         [[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
                     vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
+                    vim.cmd([[autocmd FileType markdown lua require'cmp'.setup.buffer {sources = { { name = 'cmp_pandoc' } } }]])
                     vim.cmd(
                         [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
 
@@ -427,7 +458,8 @@ return require('packer').startup(function(use)
             vim.g.vimtex_view_method = 'skim'
             vim.g.vimtex_fold_enabled = 1
             vim.g.vimtex_compiler_progname = 'nvr'
-        end
+        end,
+        requires = {'jbyuki/nabla.nvim'}
     }
     use { 'vim-scripts/scons.vim', opt = true, ft = { 'scons' } }
     use { 'Glench/Vim-Jinja2-Syntax', opt = true, ft = { 'html' } }
