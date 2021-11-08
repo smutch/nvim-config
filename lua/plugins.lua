@@ -278,13 +278,13 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' }, { 'xiyaowong/telescope-emoji.nvim' } },
+        requires = { { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' }, 'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim' },
         config = function()
             local telescope = require 'telescope'
             local h = require 'helpers'
             telescope.setup { pickers = { find_files = { theme = "dropdown" } } }
 
-            local extensions = { "fzy_native", "emoji" }
+            local extensions = { "fzy_native", "packer", "emoji" }
             for _, extension in ipairs(extensions) do
                 telescope.load_extension(extension)
             end
@@ -301,6 +301,8 @@ return require('packer').startup(function(use)
             h.noremap('n', [[<leader>f"]], '<cmd>Telescope registers<cr>')
             h.noremap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>')
             h.noremap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>')
+            h.noremap('n', '<leader>fe', '<cmd>Telescope emoji<cr>')
+            h.noremap('n', '<leader>fp', '<cmd>lua require("telescope").extensions.packer.plugins()<cr>')
             h.noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
         end
     }
