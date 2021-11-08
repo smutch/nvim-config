@@ -418,7 +418,16 @@ return require('packer').startup(function(use)
             vim.g.taboo_renamed_tab_format = " %I %l%m "
         end
     }
-    use { 'lukas-reineke/indent-blankline.nvim', config = function() vim.g.indent_blankline_char = '│' end }
+    use { 'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require("indent_blankline").setup {
+                char = '│',
+                show_current_context = true,
+                buftype_exclude = {"terminal"}
+            }
+            vim.cmd[[highlight! link IndentBlanklineChar VertSplit]]
+        end
+    }
     use {
         'metakirby5/codi.vim',
         cmd = 'Codi',
