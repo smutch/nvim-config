@@ -38,19 +38,12 @@ return require('packer').startup(function(use)
                     'kdheepak/cmp-latex-symbols', 'f3fora/cmp-spell', 'hrsh7th/cmp-calc', 'ray-x/cmp-treesitter',
                     'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'hrsh7th/cmp-cmdline',
                     { 'L3MON4D3/LuaSnip', config = function() require 'snippets' end }, 'saadparwaiz1/cmp_luasnip',
-                    'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim', {
-                        'windwp/nvim-autopairs',
-                        config = function()
-                            require'nvim-autopairs'.setup {}
-                        end
-                    }, 'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb', {
-                        'aspeddro/cmp-pandoc.nvim',
-                        ft = 'markdown',
-                        config = function()
-                            require'cmp_pandoc'.setup()
-                        end
-                    },
-                    'lukas-reineke/cmp-under-comparator',
+                    'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim',
+                    { 'windwp/nvim-autopairs', config = function() require'nvim-autopairs'.setup {} end },
+                    'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
+                    { 'aspeddro/cmp-pandoc.nvim', ft = 'markdown', config = function()
+                        require'cmp_pandoc'.setup()
+                    end }, 'lukas-reineke/cmp-under-comparator'
                 },
                 config = function()
                     vim.o.completeopt = 'menu,menuone,noselect'
@@ -71,10 +64,7 @@ return require('packer').startup(function(use)
                             ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
                             ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
                             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-                            ['<C-e>'] = cmp.mapping({
-                                i = cmp.mapping.abort(),
-                                c = cmp.mapping.close(),
-                            }),
+                            ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
                             ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 
                             ["<Tab>"] = cmp.mapping(function(fallback)
@@ -103,24 +93,15 @@ return require('packer').startup(function(use)
                         experimental = { native_menu = false, ghost_text = true },
                         sorting = {
                             comparators = {
-                                cmp.config.compare.offset,
-                                cmp.config.compare.exact,
-                                cmp.config.compare.score,
-                                require "cmp-under-comparator".under,
-                                cmp.config.compare.kind,
-                                cmp.config.compare.sort_text,
-                                cmp.config.compare.length,
-                                cmp.config.compare.order,
-                            },
+                                cmp.config.compare.offset, cmp.config.compare.exact, cmp.config.compare.score,
+                                require"cmp-under-comparator".under, cmp.config.compare.kind,
+                                cmp.config.compare.sort_text, cmp.config.compare.length, cmp.config.compare.order
+                            }
                         }
                     })
 
                     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-                    cmp.setup.cmdline('/', {
-                        sources = {
-                            { name = 'buffer' }
-                        }
-                    })
+                    cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
 
                     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
                     cmp.setup.cmdline(':', {
@@ -141,15 +122,16 @@ return require('packer').startup(function(use)
                     vim.cmd(
                         [[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
                     vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
-                    vim.cmd([[autocmd FileType markdown lua require'cmp'.setup.buffer {sources = { { name = 'cmp_pandoc' } } }]])
+                    vim.cmd(
+                        [[autocmd FileType markdown lua require'cmp'.setup.buffer {sources = { { name = 'cmp_pandoc' } } }]])
                     vim.cmd(
                         [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
 
                     vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-                    vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl="", numhl="" })
+                    vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl = "", numhl = "" })
 
                     vim.cmd(
-                    [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
+                        [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
                 end
             }
         },
@@ -223,7 +205,8 @@ return require('packer').startup(function(use)
         'edluffy/specs.nvim',
         config = function()
             require('specs').setup {
-                popup = { inc_ms = 10, width = 50, winhl = "DiffText", resizer = require('specs').slide_resizer }
+                popup = { inc_ms = 10, width = 50, winhl = "DiffText", resizer = require('specs').slide_resizer },
+                ignore_filetypes = { "rust" }
             }
         end
     }
@@ -251,6 +234,17 @@ return require('packer').startup(function(use)
                     smart_rename = { enable = true, keymaps = { smart_rename = "gR" } }
                 }
             }
+            -- if vim.loop.os_uname().sysname == "Darwin" then
+            --     require'nvim-treesitter.install'.compilers = { "gcc-11" }
+            -- end
+            -- require("nvim-treesitter.parsers").get_parser_configs().just = {
+            --     install_info = {
+            --         url = "https://github.com/IndianBoy42/tree-sitter-just", -- local path or git repo
+            --         files = { "src/parser.c", "src/scanner.cc" },
+            --         branch = "main"
+            --     },
+            --     maintainers = { "@IndianBoy42" }
+            -- }
         end
     }
     use { 'nvim-treesitter/playground', opt = true }
@@ -278,16 +272,17 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' }, 'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim' },
+        requires = {
+            { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
+            'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim'
+        },
         config = function()
             local telescope = require 'telescope'
             local h = require 'helpers'
             telescope.setup { pickers = { find_files = { theme = "dropdown" } } }
 
             local extensions = { "fzy_native", "packer", "emoji" }
-            for _, extension in ipairs(extensions) do
-                telescope.load_extension(extension)
-            end
+            for _, extension in ipairs(extensions) do telescope.load_extension(extension) end
 
             h.noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
             h.noremap('n', '<leader>fg', '<cmd>Telescope git_files<cr>')
@@ -419,14 +414,15 @@ return require('packer').startup(function(use)
             vim.g.taboo_renamed_tab_format = " %I %l%m "
         end
     }
-    use { 'lukas-reineke/indent-blankline.nvim',
+    use {
+        'lukas-reineke/indent-blankline.nvim',
         config = function()
             require("indent_blankline").setup {
                 char = '│',
                 show_current_context = true,
-                buftype_exclude = {"terminal"}
+                buftype_exclude = { "terminal" }
             }
-            vim.cmd[[highlight! link IndentBlanklineChar VertSplit]]
+            vim.cmd [[highlight! link IndentBlanklineChar VertSplit]]
         end
     }
     use {
@@ -469,7 +465,7 @@ return require('packer').startup(function(use)
             vim.g.vimtex_fold_enabled = 1
             vim.g.vimtex_compiler_progname = 'nvr'
         end,
-        requires = {'jbyuki/nabla.nvim'}
+        requires = { 'jbyuki/nabla.nvim' }
     }
     use { 'vim-scripts/scons.vim', opt = true, ft = { 'scons' } }
     use { 'Glench/Vim-Jinja2-Syntax', opt = true, ft = { 'html' } }
