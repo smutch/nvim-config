@@ -129,10 +129,10 @@ return require('packer').startup(function(use)
                         }, {
                             { name = 'cmdline' }
                         }),
-                        completion = {
-                            -- Use <c-space> to request completion
-                            autocomplete = false
-                        }
+                        -- completion = {
+                        --     -- Use <tab> or <c-space> to request completion
+                        --     autocomplete = false
+                        -- },
                     })
 
                     local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
@@ -223,7 +223,7 @@ return require('packer').startup(function(use)
         'edluffy/specs.nvim',
         config = function()
             require('specs').setup {
-                popup = { inc_ms = 10, width = 50, winhl = "WildMenu", resizer = require('specs').slide_resizer }
+                popup = { inc_ms = 10, width = 50, winhl = "DiffText", resizer = require('specs').slide_resizer }
             }
         end
     }
