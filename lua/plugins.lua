@@ -274,14 +274,21 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         requires = {
             { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
-            'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim'
+            'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim',
+            {
+                "AckslD/nvim-neoclip.lua",
+                config = function()
+                    require('neoclip').setup()
+                    vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>Telescope neoclip<cr>', { noremap = true})
+                end,
+            }
         },
         config = function()
             local telescope = require 'telescope'
             local h = require 'helpers'
             telescope.setup { pickers = { find_files = { theme = "dropdown" } } }
 
-            local extensions = { "fzy_native", "packer", "emoji" }
+            local extensions = { "fzy_native", "packer", "emoji", "neoclip" }
             for _, extension in ipairs(extensions) do telescope.load_extension(extension) end
 
             h.noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
