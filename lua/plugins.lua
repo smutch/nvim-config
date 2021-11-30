@@ -105,11 +105,7 @@ return require('packer').startup(function(use)
 
                     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
                     cmp.setup.cmdline(':', {
-                        sources = cmp.config.sources({
-                            { name = 'path' }
-                        }, {
-                            { name = 'cmdline' }
-                        }),
+                        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
                         -- completion = {
                         --     -- Use <tab> or <c-space> to request completion
                         --     autocomplete = false
@@ -131,7 +127,7 @@ return require('packer').startup(function(use)
                     vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl = "", numhl = "" })
 
                     vim.cmd(
-                        [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
+                        [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", only_current_line = true, enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
                 end
             }
         },
@@ -274,13 +270,12 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         requires = {
             { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
-            'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim',
-            {
+            'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim', {
                 "AckslD/nvim-neoclip.lua",
                 config = function()
                     require('neoclip').setup()
-                    vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>Telescope neoclip<cr>', { noremap = true})
-                end,
+                    vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>Telescope neoclip<cr>', { noremap = true })
+                end
             }
         },
         config = function()

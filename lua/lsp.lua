@@ -104,8 +104,15 @@ elseif Path:new("./poetry.lock"):exists() then
     python_prefix = string.sub(vim.fn.system('poetry env info --path'), 0, -2)
 elseif vim.env.CONDA_PREFIX then
     python_prefix = vim.env.CONDA_PREFIX
+elseif Path:new(vim.env.HOME .. "/.pyenv/shims/python"):exists() then
+    python_prefix = "/Users/smutch/.pyenv/shims/python"
 end
+
 local interpreter_path = python_prefix .. "/bin/python"
+if python_prefix:sub(-#"python") == "python" then
+    interpreter_path = python_prefix
+end
+
 print("Set LSP python interpreter to: " .. interpreter_path)
 
 -- Use LspInstall to set up automatically installed servers
