@@ -2,7 +2,6 @@
 local M = {}
 
 local lsp_status = require 'lsp-status'
-local Path = require 'plenary.path'
 local h = require 'helpers'
 lsp_status.register_progress()
 -- vim.lsp.set_log_level("debug")
@@ -97,24 +96,6 @@ local on_attach = function(client, bufnr)
     lsp_status.on_attach(client)
 end
 
-local python_prefix = "/usr"
-if vim.env.VIRTUAL_ENV then
-    python_prefix = vim.env.VIRTUAL_ENV
-elseif Path:new("./poetry.lock"):exists() then
-    python_prefix = string.sub(vim.fn.system('poetry env info --path'), 0, -2)
-elseif vim.env.CONDA_PREFIX then
-    python_prefix = vim.env.CONDA_PREFIX
-elseif Path:new(vim.env.HOME .. "/.pyenv/shims/python"):exists() then
-    python_prefix = "/Users/smutch/.pyenv/shims/python"
-end
-
-local interpreter_path = python_prefix .. "/bin/python"
-if python_prefix:sub(-#"python") == "python" then
-    interpreter_path = python_prefix
-end
-
-print("Set LSP python interpreter to: " .. interpreter_path)
-
 -- Use LspInstall to set up automatically installed servers
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
@@ -130,7 +111,7 @@ lsp_installer.on_server_ready(function(server)
     if server.name == "pyright" then
         opts.settings = {
             python = {
-                pythonPath = interpreter_path,
+                pythonPath = h.python_interpreter_path,
                 analysis = {
                     autoSearchPaths = true,
                     useLibraryCodeForTypes = true,
@@ -140,26 +121,6 @@ lsp_installer.on_server_ready(function(server)
         }
     elseif server.name == "sumneko_lua" then
         opts.settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } }
-    elseif server.name == "efm" then
-        opts.filetypes = { 'python', 'lua' }
-        opts.init_options = { documentFormatting = true }
-        opts.settings = {
-            rootMarkers = { ".git/" },
-            languages = {
-                lua = {
-                    {
-                        formatCommand = "lua-format --column-limit=120 --spaces-inside-table-braces -i",
-                        formatStdin = true
-                    }
-                },
-                python = {
-                    {
-                        formatCommand = 'if [ -e pyproject.toml ]; then '.. python_prefix ..'/bin/isort --quiet --profile black - | '.. python_prefix ..'/bin/black --quiet -; else isort --quiet -l 120 - | black --quiet -l 120 -; fi',
-                        formatStdin = true
-                    }
-                }
-            }
-        }
     elseif server.name == "rust_analyzer" then
         opts.settings = {
             ['rust-analyzer'] = {

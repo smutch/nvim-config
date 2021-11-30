@@ -30,6 +30,28 @@ return require('packer').startup(function(use)
                     vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
                 end
             }, {
+                'jose-elias-alvarez/null-ls.nvim',
+                config = function()
+                    local null_ls = require("null-ls")
+                    local h = require("helpers")
+
+                    local black_args = { "--quiet", "--fast"}
+                    if not h.file_exists('pyproject.toml') then
+                        table.insert(black_args, "-l")
+                        table.insert(black_args, "120")
+                    end
+                    table.insert(black_args, "-")
+
+                    null_ls.config({
+                        sources = {
+                            null_ls.builtins.formatting.stylua, null_ls.builtins.completion.spell,
+                            null_ls.builtins.formatting.black.with{command=h.python_prefix .. '/bin/black', args=black_args},
+                            null_ls.builtins.formatting.isort.with{command=h.python_prefix .. '/bin/isort'},
+                            null_ls.builtins.formatting.lua_format.with{args={"--column-limit=120", "--spaces-inside-table-braces", "-i"}}
+                        }
+                    })
+                end
+            }, {
                 'hrsh7th/nvim-cmp',
                 requires = {
                     'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer',
