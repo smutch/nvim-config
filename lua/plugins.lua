@@ -35,19 +35,20 @@ return require('packer').startup(function(use)
                     local null_ls = require("null-ls")
                     local h = require("helpers")
 
-                    local black_args = { "--quiet", "--fast"}
-                    if not h.file_exists('pyproject.toml') then
-                        table.insert(black_args, "-l")
-                        table.insert(black_args, "120")
-                    end
-                    table.insert(black_args, "-")
-
                     null_ls.config({
                         sources = {
-                            null_ls.builtins.formatting.stylua, null_ls.builtins.completion.spell,
-                            null_ls.builtins.formatting.black.with{command=h.python_prefix .. '/bin/black', args=black_args},
-                            null_ls.builtins.formatting.isort.with{command=h.python_prefix .. '/bin/isort'},
-                            null_ls.builtins.formatting.lua_format.with{args={"--column-limit=120", "--spaces-inside-table-braces", "-i"}}
+                            null_ls.builtins.formatting.black.with {
+                                command = h.python_prefix .. '/bin/black',
+                                extra_args = function(params)
+                                    if h.file_exists('pyproject.toml') then
+                                        return { "-l", "120" }
+                                    else
+                                        return {}
+                                    end
+                                end
+                            }, null_ls.builtins.formatting.isort.with { command = h.python_prefix .. '/bin/isort' },
+                            null_ls.builtins.formatting.lua_format
+                                .with { args = { "--column-limit=120", "--spaces-inside-table-braces", "-i" } }
                         }
                     })
                 end
