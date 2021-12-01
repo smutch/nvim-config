@@ -50,6 +50,8 @@ function M.formatting_sync(options, timeout_ms)
         vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
     elseif err then
         vim.notify("vim.lsp.buf.formatting_sync: " .. err, vim.log.levels.WARN)
+    elseif client.name == "null-ls" then
+        vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
     end
 end
 
