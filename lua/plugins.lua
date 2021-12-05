@@ -234,6 +234,7 @@ return require('packer').startup(function(use)
     -- treesitter {{{
     use {
         'nvim-treesitter/nvim-treesitter',
+        requires = 'nvim-treesitter/nvim-treesitter-textobjects',
         run = ':TSUpdate',
         config = function()
             require'nvim-treesitter.configs'.setup {
@@ -251,7 +252,53 @@ return require('packer').startup(function(use)
                     highlight_definitions = { enable = true },
                     highlight_current_scope = { enable = true },
                     smart_rename = { enable = true, keymaps = { smart_rename = "gR" } }
-                }
+                },
+                textobjects = {
+                    select = {
+                        enable = true,
+
+                        -- Automatically jump forward to textobj, similar to targets.vim
+                        lookahead = true,
+
+                        keymaps = {
+                            -- You can use the capture groups defined in textobjects.scm
+                            ["af"] = "@function.outer",
+                            ["if"] = "@function.inner",
+                            ["ac"] = "@class.outer",
+                            ["ic"] = "@class.inner",
+                            ["ap"] = "@parameter.outer",
+                            ["ip"] = "@parameter.inner",
+                            ["aC"] = "@comment.outer",
+                            ["aB"] = "@block.outer",
+                            ["iB"] = "@block.inner",
+
+                            -- -- Or you can define your own textobjects like this
+                            -- ["iF"] = {
+                            --     python = "(function_definition) @function",
+                            --     cpp = "(function_definition) @function",
+                            --     c = "(function_definition) @function",
+                            --     java = "(method_declaration) @function",
+                            -- },
+                        },
+                    },
+                    swap = {
+                        enable = true,
+                        swap_next = {
+                            ["<leader>a"] = "@parameter.inner",
+                        },
+                        swap_previous = {
+                            ["<leader>A"] = "@parameter.inner",
+                        },
+                    },
+                    lsp_interop = {
+                        enable = true,
+                        border = 'none',
+                        peek_definition_code = {
+                            ["<leader>df"] = "@function.outer",
+                            ["<leader>dF"] = "@class.outer",
+                        },
+                    },
+                },
             }
             -- if vim.loop.os_uname().sysname == "Darwin" then
             --     require'nvim-treesitter.install'.compilers = { "gcc-11" }
