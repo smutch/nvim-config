@@ -29,30 +29,7 @@ return require('packer').startup(function(use)
                     require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
                     vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
                 end
-            }, {
-                'jose-elias-alvarez/null-ls.nvim',
-                config = function()
-                    local null_ls = require("null-ls")
-                    local h = require("helpers")
-
-                    null_ls.config({
-                        sources = {
-                            null_ls.builtins.formatting.black.with {
-                                command = h.python_prefix .. '/bin/black',
-                                extra_args = function(params)
-                                    if h.file_exists('pyproject.toml') then
-                                        return { "-l", "120" }
-                                    else
-                                        return {}
-                                    end
-                                end
-                            }, null_ls.builtins.formatting.isort.with { command = h.python_prefix .. '/bin/isort' },
-                            null_ls.builtins.formatting.lua_format
-                                .with { args = { "--column-limit=120", "--spaces-inside-table-braces", "-i" } }
-                        }
-                    })
-                end
-            }, {
+            }, 'jose-elias-alvarez/null-ls.nvim', {
                 'hrsh7th/nvim-cmp',
                 requires = {
                     'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer',
@@ -186,7 +163,7 @@ return require('packer').startup(function(use)
     use {
         'numToStr/Comment.nvim',
         config = function()
-            require('Comment').setup()
+            require('Comment').setup { mappings = { extended = true } }
             vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
             vim.api.nvim_set_keymap('n', 'gcp', 'yygccp', {})
             vim.api.nvim_set_keymap('n', 'gcP', 'yygccP', {})
@@ -270,7 +247,7 @@ return require('packer').startup(function(use)
                             ["ip"] = "@parameter.inner",
                             ["aC"] = "@comment.outer",
                             ["aB"] = "@block.outer",
-                            ["iB"] = "@block.inner",
+                            ["iB"] = "@block.inner"
 
                             -- -- Or you can define your own textobjects like this
                             -- ["iF"] = {
@@ -279,26 +256,19 @@ return require('packer').startup(function(use)
                             --     c = "(function_definition) @function",
                             --     java = "(method_declaration) @function",
                             -- },
-                        },
+                        }
                     },
                     swap = {
                         enable = true,
-                        swap_next = {
-                            ["<leader>a"] = "@parameter.inner",
-                        },
-                        swap_previous = {
-                            ["<leader>A"] = "@parameter.inner",
-                        },
+                        swap_next = { ["<leader>a"] = "@parameter.inner" },
+                        swap_previous = { ["<leader>A"] = "@parameter.inner" }
                     },
                     lsp_interop = {
                         enable = true,
                         border = 'none',
-                        peek_definition_code = {
-                            ["<leader>df"] = "@function.outer",
-                            ["<leader>dF"] = "@class.outer",
-                        },
-                    },
-                },
+                        peek_definition_code = { ["<leader>df"] = "@function.outer", ["<leader>dF"] = "@class.outer" }
+                    }
+                }
             }
             -- if vim.loop.os_uname().sysname == "Darwin" then
             --     require'nvim-treesitter.install'.compilers = { "gcc-11" }

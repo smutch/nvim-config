@@ -148,6 +148,7 @@ vim.cmd([[
         au!
         au ColorScheme * hi! link Search DiffAdd | hi! link Conceal NonText | hi! Keyword cterm=italic gui=italic
         au ColorScheme onedark if &background == 'dark' | hi! Normal guifg=#d9dbda | hi! IndentBlanklineChar guifg=#2e3c44 | hi! NormalNC guibg=#31353f | hi! Search guibg=#93691d | endif
+        au ColorScheme * if &background == 'dark' | hi! NormalFloat guibg=#353B49 | endif
     augroup END
 ]])
 
