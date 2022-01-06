@@ -147,14 +147,19 @@ null_ls.setup{sources = {
     null_ls.builtins.formatting.black.with {
         command = h.python_prefix .. '/bin/black',
         extra_args = function(params)
-            if h.file_exists('pyproject.toml') then
+            if not h.file_exists('pyproject.toml') then
                 return { "-l", "120" }
             else
                 return {}
             end
         end
     }, null_ls.builtins.formatting.isort.with { command = h.python_prefix .. '/bin/isort' },
-    null_ls.builtins.formatting.lua_format.with { args = { "--column-limit=120", "--spaces-inside-table-braces", "-i" } }
+    null_ls.builtins.formatting.lua_format.with { args = { "--column-limit=120", "--spaces-inside-table-braces", "-i" } },
+    null_ls.builtins.formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" }, args = { "--print-width=1000" }}),
+    null_ls.builtins.formatting.nimpretty,
 }, on_attach=on_attach, debounce=base_opts.flags.debounce_text_changes}
+
+require'lspconfig'.nimls.setup(base_opts)
+require'lspconfig'.julials.setup(base_opts)
 
 return M

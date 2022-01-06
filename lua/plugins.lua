@@ -156,6 +156,8 @@ return require('packer').startup(function(use)
             vim.api.nvim_set_keymap('n', 'F', 'F', {})
             vim.api.nvim_set_keymap('n', 't', 't', {})
             vim.api.nvim_set_keymap('n', 'T', 'T', {})
+            vim.api.nvim_set_keymap('n', ';', ';', {})
+            vim.api.nvim_set_keymap('n', ',', ',', {})
         end
     }
 
@@ -163,7 +165,7 @@ return require('packer').startup(function(use)
     use {
         'numToStr/Comment.nvim',
         config = function()
-            require('Comment').setup { mappings = { extended = true } }
+            require('Comment').setup { mappings = { extended = true }, ignore = { '^$' } }
             vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
             vim.api.nvim_set_keymap('n', 'gcp', 'yygccp', {})
             vim.api.nvim_set_keymap('n', 'gcP', 'yygccP', {})
@@ -516,6 +518,7 @@ return require('packer').startup(function(use)
     use { 'tikhomirov/vim-glsl', opt = true }
     use { 'DingDean/wgsl.vim', opt = true }
     use 'NoahTheDuke/vim-just'
+    use 'alaviss/nim.nvim'
     -- }}}
 
 end)
