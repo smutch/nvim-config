@@ -85,10 +85,10 @@ return require('packer').startup(function(use)
                                 end
                             end, { "i", "s" })
                         },
-                        sources = {
+                        sources = cmp.config.sources({
                             { name = 'calc' }, { name = 'path' }, { name = 'nvim_lsp' }, { name = 'luasnip' },
                             { name = 'treesitter' }, { name = 'emoji' }, { name = 'buffer', keyword_length = 5 }
-                        },
+                        }),
                         formatting = { format = require'lspkind'.cmp_format({ with_text = true, maxwidth = 50 }) },
                         experimental = { native_menu = false, ghost_text = true },
                         sorting = {
