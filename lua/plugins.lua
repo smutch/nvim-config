@@ -245,8 +245,8 @@ return require('packer').startup(function(use)
                             ["if"] = "@function.inner",
                             ["ac"] = "@class.outer",
                             ["ic"] = "@class.inner",
-                            ["ap"] = "@parameter.outer",
-                            ["ip"] = "@parameter.inner",
+                            ["aP"] = "@parameter.outer",
+                            ["iP"] = "@parameter.inner",
                             ["aC"] = "@comment.outer",
                             ["aB"] = "@block.outer",
                             ["iB"] = "@block.inner"
