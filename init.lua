@@ -155,7 +155,7 @@ vim.cmd([[
 -- use the presence of a file to determine if we want to start in light or dark mode
 if h.file_exists("~/.vimlight") or vim.env.LIGHT then
     vim.o.background = 'light'
-    vim.cmd 'packadd neovim-ayu | colorscheme Ayu'
+    vim.cmd 'packadd github-nvim-theme | colorscheme github_light'
 else
     vim.o.background = 'dark'
     vim.cmd 'colorscheme onenord'
