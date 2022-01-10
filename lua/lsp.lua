@@ -128,7 +128,10 @@ lsp_installer.on_server_ready(function(server)
                     overrideCommand = {
                         'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
                     }
-                }
+                },
+                -- cargo = {
+                --     allFeatures = true
+                -- }
             }
         }
     elseif server.name == "clangd" then

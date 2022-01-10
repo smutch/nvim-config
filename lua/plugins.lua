@@ -217,9 +217,7 @@ return require('packer').startup(function(use)
         run = ':TSUpdate',
         config = function()
             require'nvim-treesitter.configs'.setup {
-                ensure_installed = "maintained", -- one of "all", "language", or a list of languages
-                -- { "python", "c", "cpp", "bash", "lua", "cuda", "latex", "rst", "rust", "toml", "vim", "yaml", "json",
-                -- "json5", "cmake", "glsl", "docker", "bibtex", "javascript", "html", "css" },
+                ensure_installed = "maintained",
                 highlight = {
                     enable = true, -- false will disable the whole extension
                     -- disable = { "c", "rust" },  -- list of language that will be disabled
@@ -479,6 +477,25 @@ return require('packer').startup(function(use)
         end
     }
     use { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = function() require('pqf').setup() end }
+    use {
+        'petertriho/nvim-scrollbar',
+        requires = 'kevinhwang91/nvim-hlslens',
+        config = function()
+            require("scrollbar").setup { handle = { color = "#4C566A" } }
+            require("hlslens").setup({
+                build_position_cb = function(plist, _, _, _)
+                    require('scrollbar.handlers.search').handler.show(plist.start_pos)
+                end
+            })
+
+            vim.cmd([[
+        augroup scrollbar_search_hide
+        autocmd!
+        autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
+        augroup END
+        ]])
+        end
+    }
     -- }}}
 
     -- prose {{{
