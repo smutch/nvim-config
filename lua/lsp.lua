@@ -19,51 +19,40 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 
 -- ripped from runtime/lua/vim/lsp/buf.lua
 local function select_client(method, on_choice)
-  vim.validate {
-    on_choice = { on_choice, 'function', false },
-  }
-  local clients = vim.tbl_values(vim.lsp.buf_get_clients())
-  clients = vim.tbl_filter(function(client)
-    return client.supports_method(method)
-  end, clients)
-  -- better UX when choices are always in the same order (between restarts)
-  table.sort(clients, function(a, b)
-    return a.name < b.name
-  end)
+    vim.validate { on_choice = { on_choice, 'function', false } }
+    local clients = vim.tbl_values(vim.lsp.buf_get_clients())
+    clients = vim.tbl_filter(function(client) return client.supports_method(method) end, clients)
+    -- better UX when choices are always in the same order (between restarts)
+    table.sort(clients, function(a, b) return a.name < b.name end)
 
-  if #clients > 1 then
-    vim.ui.select(clients, {
-      prompt = 'Select a language server:',
-      format_item = function(client)
-        return client.name
-      end,
-    }, on_choice)
-  elseif #clients < 1 then
-    on_choice(nil)
-  else
-    on_choice(clients[1])
-  end
+    if #clients > 1 then
+        vim.ui.select(clients,
+                      { prompt = 'Select a language server:', format_item = function(client) return client.name end },
+                      on_choice)
+    elseif #clients < 1 then
+        on_choice(nil)
+    else
+        on_choice(clients[1])
+    end
 end
 
 -- ripped from runtime/lua/vim/lsp/buf.lua with extra notify call upon success
 function M.formatting_sync(options, timeout_ms)
-  local params = require('vim.lsp.util').make_formatting_params(options)
-  local bufnr = vim.api.nvim_get_current_buf()
-  select_client('textDocument/formatting', function(client)
-    if client == nil then
-      return
-    end
+    local params = require('vim.lsp.util').make_formatting_params(options)
+    local bufnr = vim.api.nvim_get_current_buf()
+    select_client('textDocument/formatting', function(client)
+        if client == nil then return end
 
-    local result, err = client.request_sync('textDocument/formatting', params, timeout_ms, bufnr)
-    if result and result.result then
-      require('vim.lsp.util').apply_text_edits(result.result, bufnr)
-      vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
-    elseif err then
-      vim.notify('vim.lsp.buf.formatting_sync: ' .. err, vim.log.levels.WARN)
-    elseif client.name == "null-ls" then
-        vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
-    end
-  end)
+        local result, err = client.request_sync('textDocument/formatting', params, timeout_ms, bufnr)
+        if result and result.result then
+            require('vim.lsp.util').apply_text_edits(result.result, bufnr)
+            vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
+        elseif err then
+            vim.notify('vim.lsp.buf.formatting_sync: ' .. err, vim.log.levels.WARN)
+        elseif client.name == "null-ls" then
+            vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
+        end
+    end)
 end
 
 local on_attach = function(client, bufnr)
@@ -128,7 +117,7 @@ lsp_installer.on_server_ready(function(server)
                     overrideCommand = {
                         'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
                     }
-                },
+                }
                 -- cargo = {
                 --     allFeatures = true
                 -- }
@@ -146,23 +135,33 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 local null_ls = require("null-ls")
-null_ls.setup{sources = {
-    null_ls.builtins.formatting.black.with {
-        command = h.python_prefix .. '/bin/black',
-        extra_args = function(params)
-            if not h.file_exists('pyproject.toml') then
-                return { "-l", "120" }
-            else
-                return {}
+null_ls.setup {
+    sources = {
+        null_ls.builtins.formatting.black.with {
+            command = h.python_prefix .. '/bin/black',
+            extra_args = function(params)
+                if not h.file_exists('pyproject.toml') then
+                    return { "-l", "120" }
+                else
+                    return {}
+                end
             end
-        end
-    }, null_ls.builtins.formatting.isort.with { command = h.python_prefix .. '/bin/isort' },
-    null_ls.builtins.formatting.lua_format.with { args = { "--column-limit=120", "--spaces-inside-table-braces", "-i" } },
-    null_ls.builtins.formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" }, args = { "--print-width=1000" }}),
-    null_ls.builtins.formatting.nimpretty,
-}, on_attach=on_attach, debounce=base_opts.flags.debounce_text_changes}
+        }, null_ls.builtins.formatting.isort.with { command = h.python_prefix .. '/bin/isort' },
+        null_ls.builtins.formatting.lua_format
+            .with { args = { "--column-limit=120", "--spaces-inside-table-braces", "-i" } },
+        null_ls.builtins.formatting.prettier.with({
+            filetypes = { "html", "json", "yaml", "markdown" },
+            args = { "--print-width=1000" }
+        }), null_ls.builtins.formatting.nimpretty
+    },
+    on_attach = on_attach,
+    debounce = base_opts.flags.debounce_text_changes
+}
 
 require'lspconfig'.nimls.setup(base_opts)
-require'lspconfig'.julials.setup(base_opts)
+
+local julia_opts = base_opts
+julia_opts.julia = { environmentPath = "./" }
+require'lspconfig'.julials.setup(julia_opts)
 
 return M

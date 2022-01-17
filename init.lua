@@ -116,11 +116,12 @@ h.noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=a
 
 -- terminal stuff
 vim.env.LAUNCHED_FROM_NVIM = 1
+
 vim.cmd([[
     augroup MyTerm
         au!
         au BufWinEnter,WinEnter,TermOpen term://* startinsert 
-        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber
+        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber | hi! TermNormal guibg=Black
     augroup END
 ]])
 
@@ -134,6 +135,7 @@ h.noremap('n', '<A-h>', '<C-w>h', {})
 h.noremap('n', '<A-j>', '<C-w>j', {})
 h.noremap('n', '<A-k>', '<C-w>k', {})
 h.noremap('n', '<A-l>', '<C-w>l', {})
+h.noremap('n', '<leader>tn', ':botright 20split | term<cr>')
 
 -- }}}
 

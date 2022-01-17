@@ -352,37 +352,6 @@ return require('packer').startup(function(use)
         config = function() vim.api.nvim_set_keymap('n', '<leader>T', ':TagbarToggle<CR>', {}) end,
         opt = true
     }
-    use {
-        'akinsho/toggleterm.nvim',
-        config = function()
-            local termsize = function(direction)
-                if direction == "horizontal" then
-                    return 20
-                elseif direction == "vertical" then
-                    return vim.o.columns * 0.4
-                end
-            end
-            require("toggleterm").setup {
-                -- size can be a number or function which is passed the current terminal
-                function(term) termsize(term.direction) end,
-                open_mapping = '<leader>ts',
-                hide_numbers = true, -- hide the number column in toggleterm buffers
-                shade_filetypes = { "none" },
-                shade_terminals = true,
-                shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
-                start_in_insert = true,
-                insert_mappings = false, -- whether or not the open mapping applies in insert mode
-                persist_size = true,
-                direction = 'horizontal',
-                close_on_exit = true, -- close the terminal window when the process exits
-                shell = vim.o.shell -- change the default shell
-            }
-            vim.api.nvim_set_keymap('n', '<leader>tv',
-                                    ':ToggleTerm size=' .. termsize('vertical') .. ' direction=vertical<CR>',
-                                    { noremap = true })
-        end
-    }
-
     use 'christoomey/vim-tmux-navigator'
     use { 'vim-test/vim-test', opt = true }
     -- use 'rcarriga/vim-ultest', { 'do': ':UpdateRemoteuseins', 'for': 'python' }
