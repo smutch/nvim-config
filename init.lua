@@ -136,6 +136,7 @@ h.noremap('n', '<A-j>', '<C-w>j', {})
 h.noremap('n', '<A-k>', '<C-w>k', {})
 h.noremap('n', '<A-l>', '<C-w>l', {})
 h.noremap('n', '<leader>tn', ':botright 20split | term<cr>')
+h.noremap('n', '<leader>tv', ':botright 80vsplit | term<cr>')
 
 -- }}}
 

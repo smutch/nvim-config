@@ -21,7 +21,6 @@ return require('packer').startup(function(use)
     -- lsp and completion {{{
     use {
         'neovim/nvim-lsp',
-        event = 'InsertEnter',
         requires = {
             'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer', {
                 'ray-x/lsp_signature.nvim',
@@ -36,9 +35,35 @@ return require('packer').startup(function(use)
                     { 'Saecki/crates.nvim', config = function() require('crates').setup() end }, 'hrsh7th/cmp-path',
                     'hrsh7th/cmp-nvim-lua', -- {'andersevenrud/compe-tmux', branch='cmp'},
                     'kdheepak/cmp-latex-symbols', 'f3fora/cmp-spell', 'hrsh7th/cmp-calc', 'ray-x/cmp-treesitter',
-                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'hrsh7th/cmp-cmdline',
-                    { 'L3MON4D3/LuaSnip', config = function() require 'snippets' end }, 'saadparwaiz1/cmp_luasnip',
-                    'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim',
+                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'hrsh7th/cmp-cmdline', {
+                        'L3MON4D3/LuaSnip',
+                        config = function()
+                            require 'snippets'
+                            local h = require 'helpers'
+
+                            function _G.luasnip_map_forward()
+                                local luasnip = require 'luasnip'
+                                if luasnip.expand_or_jumpable() then
+                                    luasnip.expand_or_jump()
+                                    return true
+                                end
+                                return false
+                            end
+
+                            function _G.luasnip_map_backward()
+                                local luasnip = require 'luasnip'
+                                if luasnip.jumpable(-1) then
+                                    luasnip.jump(-1)
+                                    return true
+                                end
+                                return false
+                            end
+                            h.noremap('i', '<C-l>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
+                            h.noremap('s', '<C-l>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
+                            h.noremap('i', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
+                            h.noremap('s', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
+                        end
+                    }, 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim',
                     { 'windwp/nvim-autopairs', config = function() require'nvim-autopairs'.setup {} end },
                     'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
                     { 'aspeddro/cmp-pandoc.nvim', ft = 'markdown', config = function()
@@ -68,8 +93,11 @@ return require('packer').startup(function(use)
                             ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 
                             ["<Tab>"] = cmp.mapping(function(fallback)
+                                local luasnip = require 'luasnip'
                                 if cmp.visible() then
                                     cmp.select_next_item()
+                                elseif luasnip.expandable() then
+                                    luasnip.expand()
                                 elseif has_words_before() then
                                     cmp.complete()
                                 else
@@ -316,7 +344,7 @@ return require('packer').startup(function(use)
                     require('neoclip').setup()
                     vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>Telescope neoclip<cr>', { noremap = true })
                 end
-            }
+            }, 'nvim-telescope/telescope-symbols.nvim'
         },
         config = function()
             local telescope = require 'telescope'
@@ -339,8 +367,9 @@ return require('packer').startup(function(use)
             h.noremap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>')
             h.noremap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>')
             h.noremap('n', '<leader>fe', '<cmd>Telescope emoji<cr>')
-            h.noremap('n', '<leader>fp', '<cmd>lua require("telescope").extensions.packer.plugins()<cr>')
+            h.noremap('n', '<leader>fp', '<cmd>Telescope packer<cr>')
             h.noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
+            h.noremap('n', '<leader>fs', '<cmd>Telescope symbols<cr>')
         end
     }
 
