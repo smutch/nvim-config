@@ -236,6 +236,7 @@ return require('packer').startup(function(use)
             }
         end
     }
+    use { 'editorconfig/editorconfig-vim', config = function() vim.g.EditorConfig_exclude_patterns = {'fugitive://.*'} end }
     -- }}}
 
     -- treesitter {{{
