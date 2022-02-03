@@ -85,7 +85,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticVirtualTextHint"})')
 
-    vim.g.lsp_diagnositc_sign_priority = 100
+    vim.g.lsp_diagnostic_sign_priority = 100
 
     lsp_status.on_attach(client)
 end
@@ -154,7 +154,6 @@ null_ls.setup {
             args = { "--print-width=1000" }
         }), null_ls.builtins.formatting.nimpretty
     },
-    on_attach = on_attach,
     debounce = base_opts.flags.debounce_text_changes
 }
 
