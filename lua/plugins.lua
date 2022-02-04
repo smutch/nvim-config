@@ -1,18 +1,19 @@
 -- begin by ensure packer is actually installed!
-local execute = vim.api.nvim_command
+-- local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+local install_path =  fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
-    execute 'packadd packer.nvim'
-    require'packer'.sync()
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+else
+    require'packer'.init({ max_jobs = 50 })
 end
 
+
 -- configure plugins
-require'packer'.init({ max_jobs = 50 })
-return require('packer').startup(function(use)
+return require'packer'.startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
@@ -247,7 +248,6 @@ return require('packer').startup(function(use)
         run = ':TSUpdate',
         config = function()
             require'nvim-treesitter.configs'.setup {
-                ensure_installed = "maintained",
                 highlight = {
                     enable = true, -- false will disable the whole extension
                     -- disable = { "c", "rust" },  -- list of language that will be disabled
