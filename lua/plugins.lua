@@ -194,9 +194,15 @@ return require'packer'.startup(function(use)
 
     use 'tpope/vim-repeat'
     use {
-        'winston0410/commented.nvim',
+        'numToStr/Comment.nvim',
         config = function()
-            require('commented').setup { keybindings = {n = "gc", v = "gc", nl = "gcc"} }
+            require('Comment').setup { mappings = { extended = true }, ignore = { '^$' } }
+            vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
+            vim.api.nvim_set_keymap('n', 'gcp', 'yygccp', {})
+            vim.api.nvim_set_keymap('n', 'gcP', 'yygccP', {})
+            vim.api.nvim_set_keymap('v', '<leader><leader>', 'gc', {})
+            vim.api.nvim_set_keymap('v', 'gp', 'ypgvgc', {})
+            vim.api.nvim_set_keymap('v', 'gP', 'ygvgc`<P', {})
         end
     }
     use {
