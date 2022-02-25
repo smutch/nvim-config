@@ -173,6 +173,7 @@ return require'packer'.startup(function(use)
             vim.g.copilot_no_tab_map = true
         end
     }
+    use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
     -- }}}
 
     -- editing {{{
@@ -528,6 +529,7 @@ return require'packer'.startup(function(use)
     use { 'cespare/vim-toml', opt = true, ft = { 'toml' } }
     use { 'tikhomirov/vim-glsl', opt = true }
     use { 'DingDean/wgsl.vim', opt = true }
+    use { 'snakemake/snakemake', rtp = 'misc/vim' }
     use 'NoahTheDuke/vim-just'
     use 'alaviss/nim.nvim'
     -- }}}
