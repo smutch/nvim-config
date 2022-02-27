@@ -163,7 +163,9 @@ return require'packer'.startup(function(use)
         },
         config = function() require 'lsp' end
     }
+
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup {} end }
+
     use {
         'github/copilot.vim',
         opt = true,
@@ -173,7 +175,9 @@ return require'packer'.startup(function(use)
             vim.g.copilot_no_tab_map = true
         end
     }
+
     use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
+
     -- }}}
 
     -- editing {{{
@@ -363,13 +367,16 @@ return require'packer'.startup(function(use)
       'kyazdani42/nvim-tree.lua',
       config = function()
           local h = require 'helpers'
-          require'nvim-tree'.setup {}
+          require'nvim-tree'.setup {
+              hijack_netrw = true
+          }
           h.noremap('n', '<leader>F', '<cmd>NvimTreeToggle<CR>')
       end
     }
 
     use {
         'nvim-telescope/telescope.nvim',
+        cmd = { 'MagmaInit' },
         requires = {
             { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
             'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim', {
@@ -497,15 +504,6 @@ return require'packer'.startup(function(use)
                 buftype_exclude = { "terminal" }
             }
             vim.cmd [[highlight! link IndentBlanklineChar VertSplit]]
-        end
-    }
-    use {
-        'metakirby5/codi.vim',
-        cmd = 'Codi',
-        setup = function()
-            vim.g['codi#interpreters'] =
-                { python = { bin = '/usr/local/Caskroom/mambaforge/base/envs/std/bin/python' } }
-            vim.g['codi#virtual_text'] = 0
         end
     }
     use { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = function() require('pqf').setup() end }
