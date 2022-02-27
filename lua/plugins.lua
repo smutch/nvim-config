@@ -1,6 +1,3 @@
-            vim.api.nvim_set_keymap('v', 'gdc', '<cmd>call v:lua.___gdc("line")<cr>', {noremap = true})
-            vim.api.nvim_set_keymap('v', 'gdc', '<cmd>call v:lua.___gdc("V")<cr>', {noremap = true})
-            vim.api.nvim_set_keymap('v', 'gpc', '<cmd>call v:lua.___gpc("V")<cr>', {noremap = true})
 -- begin by ensure packer is actually installed!
 -- local execute = vim.api.nvim_command
 local fn = vim.fn
@@ -43,8 +40,8 @@ return require'packer'.startup(function(use)
                     'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'hrsh7th/cmp-cmdline', {
                         'L3MON4D3/LuaSnip',
                         config = function()
-                            require 'snippets'
                             local h = require 'helpers'
+                            require 'snippets'
 
                             function _G.luasnip_map_forward()
                                 local luasnip = require 'luasnip'
@@ -354,13 +351,22 @@ return require'packer'.startup(function(use)
     -- utils {{{
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-eunuch'
-    use { 'tpope/vim-obsession', opt = true }
+    use { 'tpope/vim-obsession', cmd = 'Obsession' }
     use 'chrisbra/vim-diff-enhanced'
     use {
         'moll/vim-bbye',
         config = function() vim.api.nvim_set_keymap('n', 'Q', ':Bdelete<CR>', { noremap = true, silent = true }) end
     }
     use 'justinmk/vim-dirvish'
+
+    use {
+      'kyazdani42/nvim-tree.lua',
+      config = function()
+          local h = require 'helpers'
+          require'nvim-tree'.setup {}
+          h.noremap('n', '<leader>F', '<cmd>NvimTreeToggle<CR>')
+      end
+    }
 
     use {
         'nvim-telescope/telescope.nvim',
@@ -375,8 +381,8 @@ return require'packer'.startup(function(use)
             }, 'nvim-telescope/telescope-symbols.nvim'
         },
         config = function()
-            local telescope = require 'telescope'
             local h = require 'helpers'
+            local telescope = require 'telescope'
             telescope.setup { pickers = { find_files = { theme = "dropdown" } } }
 
             local extensions = { "fzy_native", "packer", "emoji", "neoclip" }
@@ -509,9 +515,7 @@ return require'packer'.startup(function(use)
         config = function()
             require("scrollbar").setup { handle = { color = "#4C566A" } }
             require("hlslens").setup({
-                build_position_cb = function(plist, _, _, _)
-                    require('scrollbar.handlers.search').handler.show(plist.start_pos)
-                end
+                require("scrollbar.handlers.search").setup()
             })
 
             vim.cmd([[
