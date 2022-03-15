@@ -60,6 +60,7 @@ return require'packer'.startup(function(use)
                                 end
                                 return false
                             end
+
                             h.noremap('i', '<C-l>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
                             h.noremap('s', '<C-l>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
                             h.noremap('i', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
@@ -368,7 +369,7 @@ return require'packer'.startup(function(use)
       config = function()
           local h = require 'helpers'
           require'nvim-tree'.setup {
-              hijack_netrw = true
+              hijack_netrw = false
           }
           h.noremap('n', '<leader>F', '<cmd>NvimTreeToggle<CR>')
       end
@@ -376,7 +377,6 @@ return require'packer'.startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim',
-        cmd = { 'MagmaInit' },
         requires = {
             { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
             'xiyaowong/telescope-emoji.nvim', 'nvim-telescope/telescope-packer.nvim', {
@@ -430,6 +430,7 @@ return require'packer'.startup(function(use)
 
     use {
         'dccsillag/magma-nvim',
+        cmd = { 'MagmaInit' },
         run = ':UpdateRemotePlugins',
         ft = 'python',
         config = function()
