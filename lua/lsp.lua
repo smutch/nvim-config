@@ -107,6 +107,10 @@ lsp_installer.on_server_ready(function(server)
                 analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } }
             }
         }
+    elseif server.name == "pylsp" then
+        opts.settings = {
+            pylsp = { plugins = { pycodestyle = { maxLineLength = 120 } } }
+        }
     elseif server.name == "sumneko_lua" then
         opts.settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } }
     elseif server.name == "rust_analyzer" then
