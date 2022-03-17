@@ -13,7 +13,7 @@ end
 
 
 -- configure plugins
-return require'packer'.startup(function(use)
+return require'packer'.startup(function(use, use_rocks)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
@@ -177,7 +177,8 @@ return require'packer'.startup(function(use)
         end
     }
 
-    use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
+    -- The rockspec for this is currently broken. Need to wait for a fix.
+    -- use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
 
     -- }}}
 
@@ -201,7 +202,7 @@ return require'packer'.startup(function(use)
     use {
         'numToStr/Comment.nvim',
         config = function()
-            require('Comment').setup { mappings = { extended = true }, ignore = { '^$' } }
+            require('Comment').setup { mappings = { extended = true }, ignore = '^$' }
             vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
             vim.api.nvim_set_keymap('v', '<leader><leader>', 'gc', {})
 
