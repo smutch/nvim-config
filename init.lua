@@ -42,8 +42,14 @@ vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4 -- 4 spaces for tabs
 
+local version = vim.version()
+if version.major > 0 or version.minor >= 7 then
+    vim.o.laststatus = 3 -- Single status line for all windows
+else
+    vim.o.laststatus = 2 -- Always display a status line
+end
+
 vim.o.vb = false -- Turn off visual beep
-vim.o.laststatus = 2 -- Always display a status line
 vim.o.cmdheight = 1 -- Command line height
 vim.opt.listchars = { tab = [[▸\ ]], eol = '↵', trail = '·' } -- Set hidden characters
 vim.o.number = false -- Don't show line numbers
@@ -256,7 +262,10 @@ function QFOpenInWindow()
         vim.cmd("exec ':' " .. linenumber .. 'cc')
     end
 end
-vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e :<C-u>call QFOpenInWindow()<CR>]])
+vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e <cmd>lua QFOpenInWindow()<CR>]])
+
+-- by default, use the last focussed split for opening new items
+vim.opt.switchbuf:append{ uselast=true }
 
 -- Edit rc files
 vim.cmd([[command! Erc execute ':e ~/.config/nvim/init.lua']])
