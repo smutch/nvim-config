@@ -5,11 +5,11 @@ local fn = vim.fn
 local install_path =  fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    -- fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
     vim.cmd [[packadd packer.nvim]]
-else
-    require'packer'.init({ max_jobs = 50 })
 end
+require'packer'.init({ max_jobs = 50 })
 
 
 -- configure plugins
@@ -329,6 +329,8 @@ return require'packer'.startup(function(use, use_rocks)
                     }
                 }
             }
+            local ft_to_parser = require('nvim-treesitter.parsers').filetype_to_parsername
+            ft_to_parser.astro = "tsx"
             -- if vim.loop.os_uname().sysname == "Darwin" then
             --     require'nvim-treesitter.install'.compilers = { "gcc-11" }
             -- end
@@ -569,6 +571,9 @@ return require'packer'.startup(function(use, use_rocks)
     use 'alaviss/nim.nvim'
     -- }}}
 
+    if packer_bootstrap then
+      require('packer').sync()
+    end
 end)
 
 -- vim: set fdm=marker:
