@@ -45,7 +45,7 @@ function M.formatting_sync(options, timeout_ms)
 
         local result, err = client.request_sync('textDocument/formatting', params, timeout_ms, bufnr)
         if result and result.result then
-            require('vim.lsp.util').apply_text_edits(result.result, bufnr)
+            require('vim.lsp.util').apply_text_edits(result.result, bufnr, client.offset_encoding)
             vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
         elseif err then
             vim.notify('vim.lsp.buf.formatting_sync: ' .. err, vim.log.levels.WARN)
@@ -109,7 +109,7 @@ lsp_installer.on_server_ready(function(server)
         }
     elseif server.name == "pylsp" then
         opts.settings = {
-            pylsp = { plugins = { pycodestyle = { maxLineLength = 120 } } }
+            pylsp = { plugins = { pycodestyle = { maxLineLength = 120 }, jedi = { environment = h.python_interpreter_path } } }
         }
     elseif server.name == "sumneko_lua" then
         opts.settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } }
@@ -142,7 +142,8 @@ local null_ls = require("null-ls")
 null_ls.setup {
     sources = {
         null_ls.builtins.formatting.black.with {
-            command = h.python_prefix .. '/bin/black',
+            -- command = h.python_prefix .. 'black',
+            command = 'black',
             extra_args = function(params)
                 if not h.file_exists('pyproject.toml') then
                     return { "-l", "120" }
@@ -150,7 +151,10 @@ null_ls.setup {
                     return {}
                 end
             end
-        }, null_ls.builtins.formatting.isort.with { command = h.python_prefix .. '/bin/isort' },
+        }, null_ls.builtins.formatting.isort.with {
+            -- command = h.python_prefix .. '/bin/isort'
+            command = 'isort'
+        },
         null_ls.builtins.formatting.lua_format
             .with { args = { "--column-limit=120", "--spaces-inside-table-braces", "-i" } },
         null_ls.builtins.formatting.prettier.with({
