@@ -6,7 +6,7 @@ local install_path =  fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
     -- fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    PACKER_BOOTSTRAP = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
     vim.cmd [[packadd packer.nvim]]
 end
 require'packer'.init({ max_jobs = 50 })
@@ -475,8 +475,8 @@ return require'packer'.startup(function(use, use_rocks)
     -- looking good {{{
 
     -- colorschemes {{{
-    use 'navarasu/onedark.nvim'
-    use { 'EdenEast/nightfox.nvim', opt = true }
+    use { 'navarasu/onedark.nvim', opt = true }
+    use { 'EdenEast/nightfox.nvim' }
     use { 'Shatur/neovim-ayu', opt = true }
     use {
         'projekt0n/github-nvim-theme',
@@ -486,11 +486,10 @@ return require'packer'.startup(function(use, use_rocks)
     use { 'rmehri01/onenord.nvim' }
     -- }}}
 
-    use 'kyazdani42/nvim-web-devicons'
     use {
-        'NTBBloodbath/galaxyline.nvim',
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', 'nvim-lua/lsp-status.nvim' },
         config = function() require 'statusline' end,
-        requires = 'nvim-lua/lsp-status.nvim'
     }
     use {
         'gcmt/taboo.vim',
@@ -571,7 +570,7 @@ return require'packer'.startup(function(use, use_rocks)
     use 'alaviss/nim.nvim'
     -- }}}
 
-    if packer_bootstrap then
+    if PACKER_BOOTSTRAP then
       require('packer').sync()
     end
 end)

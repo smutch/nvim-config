@@ -169,13 +169,16 @@ vim.cmd([[
 -- use the presence of a file to determine if we want to start in light or dark mode
 if h.file_exists("~/.vimlight") or vim.env.LIGHT then
     vim.o.background = 'light'
-    vim.cmd 'packadd github-nvim-theme | colorscheme github_light'
+    -- vim.cmd 'packadd github-nvim-theme | colorscheme github_light'
+    vim.cmd 'colorscheme dawnfox'
 else
     vim.o.background = 'dark'
-    vim.cmd 'colorscheme onenord'
+    -- vim.cmd 'colorscheme onenord'
+    vim.cmd 'colorscheme nightfox'
 end
 
 -- terminal colors
+--[[
 vim.g.terminal_color_0 = "#252525"
 vim.g.terminal_color_1 = "#d06c76"
 vim.g.terminal_color_2 = "#99c27c"
@@ -192,6 +195,7 @@ vim.g.terminal_color_12 = "#40C4FF"
 vim.g.terminal_color_13 = "#FF4081"
 vim.g.terminal_color_14 = "#59b3be"
 vim.g.terminal_color_15 = "#F5F5F5"
+]]
 
 -- }}}
 
