@@ -29,7 +29,7 @@ return require'packer'.startup(function(use, use_rocks)
                 config = function()
                     require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
                     vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
-                end
+                end,
             }, 'jose-elias-alvarez/null-ls.nvim', {
                 'hrsh7th/nvim-cmp',
                 requires = {
@@ -69,9 +69,7 @@ return require'packer'.startup(function(use, use_rocks)
                     }, 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim',
                     { 'windwp/nvim-autopairs', config = function() require'nvim-autopairs'.setup {} end },
                     'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
-                    { 'aspeddro/cmp-pandoc.nvim', ft = 'markdown', config = function()
-                        require'cmp_pandoc'.setup()
-                    end }, 'lukas-reineke/cmp-under-comparator'
+                    'lukas-reineke/cmp-under-comparator'
                 },
                 config = function()
                     vim.o.completeopt = 'menu,menuone,noselect'
@@ -149,8 +147,6 @@ return require'packer'.startup(function(use, use_rocks)
                     vim.cmd(
                         [[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
                     vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
-                    vim.cmd(
-                        [[autocmd FileType markdown lua require'cmp'.setup.buffer {sources = { { name = 'cmp_pandoc' } } }]])
                     vim.cmd(
                         [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
 
@@ -465,10 +461,17 @@ return require'packer'.startup(function(use, use_rocks)
         end
     }
     use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
-    use { 'rhysd/git-messenger.vim', opt = true }
+    use { 'f-person/git-blame.nvim', config = function() vim.g.gitblame_enabled = 0 end }
 
     -- linting
     use { 'neomake/neomake', opt = true }
+
+    -- docstrings
+    use { 'kkoomen/vim-doge', run = ':call doge#install()',
+        config = function()
+            vim.g.dodge_doc_standard_python = 'google'
+        end
+    }
 
     -- }}}
 
