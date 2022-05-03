@@ -11,7 +11,8 @@ vim.cmd("hi! link SignColumn Normal")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
-    virtual_text = { spacing = 4 },
+    -- virtual_text = { spacing = 4 },
+    virtual_text = false,
     signs = true,
     update_in_insert = false,
     severity_sort = true
@@ -68,11 +69,11 @@ local on_attach = function(client, bufnr)
     bnoremap("n", "gr", "<cmd>Telescope lsp_references<CR>", { silent = true })
     bnoremap("n", "1g/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true })
     bnoremap("n", "g/", "<cmd>Telescope lsp_workspace_symbols<CR>", { silent = true })
-    bnoremap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { silent = true })
-    bnoremap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { silent = true })
+    bnoremap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { silent = true })
+    bnoremap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true })
     bnoremap("n", "<localleader>D", "<cmd>LspTroubleToggle<cr>", { silent = true })
     bnoremap("n", "<localleader>d", "<cmd>Trouble lsp_document_diagnostics<cr>", { silent = true })
-    bnoremap("n", "<localleader>i", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", { silent = true })
+    bnoremap("n", "<localleader>i", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
     bnoremap("n", "<localleader>f", "<cmd>lua require'lsp'.formatting_sync()<CR>", { silent = true }) -- WARNING: lsp (this module) NOT vim.lsp.buf
     bnoremap("n", "ga", "<cmd>Telescope lsp_code_actions theme=cursor<CR>", { silent = true })
 
