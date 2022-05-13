@@ -355,22 +355,79 @@ return require'packer'.startup(function(use, use_rocks)
     -- utils {{{
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-eunuch'
-    use { 'tpope/vim-obsession', cmd = 'Obsession' }
+    use {
+        'rmagatti/auto-session',
+        config = function()
+            require('auto-session').setup {
+                post_restore_cmds = {"stopinsert"}
+            }
+        end
+    }
     use 'chrisbra/vim-diff-enhanced'
     use {
         'moll/vim-bbye',
         config = function() vim.api.nvim_set_keymap('n', 'Q', ':Bdelete<CR>', { noremap = true, silent = true }) end
     }
-    use 'justinmk/vim-dirvish'
 
     use {
-      'kyazdani42/nvim-tree.lua',
+      'nvim-neo-tree/neo-tree.nvim',
+      branch = "v2.x",
+      requires = { "MunifTanjim/nui.nvim" },
       config = function()
           local h = require 'helpers'
-          require'nvim-tree'.setup {
-              hijack_netrw = false
-          }
-          h.noremap('n', '<leader>F', '<cmd>NvimTreeToggle<CR>')
+          vim.g.neo_tree_remove_legacy_commands = true
+          require("neo-tree").setup({
+              event_handlers = {
+                  {
+                      event = "file_open_requested",
+                      handler = function(args)
+                          local state = args.state
+                          local path = args.path
+                          local open_cmd = args.open_cmd or "edit"
+
+                          -- use last window if possible
+                          local suitable_window_found = false
+                          local nt = require("neo-tree")
+                          if nt.config.open_files_in_last_window then
+                              local prior_window = nt.get_prior_window()
+                              if prior_window > 0 then
+                                  local success = pcall(vim.api.nvim_set_current_win, prior_window)
+                                  if success then
+                                      suitable_window_found = true
+                                  end
+                              end
+                          end
+
+                          -- find a suitable window to open the file in
+                          if not suitable_window_found then
+                              if state.window.position == "right" then
+                                  vim.cmd("wincmd t")
+                              else
+                                  vim.cmd("wincmd w")
+                              end
+                          end
+                          local attempts = 0
+                          while attempts < 4 and vim.bo.filetype == "neo-tree" do
+                              attempts = attempts + 1
+                              vim.cmd("wincmd w")
+                          end
+                          if vim.bo.filetype == "neo-tree" then
+                              -- Neo-tree must be the only window, restore it's status as a sidebar
+                              local winid = vim.api.nvim_get_current_win()
+                              local width = require("neo-tree.utils").get_value(state, "window.width", 40)
+                              vim.cmd("vsplit " .. path)
+                              vim.api.nvim_win_set_width(winid, width)
+                          else
+                              vim.cmd(open_cmd .. " " .. path)
+                          end
+
+                          -- If you don't return this, it will proceed to open the file using built-in logic.
+                          return { handled = true }
+                      end
+                  },
+              },
+          })
+          h.noremap('n', '<leader>F', '<cmd>Neotree toggle<CR>')
       end
     }
 
