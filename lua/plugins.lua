@@ -372,10 +372,11 @@ return require'packer'.startup(function(use, use_rocks)
     use {
       'nvim-neo-tree/neo-tree.nvim',
       branch = "v2.x",
-      requires = { "MunifTanjim/nui.nvim" },
+      requires = { "MunifTanjim/nui.nvim", "s1n7ax/nvim-window-picker" },
       config = function()
           local h = require 'helpers'
           vim.g.neo_tree_remove_legacy_commands = true
+
           require("neo-tree").setup({
               event_handlers = {
                   {
@@ -385,38 +386,44 @@ return require'packer'.startup(function(use, use_rocks)
                           local path = args.path
                           local open_cmd = args.open_cmd or "edit"
 
-                          -- use last window if possible
-                          local suitable_window_found = false
-                          local nt = require("neo-tree")
-                          if nt.config.open_files_in_last_window then
-                              local prior_window = nt.get_prior_window()
-                              if prior_window > 0 then
-                                  local success = pcall(vim.api.nvim_set_current_win, prior_window)
-                                  if success then
-                                      suitable_window_found = true
+                          if not state.window.position == "current" then
+
+                              -- use last window if possible
+                              local suitable_window_found = false
+                              local nt = require("neo-tree")
+                              if nt.config.open_files_in_last_window then
+                                  local prior_window = nt.get_prior_window()
+                                  if prior_window > 0 then
+                                      local success = pcall(vim.api.nvim_set_current_win, prior_window)
+                                      if success then
+                                          suitable_window_found = true
+                                      end
                                   end
                               end
-                          end
 
-                          -- find a suitable window to open the file in
-                          if not suitable_window_found then
-                              if state.window.position == "right" then
-                                  vim.cmd("wincmd t")
-                              else
+                              -- find a suitable window to open the file in
+                              if not suitable_window_found then
+                                  if state.window.position == "right" then
+                                      vim.cmd("wincmd t")
+                                  else
+                                      vim.cmd("wincmd w")
+                                  end
+                              end
+                              local attempts = 0
+                              while attempts < 4 and vim.bo.filetype == "neo-tree" do
+                                  attempts = attempts + 1
                                   vim.cmd("wincmd w")
                               end
-                          end
-                          local attempts = 0
-                          while attempts < 4 and vim.bo.filetype == "neo-tree" do
-                              attempts = attempts + 1
-                              vim.cmd("wincmd w")
-                          end
-                          if vim.bo.filetype == "neo-tree" then
-                              -- Neo-tree must be the only window, restore it's status as a sidebar
-                              local winid = vim.api.nvim_get_current_win()
-                              local width = require("neo-tree.utils").get_value(state, "window.width", 40)
-                              vim.cmd("vsplit " .. path)
-                              vim.api.nvim_win_set_width(winid, width)
+                              if vim.bo.filetype == "neo-tree" then
+                                  -- Neo-tree must be the only window, restore it's status as a sidebar
+                                  local winid = vim.api.nvim_get_current_win()
+                                  local width = require("neo-tree.utils").get_value(state, "window.width", 40)
+                                  vim.cmd("vsplit " .. path)
+                                  vim.api.nvim_win_set_width(winid, width)
+                              else
+                                  vim.cmd(open_cmd .. " " .. path)
+                              end
+
                           else
                               vim.cmd(open_cmd .. " " .. path)
                           end
@@ -426,8 +433,17 @@ return require'packer'.startup(function(use, use_rocks)
                       end
                   },
               },
+              filesystem = {
+                  window = {
+                      mappings = {
+                          ["-"] = "navigate_up",
+                      }
+                  }
+              }
           })
+
           h.noremap('n', '<leader>F', '<cmd>Neotree toggle<CR>')
+          h.noremap('n', '-', '<cmd>Neotree focus current reveal_force_cwd<CR>')
       end
     }
 
