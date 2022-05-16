@@ -382,11 +382,12 @@ return require'packer'.startup(function(use, use_rocks)
                   {
                       event = "file_open_requested",
                       handler = function(args)
+
                           local state = args.state
                           local path = args.path
                           local open_cmd = args.open_cmd or "edit"
 
-                          if not state.window.position == "current" then
+                          if vim.api.nvim_buf_get_var(vim.fn.bufnr(), "neo_tree_position") ~= "current" then
 
                               -- use last window if possible
                               local suitable_window_found = false
@@ -414,6 +415,7 @@ return require'packer'.startup(function(use, use_rocks)
                                   attempts = attempts + 1
                                   vim.cmd("wincmd w")
                               end
+
                               if vim.bo.filetype == "neo-tree" then
                                   -- Neo-tree must be the only window, restore it's status as a sidebar
                                   local winid = vim.api.nvim_get_current_win()
@@ -423,7 +425,6 @@ return require'packer'.startup(function(use, use_rocks)
                               else
                                   vim.cmd(open_cmd .. " " .. path)
                               end
-
                           else
                               vim.cmd(open_cmd .. " " .. path)
                           end
@@ -433,13 +434,6 @@ return require'packer'.startup(function(use, use_rocks)
                       end
                   },
               },
-              filesystem = {
-                  window = {
-                      mappings = {
-                          ["-"] = "navigate_up",
-                      }
-                  }
-              }
           })
 
           h.noremap('n', '<leader>F', '<cmd>Neotree toggle<CR>')
