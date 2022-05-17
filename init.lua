@@ -79,8 +79,8 @@ vim.o.suffixes = '.bak,.o,.info,.swp,.obj'
 
 h.noremap('i', 'kj', '<ESC>')
 
--- Switch back to alternate file
-h.noremap('n', '<CR><CR>', '<C-S-^>')
+-- Switch back to alternate files and tabs
+h.noremap('n', '<BS><BS>', '<C-S-^>')
 
 -- Make Y behave like other capital
 h.noremap('n', 'Y', 'y$')
@@ -103,7 +103,7 @@ vim.cmd([[command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')]]
 
 -- Toggle to last active tab
 vim.g.lasttab = 1
-h.noremap('n', '<CR>t', ':exe "tabn ".g:lasttab<CR>')
+h.noremap('n', '<BS>t', ':exe "tabn ".g:lasttab<CR>')
 vim.cmd([[au TabLeave * let g:lasttab = tabpagenr()]])
 
 -- Disable increment number up / down - *way* too dangerous...
