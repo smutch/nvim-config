@@ -2,18 +2,18 @@
 -- local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path =  fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
     -- fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    PACKER_BOOTSTRAP = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    PACKER_BOOTSTRAP = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
     vim.cmd [[packadd packer.nvim]]
 end
-require'packer'.init({ max_jobs = 50 })
+require 'packer'.init({ max_jobs = 50 })
 
 
 -- configure plugins
-return require'packer'.startup(function(use, use_rocks)
+return require 'packer'.startup(function(use, use_rocks)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
@@ -27,7 +27,7 @@ return require'packer'.startup(function(use, use_rocks)
             'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer', {
                 'ray-x/lsp_signature.nvim',
                 config = function()
-                    require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
+                    require 'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
                     vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
                 end,
             }, 'jose-elias-alvarez/null-ls.nvim', {
@@ -67,7 +67,7 @@ return require'packer'.startup(function(use, use_rocks)
                             h.noremap('s', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
                         end
                     }, 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim',
-                    { 'windwp/nvim-autopairs', config = function() require'nvim-autopairs'.setup {} end },
+                    { 'windwp/nvim-autopairs', config = function() require 'nvim-autopairs'.setup {} end },
                     'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
                     'lukas-reineke/cmp-under-comparator'
                 },
@@ -78,8 +78,8 @@ return require'packer'.startup(function(use, use_rocks)
                     local has_words_before = function()
                         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
                         return col ~= 0 and
-                                   vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") ==
-                                   nil
+                            vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") ==
+                            nil
                     end
 
                     cmp.setup({
@@ -118,12 +118,12 @@ return require'packer'.startup(function(use, use_rocks)
                             { name = 'calc' }, { name = 'path' }, { name = 'nvim_lsp' }, { name = 'luasnip' },
                             { name = 'treesitter' }, { name = 'emoji' }, { name = 'buffer', keyword_length = 5 }
                         }),
-                        formatting = { format = require'lspkind'.cmp_format({ with_text = true, maxwidth = 50 }) },
+                        formatting = { format = require 'lspkind'.cmp_format({ with_text = true, maxwidth = 50 }) },
                         experimental = { native_menu = false, ghost_text = true },
                         sorting = {
                             comparators = {
                                 cmp.config.compare.offset, cmp.config.compare.exact, cmp.config.compare.score,
-                                require"cmp-under-comparator".under, cmp.config.compare.kind,
+                                require "cmp-under-comparator".under, cmp.config.compare.kind,
                                 cmp.config.compare.sort_text, cmp.config.compare.length, cmp.config.compare.order
                             }
                         }
@@ -145,16 +145,16 @@ return require'packer'.startup(function(use, use_rocks)
                     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '{' } }))
 
                     vim.cmd(
-                        [[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
+                    [[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
                     vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
                     vim.cmd(
-                        [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
+                    [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
 
                     vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
                     vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl = "", numhl = "" })
 
                     vim.cmd(
-                        [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", only_current_line = true, enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
+                    [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", only_current_line = true, enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
                 end
             }
         },
@@ -168,7 +168,7 @@ return require'packer'.startup(function(use, use_rocks)
         opt = true,
         setup = function()
             vim.api.nvim_set_keymap('i', [[<C-j>]], [[copilot#Accept("<CR>")]],
-                                    { silent = true, script = true, expr = true })
+                { silent = true, script = true, expr = true })
             vim.g.copilot_no_tab_map = true
         end
     }
@@ -225,8 +225,8 @@ return require'packer'.startup(function(use, use_rocks)
                 vim.api.nvim_win_set_cursor(0, { erow, col })
             end
 
-            vim.api.nvim_set_keymap('v', 'gpc', '<esc><cmd>call v:lua.___gpc("V")<cr>', {noremap = true})
-            vim.api.nvim_set_keymap('n', 'gpc', '<esc><cmd>call v:lua.___gpc()<cr>', {noremap = true})
+            vim.api.nvim_set_keymap('v', 'gpc', '<esc><cmd>call v:lua.___gpc("V")<cr>', { noremap = true })
+            vim.api.nvim_set_keymap('n', 'gpc', '<esc><cmd>call v:lua.___gpc()<cr>', { noremap = true })
         end
     }
     use {
@@ -263,7 +263,7 @@ return require'packer'.startup(function(use, use_rocks)
             }
         end
     }
-    use { 'editorconfig/editorconfig-vim', config = function() vim.g.EditorConfig_exclude_patterns = {'fugitive://.*'} end }
+    use { 'editorconfig/editorconfig-vim', config = function() vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*' } end }
     -- }}}
 
     -- treesitter {{{
@@ -272,7 +272,7 @@ return require'packer'.startup(function(use, use_rocks)
         requires = 'nvim-treesitter/nvim-treesitter-textobjects',
         run = ':TSUpdate',
         config = function()
-            require'nvim-treesitter.configs'.setup {
+            require 'nvim-treesitter.configs'.setup {
                 highlight = {
                     enable = true, -- false will disable the whole extension
                     -- disable = { "c", "rust" },  -- list of language that will be disabled
@@ -359,7 +359,7 @@ return require'packer'.startup(function(use, use_rocks)
         'rmagatti/auto-session',
         config = function()
             require('auto-session').setup {
-                post_restore_cmds = {"stopinsert"}
+                post_restore_cmds = { "stopinsert" }
             }
         end
     }
@@ -394,8 +394,9 @@ return require'packer'.startup(function(use, use_rocks)
                 "AckslD/nvim-neoclip.lua",
                 config = function()
                     require('neoclip').setup()
-                    vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>Telescope neoclip<cr>', { noremap = true })
+                    vim.api.nvim_set_keymap('n', '<leader>fv', '<cmd>Telescope neoclip<cr>', { noremap = true })
 
+                    local actions = require "telescope.actions"
                     require("telescope").setup {
                         defaults = {
                             vimgrep_arguments = {
@@ -407,48 +408,23 @@ return require'packer'.startup(function(use, use_rocks)
                                 "--column",
                                 "--smart-case",
                             },
-                            prompt_prefix = "   ",
+                            prompt_prefix = "  ",
                             selection_caret = "  ",
                             entry_prefix = "  ",
-                            initial_mode = "insert",
-                            selection_strategy = "reset",
-                            sorting_strategy = "ascending",
-                            layout_strategy = "horizontal",
-                            layout_config = {
-                                horizontal = {
-                                    prompt_position = "top",
-                                    preview_width = 0.55,
-                                    results_width = 0.8,
-                                },
-                                vertical = {
-                                    mirror = false,
-                                },
-                                width = 0.87,
-                                height = 0.80,
-                                preview_cutoff = 120,
-                            },
-                            -- file_sorter = require("telescope.sorters").get_fuzzy_file,
-                            file_ignore_patterns = { "node_modules" },
-                            -- generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-                            path_display = { "truncate" },
-                            winblend = 0,
-                            border = {},
-                            borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-                            color_devicons = true,
-                            use_less = true,
-                            set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-                            -- file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-                            -- grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-                            -- qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-                            -- Developer configurations: Not meant for general override
-                            -- buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
                             mappings = {
-                                n = { ["q"] = require("telescope.actions").close },
+                                n = { ["q"] = actions.close },
+                                i = {
+                                    ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
+                                },
                             },
                         },
-
                         extensions_list = { "themes", "terms" },
                     }
+
+                    -- vim.cmd [[hi! link TelescopeResultsTitle TodoBgNOTE]]
+                    -- vim.cmd [[hi! link TelescopePromptTitle TodoBgTODO]]
+                    -- vim.cmd [[hi! link TelescopePreviewTitle TodoBgHACK]]
+
                 end
             }, 'nvim-telescope/telescope-symbols.nvim'
         },
@@ -481,7 +457,7 @@ return require'packer'.startup(function(use, use_rocks)
 
     use { 'folke/todo-comments.nvim', config = function() require("todo-comments").setup {} end }
 
-    use { 'norcalli/nvim-colorizer.lua', opt = true, config = function() require'colorizer'.setup() end }
+    use { 'norcalli/nvim-colorizer.lua', opt = true, config = function() require 'colorizer'.setup() end }
     use {
         'majutsushi/tagbar',
         config = function() vim.api.nvim_set_keymap('n', '<leader>T', ':TagbarToggle<CR>', {}) end,
@@ -501,7 +477,7 @@ return require'packer'.startup(function(use, use_rocks)
         config = function()
             local h = require 'helpers'
             h.noremap('n', '<LocalLeader>r', 'nvim_exec("MagmaEvaluateOperator", v:true)',
-                      { silent = true, expr = true })
+                { silent = true, expr = true })
             h.noremap('n', '<LocalLeader>rr', ':MagmaEvaluateLine<CR>', { silent = true })
             h.noremap('x', '<LocalLeader>r', ':<c-u>MagmaEvaluateVisual<CR>', { silent = true })
             h.noremap('n', '<LocalLeader>rc', ':MagmaReevaluateCell<CR>', { silent = true })
@@ -529,6 +505,14 @@ return require'packer'.startup(function(use, use_rocks)
     use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use { 'f-person/git-blame.nvim', config = function() vim.g.gitblame_enabled = 0 end }
 
+    -- use {
+    --     "akinsho/toggleterm.nvim",
+    --     tag = 'v1.*',
+    --     config = function()
+    --         require("toggleterm").setup()
+    --     end
+    -- }
+
     -- linting
     use { 'neomake/neomake', opt = true }
 
@@ -550,7 +534,7 @@ return require'packer'.startup(function(use, use_rocks)
     use {
         'projekt0n/github-nvim-theme',
         opt = true,
-        config = function() require'github-theme'.setup { theme_style = 'dark' } end
+        config = function() require 'github-theme'.setup { theme_style = 'dark' } end
     }
     use { 'rmehri01/onenord.nvim' }
     -- }}}
@@ -593,7 +577,7 @@ return require'packer'.startup(function(use, use_rocks)
         autocmd!
         autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
         augroup END
-        ]])
+        ]]   )
         end
     }
     -- }}}
@@ -640,7 +624,7 @@ return require'packer'.startup(function(use, use_rocks)
     -- }}}
 
     if PACKER_BOOTSTRAP then
-      require('packer').sync()
+        require('packer').sync()
     end
 end)
 
