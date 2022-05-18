@@ -67,7 +67,16 @@ return require 'packer'.startup(function(use, use_rocks)
                             h.noremap('s', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
                         end
                     }, 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim',
-                    { 'windwp/nvim-autopairs', config = function() require 'nvim-autopairs'.setup {} end },
+                    {
+                        'windwp/nvim-autopairs',
+                        config = function()
+                            local autopairs = require 'nvim-autopairs'
+                            autopairs.setup {}
+                            autopairs.get_rule('"""'):with_move(function(opts)
+                                return opts.char == opts.next_char:sub(1, 1)
+                            end)
+                        end, 
+                    },
                     'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
                     'lukas-reineke/cmp-under-comparator'
                 },
