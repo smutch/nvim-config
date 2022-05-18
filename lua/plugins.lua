@@ -24,20 +24,28 @@ return require 'packer'.startup(function(use, use_rocks)
     use {
         'neovim/nvim-lsp',
         requires = {
-            'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer', {
+            'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer',
+            {
                 'ray-x/lsp_signature.nvim',
                 config = function()
                     require 'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
                     vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
                 end,
-            }, 'jose-elias-alvarez/null-ls.nvim', {
+            },
+            'jose-elias-alvarez/null-ls.nvim', {
                 'hrsh7th/nvim-cmp',
                 requires = {
                     'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer',
-                    { 'Saecki/crates.nvim', config = function() require('crates').setup() end }, 'hrsh7th/cmp-path',
-                    'hrsh7th/cmp-nvim-lua', -- {'andersevenrud/compe-tmux', branch='cmp'},
+                    {
+                        'Saecki/crates.nvim',
+                        config = function()
+                            require('crates').setup()
+                        end
+                    },
+                    'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua', -- {'andersevenrud/compe-tmux', branch='cmp'},
                     'kdheepak/cmp-latex-symbols', 'f3fora/cmp-spell', 'hrsh7th/cmp-calc', 'ray-x/cmp-treesitter',
-                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'hrsh7th/cmp-cmdline', {
+                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'hrsh7th/cmp-cmdline',
+                    {
                         'L3MON4D3/LuaSnip',
                         config = function()
                             local h = require 'helpers'
@@ -75,7 +83,7 @@ return require 'packer'.startup(function(use, use_rocks)
                             autopairs.get_rule('"""'):with_move(function(opts)
                                 return opts.char == opts.next_char:sub(1, 1)
                             end)
-                        end, 
+                        end,
                     },
                     'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
                     'lukas-reineke/cmp-under-comparator'
@@ -96,11 +104,11 @@ return require 'packer'.startup(function(use, use_rocks)
                             require('luasnip').lsp_expand(args.body)
                         end },
                         mapping = {
-                            ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+                            ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
                             ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
                             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
                             ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-                            ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+                            ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
 
                             ["<Tab>"] = cmp.mapping(function(fallback)
                                 local luasnip = require 'luasnip'
@@ -139,10 +147,11 @@ return require 'packer'.startup(function(use, use_rocks)
                     })
 
                     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-                    cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
+                    cmp.setup.cmdline('/', { mapping = cmp.mapping.preset.cmdline(), sources = { { name = 'buffer' } } })
 
                     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
                     cmp.setup.cmdline(':', {
+                        mapping = cmp.mapping.preset.cmdline(),
                         sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
                         -- completion = {
                         --     -- Use <tab> or <c-space> to request completion
