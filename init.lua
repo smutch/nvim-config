@@ -122,6 +122,7 @@ h.noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=a
 
 -- terminal stuff
 vim.env.LAUNCHED_FROM_NVIM = 1
+vim.env.NVIM_LISTEN_ADDRESS = vim.v.servername
 
 vim.cmd([[
     augroup MyTerm
