@@ -14,10 +14,14 @@ local disabled_filetypes = {
 
 M.winbar = function()
     local win_num = vim.api.nvim_win_get_number(0)
+    local basic = '[' .. win_num .. ']'
 
+    if vim.bo.buftype == "terminal" then
+        return basic
+    end
     for _, ft in pairs(disabled_filetypes) do
         if (vim.bo.filetype == ft) then
-            return '[' .. win_num .. ']'
+            return basic
         end
     end
 
@@ -26,7 +30,7 @@ M.winbar = function()
         location = gps.get_location()
     end
 
-    return location .. ' | [' .. win_num .. '] ' .. '%F'
+    return location .. ' [' .. win_num .. '] ' .. '%F'
 end
 
 vim.o.winbar = "%=%{%v:lua.require('winbar').winbar()%}"
