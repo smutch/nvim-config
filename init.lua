@@ -4,6 +4,7 @@ if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then 
 -- plugins
 require 'plugins'
 local h = require 'helpers'
+require 'winbar'
 
 -- basic setting {{{
 vim.o.termguicolors = true

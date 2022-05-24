@@ -358,6 +358,12 @@ return require 'packer'.startup(function(use, use_rocks)
             -- }
         end
     }
+    use {
+        'SmiteshP/nvim-gps',
+        config = function()
+            require("nvim-gps").setup()
+        end
+    }
     use { 'nvim-treesitter/playground', opt = true }
     use {
         'tpope/vim-dispatch',
