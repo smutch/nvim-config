@@ -14,7 +14,7 @@ local disabled_filetypes = {
 
 M.winbar = function()
     local win_num = vim.api.nvim_win_get_number(0)
-    local basic = '[' .. win_num .. ']'
+    local basic = ' ' .. win_num
 
     if vim.bo.buftype == "terminal" then
         return basic
@@ -30,10 +30,12 @@ M.winbar = function()
         location = gps.get_location()
     end
 
-    return location .. ' [' .. win_num .. '] ' .. '%F'
+    local modified = vim.o.modified and '[+] ' or ''
+
+    return location .. ' |  ' .. win_num .. ' | ' .. modified .. '%f '
 end
 
 vim.o.winbar = "%=%{%v:lua.require('winbar').winbar()%}"
-vim.api.nvim_set_hl(0, "winbar", { link = "FoldColumn" })
+vim.api.nvim_set_hl(0, "winbar", { link = "BufferInactive" })
 
 return M
