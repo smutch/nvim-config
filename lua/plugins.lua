@@ -297,6 +297,7 @@ return require 'packer'.startup(function(use, use_rocks)
                     custom_captures = { ["variable"] = "Normal" },
                     additional_vim_regex_highlighting = false
                 },
+                ensure_installed = { "c", "python", "lua", "bash", "make", "cmake", "toml", "yaml", "cpp", "cuda", "json", "rust", "vim", "html", "css", "bibtex", "latex", "markdown", "rst", "comment" },
                 incremental_selection = { enable = false },
                 refactor = {
                     highlight_definitions = { enable = true },
@@ -488,29 +489,13 @@ return require 'packer'.startup(function(use, use_rocks)
         opt = true
     }
     use 'christoomey/vim-tmux-navigator'
-    use { 'vim-test/vim-test', opt = true }
-    -- use 'rcarriga/vim-ultest', { 'do': ':UpdateRemoteuseins', 'for': 'python' }
+    use {
+        'rcarriga/vim-ultest',
+        requires= { 'vim-test/vim-test' },
+        run = ":UpdateRemotePlugins"
+    }
 
     use { 'rcarriga/nvim-notify', config = function() vim.notify = require 'notify' end }
-
-    use {
-        'dccsillag/magma-nvim',
-        cmd = { 'MagmaInit' },
-        run = ':UpdateRemotePlugins',
-        ft = 'python',
-        config = function()
-            local h = require 'helpers'
-            h.noremap('n', '<LocalLeader>r', 'nvim_exec("MagmaEvaluateOperator", v:true)',
-                { silent = true, expr = true })
-            h.noremap('n', '<LocalLeader>rr', ':MagmaEvaluateLine<CR>', { silent = true })
-            h.noremap('x', '<LocalLeader>r', ':<c-u>MagmaEvaluateVisual<CR>', { silent = true })
-            h.noremap('n', '<LocalLeader>rc', ':MagmaReevaluateCell<CR>', { silent = true })
-            h.noremap('n', '<LocalLeader>rd', ':MagmaDelete<CR>', { silent = true })
-            h.noremap('n', '<LocalLeader>ro', ':MagmaShowOutput<CR>', { silent = true })
-
-            vim.g.magma_automatically_open_output = false
-        end
-    }
 
     -- git
     use {
