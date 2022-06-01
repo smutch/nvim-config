@@ -1,11 +1,9 @@
 -- begin by ensure packer is actually installed!
--- local execute = vim.api.nvim_command
 local fn = vim.fn
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    -- fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
     PACKER_BOOTSTRAP = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
     vim.cmd [[packadd packer.nvim]]
 end
@@ -20,163 +18,62 @@ return require 'packer'.startup(function(use, use_rocks)
     -- Utility stuff used by lots of plugins
     use 'nvim-lua/plenary.nvim'
 
-    -- lsp and completion {{{
+    -- lsp
+    use 'neovim/nvim-lspconfig'
+    use 'williamboman/nvim-lsp-installer'
     use {
-        'neovim/nvim-lsp',
-        requires = {
-            'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer',
-            {
-                'ray-x/lsp_signature.nvim',
-                config = function()
-                    require 'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
-                    vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
-                end,
-            },
-            'jose-elias-alvarez/null-ls.nvim', {
-                'hrsh7th/nvim-cmp',
-                requires = {
-                    'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer',
-                    {
-                        'Saecki/crates.nvim',
-                        config = function()
-                            require('crates').setup()
-                        end
-                    },
-                    'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua', -- {'andersevenrud/compe-tmux', branch='cmp'},
-                    'kdheepak/cmp-latex-symbols', 'f3fora/cmp-spell', 'hrsh7th/cmp-calc', 'ray-x/cmp-treesitter',
-                    'hrsh7th/cmp-emoji', 'hrsh7th/cmp-omni', 'hrsh7th/cmp-cmdline',
-                    {
-                        'L3MON4D3/LuaSnip',
-                        config = function()
-                            local h = require 'helpers'
-                            require 'snippets'
+        'ray-x/lsp_signature.nvim',
+        config = require "plugins.lsp_signature".config
+    }
+    use 'jose-elias-alvarez/null-ls.nvim'
+    use 'nvim-lua/lsp_extensions.nvim'
+	use 'kosayoda/nvim-lightbulb'
 
-                            function _G.luasnip_map_forward()
-                                local luasnip = require 'luasnip'
-                                if luasnip.expand_or_jumpable() then
-                                    luasnip.expand_or_jump()
-                                    return true
-                                end
-                                return false
-                            end
+    -- completion
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use {
+        'Saecki/crates.nvim',
+        config = function()
+            require "crates".setup()
+        end
+    }
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'kdheepak/cmp-latex-symbols'
+	use 'f3fora/cmp-spell'
+	use 'hrsh7th/cmp-calc'
+	use 'ray-x/cmp-treesitter'
+	use 'hrsh7th/cmp-emoji'
+	use 'hrsh7th/cmp-omni'
+	use 'hrsh7th/cmp-cmdline'
+    use 'lukas-reineke/cmp-under-comparator'
+    use {
+        'hrsh7th/nvim-cmp',
+        config = require "plugins.cmp".config
+    }
 
-                            function _G.luasnip_map_backward()
-                                local luasnip = require 'luasnip'
-                                if luasnip.jumpable(-1) then
-                                    luasnip.jump(-1)
-                                    return true
-                                end
-                                return false
-                            end
+    -- snippets
+    use 'saadparwaiz1/cmp_luasnip'
+	use 'rafamadriz/friendly-snippets'
+	use 'onsails/lspkind-nvim'
+    use {
+        'L3MON4D3/LuaSnip',
+        config = require "plugins.luasnip".config
+    }
 
-                            h.noremap('i', '<C-l>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
-                            h.noremap('s', '<C-l>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
-                            h.noremap('i', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
-                            h.noremap('s', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
-                        end
-                    }, 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets', 'onsails/lspkind-nvim',
-                    {
-                        'windwp/nvim-autopairs',
-                        config = function()
-                            local autopairs = require 'nvim-autopairs'
-                            autopairs.setup {}
-                            autopairs.get_rule('"""'):with_move(function(opts)
-                                return opts.char == opts.next_char:sub(1, 1)
-                            end)
-                        end,
-                    },
-                    'nvim-lua/lsp_extensions.nvim', 'kosayoda/nvim-lightbulb',
-                    'lukas-reineke/cmp-under-comparator'
-                },
-                config = function()
-                    vim.o.completeopt = 'menu,menuone,noselect'
-                    local cmp = require 'cmp'
+    -- TODO: Continue refactoring from here
 
-                    local has_words_before = function()
-                        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-                        return col ~= 0 and
-                            vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") ==
-                            nil
-                    end
-
-                    cmp.setup({
-                        snippet = { expand = function(args)
-                            require('luasnip').lsp_expand(args.body)
-                        end },
-                        mapping = {
-                            ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-                            ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-                            ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-                            ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-                            ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
-
-                            ["<Tab>"] = cmp.mapping(function(fallback)
-                                local luasnip = require 'luasnip'
-                                if cmp.visible() then
-                                    cmp.select_next_item()
-                                elseif luasnip.expandable() then
-                                    luasnip.expand()
-                                elseif has_words_before() then
-                                    cmp.complete()
-                                else
-                                    fallback()
-                                end
-                            end, { "i", "s" }),
-
-                            ["<S-Tab>"] = cmp.mapping(function(fallback)
-                                if cmp.visible() then
-                                    cmp.select_prev_item()
-                                else
-                                    fallback()
-                                end
-                            end, { "i", "s" })
-                        },
-                        sources = cmp.config.sources({
-                            { name = 'calc' }, { name = 'path' }, { name = 'nvim_lsp' }, { name = 'luasnip' },
-                            { name = 'treesitter' }, { name = 'emoji' }, { name = 'buffer', keyword_length = 5 }
-                        }),
-                        formatting = { format = require 'lspkind'.cmp_format({ with_text = true, maxwidth = 50 }) },
-                        experimental = { native_menu = false, ghost_text = true },
-                        sorting = {
-                            comparators = {
-                                cmp.config.compare.offset, cmp.config.compare.exact, cmp.config.compare.score,
-                                require "cmp-under-comparator".under, cmp.config.compare.kind,
-                                cmp.config.compare.sort_text, cmp.config.compare.length, cmp.config.compare.order
-                            }
-                        }
-                    })
-
-                    -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-                    cmp.setup.cmdline('/', { mapping = cmp.mapping.preset.cmdline(), sources = { { name = 'buffer' } } })
-
-                    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-                    cmp.setup.cmdline(':', {
-                        mapping = cmp.mapping.preset.cmdline(),
-                        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
-                        -- completion = {
-                        --     -- Use <tab> or <c-space> to request completion
-                        --     autocomplete = false
-                        -- },
-                    })
-
-                    local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-                    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '{' } }))
-
-                    vim.cmd(
-                    [[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
-                    vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
-                    vim.cmd(
-                    [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
-
-                    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-                    vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl = "", numhl = "" })
-
-                    vim.cmd(
-                    [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", only_current_line = true, enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
-                end
-            }
-        },
-        config = function() require 'lsp' end
+    -- editing
+    use {
+        'windwp/nvim-autopairs',
+        config = function()
+            local autopairs = require 'nvim-autopairs'
+            autopairs.setup {}
+            autopairs.get_rule('"""'):with_move(function(opts)
+                return opts.char == opts.next_char:sub(1, 1)
+            end)
+        end
     }
 
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup {} end }

@@ -2,9 +2,10 @@
 if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then require 'system' end
 
 -- plugins
-require 'plugins'
-local h = require 'helpers'
-require 'winbar'
+require "plugins"
+require "lsp"
+require "winbar"
+local h = require "helpers"
 
 -- basic setting {{{
 vim.o.termguicolors = true
