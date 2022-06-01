@@ -18,26 +18,23 @@ return require 'packer'.startup(function(use, use_rocks)
     -- Utility stuff used by lots of plugins
     use 'nvim-lua/plenary.nvim'
 
-    -- lsp
+    -- lsp {{{
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
-    use {
-        'ray-x/lsp_signature.nvim',
-        config = require "plugins.lsp_signature".config
-    }
+    use { 'ray-x/lsp_signature.nvim', config = require "plugins.lsp_signature".config }
     use 'jose-elias-alvarez/null-ls.nvim'
     use 'nvim-lua/lsp_extensions.nvim'
 	use 'kosayoda/nvim-lightbulb'
+    use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup() end }
+    -- The rockspec for this is currently broken. Need to wait for a fix.
+    -- use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
+    -- }}}
 
-    -- completion
+
+    -- completion {{{
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
-    use {
-        'Saecki/crates.nvim',
-        config = function()
-            require "crates".setup()
-        end
-    }
+    use { 'Saecki/crates.nvim', config = function() require "crates".setup() end }
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-nvim-lua'
     use 'kdheepak/cmp-latex-symbols'
@@ -48,137 +45,32 @@ return require 'packer'.startup(function(use, use_rocks)
 	use 'hrsh7th/cmp-omni'
 	use 'hrsh7th/cmp-cmdline'
     use 'lukas-reineke/cmp-under-comparator'
-    use {
-        'hrsh7th/nvim-cmp',
-        config = require "plugins.cmp".config
-    }
+    use { 'hrsh7th/nvim-cmp', config = require "plugins.cmp".config }
+    -- }}}
 
-    -- snippets
+    -- snippets {{{
     use 'saadparwaiz1/cmp_luasnip'
 	use 'rafamadriz/friendly-snippets'
 	use 'onsails/lspkind-nvim'
-    use {
-        'L3MON4D3/LuaSnip',
-        config = require "plugins.luasnip".config
-    }
-
-    -- TODO: Continue refactoring from here
-
-    -- editing
-    use {
-        'windwp/nvim-autopairs',
-        config = function()
-            local autopairs = require 'nvim-autopairs'
-            autopairs.setup {}
-            autopairs.get_rule('"""'):with_move(function(opts)
-                return opts.char == opts.next_char:sub(1, 1)
-            end)
-        end
-    }
-
-    use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup {} end }
-
-    use {
-        'github/copilot.vim',
-        opt = true,
-        setup = function()
-            vim.api.nvim_set_keymap('i', [[<C-j>]], [[copilot#Accept("<CR>")]],
-                { silent = true, script = true, expr = true })
-            vim.g.copilot_no_tab_map = true
-        end
-    }
-
-    -- The rockspec for this is currently broken. Need to wait for a fix.
-    -- use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
-
+    use { 'L3MON4D3/LuaSnip', config = require "plugins.luasnip".config }
     -- }}}
 
     -- editing {{{
+    use { 'windwp/nvim-autopairs', config = require "plugins.autopairs".config }
+    use { 'github/copilot.vim', opt = true, setup = require "plugins.copilot".setup }
     use 'tpope/vim-rsi'
-    use {
-        'ggandor/lightspeed.nvim',
-        config = function()
-            -- These dummy mappings prevent lightspeed from implementing multi-line f/F/t/F
-            -- jumps and breaking ; and ,
-            vim.api.nvim_set_keymap('n', 'f', 'f', {})
-            vim.api.nvim_set_keymap('n', 'F', 'F', {})
-            vim.api.nvim_set_keymap('n', 't', 't', {})
-            vim.api.nvim_set_keymap('n', 'T', 'T', {})
-            vim.api.nvim_set_keymap('n', ';', ';', {})
-            vim.api.nvim_set_keymap('n', ',', ',', {})
-        end
-    }
+    use { 'ggandor/lightspeed.nvim', config = require "plugins.lightspeed".config }
 
     use 'tpope/vim-repeat'
-    use {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup { mappings = { extended = true }, ignore = '^$' }
-            vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', {})
-            vim.api.nvim_set_keymap('v', '<leader><leader>', 'gc', {})
-
-            local U = require("Comment.utils")
-            local A = require("Comment.api")
-
-            function _G.___gpc(vmode)
-                local range = U.get_region(vmode)
-                -- print(vim.inspect(range))
-                local lines = U.get_lines(range)
-                -- print(vim.inspect(lines))
-
-                -- Copying the block
-                local srow = range.erow
-                vim.api.nvim_buf_set_lines(0, srow, srow, false, lines)
-
-                -- Doing the comment
-                A.comment_linewise_op(vmode)
-
-                -- Move the cursor
-                local erow = srow + 1
-                local line = U.get_lines({ srow = srow, erow = erow })
-                local _, col = U.grab_indent(line[1])
-                vim.api.nvim_win_set_cursor(0, { erow, col })
-            end
-
-            vim.api.nvim_set_keymap('v', 'gpc', '<esc><cmd>call v:lua.___gpc("V")<cr>', { noremap = true })
-            vim.api.nvim_set_keymap('n', 'gpc', '<esc><cmd>call v:lua.___gpc()<cr>', { noremap = true })
-        end
-    }
-    use {
-        'junegunn/vim-easy-align',
-        opt = true,
-        event = 'InsertEnter',
-        config = function()
-            vim.api.nvim_set_keymap('v', '<Enter>', '<Plug>(EasyAlign)', {})
-            vim.api.nvim_set_keymap('n', 'gA', '<Plug>(EasyAlign)', {})
-        end
-    }
+    use { 'numToStr/Comment.nvim', config = require "plugins.comment".config }
+    use { 'junegunn/vim-easy-align', config = require "plugins.easy-align".config }
     use 'michaeljsmith/vim-indent-object'
-    use {
-        'tpope/vim-surround',
-        config = function()
-            -- Extra surround mappings for particular filetypes
-
-            -- Markdown
-            vim.cmd([[autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math]])
-            vim.cmd([[autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout]])
-            vim.cmd([[autocmd FileType markdown let b:surround_98 = "**\r**" "bold]])
-            vim.cmd([[autocmd FileType markdown let b:surround_105 = "*\r*" "italics]])
-        end
-    }
+    use { 'tpope/vim-surround', config = require "plugins.vim-surround".config }
     use { 'jeffkreeftmeijer/vim-numbertoggle', opt = true }
     use { 'chrisbra/unicode.vim', opt = true }
     use 'wellle/targets.vim'
-    use {
-        'edluffy/specs.nvim',
-        config = function()
-            require('specs').setup {
-                popup = { inc_ms = 10, width = 50, winhl = "DiffText", resizer = require('specs').slide_resizer },
-                ignore_filetypes = { "rust" }
-            }
-        end
-    }
-    use { 'editorconfig/editorconfig-vim', config = function() vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*' } end }
+    use { 'edluffy/specs.nvim', config = require "plugins.specs".config }
+    use { 'editorconfig/editorconfig-vim', config = require "plugins.editorconfig-vim".config }
     -- }}}
 
     -- treesitter {{{
@@ -186,92 +78,11 @@ return require 'packer'.startup(function(use, use_rocks)
         'nvim-treesitter/nvim-treesitter',
         requires = 'nvim-treesitter/nvim-treesitter-textobjects',
         run = ':TSUpdate',
-        config = function()
-            require 'nvim-treesitter.configs'.setup {
-                highlight = {
-                    enable = true, -- false will disable the whole extension
-                    -- disable = { "c", "rust" },  -- list of language that will be disabled
-                    custom_captures = { ["variable"] = "Normal" },
-                    additional_vim_regex_highlighting = false
-                },
-                ensure_installed = { "c", "python", "lua", "bash", "make", "cmake", "toml", "yaml", "cpp", "cuda", "json", "rust", "vim", "html", "css", "bibtex", "latex", "markdown", "rst", "comment" },
-                incremental_selection = { enable = false },
-                refactor = {
-                    highlight_definitions = { enable = true },
-                    highlight_current_scope = { enable = true },
-                    smart_rename = { enable = true, keymaps = { smart_rename = "gR" } }
-                },
-                textobjects = {
-                    select = {
-                        enable = true,
-
-                        -- Automatically jump forward to textobj, similar to targets.vim
-                        lookahead = true,
-
-                        keymaps = {
-                            -- You can use the capture groups defined in textobjects.scm
-                            ["af"] = "@function.outer",
-                            ["if"] = "@function.inner",
-                            ["ac"] = "@class.outer",
-                            ["ic"] = "@class.inner",
-                            ["aP"] = "@parameter.outer",
-                            ["iP"] = "@parameter.inner",
-                            ["aC"] = "@comment.outer",
-                            ["aB"] = "@block.outer",
-                            ["iB"] = "@block.inner"
-
-                            -- -- Or you can define your own textobjects like this
-                            -- ["iF"] = {
-                            --     python = "(function_definition) @function",
-                            --     cpp = "(function_definition) @function",
-                            --     c = "(function_definition) @function",
-                            --     java = "(method_declaration) @function",
-                            -- },
-                        }
-                    },
-                    swap = {
-                        enable = true,
-                        swap_next = { ["<leader>a"] = "@parameter.inner" },
-                        swap_previous = { ["<leader>A"] = "@parameter.inner" }
-                    },
-                    lsp_interop = {
-                        enable = true,
-                        border = 'none',
-                        peek_definition_code = { ["<leader>df"] = "@function.outer", ["<leader>dF"] = "@class.outer" }
-                    }
-                }
-            }
-            local ft_to_parser = require('nvim-treesitter.parsers').filetype_to_parsername
-            ft_to_parser.astro = "tsx"
-            -- if vim.loop.os_uname().sysname == "Darwin" then
-            --     require'nvim-treesitter.install'.compilers = { "gcc-11" }
-            -- end
-            -- require("nvim-treesitter.parsers").get_parser_configs().just = {
-            --     install_info = {
-            --         url = "https://github.com/IndianBoy42/tree-sitter-just", -- local path or git repo
-            --         files = { "src/parser.c", "src/scanner.cc" },
-            --         branch = "main"
-            --     },
-            --     maintainers = { "@IndianBoy42" }
-            -- }
-        end
+        config = require "plugins.nvim-treesitter".config
     }
-    use {
-        'SmiteshP/nvim-gps',
-        config = function()
-            require("nvim-gps").setup()
-        end
-    }
+    use { 'SmiteshP/nvim-gps', config = function() require("nvim-gps").setup() end }
     use { 'nvim-treesitter/playground', opt = true }
-    use {
-        'tpope/vim-dispatch',
-        config = function()
-            vim.g.dispatch_compilers = { python = 'python %' }
-
-            -- remove iterm from the list of handlers (don't like it removing focus when run)
-            vim.g.dispatch_handlers = { 'tmux', 'screen', 'windows', 'x11', 'headless' }
-        end
-    }
+    use { 'tpope/vim-dispatch', config = require "plugins.vim-dispatch".config }
     -- }}}
 
     -- utils {{{
