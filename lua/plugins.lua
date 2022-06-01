@@ -395,17 +395,50 @@ return require 'packer'.startup(function(use, use_rocks)
     }
 
     use {
-        'kyazdani42/nvim-tree.lua',
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
         requires = {
-            'kyazdani42/nvim-web-devicons', -- optional, for file icon
-        },
-        tag = 'nightly', -- optional, updated every week
-        config = function()
-            vim.g.nvim_tree_icons = { git = { unstaged = "~" } }
-            require("nvim-tree").setup {
-                update_to_buf_dir = { enable = false }
+            "nvim-lua/plenary.nvim",
+            "kyazdani42/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+            {
+                's1n7ax/nvim-window-picker',
+                tag = "1.*",
+                config = function()
+                    require'window-picker'.setup({
+                        filter_rules = {
+                            bo = {
+                                filetype = { 'neo-tree', "neo-tree-popup", "notify", "quickfix" },
+                                buftype = { 'terminal' },
+                            },
+                        },
+                        other_win_hl_color = '#e35e4f',
+                    })
+                end,
             }
-            require('helpers').noremap('n', '<leader>F', '<cmd>NvimTreeToggle<cr>')
+        },
+        config = function ()
+            vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+            vim.fn.sign_define("DiagnosticSignError", {text = " ", texthl = "DiagnosticSignError"})
+            vim.fn.sign_define("DiagnosticSignWarn", {text = " ", texthl = "DiagnosticSignWarn"})
+            vim.fn.sign_define("DiagnosticSignInfo", {text = " ", texthl = "DiagnosticSignInfo"})
+            vim.fn.sign_define("DiagnosticSignHint", {text = "", texthl = "DiagnosticSignHint"})
+
+            require("neo-tree").setup({
+                filesystem = {
+                    window = {
+                        mappings = {
+                            ["-"] = "navigate_up",
+                            ["<bs>"] = nil,
+                            ["S"] = "split_with_window_picker",
+                            ["s"] = "vsplit_with_window_picker",
+                            ["<cr>"] = "open_with_window_picker"
+                        }
+                    }
+                }
+            })
+            vim.api.nvim_set_keymap('n', '<leader>F', '<cmd>Neotree reveal<cr>', { noremap = true })
         end
     }
 
