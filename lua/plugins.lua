@@ -88,14 +88,7 @@ return require 'packer'.startup(function(use, use_rocks)
     -- utils {{{
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-eunuch'
-    use {
-        'rmagatti/auto-session',
-        config = function()
-            require('auto-session').setup {
-                post_restore_cmds = { "stopinsert" }
-            }
-        end
-    }
+    use { 'rmagatti/auto-session', config = require "plugins.auto-session".config }
     use 'chrisbra/vim-diff-enhanced'
     use { 'moll/vim-bbye', config = require "plugins.vim-bbye".config }
 
