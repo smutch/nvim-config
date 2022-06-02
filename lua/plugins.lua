@@ -137,14 +137,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use { 'f-person/git-blame.nvim', config = require "plugins.git-blame".config }
     -- }}}
 
-    -- use {
-    --     "akinsho/toggleterm.nvim",
-    --     tag = 'v1.*',
-    --     config = function()
-    --         require("toggleterm").setup()
-    --     end
-    -- }
-
+    use { 'numToStr/FTerm.nvim', config = require "plugins.fterm".config }
     use { 'neomake/neomake', opt = true }
     use { 'kkoomen/vim-doge', run = ':call doge#install()', config = require "plugins.vim-dodge".config }
 
