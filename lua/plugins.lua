@@ -30,7 +30,6 @@ return require 'packer'.startup(function(use, use_rocks)
     -- use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
     -- }}}
 
-
     -- completion {{{
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
@@ -124,6 +123,18 @@ return require 'packer'.startup(function(use, use_rocks)
     use { 'majutsushi/tagbar', opt = true , config = require "plugins.tagbar".config }
     use 'christoomey/vim-tmux-navigator'
     use { 'rcarriga/vim-ultest', requires = 'vim-test/vim-test', run = ":UpdateRemotePlugins" }
+
+    use { "antoinemadec/FixCursorHold.nvim" }
+    use {
+        "rcarriga/neotest",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+            "rcarriga/neotest-python"
+        },
+        config = require "plugins.neotest".config
+    }
     use { 'rcarriga/nvim-notify', config = function() vim.notify = require 'notify' end }
 
     -- git {{{
