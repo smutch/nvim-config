@@ -18,7 +18,8 @@ function M.config()
                     ["s"] = "vsplit_with_window_picker",
                     ["<cr>"] = "open_with_window_picker"
                 }
-            }
+            },
+            hijack_netrw_behavior = "disabled"
         }
     })
     vim.api.nvim_set_keymap('n', '<leader>F', '<cmd>Neotree reveal<cr>', { noremap = true })
