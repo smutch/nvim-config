@@ -36,6 +36,5 @@ M.winbar = function()
 end
 
 vim.o.winbar = "%{%v:lua.require('winbar').winbar()%}"
-vim.api.nvim_set_hl(0, "winbar", { link = "BufferInactive" })
 
 return M

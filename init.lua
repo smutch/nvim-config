@@ -179,6 +179,8 @@ else
     -- vim.cmd 'colorscheme onenord'
     vim.cmd 'colorscheme nightfox'
 end
+vim.api.nvim_set_hl(0, "WinBarNC", { link = "lualine_x_normal" })
+vim.api.nvim_set_hl(0, "WinBar", { link = "lualine_c_normal" })
 
 -- terminal colors
 --[[
