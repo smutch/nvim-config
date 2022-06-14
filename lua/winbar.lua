@@ -4,7 +4,7 @@ end
 
 
 local M = {}
-local gps = require("nvim-gps")
+local navic = require("nvim-navic")
 
 local disabled_filetypes = {
     'NvimTree',
@@ -26,16 +26,16 @@ M.winbar = function()
     end
 
     local location = ''
-    if gps.is_available() then
-        location = gps.get_location()
+    if navic.is_available() then
+        location = navic.get_location()
     end
 
     local modified = vim.o.modified and '[+] ' or ''
 
-    return location .. ' |  ' .. win_num .. ' | ' .. modified .. '%f '
+    return ' ' .. win_num .. ' | ' .. modified .. '%f >> ' .. location
 end
 
-vim.o.winbar = "%=%{%v:lua.require('winbar').winbar()%}"
+vim.o.winbar = "%{%v:lua.require('winbar').winbar()%}"
 vim.api.nvim_set_hl(0, "winbar", { link = "BufferInactive" })
 
 return M

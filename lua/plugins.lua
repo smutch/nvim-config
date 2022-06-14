@@ -26,6 +26,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use 'nvim-lua/lsp_extensions.nvim'
 	use 'kosayoda/nvim-lightbulb'
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup() end }
+    use 'SmiteshP/nvim-navic'
     -- The rockspec for this is currently broken. Need to wait for a fix.
     -- use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
     -- }}}
@@ -79,6 +80,7 @@ return require 'packer'.startup(function(use, use_rocks)
         run = ':TSUpdate',
         config = require "plugins.nvim-treesitter".config
     }
+    use 'nvim-treesitter/nvim-treesitter-context'
     use { 'SmiteshP/nvim-gps', config = function() require("nvim-gps").setup() end }
     use { 'nvim-treesitter/playground', opt = true }
     use { 'tpope/vim-dispatch', config = require "plugins.vim-dispatch".config }
@@ -172,7 +174,7 @@ return require 'packer'.startup(function(use, use_rocks)
 
     use {
         'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', 'nvim-lua/lsp-status.nvim' },
+        requires = { 'kyazdani42/nvim-web-devicons' },
         config = require 'plugins.lualine'.config
     }
     use { 'lukas-reineke/indent-blankline.nvim', config = require "plugins.indent-blankline".config }

@@ -1,9 +1,7 @@
 -- LSP
 local M = {}
 
-local lsp_status = require 'lsp-status'
 local h = require 'helpers'
-lsp_status.register_progress()
 -- vim.lsp.set_log_level("debug")
 
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
@@ -88,7 +86,7 @@ local on_attach = function(client, bufnr)
 
     vim.g.lsp_diagnostic_sign_priority = 100
 
-    lsp_status.on_attach(client)
+    require('nvim-navic').attach(client, bufnr)
 end
 
 -- Use LspInstall to set up automatically installed servers
