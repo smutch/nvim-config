@@ -3,9 +3,14 @@ local M = {}
 function M.config()
     local h = require 'helpers'
     local telescope = require 'telescope'
-    telescope.setup { pickers = { find_files = { theme = "dropdown" } } }
+    telescope.setup {
+        pickers = {
+            find_files = { theme = "dropdown" } },
+            extensions = { ["ui-select"] = { require("telescope.themes").get_dropdown() }
+        }
+    }
 
-    local extensions = { "fzy_native", "packer", "emoji", "neoclip" }
+    local extensions = { "fzy_native", "packer", "emoji", "neoclip", "ui-select" }
     for _, extension in ipairs(extensions) do telescope.load_extension(extension) end
 
     h.noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')

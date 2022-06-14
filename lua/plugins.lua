@@ -117,6 +117,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use 'xiyaowong/telescope-emoji.nvim'
 	use 'nvim-telescope/telescope-packer.nvim'
 	use 'nvim-telescope/telescope-symbols.nvim'
+    use { 'nvim-telescope/telescope-ui-select.nvim' }
     use { 'nvim-telescope/telescope.nvim', config = require "plugins.telescope".config }
     -- }}}
 

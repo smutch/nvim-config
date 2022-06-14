@@ -73,7 +73,7 @@ local on_attach = function(client, bufnr)
     bnoremap("n", "<localleader>d", "<cmd>Trouble lsp_document_diagnostics<cr>", { silent = true })
     bnoremap("n", "<localleader>i", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
     bnoremap("n", "<localleader>f", "<cmd>lua require'lsp'.formatting_sync()<CR>", { silent = true }) -- WARNING: lsp (this module) NOT vim.lsp.buf
-    bnoremap("n", "ga", "<cmd>Telescope lsp_code_actions theme=cursor<CR>", { silent = true })
+    bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
 
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticVirtualTextError"})')
