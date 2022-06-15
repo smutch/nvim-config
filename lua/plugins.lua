@@ -26,7 +26,10 @@ return require 'packer'.startup(function(use, use_rocks)
     use 'nvim-lua/lsp_extensions.nvim'
 	use 'kosayoda/nvim-lightbulb'
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup() end }
-    use 'SmiteshP/nvim-navic'
+    
+    -- Disabled just now as it doesn't work with pylsp (see winbar setup too)
+    -- use 'SmiteshP/nvim-navic'
+
     -- The rockspec for this is currently broken. Need to wait for a fix.
     -- use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
     -- }}}

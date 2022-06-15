@@ -86,7 +86,7 @@ local on_attach = function(client, bufnr)
 
     vim.g.lsp_diagnostic_sign_priority = 100
 
-    require('nvim-navic').attach(client, bufnr)
+    -- require('nvim-navic').attach(client, bufnr)
 end
 
 -- Use LspInstall to set up automatically installed servers

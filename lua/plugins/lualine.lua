@@ -1,13 +1,7 @@
 local M = {}
 
-function M.config()
-    -- Eviline config for lualine
-    -- Author: shadmansaleh
-    -- Credit: glepnir
-    local lualine = require('lualine')
-
-    -- Color table for highlights
-    -- stylua: ignore
+local function sync_colors()
+    -- default colors
     local colors = {
         bg       = '#202328',
         fg       = '#bbc2cf',
@@ -21,6 +15,36 @@ function M.config()
         blue     = '#51afef',
         red      = '#ec5f67',
     }
+
+    if string.find(vim.g.colors_name, "fox") then
+        local palette = require('nightfox.palette').load(vim.g.colors_name)
+        colors = {
+            bg       = palette.bg0,
+            fg       = palette.fg0,
+            yellow   = palette.yellow.base,
+            cyan     = palette.cyan.base,
+            darkblue = palette.blue.dim,
+            green    = palette.green.base,
+            orange   = palette.orange.base,
+            violet   = palette.magenta.bright,
+            magenta  = palette.magenta.base,
+            blue     = palette.blue.base,
+            red      = palette.red.base,
+        }
+    end
+
+    return colors
+end
+
+
+function M.statusline()
+    -- Eviline config for lualine
+    -- Author: shadmansaleh
+    -- Credit: glepnir
+
+    local lualine = require('lualine')
+
+    local colors = sync_colors()
 
     local conditions = {
         buffer_not_empty = function()
@@ -222,6 +246,18 @@ function M.config()
 
     -- Now don't forget to initialize lualine
     lualine.setup(config)
+end
+
+function M.config()
+    local setup = require('plugins.lualine')
+    setup.statusline()
+
+    local augroup = vim.api.nvim_create_augroup("lualine_colors", {})
+    vim.api.nvim_create_autocmd("ColorScheme", {
+        callback = setup.statusline,
+        group = augroup
+    })
+
 end
 
 return M

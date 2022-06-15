@@ -4,7 +4,7 @@ end
 
 
 local M = {}
-local navic = require("nvim-navic")
+-- local navic = require("nvim-navic")
 
 local disabled_filetypes = {
     'NvimTree',
@@ -25,16 +25,29 @@ M.winbar = function()
         end
     end
 
-    local location = ''
-    if navic.is_available() then
-        location = navic.get_location()
-    end
+    -- local location = ''
+    -- if navic.is_available() then
+    --     location = navic.get_location()
+    -- end
 
     local modified = vim.o.modified and '[+] ' or ''
 
-    return ' ' .. win_num .. ' | ' .. modified .. '%f >> ' .. location
+    -- return ' ' .. win_num .. ' | ' .. modified .. '%f >> ' .. location
+    return ' ' .. win_num .. ' | ' .. modified .. '%f'
 end
 
 vim.o.winbar = "%{%v:lua.require('winbar').winbar()%}"
+
+local augrp = vim.api.nvim_create_augroup("winbar", {})
+
+local function winbar_colors()
+    vim.api.nvim_set_hl(0, "WinBarNC", { link = "lualine_x_normal" })
+    vim.api.nvim_set_hl(0, "WinBar", { link = "lualine_c_normal" })
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    group = augrp,
+    callback = winbar_colors
+})
 
 return M

@@ -160,15 +160,6 @@ end
 
 -- colors {{{
 
-vim.cmd([[
-    augroup CustomColors
-        au!
-        au ColorScheme * hi! link Search DiffAdd | hi! link Conceal NonText | hi! Keyword cterm=italic gui=italic
-        au ColorScheme onedark if &background == 'dark' | hi! Normal guifg=#d9dbda | hi! IndentBlanklineChar guifg=#2e3c44 | hi! NormalNC guibg=#31353f | hi! Search guibg=#93691d | endif
-        au ColorScheme * if &background == 'dark' | hi! NormalFloat guibg=#353B49 | endif
-    augroup END
-]])
-
 -- use the presence of a file to determine if we want to start in light or dark mode
 if h.file_exists("~/.vimlight") or vim.env.LIGHT then
     vim.o.background = 'light'
@@ -179,28 +170,6 @@ else
     -- vim.cmd 'colorscheme onenord'
     vim.cmd 'colorscheme nightfox'
 end
-vim.api.nvim_set_hl(0, "WinBarNC", { link = "lualine_x_normal" })
-vim.api.nvim_set_hl(0, "WinBar", { link = "lualine_c_normal" })
-
--- terminal colors
---[[
-vim.g.terminal_color_0 = "#252525"
-vim.g.terminal_color_1 = "#d06c76"
-vim.g.terminal_color_2 = "#99c27c"
-vim.g.terminal_color_3 = "#FFD740"
-vim.g.terminal_color_4 = "#40C4FF"
-vim.g.terminal_color_5 = "#FF4081"
-vim.g.terminal_color_6 = "#59b3be"
-vim.g.terminal_color_7 = "#F5F5F5"
-vim.g.terminal_color_8 = "#708284"
-vim.g.terminal_color_9 = "#d06c76"
-vim.g.terminal_color_10 = "#99c27c"
-vim.g.terminal_color_11 = "#FFD740"
-vim.g.terminal_color_12 = "#40C4FF"
-vim.g.terminal_color_13 = "#FF4081"
-vim.g.terminal_color_14 = "#59b3be"
-vim.g.terminal_color_15 = "#F5F5F5"
-]]
 
 -- }}}
 
