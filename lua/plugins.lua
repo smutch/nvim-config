@@ -59,7 +59,11 @@ return require 'packer'.startup(function(use, use_rocks)
     -- }}}
 
     -- editing {{{
-    use { 'windwp/nvim-autopairs', config = require "plugins.autopairs".config }
+    use {'ZhiyuanLck/smart-pairs', event = 'InsertEnter', config = function() require('pairs'):setup({
+        enter = {
+            enable_mapping = false,
+        },
+    }) end}
     use { 'github/copilot.vim', opt = true, setup = require "plugins.copilot".setup }
     use 'tpope/vim-rsi'
     use { 'ggandor/leap.nvim', config = function() require('leap').set_default_keymaps() end }
