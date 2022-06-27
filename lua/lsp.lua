@@ -91,9 +91,17 @@ end
 
 -- Use LspInstall to set up automatically installed servers
 local lsp_installer = require("nvim-lsp-installer")
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- nvim-ufo
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+
 local base_opts = {
     on_attach = on_attach,
-    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities),
     flags = { debounce_text_changes = 250 }
 }
 lsp_installer.on_server_ready(function(server)

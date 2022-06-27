@@ -26,7 +26,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use 'nvim-lua/lsp_extensions.nvim'
 	use 'kosayoda/nvim-lightbulb'
     use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup() end }
-    
+
     -- Disabled just now as it doesn't work with pylsp (see winbar setup too)
     -- use 'SmiteshP/nvim-navic'
 
@@ -155,6 +155,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use { 'numToStr/FTerm.nvim', config = require "plugins.fterm".config }
     use { 'neomake/neomake', opt = true }
     use { 'kkoomen/vim-doge', run = ':call doge#install()', config = require "plugins.vim-dodge".config }
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = require "plugins.nvim-ufo".config }
 
     -- prose {{{
     use { 'reedes/vim-wordy', opt = true, ft = { 'markdown', 'tex', 'latex' } }
@@ -190,7 +191,6 @@ return require 'packer'.startup(function(use, use_rocks)
     -- python {{{
     use { 'vim-python/python-syntax', ft = { 'python' } }
     use { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } }
-    use { 'tmhedberg/SimpylFold', ft = { 'python' } }
     use { 'anntzer/vim-cython', ft = { 'python', 'cython' } }
     -- }}}
 
