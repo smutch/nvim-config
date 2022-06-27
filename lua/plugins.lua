@@ -62,7 +62,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use { 'windwp/nvim-autopairs', config = require "plugins.autopairs".config }
     use { 'github/copilot.vim', opt = true, setup = require "plugins.copilot".setup }
     use 'tpope/vim-rsi'
-    use { 'ggandor/lightspeed.nvim', config = require "plugins.lightspeed".config }
+    use { 'ggandor/leap.nvim', config = function() require('leap').set_default_keymaps() end }
 
     use 'tpope/vim-repeat'
     use { 'numToStr/Comment.nvim', config = require "plugins.comment".config }
