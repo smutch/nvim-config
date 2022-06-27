@@ -124,13 +124,11 @@ return require 'packer'.startup(function(use, use_rocks)
     use { 'nvim-telescope/telescope.nvim', config = require "plugins.telescope".config }
     -- }}}
 
+    use { "antoinemadec/FixCursorHold.nvim" }
     use { 'folke/todo-comments.nvim', config = function() require("todo-comments").setup {} end }
     use { 'norcalli/nvim-colorizer.lua', opt = true, config = function() require 'colorizer'.setup() end }
     use { 'majutsushi/tagbar', opt = true , config = require "plugins.tagbar".config }
     use 'christoomey/vim-tmux-navigator'
-    use { 'rcarriga/vim-ultest', requires = 'vim-test/vim-test', run = ":UpdateRemotePlugins" }
-
-    use { "antoinemadec/FixCursorHold.nvim" }
     use {
         "rcarriga/neotest",
         requires = {
