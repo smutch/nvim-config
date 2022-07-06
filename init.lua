@@ -75,6 +75,9 @@ vim.o.wildignore = vim.o.wildignore ..
                        '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
 vim.o.suffixes = '.bak,.o,.info,.swp,.obj'
 
+-- by default, use the last focussed split for opening new items
+vim.opt.switchbuf:append{ uselast=true }
+
 -- }}}
 
 -- general keybindings {{{
@@ -241,9 +244,6 @@ function QFOpenInWindow()
     end
 end
 vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e <cmd>lua QFOpenInWindow()<CR>]])
-
--- by default, use the last focussed split for opening new items
-vim.opt.switchbuf:append{ uselast=true }
 
 -- Edit rc files
 vim.cmd([[command! Erc execute ':e ~/.config/nvim/init.lua']])

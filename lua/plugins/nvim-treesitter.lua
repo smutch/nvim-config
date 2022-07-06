@@ -52,8 +52,28 @@ function M.config()
                     enable = true,
                     border = 'none',
                     peek_definition_code = { ["<leader>df"] = "@function.outer", ["<leader>dF"] = "@class.outer" }
-                }
-            }
+                },
+                move = {
+                    enable = true,
+                    set_jumps = false, -- whether to set jumps in the jumplist
+                    goto_next_start = {
+                        ["]m"] = "@function.outer",
+                        ["]]"] = "@class.outer",
+                    },
+                    goto_next_end = {
+                        ["]M"] = "@function.outer",
+                        ["]["] = "@class.outer",
+                    },
+                    goto_previous_start = {
+                        ["[m"] = "@function.outer",
+                        ["[["] = "@class.outer",
+                    },
+                    goto_previous_end = {
+                        ["[M"] = "@function.outer",
+                        ["[]"] = "@class.outer",
+                    },
+                },
+            },
         }
         local ft_to_parser = require('nvim-treesitter.parsers').filetype_to_parsername
         ft_to_parser.astro = "tsx"
