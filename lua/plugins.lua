@@ -25,7 +25,9 @@ return require 'packer'.startup(function(use, use_rocks)
     use 'jose-elias-alvarez/null-ls.nvim'
     use 'nvim-lua/lsp_extensions.nvim'
 	use 'kosayoda/nvim-lightbulb'
-    use { 'folke/lsp-trouble.nvim', config = function() require("trouble").setup() end }
+    use { 'folke/lsp-trouble.nvim', config = function() require "trouble".setup() end }
+    use { 'j-hui/fidget.nvim', config = function() require "fidget".setup() end }
+    use { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end }
 
     -- Disabled just now as it doesn't work with pylsp (see winbar setup too)
     -- use 'SmiteshP/nvim-navic'
@@ -87,8 +89,8 @@ return require 'packer'.startup(function(use, use_rocks)
         run = ':TSUpdate',
         config = require "plugins.nvim-treesitter".config
     }
-    use 'nvim-treesitter/nvim-treesitter-context'
-    use { 'SmiteshP/nvim-gps', config = function() require("nvim-gps").setup() end }
+    -- use 'nvim-treesitter/nvim-treesitter-context'
+    -- use { 'SmiteshP/nvim-gps', config = function() require("nvim-gps").setup() end }
     use { 'nvim-treesitter/playground', opt = true }
     use { 'tpope/vim-dispatch', config = require "plugins.vim-dispatch".config }
     -- }}}
