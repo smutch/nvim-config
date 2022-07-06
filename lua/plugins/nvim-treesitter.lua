@@ -6,7 +6,7 @@ function M.config()
             enable = true, -- false will disable the whole extension
             -- disable = { "c", "rust" },  -- list of language that will be disabled
             custom_captures = { ["variable"] = "Normal" },
-            additional_vim_regex_highlighting = false
+            additional_vim_regex_highlighting = false -- WARNING: Must be set to false for spellsitter plugin
         },
         ensure_installed = { "c", "python", "lua", "bash", "make", "cmake", "toml", "yaml", "cpp", "cuda", "json", "rust", "vim", "html", "css", "bibtex", "latex", "markdown", "rst", "comment" },
         incremental_selection = { enable = false },
