@@ -6,7 +6,7 @@ setlocal softtabstop=4
 setlocal shiftwidth=4
 setlocal noshowmode  " Allows jedi to show function call signatures
 setlocal concealcursor=nic
-setlocal nofoldenable  " Don't fold by default
+" setlocal nofoldenable  " Don't fold by default
 
 " syntax hightlighting options
 let g:python_highlight_all = 1
