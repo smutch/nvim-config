@@ -163,16 +163,12 @@ end
 
 -- colors {{{
 
--- use the presence of a file to determine if we want to start in light or dark mode
-if h.file_exists("~/.vimlight") or vim.env.LIGHT then
-    vim.o.background = 'light'
-    -- vim.cmd 'packadd github-nvim-theme | colorscheme github_light'
-    vim.cmd 'colorscheme dawnfox'
-else
-    vim.o.background = 'dark'
-    -- vim.cmd 'colorscheme onenord'
+require('packer.luarocks').setup_paths()
+local colorscheme_switch = require'colorscheme-switch'
+if not colorscheme_switch.apply() then
     vim.cmd 'colorscheme nightfox'
 end
+colorscheme_switch.setup()
 
 -- }}}
 
