@@ -2,7 +2,7 @@ local M = {}
 
 function M.config()
     vim.wo.foldcolumn = '0'  -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
-    vim.wo.foldlevelstart = 99
+    vim.o.foldlevelstart = 99
     vim.wo.foldenable = true
     vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
