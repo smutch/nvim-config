@@ -28,6 +28,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use { 'folke/lsp-trouble.nvim', config = function() require "trouble".setup() end }
     use { 'j-hui/fidget.nvim', config = function() require "fidget".setup() end }
     use { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end }
+    use { "barreiroleo/ltex-extra.nvim" }
 
     -- Disabled just now as it doesn't work with pylsp (see winbar setup too)
     -- use 'SmiteshP/nvim-navic'

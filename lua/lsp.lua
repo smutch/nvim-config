@@ -26,8 +26,8 @@ local function select_client(method, on_choice)
 
     if #clients > 1 then
         vim.ui.select(clients,
-                      { prompt = 'Select a language server:', format_item = function(client) return client.name end },
-                      on_choice)
+            { prompt = 'Select a language server:', format_item = function(client) return client.name end },
+            on_choice)
     elseif #clients < 1 then
         on_choice(nil)
     else
@@ -58,6 +58,7 @@ local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
     local function bnoremap(...) h.bnoremap(bufnr, ...) end
+
     bnoremap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { silent = true })
     bnoremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
     bnoremap("n", "gD", "<cmd>Telescope lsp_implementations<CR>", { silent = true })
@@ -102,46 +103,41 @@ capabilities.textDocument.foldingRange = {
 local base_opts = {
     on_attach = on_attach,
     capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities),
-    flags = { debounce_text_changes = 250 }
+    flags = { debounce_text_changes = 250 },
+
+    settings = {
+        python = {
+            pythonPath = h.python_interpreter_path,
+            analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } }
+        },
+        pylsp = { plugins = { pycodestyle = { maxLineLength = 120 },
+        jedi = { environment = h.python_interpreter_path } } },
+        ['rust-analyzer'] = {
+            checkOnSave = {
+                allFeatures = true,
+                overrideCommand = {
+                    'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
+                }
+            }
+        },
+        Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } },
+        ltex = { language = "en-AU", additionalRules = { enablePickyRules = true } },
+    }
+
 }
+
 lsp_installer.on_server_ready(function(server)
     -- Customize the options passed to the server
-    local opts = base_opts
-    if server.name == "pyright" then
-        opts.settings = {
-            python = {
-                pythonPath = h.python_interpreter_path,
-                analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } }
-            }
-        }
-    elseif server.name == "pylsp" then
-        opts.settings = {
-            pylsp = { plugins = { pycodestyle = { maxLineLength = 120 }, jedi = { environment = h.python_interpreter_path } } }
-        }
-    elseif server.name == "sumneko_lua" then
-        opts.settings = { Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } } }
-    elseif server.name == "rust_analyzer" then
-        opts.settings = {
-            ['rust-analyzer'] = {
-                checkOnSave = {
-                    allFeatures = true,
-                    overrideCommand = {
-                        'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
-                    }
-                }
-                -- cargo = {
-                --     allFeatures = true
-                -- }
-            }
-        }
-    elseif server.name == "clangd" then
+    if server.name == "clangd" and vim.g.clangd_bin then
         -- This is for systems (like OzSTAR) where glibc is too old to be compatible
         -- with binary releases of clangd...
-        if vim.g.clangd_bin then opts.cmd = { vim.g.clangd_bin, "--background-index" } end
+        local opts = vim.deepcopy(base_opts)
+        opts.cmd = { vim.g.clangd_bin, "--background-index" }
+        server:setup(opts)
+    else
+        -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+        server:setup(base_opts)
     end
-
-    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-    server:setup(opts)
     vim.cmd [[ do User LspAttachBuffers ]]
 end)
 
@@ -172,10 +168,22 @@ null_ls.setup {
     debounce = base_opts.flags.debounce_text_changes
 }
 
-require'lspconfig'.nimls.setup(base_opts)
+require 'lspconfig'.nimls.setup(base_opts)
 
-local julia_opts = base_opts
+local julia_opts = vim.deepcopy(base_opts)
 julia_opts.julia = { environmentPath = "./" }
-require'lspconfig'.julials.setup(julia_opts)
+require 'lspconfig'.julials.setup(julia_opts)
+
+local ltex_opts = vim.deepcopy(base_opts)
+ltex_opts.on_attach = function(client, buffer)
+    on_attach(client, buffer)
+    require("ltex_extra").setup {
+        load_langs = { "en-AU" },
+        init_check = true,
+        path = ".ltex"
+    }
+end
+ltex_opts.filetypes = {"tex"}
+require 'lspconfig'.ltex.setup(ltex_opts)
 
 return M
