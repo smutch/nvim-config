@@ -163,12 +163,15 @@ end
 
 -- colors {{{
 
-require('packer.luarocks').setup_paths()
-local colorscheme_switch = require'colorscheme-switch'
-if not colorscheme_switch.apply() then
-    vim.cmd 'colorscheme nightfox'
-end
-colorscheme_switch.setup()
+-- require('packer.luarocks').setup_paths()
+-- local colorscheme_switch = require'colorscheme-switch'
+-- if not colorscheme_switch.apply() then
+--     vim.cmd 'colorscheme nightfox'
+-- end
+-- colorscheme_switch.setup()
+
+-- see persist plugin config
+-- require "persist.colorscheme".set()
 
 -- }}}
 

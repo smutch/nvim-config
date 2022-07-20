@@ -34,7 +34,6 @@ return require 'packer'.startup(function(use, use_rocks)
 
     -- The rockspec for this is currently broken. Need to wait for a fix.
     -- use_rocks {'luaformatter', server = 'https://luarocks.org/dev'}
-    use_rocks 'toml'
     -- }}}
 
     -- completion {{{
@@ -191,6 +190,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use { 'gcmt/taboo.vim', config = require "plugins.taboo".config }
     use { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = function() require('pqf').setup() end }
     use { 'petertriho/nvim-scrollbar', requires = 'kevinhwang91/nvim-hlslens', config = require "plugins.nvim-scrollbar".config }
+    use { '~/dotfiles/nvim/my_plugins/persist', rocks = 'toml', config = function() require "persist.colorscheme".set() end }
 
     -- }}}
 

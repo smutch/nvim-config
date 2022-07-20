@@ -16,7 +16,8 @@ local function sync_colors()
         red      = '#ec5f67',
     }
 
-    if string.find(vim.g.colors_name, "fox") then
+    local colorscheme = vim.cmd "silent colorscheme"
+    if string.find(colorscheme, "fox") then
         local palette = require('nightfox.palette').load(vim.g.colors_name)
         colors = {
             bg       = palette.bg0,
