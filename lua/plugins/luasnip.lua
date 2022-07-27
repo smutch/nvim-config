@@ -1,6 +1,6 @@
 local M = {}
 
-function M.luasnip()
+function M.config()
     local h = require 'helpers'
     require 'snippets'
 
