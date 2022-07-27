@@ -17,44 +17,6 @@ vim.diagnostic.config({
 })
 
 
--- ripped from runtime/lua/vim/lsp/buf.lua
-local function select_client(method, on_choice)
-    vim.validate { on_choice = { on_choice, 'function', false } }
-    local clients = vim.tbl_values(vim.lsp.buf_get_clients())
-    clients = vim.tbl_filter(function(client) return client.supports_method(method) end, clients)
-    -- better UX when choices are always in the same order (between restarts)
-    table.sort(clients, function(a, b) return a.name < b.name end)
-
-    if #clients > 1 then
-        vim.ui.select(clients,
-            { prompt = 'Select a language server:', format_item = function(client) return client.name end },
-            on_choice)
-    elseif #clients < 1 then
-        on_choice(nil)
-    else
-        on_choice(clients[1])
-    end
-end
-
--- ripped from runtime/lua/vim/lsp/buf.lua with extra notify call upon success
-function M.formatting_sync(options, timeout_ms)
-    local params = require('vim.lsp.util').make_formatting_params(options)
-    local bufnr = vim.api.nvim_get_current_buf()
-    select_client('textDocument/formatting', function(client)
-        if client == nil then return end
-
-        local result, err = client.request_sync('textDocument/formatting', params, timeout_ms, bufnr)
-        if result and result.result then
-            require('vim.lsp.util').apply_text_edits(result.result, bufnr, client.offset_encoding)
-            vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
-        elseif err then
-            vim.notify('vim.lsp.buf.formatting_sync: ' .. err, vim.log.levels.WARN)
-        elseif client.name == "null-ls" then
-            vim.notify("vim.lsp.buf.formatting_sync: Complete", vim.log.levels.INFO)
-        end
-    end)
-end
-
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
@@ -74,7 +36,7 @@ local on_attach = function(client, bufnr)
     bnoremap("n", "<localleader>D", "<cmd>LspTroubleToggle<cr>", { silent = true })
     bnoremap("n", "<localleader>d", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
     bnoremap("n", "<localleader>i", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
-    bnoremap("n", "<localleader>f", "<cmd>lua require'lsp'.formatting_sync()<CR>", { silent = true }) -- WARNING: lsp (this module) NOT vim.lsp.buf
+    bnoremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true }) -- WARNING: lsp (this module) NOT vim.lsp.buf
     bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
 
     vim.api.nvim_command(
@@ -91,11 +53,9 @@ local on_attach = function(client, bufnr)
     -- require('nvim-navic').attach(client, bufnr)
 end
 
--- Use LspInstall to set up automatically installed servers
-local lsp_installer = require("nvim-lsp-installer")
-local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- nvim-ufo
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
@@ -121,26 +81,28 @@ local base_opts = {
                 }
             }
         },
-        Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } },
+        Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 }, format = { enable = false } },
         -- ltex = { language = "en", additionalRules = { enablePickyRules = true }, disabledRules = {  } },
     }
 
 }
 
-lsp_installer.on_server_ready(function(server)
-    -- Customize the options passed to the server
-    if server.name == "clangd" and vim.g.clangd_bin then
-        -- This is for systems (like OzSTAR) where glibc is too old to be compatible
-        -- with binary releases of clangd...
-        local opts = vim.deepcopy(base_opts)
-        opts.cmd = { vim.g.clangd_bin, "--background-index" }
-        server:setup(opts)
-    else
-        -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-        server:setup(base_opts)
-    end
-    vim.cmd [[ do User LspAttachBuffers ]]
-end)
+-- Use mason to set up automatically installed servers
+require "mason-lspconfig".setup_handlers({
+    function (server_name) -- default handler (optional)
+        require("lspconfig")[server_name].setup(base_opts)
+    end,
+	-- Customize the options passed to the server
+	["clangd"] = function()
+		if vim.g.clangd_bin then
+			-- This is for systems (like OzSTAR) where glibc is too old to be compatible
+			-- with binary releases of clangd...
+			local opts = vim.deepcopy(base_opts)
+			opts.cmd = { vim.g.clangd_bin, "--background-index" }
+			require "lspconfig".clangd.setup(opts)
+		end
+	end
+})
 
 local null_ls = require("null-ls")
 null_ls.setup {
