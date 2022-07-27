@@ -153,8 +153,6 @@ return require'packer'.startup(function(use, use_rocks)
     use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = require"plugins.nvim-ufo".config }
 
     -- prose {{{
-    use { 'reedes/vim-wordy', opt = true, ft = { 'markdown', 'tex', 'latex' } }
-    use { 'davidbeckingsale/writegood.vim', opt = true, ft = { 'tex', 'markdown', 'latex' } }
     use { 'folke/zen-mode.nvim', opt = true, cmd = 'ZenMode', config = function() require("zen-mode").setup {} end }
     -- }}}
 

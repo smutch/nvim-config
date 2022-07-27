@@ -130,7 +130,7 @@ null_ls.setup {
         null_ls.builtins.diagnostics.chktex
     },
     debounce = base_opts.flags.debounce_text_changes,
-    on_attch = on_attach
+    on_attach = on_attach
 }
 
 require 'lspconfig'.nimls.setup(base_opts)
