@@ -25,7 +25,7 @@ return require 'packer'.startup(function(use, use_rocks)
     use 'jose-elias-alvarez/null-ls.nvim'
     use 'nvim-lua/lsp_extensions.nvim'
 	use 'kosayoda/nvim-lightbulb'
-    use { 'folke/lsp-trouble.nvim', config = function() require "trouble".setup() end }
+    use { 'folke/lsp-trouble.nvim', config = require "plugins.trouble".config }
     use { 'j-hui/fidget.nvim', config = function() require "fidget".setup() end }
     use { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end }
     use { "barreiroleo/ltex-extra.nvim" }

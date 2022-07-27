@@ -192,9 +192,6 @@ h.noremap('n', '<leader>*', [[:silent grep! "<C-r><C-w>"<CR>:Trouble quickfix<CR
 vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args>|Trouble quickfix')
 h.noremap('n', '<leader>/', ':Grep ')
 
--- Load up last search in buffer into the location list and open it
-h.noremap('n', '<leader>l', ':<C-u>lvimgrep // % | Trouble loclist<CR>')
-
 -- handy mapping to fold around previous search results
 -- taken from http://vim.wikia.com/wiki/Folding_with_Regular_Expression
 -- \z to show previous search results
