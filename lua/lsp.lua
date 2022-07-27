@@ -7,7 +7,7 @@ local h = require 'helpers'
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
 vim.cmd("hi! link SignColumn Normal")
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+vim.diagnostic.config({
     underline = true,
     -- virtual_text = { spacing = 4 },
     virtual_text = false,
@@ -15,6 +15,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
     update_in_insert = false,
     severity_sort = true
 })
+
 
 -- ripped from runtime/lua/vim/lsp/buf.lua
 local function select_client(method, on_choice)
@@ -121,7 +122,7 @@ local base_opts = {
             }
         },
         Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 } },
-        ltex = { language = "en-AU", additionalRules = { enablePickyRules = true } },
+        -- ltex = { language = "en", additionalRules = { enablePickyRules = true }, disabledRules = {  } },
     }
 
 }
@@ -163,9 +164,11 @@ null_ls.setup {
         null_ls.builtins.formatting.prettier.with({
             filetypes = { "html", "json", "yaml", "markdown" },
             args = { "--print-width=1000" }
-        }), null_ls.builtins.formatting.nimpretty
+        }), null_ls.builtins.formatting.nimpretty,
+        null_ls.builtins.diagnostics.chktex
     },
-    debounce = base_opts.flags.debounce_text_changes
+    debounce = base_opts.flags.debounce_text_changes,
+    on_attch = on_attach
 }
 
 require 'lspconfig'.nimls.setup(base_opts)
@@ -174,16 +177,16 @@ local julia_opts = vim.deepcopy(base_opts)
 julia_opts.julia = { environmentPath = "./" }
 require 'lspconfig'.julials.setup(julia_opts)
 
-local ltex_opts = vim.deepcopy(base_opts)
-ltex_opts.on_attach = function(client, buffer)
-    on_attach(client, buffer)
-    require("ltex_extra").setup {
-        load_langs = { "en-AU" },
-        init_check = true,
-        path = ".ltex"
-    }
-end
-ltex_opts.filetypes = {"tex"}
-require 'lspconfig'.ltex.setup(ltex_opts)
+-- local ltex_opts = vim.deepcopy(base_opts)
+-- ltex_opts.on_attach = function(client, buffer)
+--     on_attach(client, buffer)
+--     require("ltex_extra").setup {
+--         load_langs = { "en-AU" },
+--         init_check = true,
+--         path = ".ltex",
+--     }
+-- end
+-- ltex_opts.filetypes = {"tex"}
+-- require 'lspconfig'.ltex.setup(ltex_opts)
 
 return M
