@@ -41,6 +41,10 @@ ab <buffer> ... \ldots
 " syntax
 hi! link Folded texStyleBold
 
+" for wrapped line movement
+nnoremap j gj
+nnoremap k gk
+
 " Select 'chunks'
 " vnoremap <buffer> ac ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR><Esc>V/<CR>k
 " vnoremap <buffer> ic ?\(^ *$\)\\|\(^ *\\end\)\\|\(^ *\\begin\)\\|\(^ *\\item\)<CR>j<Esc>V/<CR>k
