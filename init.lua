@@ -349,6 +349,14 @@ vim.cmd([[au BufNewFile,BufRead *.{qsub,pbs} set ft=sh]])
 -- c/c++ switching between source and header using clangd
 vim.cmd([[au FileType c,cpp noremap gH :ClangdSwitchSourceHeader<CR>]])
 
+-- project specific
+local projects_grp = vim.api.nvim_create_augroup("Projects", {})
+vim.api.nvim_create_autocmd("VimEnter", {
+    group = projects_grp,
+    pattern = { "/Users/smutch/work/astro/papers/mhysa/manuscript/*" },
+    callback = function() vim.cmd.colorscheme "dawnfox" end
+})
+
 -- }}}
 
 -- vim: set fdm=marker:
