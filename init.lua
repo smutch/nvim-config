@@ -133,7 +133,7 @@ vim.cmd([[
     augroup MyTerm
         au!
         au BufWinEnter,WinEnter,TermOpen term://* startinsert 
-        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber | hi! TermNormal guibg=Black
+        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber | hi! TermNormal guibg=#191726	
     augroup END
 ]])
 
