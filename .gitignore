@@ -16,3 +16,5 @@ tags
 thesaurus
 init.vim
 persistent_config.toml
+
+persist.toml
