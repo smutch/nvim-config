@@ -76,7 +76,7 @@ vim.o.wildignore = vim.o.wildignore ..
 vim.o.suffixes = '.bak,.o,.info,.swp,.obj'
 
 -- by default, use the last focussed split for opening new items
-vim.opt.switchbuf:append{ uselast=true }
+vim.opt.switchbuf:append{ uselast = true }
 
 -- }}}
 
@@ -246,6 +246,16 @@ vim.cmd([[command! Erc execute ':e ~/.config/nvim/init.lua']])
 vim.cmd([[command! Eplug execute ':e ~/.config/nvim/lua/plugins.lua']])
 vim.cmd([[command! Elsp execute ':e ~/.config/nvim/lua/lsp.lua']])
 vim.cmd([[command! Esnip execute ':e ~/.config/nvim/lua/snippets.lua']])
+
+-- Smart dd (https://www.reddit.com/r/neovim/comments/w0jzzv/comment/igfjx5y/?utm_source=share&utm_medium=web2x&context=3)
+local function smart_dd()
+    if vim.api.nvim_get_current_line():match("^%s*$") then
+        return "\"_dd"
+    else
+        return "dd"
+    end
+end
+vim.keymap.set('n', 'dd', smart_dd, {noremap=true, expr = true})
 
 -- Capture output from a vim command (like :version or :messages) into a split scratch buffer.
 --  (credit: ctechols, https://gist.github.com/ctechols/c6f7c900b09be5a31dc8)
