@@ -25,11 +25,11 @@ return require'packer'.startup(function(use, use_rocks)
     use 'neovim/nvim-lspconfig'
     use { 'ray-x/lsp_signature.nvim', config = require"plugins.lsp_signature".config }
     use 'jose-elias-alvarez/null-ls.nvim'
-    use 'nvim-lua/lsp_extensions.nvim'
     use 'kosayoda/nvim-lightbulb'
     use { 'folke/lsp-trouble.nvim', config = require"plugins.trouble".config }
     use { 'j-hui/fidget.nvim', config = function() require"fidget".setup() end }
     use { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end }
+    use { 'simrat39/rust-tools.nvim' }
     -- use { "barreiroleo/ltex-extra.nvim" }
     -- use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = function() require("lsp_lines").setup() end }
 

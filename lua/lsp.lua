@@ -101,7 +101,10 @@ require "mason-lspconfig".setup_handlers({
 			opts.cmd = { vim.g.clangd_bin, "--background-index" }
 			require "lspconfig".clangd.setup(opts)
 		end
-	end
+	end,
+    ["rust_analyzer"] = function()
+        require"rust-tools".setup({server = base_opts})
+    end
 })
 
 local null_ls = require("null-ls")

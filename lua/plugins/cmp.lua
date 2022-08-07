@@ -78,9 +78,6 @@ function M.config()
 
         vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
         vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl = "", numhl = "" })
-
-        vim.cmd(
-        [[autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix = ' 﫢 ', highlight = "NonText", only_current_line = true, enabled = {"TypeHint", "ChainingHint", "ParameterHint"}}]])
 end
 
 return M
