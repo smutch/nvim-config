@@ -16,7 +16,6 @@ vim.diagnostic.config({
     severity_sort = true
 })
 
-
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
@@ -53,13 +52,9 @@ local on_attach = function(client, bufnr)
     -- require('nvim-navic').attach(client, bufnr)
 end
 
-
 -- nvim-ufo
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true
-}
+capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
 local base_opts = {
     on_attach = on_attach,
@@ -71,8 +66,9 @@ local base_opts = {
             pythonPath = h.python_interpreter_path,
             analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } }
         },
-        pylsp = { plugins = { pycodestyle = { maxLineLength = 120 },
-        jedi = { environment = h.python_interpreter_path } } },
+        pylsp = {
+            plugins = { pycodestyle = { maxLineLength = 120 }, jedi = { environment = h.python_interpreter_path } }
+        },
         ['rust-analyzer'] = {
             checkOnSave = {
                 allFeatures = true,
@@ -81,29 +77,33 @@ local base_opts = {
                 }
             }
         },
-        Lua = { diagnostics = { globals = { 'vim' } }, workspace = { preloadFileSize = 500 }, format = { enable = false } },
+        Lua = {
+            diagnostics = { globals = { 'vim' } },
+            workspace = { preloadFileSize = 500 },
+            format = { enable = false }
+        }
         -- ltex = { language = "en", additionalRules = { enablePickyRules = true }, disabledRules = {  } },
     }
 
 }
 
 -- Use mason to set up automatically installed servers
-require "mason-lspconfig".setup_handlers({
-    function (server_name) -- default handler (optional)
+require"mason-lspconfig".setup_handlers({
+    function(server_name) -- default handler (optional)
         require("lspconfig")[server_name].setup(base_opts)
     end,
-	-- Customize the options passed to the server
-	["clangd"] = function()
-		if vim.g.clangd_bin then
-			-- This is for systems (like OzSTAR) where glibc is too old to be compatible
-			-- with binary releases of clangd...
-			local opts = vim.deepcopy(base_opts)
-			opts.cmd = { vim.g.clangd_bin, "--background-index" }
-			require "lspconfig".clangd.setup(opts)
-		end
-	end,
+    -- Customize the options passed to the server
+    ["clangd"] = function()
+        if vim.g.clangd_bin then
+            -- This is for systems (like OzSTAR) where glibc is too old to be compatible
+            -- with binary releases of clangd...
+            local opts = vim.deepcopy(base_opts)
+            opts.cmd = { vim.g.clangd_bin, "--background-index" }
+            require"lspconfig".clangd.setup(opts)
+        end
+    end,
     ["rust_analyzer"] = function()
-        require"rust-tools".setup({server = base_opts})
+        require"rust-tools".setup({ server = base_opts, tools = { inlay_hints = { max_len_align = true, max_len_align_padding = 2 } } })
     end
 })
 
@@ -129,18 +129,17 @@ null_ls.setup {
         null_ls.builtins.formatting.prettier.with({
             filetypes = { "html", "json", "yaml", "markdown" },
             args = { "--print-width=1000" }
-        }), null_ls.builtins.formatting.nimpretty,
-        null_ls.builtins.diagnostics.chktex
+        }), null_ls.builtins.formatting.nimpretty, null_ls.builtins.diagnostics.chktex
     },
     debounce = base_opts.flags.debounce_text_changes,
     on_attach = on_attach
 }
 
-require 'lspconfig'.nimls.setup(base_opts)
+require'lspconfig'.nimls.setup(base_opts)
 
 local julia_opts = vim.deepcopy(base_opts)
 julia_opts.julia = { environmentPath = "./" }
-require 'lspconfig'.julials.setup(julia_opts)
+require'lspconfig'.julials.setup(julia_opts)
 
 -- local ltex_opts = vim.deepcopy(base_opts)
 -- ltex_opts.on_attach = function(client, buffer)
