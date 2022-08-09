@@ -62,8 +62,8 @@ return require'packer'.startup(function(use, use_rocks)
     -- }}}
 
     -- editing {{{
-    use { 'windwp/nvim-autopairs', config = require "plugins.autopairs".config }
-    use { 'github/copilot.vim', opt = true, setup = require "plugins.copilot".setup }
+    use { 'windwp/nvim-autopairs', config = require"plugins.autopairs".config }
+    use { 'github/copilot.vim', opt = true, setup = require"plugins.copilot".setup }
     use 'tpope/vim-rsi'
     use { 'ggandor/leap.nvim', config = function() require('leap').set_default_keymaps() end }
 
@@ -158,7 +158,14 @@ return require'packer'.startup(function(use, use_rocks)
 
     -- colorschemes {{{
     use { 'navarasu/onedark.nvim', opt = true }
-    use { 'EdenEast/nightfox.nvim' }
+    use {
+        'EdenEast/nightfox.nvim',
+        config = function()
+            require'nightfox'.setup {
+                options = { styles = { comments = "italic", keywords = "bold", types = "italic,bold" } }
+            }
+        end
+    }
     use { 'Shatur/neovim-ayu', opt = true }
     use {
         'projekt0n/github-nvim-theme',
