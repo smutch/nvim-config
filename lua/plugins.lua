@@ -98,6 +98,7 @@ return require'packer'.startup(function(use, use_rocks)
     use { 'rmagatti/auto-session', config = require"plugins.auto-session".config }
     use 'chrisbra/vim-diff-enhanced'
     use { 'moll/vim-bbye', config = require"plugins.vim-bbye".config }
+    use 'bfredl/nvim-luadev'
 
     use {
         "nvim-neo-tree/neo-tree.nvim",

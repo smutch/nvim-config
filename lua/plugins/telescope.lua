@@ -29,6 +29,7 @@ function M.config()
     h.noremap('n', '<leader>fp', '<cmd>Telescope packer<cr>')
     h.noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
     h.noremap('n', '<leader>fs', '<cmd>Telescope symbols<cr>')
+    vim.keymap.set('n', 'z=', function() require'telescope.builtin'.spell_suggest(require'telescope.themes'.get_dropdown{}) end, {noremap=true})
 end
 
 return M
