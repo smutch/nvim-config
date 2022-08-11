@@ -213,6 +213,7 @@ return require'packer'.startup(function(use, use_rocks)
         config = require"plugins.vimtex".config,
         requires = 'jbyuki/nabla.nvim'
     }
+    use({ "quarto-dev/quarto-vim", requires = { { "vim-pandoc/vim-pandoc-syntax" } }, ft = { "quarto" } })
     use { 'vim-scripts/scons.vim', opt = true, ft = { 'scons' } }
     use { 'Glench/Vim-Jinja2-Syntax', opt = true, ft = { 'html' } }
     use { 'mattn/emmet-vim', opt = true, ft = { 'html', 'css', 'sass', 'jinja.html' } }
