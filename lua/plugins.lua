@@ -111,6 +111,21 @@ return require'packer'.startup(function(use, use_rocks)
     }
 
     use "elihunter173/dirbuf.nvim"
+    use { 'mfussenegger/nvim-dap', config = require"plugins.dap".config }
+    use { 'rcarriga/nvim-dap-ui', config = function()
+            local dap, dapui = require("dap"), require("dapui")
+            dapui.setup()
+            dap.listeners.after.event_initialized["dapui_config"] = function()
+                dapui.open()
+            end
+            dap.listeners.before.event_terminated["dapui_config"] = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited["dapui_config"] = function()
+                dapui.close()
+            end
+        end
+    }
 
     -- telescope {{{
     use { "AckslD/nvim-neoclip.lua", config = require"plugins.nvim-neoclip".config }
