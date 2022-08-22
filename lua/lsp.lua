@@ -22,7 +22,6 @@ local on_attach = function(client, bufnr)
     local function bnoremap(...) h.bnoremap(bufnr, ...) end
 
     bnoremap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { silent = true })
-    bnoremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
     bnoremap("n", "gD", "<cmd>Telescope lsp_implementations<CR>", { silent = true })
     bnoremap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { silent = true })
     bnoremap("n", "1gD", "<cmd>Telescope lsp_type_definitions<CR>", { silent = true })
@@ -32,11 +31,16 @@ local on_attach = function(client, bufnr)
     bnoremap("n", "g/", "<cmd>Telescope lsp_workspace_symbols<CR>", { silent = true })
     bnoremap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { silent = true })
     bnoremap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true })
-    bnoremap("n", "<localleader>D", "<cmd>LspTroubleToggle<cr>", { silent = true })
-    bnoremap("n", "<localleader>d", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
+    bnoremap("n", "<localleader>D", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
     bnoremap("n", "<localleader>i", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
     bnoremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true }) -- WARNING: lsp (this module) NOT vim.lsp.buf
-    bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+    if client.name ~= "rust_analyzer" then
+        bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+        bnoremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
+    else
+        vim.keymap.set("n", "ga", require'rust-tools'.code_action_group.code_action_group, { buffer = bufnr })
+        vim.keymap.set("n", "K", require'rust-tools'.hover_actions.hover_actions, { buffer = bufnr })
+    end
 
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticVirtualTextError"})')
@@ -48,6 +52,7 @@ local on_attach = function(client, bufnr)
         'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticVirtualTextHint"})')
 
     vim.g.lsp_diagnostic_sign_priority = 100
+
 
     -- require('nvim-navic').attach(client, bufnr)
 end
