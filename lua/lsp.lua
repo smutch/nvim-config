@@ -98,15 +98,15 @@ require"mason-lspconfig".setup_handlers({
         require("lspconfig")[server_name].setup(base_opts)
     end,
     -- Customize the options passed to the server
-    ["clangd"] = function()
-        if vim.g.clangd_bin then
-            -- This is for systems (like OzSTAR) where glibc is too old to be compatible
-            -- with binary releases of clangd...
-            local opts = vim.deepcopy(base_opts)
-            opts.cmd = { vim.g.clangd_bin, "--background-index" }
-            require"lspconfig".clangd.setup(opts)
-        end
-    end,
+    -- ["clangd"] = function()
+    --     if vim.g.clangd_bin then
+    --         -- This is for systems (like OzSTAR) where glibc is too old to be compatible
+    --         -- with binary releases of clangd...
+    --         local opts = vim.deepcopy(base_opts)
+    --         opts.cmd = { vim.g.clangd_bin, "--background-index" }
+    --         require"lspconfig".clangd.setup(opts)
+    --     end
+    -- end,
     ["rust_analyzer"] = function()
         require"rust-tools".setup({ server = base_opts, tools = { inlay_hints = { max_len_align = true, max_len_align_padding = 2 } } })
     end
