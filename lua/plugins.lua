@@ -160,7 +160,17 @@ return require'packer'.startup(function(use, use_rocks)
     -- git {{{
     use { 'tpope/vim-fugitive', requires = 'tpope/vim-git', config = require"plugins.vim-fugitive".config }
     use 'junegunn/gv.vim'
-    use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
+    use { 'lewis6991/gitsigns.nvim', config = function()
+        require('gitsigns').setup({
+            on_attach = function(bufnr)
+                local gs = require("gitsigns")
+                vim.keymap.set("n", "]h", gs.next_hunk, { noremap = true })
+                vim.keymap.set("n", "[h", gs.prev_hunk, { noremap = true })
+                vim.keymap.set("n", "ghs", gs.stage_hunk, { noremap = true })
+                vim.keymap.set("n", "ghu", gs.undo_stage_hunk, { noremap = true })
+            end
+    })
+    end }
     use { 'f-person/git-blame.nvim', config = require"plugins.git-blame".config }
     -- }}}
 
