@@ -100,6 +100,7 @@ return require'packer'.startup(function(use, use_rocks)
     use { 'bfredl/nvim-luadev', config = require"plugins.luadev".config }
     use { 'lewis6991/impatient.nvim', config = function() require'impatient' end }
     use { 'RRethy/vim-illuminate', config = function() require'illuminate'.configure{} end }
+    use 'sindrets/diffview.nvim'
 
     use {
         "nvim-neo-tree/neo-tree.nvim",
