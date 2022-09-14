@@ -70,6 +70,8 @@ vim.o.directory = os.getenv('HOME') .. "/.nvim_backup"
 vim.o.undodir = os.getenv('HOME') .. "/.nvim_backup/undo" -- where to save undo histories
 vim.o.undofile = true -- Save undo's after file closes
 
+vim.opt.diffopt:append{ "algorithm:patience" }  -- use the patience algo for diffs
+
 -- ignores
 vim.o.wildignore = vim.o.wildignore ..
                        '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'

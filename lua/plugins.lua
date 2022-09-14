@@ -96,7 +96,6 @@ return require'packer'.startup(function(use, use_rocks)
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-eunuch'
     use { 'rmagatti/auto-session', config = require"plugins.auto-session".config }
-    use 'chrisbra/vim-diff-enhanced'
     use { 'moll/vim-bbye', config = require"plugins.vim-bbye".config }
     use { 'bfredl/nvim-luadev', config = require"plugins.luadev".config }
     use { 'lewis6991/impatient.nvim', config = function() require'impatient' end }
