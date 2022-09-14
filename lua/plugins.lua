@@ -31,7 +31,10 @@ return require'packer'.startup(function(use, use_rocks)
     use { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end }
     use { 'simrat39/rust-tools.nvim' }
     -- use { "barreiroleo/ltex-extra.nvim" }
-    -- use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = function() require("lsp_lines").setup() end }
+    use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = function()
+        require("lsp_lines").setup()
+        vim.keymap.set("", "<Leader>D", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+    end }
 
     -- Disabled just now as it doesn't work with pylsp (see winbar setup too)
     -- use 'SmiteshP/nvim-navic'

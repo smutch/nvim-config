@@ -13,7 +13,10 @@ vim.diagnostic.config({
     virtual_text = false,
     signs = true,
     update_in_insert = false,
-    severity_sort = true
+    severity_sort = true,
+
+    -- set for lsp_lines plugin
+    virtual_lines = { only_current_line = true }
 })
 
 local on_attach = function(client, bufnr)
