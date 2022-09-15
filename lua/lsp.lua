@@ -16,7 +16,7 @@ vim.diagnostic.config({
     severity_sort = true,
 
     -- set for lsp_lines plugin
-    virtual_lines = { only_current_line = true }
+    -- virtual_lines = { only_current_line = true }
 })
 
 local on_attach = function(client, bufnr)
