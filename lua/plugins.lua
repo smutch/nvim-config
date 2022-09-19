@@ -31,10 +31,14 @@ return require'packer'.startup(function(use, use_rocks)
     use { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end }
     use { 'simrat39/rust-tools.nvim' }
     -- use { "barreiroleo/ltex-extra.nvim" }
-    use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = function()
-        require("lsp_lines").setup()
-        vim.keymap.set("", "<Leader>D", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-    end }
+    use {
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = function()
+            require("lsp_lines").setup()
+            vim.diagnostic.config({ virtual_lines = false })
+            vim.keymap.set("", "<Leader>D", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+        end
+    }
 
     -- Disabled just now as it doesn't work with pylsp (see winbar setup too)
     -- use 'SmiteshP/nvim-navic'
@@ -101,9 +105,16 @@ return require'packer'.startup(function(use, use_rocks)
     use { 'rmagatti/auto-session', config = require"plugins.auto-session".config }
     use { 'moll/vim-bbye', config = require"plugins.vim-bbye".config }
     use { 'bfredl/nvim-luadev', config = require"plugins.luadev".config }
-    use { 'lewis6991/impatient.nvim', config = function() require'impatient' end }
-    use { 'RRethy/vim-illuminate', config = function() require'illuminate'.configure{} end }
+    use { 'lewis6991/impatient.nvim', config = function() require 'impatient' end }
+    use { 'RRethy/vim-illuminate', config = function() require'illuminate'.configure {} end }
     use 'sindrets/diffview.nvim'
+    use {
+        'Canop/nvim-bacon',
+        config = function()
+            vim.keymap.set('n', '<leader>bn', ':BaconLoad<CR>:w<CR>:BaconNext<CR>', { noremap = true })
+            vim.keymap.set('n', '<leader>bg', ':BaconList<CR>', { noremap = true })
+        end
+    }
 
     use {
         "nvim-neo-tree/neo-tree.nvim",
@@ -117,18 +128,14 @@ return require'packer'.startup(function(use, use_rocks)
 
     use "elihunter173/dirbuf.nvim"
     use { 'mfussenegger/nvim-dap', config = require"plugins.dap".config }
-    use { 'rcarriga/nvim-dap-ui', config = function()
+    use {
+        'rcarriga/nvim-dap-ui',
+        config = function()
             local dap, dapui = require("dap"), require("dapui")
             dapui.setup()
-            dap.listeners.after.event_initialized["dapui_config"] = function()
-                dapui.open()
-            end
-            dap.listeners.before.event_terminated["dapui_config"] = function()
-                dapui.close()
-            end
-            dap.listeners.before.event_exited["dapui_config"] = function()
-                dapui.close()
-            end
+            dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+            dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+            dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
         end
     }
 
@@ -160,17 +167,20 @@ return require'packer'.startup(function(use, use_rocks)
     -- git {{{
     use { 'tpope/vim-fugitive', requires = 'tpope/vim-git', config = require"plugins.vim-fugitive".config }
     use 'junegunn/gv.vim'
-    use { 'lewis6991/gitsigns.nvim', config = function()
-        require('gitsigns').setup({
-            on_attach = function(bufnr)
-                local gs = require("gitsigns")
-                vim.keymap.set("n", "]h", gs.next_hunk, { noremap = true })
-                vim.keymap.set("n", "[h", gs.prev_hunk, { noremap = true })
-                vim.keymap.set("n", "ghs", gs.stage_hunk, { noremap = true })
-                vim.keymap.set("n", "ghu", gs.undo_stage_hunk, { noremap = true })
-            end
-    })
-    end }
+    use {
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('gitsigns').setup({
+                on_attach = function(bufnr)
+                    local gs = require("gitsigns")
+                    vim.keymap.set("n", "]h", gs.next_hunk, { noremap = true })
+                    vim.keymap.set("n", "[h", gs.prev_hunk, { noremap = true })
+                    vim.keymap.set("n", "ghs", gs.stage_hunk, { noremap = true })
+                    vim.keymap.set("n", "ghu", gs.undo_stage_hunk, { noremap = true })
+                end
+            })
+        end
+    }
     use { 'f-person/git-blame.nvim', config = require"plugins.git-blame".config }
     -- }}}
 
