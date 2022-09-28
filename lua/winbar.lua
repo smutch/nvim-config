@@ -25,15 +25,17 @@ M.winbar = function()
         end
     end
 
-    -- local location = ''
+    local location = ''
     -- if navic.is_available() then
     --     location = navic.get_location()
+    -- end
+    -- if location ~= '' then
+    --     location = '  ' .. location
     -- end
 
     local modified = vim.o.modified and '[+] ' or ''
 
-    -- return ' ' .. win_num .. ' | ' .. modified .. '%f >> ' .. location
-    return ' ' .. win_num .. ' | ' .. modified .. '%f'
+    return ' ' .. win_num .. ' | ' .. modified .. '%f' .. location
 end
 
 vim.o.winbar = "%{%v:lua.require('winbar').winbar()%}"
