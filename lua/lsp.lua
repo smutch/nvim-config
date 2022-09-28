@@ -53,7 +53,6 @@ local on_attach = function(client, bufnr)
 
     vim.g.lsp_diagnostic_sign_priority = 100
 
-
     -- require('nvim-navic').attach(client, bufnr)
 end
 
@@ -107,10 +106,12 @@ require"mason-lspconfig".setup_handlers({
     --         require"lspconfig".clangd.setup(opts)
     --     end
     -- end,
-    ["rust_analyzer"] = function()
-        require"rust-tools".setup({ server = base_opts, tools = { inlay_hints = { max_len_align = true, max_len_align_padding = 2 } } })
-    end
+
+    -- Let rust-tools (below) setup rust_analyzer for us
+    ["rust_analyzer"] = nil
 })
+
+require"rust-tools".setup({ server = base_opts, tools = { inlay_hints = { max_len_align = true, max_len_align_padding = 2 } } })
 
 local null_ls = require("null-ls")
 null_ls.setup {
