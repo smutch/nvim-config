@@ -229,7 +229,7 @@ return require'packer'.startup(function(use, use_rocks)
         config = require"plugins.nvim-scrollbar".config
     }
     use {
-        '~/dotfiles/nvim/my_plugins/persist',
+        'smutch/persist.nvim',
         rocks = 'toml',
         config = function() require"persist.colorscheme".set() end
     }
