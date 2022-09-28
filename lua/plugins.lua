@@ -93,8 +93,7 @@ return require'packer'.startup(function(use, use_rocks)
         run = ':TSUpdate',
         config = require"plugins.nvim-treesitter".config
     }
-    -- use 'nvim-treesitter/nvim-treesitter-context'
-    -- use { 'SmiteshP/nvim-gps', config = function() require("nvim-gps").setup() end }
+    use 'nvim-treesitter/nvim-treesitter-context'
     use { 'nvim-treesitter/playground', opt = true }
     use { 'tpope/vim-dispatch', config = require"plugins.vim-dispatch".config }
     -- }}}
