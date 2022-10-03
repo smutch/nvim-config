@@ -191,7 +191,7 @@ else
     vim.o.grepprg = "grep -nHRI $* ."
 end
 h.noremap('n', '<leader>*', [[:silent grep! "<C-r><C-w>"<CR>:Trouble quickfix<CR>]])
-vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args>|Trouble quickfix')
+vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args> | Trouble quickfix')
 h.noremap('n', '<leader>/', ':Grep ')
 
 -- handy mapping to fold around previous search results

@@ -22,12 +22,15 @@ function M.config()
             ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
             ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
 
+            ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+            ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+
             ["<Tab>"] = cmp.mapping(function(fallback)
                 local luasnip = require 'luasnip'
                 if cmp.visible() then
                     cmp.select_next_item()
-                elseif luasnip.expandable() then
-                    luasnip.expand()
+                elseif luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
                 elseif has_words_before() then
                     cmp.complete()
                 else
@@ -36,8 +39,11 @@ function M.config()
             end, { "i", "s" }),
 
             ["<S-Tab>"] = cmp.mapping(function(fallback)
+                local luasnip = require 'luasnip'
                 if cmp.visible() then
                     cmp.select_prev_item()
+                elseif luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
                 else
                     fallback()
                 end

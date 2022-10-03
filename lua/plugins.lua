@@ -1,4 +1,4 @@
--- begin by ensure packer is actually installed!
+-- begin by ensuring packer is actually installed
 local fn = vim.fn
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -59,6 +59,24 @@ return require'packer'.startup(function(use, use_rocks)
     use 'hrsh7th/cmp-cmdline'
     use 'lukas-reineke/cmp-under-comparator'
     use 'saadparwaiz1/cmp_luasnip'
+
+    use {
+        "zbirenbaum/copilot.lua",
+        event = {"VimEnter"},
+        config = function()
+            vim.defer_fn(function()
+                require("copilot").setup()
+            end, 100)
+        end,
+    }
+    use {
+        "zbirenbaum/copilot-cmp",
+        after = { "copilot.lua" },
+        config = function ()
+            require("copilot_cmp").setup()
+        end
+    }
+
     use { 'hrsh7th/nvim-cmp', config = require"plugins.cmp".config }
     -- }}}
 
@@ -150,7 +168,7 @@ return require'packer'.startup(function(use, use_rocks)
 
     use { "antoinemadec/FixCursorHold.nvim" }
     use { 'folke/todo-comments.nvim', config = function() require("todo-comments").setup {} end }
-    use { 'norcalli/nvim-colorizer.lua', opt = true, config = function() require'colorizer'.setup() end }
+    use { 'uga-rosa/ccc.nvim', config = function() require'ccc'.setup {} end }
     use { 'majutsushi/tagbar', opt = true, config = require"plugins.tagbar".config }
     use 'christoomey/vim-tmux-navigator'
     use {
