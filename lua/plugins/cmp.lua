@@ -11,6 +11,17 @@ function M.config()
         nil
     end
 
+    local default_sources = {
+        { name = 'calc', group_index = 1  },
+        { name = 'path', group_index = 1  },
+        { name = 'nvim_lsp', group_index = 1  },
+        { name = 'luasnip', group_index = 1  },
+        { name = 'treesitter', group_index = 1  },
+        { name = 'emoji', group_index = 2  },
+        { name = 'buffer', keyword_length = 5, group_index = 2 },
+        { name = 'copilot', group_index = 1  },
+    }
+
     cmp.setup({
         snippet = { expand = function(args)
             require('luasnip').lsp_expand(args.body)
@@ -49,10 +60,7 @@ function M.config()
                 end
             end, { "i", "s" })
         },
-        sources = cmp.config.sources({
-            { name = 'calc' }, { name = 'path' }, { name = 'nvim_lsp' }, { name = 'luasnip' },
-            { name = 'treesitter' }, { name = 'emoji' }, { name = 'buffer', keyword_length = 5 }
-        }),
+        sources = default_sources,
         formatting = { format = require 'lspkind'.cmp_format({ with_text = true, maxwidth = 50 }) },
         experimental = { native_menu = false, ghost_text = true },
         sorting = {
@@ -73,17 +81,37 @@ function M.config()
         sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
         })
 
-        local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-        cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '{' } }))
+    local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '{' } }))
 
-        vim.cmd(
-        [[autocmd FileType lua lua require'cmp'.setup.buffer {sources = { { name = 'nvim_lua' } } }]])
-        vim.cmd([[autocmd FileType toml lua require'cmp'.setup.buffer {sources = { { name = 'crates' } } }]])
-        vim.cmd(
-        [[autocmd FileType tex lua require'cmp'.setup.buffer {sources = { { name = 'omni' } }, { name = 'latex_symbols'} }]])
-
-        vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-        vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl = "", numhl = "" })
+    local augrp = vim.api.nvim_create_augroup("Projects", {})
+    vim.api.nvim_create_autocmd("FileType", {
+        group = augrp,
+        pattern = { "lua" },
+        callback = function()
+            local sources = { { name = 'nvim_lua', group_index = 1 } }
+            vim.list_extend(sources, default_sources)
+            cmp.setup.buffer { sources = sources }
+        end
+    })
+    vim.api.nvim_create_autocmd("FileType", {
+        group = augrp,
+        pattern = { "toml" },
+        callback = function()
+            local sources = { { name = 'crates', group_index = 1 } }
+            vim.list_extend(sources, default_sources)
+            cmp.setup.buffer { sources = sources }
+        end
+    })
+    vim.api.nvim_create_autocmd("FileType", {
+        group = augrp,
+        pattern = { "tex" },
+        callback = function()
+            local sources = { { name = 'omni', group_index = 1 } , { name = 'latex_symbols', group_index = 1 } }
+            vim.list_extend(sources, default_sources)
+            cmp.setup.buffer { sources = sources }
+        end
+    })
 end
 
 return M

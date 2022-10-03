@@ -25,7 +25,17 @@ return require'packer'.startup(function(use, use_rocks)
     use 'neovim/nvim-lspconfig'
     use { 'ray-x/lsp_signature.nvim', config = require"plugins.lsp_signature".config }
     use 'jose-elias-alvarez/null-ls.nvim'
-    use 'kosayoda/nvim-lightbulb'
+    use {'kosayoda/nvim-lightbulb',
+        config = function()
+            local augrp = vim.api.nvim_create_augroup("Projects", {})
+            vim.api.nvim_create_autocmd("CursorHold,CursorHoldI", {
+                group = augrp,
+                pattern = { "*" },
+                callback = require'nvim-lightbulb'.update_lightbulb
+            })
+            vim.fn.sign_define('LightBulbSign', { text = "ﯧ", texthl = "", linehl = "", numhl = "" })
+        end
+    }
     use { 'folke/lsp-trouble.nvim', config = require"plugins.trouble".config }
     use { 'j-hui/fidget.nvim', config = function() require"fidget".setup() end }
     use { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end }
@@ -62,20 +72,10 @@ return require'packer'.startup(function(use, use_rocks)
 
     use {
         "zbirenbaum/copilot.lua",
-        event = {"VimEnter"},
-        config = function()
-            vim.defer_fn(function()
-                require("copilot").setup()
-            end, 100)
-        end,
+        event = { "VimEnter" },
+        config = function() vim.defer_fn(function() require("copilot").setup() end, 100) end
     }
-    use {
-        "zbirenbaum/copilot-cmp",
-        after = { "copilot.lua" },
-        config = function ()
-            require("copilot_cmp").setup()
-        end
-    }
+    use { "zbirenbaum/copilot-cmp", after = { "copilot.lua" }, config = function() require("copilot_cmp").setup() end }
 
     use { 'hrsh7th/nvim-cmp', config = require"plugins.cmp".config }
     -- }}}
@@ -245,11 +245,7 @@ return require'packer'.startup(function(use, use_rocks)
         requires = 'kevinhwang91/nvim-hlslens',
         config = require"plugins.nvim-scrollbar".config
     }
-    use {
-        'smutch/persist.nvim',
-        rocks = 'toml',
-        config = function() require"persist.colorscheme".set() end
-    }
+    use { 'smutch/persist.nvim', rocks = 'toml', config = function() require"persist.colorscheme".set() end }
 
     -- }}}
 
