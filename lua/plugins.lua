@@ -9,7 +9,13 @@ if fn.empty(fn.glob(install_path)) > 0 then
     })
     vim.cmd [[packadd packer.nvim]]
 end
-require'packer'.init({ max_jobs = 50 })
+
+-- need to check if we are headless before setting max_jobs (https://github.com/wbthomason/packer.nvim/issues/751)
+if vim.tbl_count(vim.api.nvim_list_uis()) > 0 then
+    require'packer'.init({ max_jobs = 50 })
+else
+    require'packer'.init({})
+end
 
 -- configure plugins
 return require'packer'.startup(function(use, use_rocks)
@@ -72,8 +78,9 @@ return require'packer'.startup(function(use, use_rocks)
 
     use {
         "zbirenbaum/copilot.lua",
+        opt = true,
         event = { "VimEnter" },
-        config = function() vim.defer_fn(function() require("copilot").setup() end, 100) end
+        config = function() vim.defer_fn(function() require("copilot").setup() end, 100) end,
     }
     use { "zbirenbaum/copilot-cmp", after = { "copilot.lua" }, config = function() require("copilot_cmp").setup() end }
 
@@ -106,11 +113,10 @@ return require'packer'.startup(function(use, use_rocks)
     -- treesitter {{{
     use {
         'nvim-treesitter/nvim-treesitter',
-        requires = 'nvim-treesitter/nvim-treesitter-textobjects',
-        run = ':TSUpdate',
         config = require"plugins.nvim-treesitter".config
     }
-    use 'nvim-treesitter/nvim-treesitter-context'
+    use { 'nvim-treesitter/nvim-treesitter-context', after = 'nvim-treesitter' }
+    use { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' }
     use { 'nvim-treesitter/playground', opt = true }
     use { 'tpope/vim-dispatch', config = require"plugins.vim-dispatch".config }
     -- }}}

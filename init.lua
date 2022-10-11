@@ -3,6 +3,7 @@ if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then 
 
 -- plugins
 require "plugins"
+if vim.env.NVIM_FRESH_INSTALL then return end
 require "lsp"
 require "winbar"
 local h = require "helpers"
