@@ -2,7 +2,6 @@ local M = {}
 
 function M.config()
     local h = require 'helpers'
-    require 'snippets'
 
     function _G.luasnip_map_forward()
         local luasnip = require 'luasnip'
@@ -26,6 +25,10 @@ function M.config()
     h.noremap('s', '<C-l>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
     h.noremap('i', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
     h.noremap('s', '<C-y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
+    vim.api.nvim_create_user_command("LuaSnipEdit", require("luasnip.loaders").edit_snippet_files, {})
+
+    require("luasnip.loaders.from_vscode").lazy_load()
+    require("luasnip.loaders.from_lua").load({paths = vim.fn.stdpath("config") .. "/lua/snippets"})
 end
 
 return M

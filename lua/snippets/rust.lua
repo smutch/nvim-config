@@ -1,14 +1,3 @@
-local ls = require "luasnip"
-local s = ls.snippet
-local sn = ls.snippet_node
-local isn = ls.indent_snippet_node
-local t = ls.text_node
-local i = ls.insert_node
-local f = ls.function_node
-local c = ls.choice_node
-local d = ls.dynamic_node
-local events = require("luasnip.util.events")
-
 local function split_multiline(str, delimiter)
     delimiter = delimiter or "\n"
     local result = {}
@@ -23,9 +12,10 @@ local function split_multiline(str, delimiter)
     return result
 end
 
-ls.snippets = {
-    rust = {
-        s({ trig = "nannou_app", name = "Nannou App", descr = "Scafold for Nannou App" }, t(split_multiline([[
+
+return {
+    s({ trig = "nannou_app", name = "Nannou App", descr = "Scafold for Nannou App" },
+        t(split_multiline([[
 use nannou::prelude::*;
 
 fn main() {
@@ -49,12 +39,6 @@ fn view(app: &App, _model: &Model, frame: Frame) {
     draw.ellipse().color(STEELBLUE);
     draw.to_frame(app, &frame).unwrap();
 }
-]])))
-    },
-    python = {
-        s({ trig = "ifmain", name = "if __main__", descr = "If this is being run directly" },
-          t({ 'if __name__ == "__main__":', "\t" }), i(0))
-    }
+        ]]))
+    )
 }
-
-require("luasnip.loaders.from_vscode").lazy_load()

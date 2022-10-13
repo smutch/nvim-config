@@ -31,7 +31,8 @@ return require'packer'.startup(function(use, use_rocks)
     use 'neovim/nvim-lspconfig'
     use { 'ray-x/lsp_signature.nvim', config = require"plugins.lsp_signature".config }
     use 'jose-elias-alvarez/null-ls.nvim'
-    use {'kosayoda/nvim-lightbulb',
+    use {
+        'kosayoda/nvim-lightbulb',
         config = function()
             local augrp = vim.api.nvim_create_augroup("Projects", {})
             vim.api.nvim_create_autocmd("CursorHold,CursorHoldI", {
@@ -60,6 +61,12 @@ return require'packer'.startup(function(use, use_rocks)
     -- use 'SmiteshP/nvim-navic'
     -- }}}
 
+    -- snippets {{{
+    use 'rafamadriz/friendly-snippets'
+    use 'onsails/lspkind-nvim'
+    use { 'L3MON4D3/LuaSnip', config = require"plugins.luasnip".config }
+    -- }}}
+
     -- completion {{{
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
@@ -78,19 +85,20 @@ return require'packer'.startup(function(use, use_rocks)
 
     use {
         "zbirenbaum/copilot.lua",
-        opt = true,
         event = { "VimEnter" },
-        config = function() vim.defer_fn(function() require("copilot").setup() end, 100) end,
+        config = function()
+            vim.defer_fn(function()
+                require("copilot").setup({
+                    filetypes = {
+                        ["*"] = false -- disable for all non-listed filetypes in this table
+                    }
+                })
+            end, 100)
+        end
     }
     use { "zbirenbaum/copilot-cmp", after = { "copilot.lua" }, config = function() require("copilot_cmp").setup() end }
 
     use { 'hrsh7th/nvim-cmp', config = require"plugins.cmp".config }
-    -- }}}
-
-    -- snippets {{{
-    use 'rafamadriz/friendly-snippets'
-    use 'onsails/lspkind-nvim'
-    use { 'L3MON4D3/LuaSnip', config = require"plugins.luasnip".config }
     -- }}}
 
     -- editing {{{
@@ -111,10 +119,7 @@ return require'packer'.startup(function(use, use_rocks)
     -- }}}
 
     -- treesitter {{{
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        config = require"plugins.nvim-treesitter".config
-    }
+    use { 'nvim-treesitter/nvim-treesitter', config = require"plugins.nvim-treesitter".config }
     use { 'nvim-treesitter/nvim-treesitter-context', after = 'nvim-treesitter' }
     use { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' }
     use { 'nvim-treesitter/playground', opt = true }
