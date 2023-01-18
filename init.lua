@@ -1,19 +1,32 @@
 -- system specific config
 if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then require 'system' end
 
+vim.g.mapleader = " "
+vim.g.localleader = "\\"
+
 -- plugins
-require "plugins"
-if vim.env.NVIM_FRESH_INSTALL then return end
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup("plugins")
 require "lsp"
 require "winbar"
 local h = require "helpers"
 
 -- basic setting {{{
+vim.cmd.colorscheme "nightfox"
 vim.o.termguicolors = true
 vim.o.encoding = 'utf-8'
-
-vim.g.mapleader = " "
-vim.g.localleader = "\\"
 
 vim.o.history = 1000 -- Store a ton of history (default is 20)
 vim.o.wildmenu = true -- show list instead of just completing

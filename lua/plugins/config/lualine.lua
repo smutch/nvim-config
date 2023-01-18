@@ -250,7 +250,7 @@ function M.statusline()
 end
 
 function M.config()
-    local setup = require('plugins.lualine')
+    local setup = require('plugins.config.lualine')
     setup.statusline()
 
     local augroup = vim.api.nvim_create_augroup("lualine_colors", {})
