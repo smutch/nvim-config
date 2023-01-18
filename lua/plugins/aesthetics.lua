@@ -38,7 +38,7 @@ return {
             vim.g.taboo_renamed_tab_format = " %I %l%m "
         end
     },
-    { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = function() require('pqf').setup() end },
+    { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = true },
     { 'kevinhwang91/nvim-hlslens' },
     {
         'petertriho/nvim-scrollbar',

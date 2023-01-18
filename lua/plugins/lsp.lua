@@ -1,6 +1,6 @@
 return {
-    { 'williamboman/mason.nvim', config = function() require"mason".setup() end },
-    { "williamboman/mason-lspconfig.nvim", config = function() require("mason-lspconfig").setup() end },
+    { 'williamboman/mason.nvim', config = true },
+    { "williamboman/mason-lspconfig.nvim", config = true },
     { 'neovim/nvim-lspconfig' },
     {
         'ray-x/lsp_signature.nvim',
@@ -30,7 +30,7 @@ return {
             require "helpers".noremap('n', '<leader>L', ':<C-u>lvimgrep // % | Trouble loclist<CR>')
         end
     },
-    { 'j-hui/fidget.nvim', config = function() require"fidget".setup() end },
+    { 'j-hui/fidget.nvim', config = true },
     { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end },
     { 'simrat39/rust-tools.nvim' },
     {

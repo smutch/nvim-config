@@ -96,8 +96,8 @@ return {
     },
     { 'elihunter173/dirbuf.nvim' },
     { "antoinemadec/FixCursorHold.nvim" },
-    { 'folke/todo-comments.nvim', config = function() require("todo-comments").setup {} end },
-    { 'uga-rosa/ccc.nvim', config = function() require'ccc'.setup {} end },
+    { 'folke/todo-comments.nvim', config = true },
+    { 'uga-rosa/ccc.nvim', config = true },
     {
         'majutsushi/tagbar',
         config = function()
@@ -126,7 +126,7 @@ return {
             vim.keymap.set('n', ']f', function() return require("neotest").jump.next({ status = "failed" }) end, {noremap = true, silent = true})
         end
     },
-    { 'rcarriga/nvim-notify', config = function() vim.notify = require 'notify' end },
+    { 'rcarriga/nvim-notify', config = true },
     { 'folke/zen-mode.nvim', cmd = 'ZenMode', config = function() require("zen-mode").setup {} end },
     {
         'numToStr/FTerm.nvim',
@@ -137,7 +137,7 @@ return {
         end
     },
     { 'neomake/neomake' },
-    { 'kkoomen/vim-doge', run = ':call doge#install()', config = function() vim.g.dodge_doc_standard_python = 'google' end },
+    { 'danymat/neogen', config = true },
     { 'kevinhwang91/promise-async' },
     {
         'kevinhwang91/nvim-ufo',

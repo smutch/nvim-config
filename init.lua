@@ -258,7 +258,7 @@ vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e <cmd>lua QFOpenInWind
 
 -- Edit rc files
 vim.cmd([[command! Erc execute ':e ~/.config/nvim/init.lua']])
-vim.cmd([[command! Eplug execute ':e ~/.config/nvim/lua/plugins.lua']])
+vim.cmd([[command! Eplug execute ':e ~/.config/nvim/lua/plugins/']])
 vim.cmd([[command! Elsp execute ':e ~/.config/nvim/lua/lsp.lua']])
 vim.cmd([[command! Esnip execute ':e ~/.config/nvim/lua/snippets.lua']])
 

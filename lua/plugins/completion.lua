@@ -1,7 +1,7 @@
 return {
      { 'hrsh7th/cmp-nvim-lsp' },
      { 'hrsh7th/cmp-buffer' },
-     { 'Saecki/crates.nvim', config = function() require"crates".setup() end },
+     { 'Saecki/crates.nvim', config = true },
      { 'hrsh7th/cmp-path' },
      { 'hrsh7th/cmp-nvim-lua' },
      { 'kdheepak/cmp-latex-symbols' },
@@ -27,7 +27,7 @@ return {
             end, 100)
         end
     },
-    { "zbirenbaum/copilot-cmp", config = function() require("copilot_cmp").setup() end },
+    { "zbirenbaum/copilot-cmp", config = true },
     {
         'hrsh7th/nvim-cmp',
         config = function()
