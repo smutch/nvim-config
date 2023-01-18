@@ -49,7 +49,7 @@
   "neotest": { "branch": "master", "commit": "fee5ce9bdc3dff4706a29b012e75025ab376becb" },
   "neotest-python": { "branch": "master", "commit": "e53920d145d37783c8d8428365a0a230e0a18cb5" },
   "neovim-ayu": { "branch": "master", "commit": "ba749799e48a8c5065106989eb8bf9915b51081d" },
-  "nightfox.nvim": { "branch": "main", "commit": "925cca4bb4978530b13f96eb2de887ded19484d0" },
+  "nightfox.nvim": { "branch": "main", "commit": "23a678f47722801f70fe64df39a1fa29f6abf297" },
   "nim.nvim": { "branch": "master", "commit": "87afde2ae995723e0338e1851c3b3c1cbd81d955" },
   "nui.nvim": { "branch": "main", "commit": "b99e6cb13dc51768abc1c4c8585045a0c0459ef1" },
   "null-ls.nvim": { "branch": "main", "commit": "7bd74a821d991057ca1c0ca569d8252c4f89f860" },

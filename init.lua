@@ -1,6 +1,7 @@
 -- system specific config
 if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then require 'system' end
 
+-- must be set before lazy plugins loaded
 vim.g.mapleader = " "
 vim.g.localleader = "\\"
 
@@ -17,15 +18,15 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-
 require("lazy").setup("plugins")
+
 require "lsp"
 require "winbar"
 local h = require "helpers"
 
 -- basic setting {{{
-vim.cmd.colorscheme "nightfox"
 vim.o.termguicolors = true
+vim.cmd.colorscheme "nightfox"
 vim.o.encoding = 'utf-8'
 
 vim.o.history = 1000 -- Store a ton of history (default is 20)
@@ -133,6 +134,18 @@ h.map('n', '<C-x>', '<Nop>')
 
 -- Turn off search highlighting
 h.noremap('', [[|]], '<Esc>:<C-u>noh<CR>', { silent = true })
+local ns = vim.api.nvim_create_namespace('toggle_hlsearch')
+local function toggle_hlsearch(char)
+  if vim.fn.mode() == 'n' then
+    local keys = { '<CR>', 'n', 'N', '*', '#', '?', '/' }
+    local new_hlsearch = vim.tbl_contains(keys, vim.fn.keytrans(char))
+
+    if vim.opt.hlsearch:get() ~= new_hlsearch then
+      vim.opt.hlsearch = new_hlsearch
+    end
+  end
+end
+vim.on_key(toggle_hlsearch, ns)
 
 -- Paste without auto indent
 h.noremap('n', '<F2>', ':set invpaste paste?<CR>', {})
@@ -175,20 +188,6 @@ if vim.g.neovide then
     vim.g.neovide_cursor_animation_length = 0.01
     vim.g.neovide_cursor_vfx_mode = "railgun"
 end
--- }}}
-
--- colors {{{
-
--- require('packer.luarocks').setup_paths()
--- local colorscheme_switch = require'colorscheme-switch'
--- if not colorscheme_switch.apply() then
---     vim.cmd 'colorscheme nightfox'
--- end
--- colorscheme_switch.setup()
-
--- see persist plugin config
--- require "persist.colorscheme".set()
-
 -- }}}
 
 -- searching {{{
