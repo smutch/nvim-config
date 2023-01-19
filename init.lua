@@ -161,11 +161,12 @@ h.noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=a
 vim.env.LAUNCHED_FROM_NVIM = 1
 vim.env.NVIM_LISTEN_ADDRESS = vim.v.servername
 
+--  | hi! TermNormal guibg=#191726
 vim.cmd([[
     augroup MyTerm
         au!
         au BufWinEnter,WinEnter,TermOpen term://* startinsert 
-        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber | hi! TermNormal guibg=#191726	
+        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber
     augroup END
 ]])
 
