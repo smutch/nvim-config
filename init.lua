@@ -4,6 +4,7 @@ if table.getn(vim.api.nvim_get_runtime_file("lua/system.lua", false)) == 1 then 
 -- must be set before lazy plugins loaded
 vim.g.mapleader = " "
 vim.g.localleader = "\\"
+vim.o.termguicolors = true
 
 -- plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -22,11 +23,13 @@ require("lazy").setup("plugins")
 
 require "lsp"
 require "winbar"
+Persist = require "persist"
 local h = require "helpers"
 
+-- load serialized options
+
 -- basic setting {{{
-vim.o.termguicolors = true
-vim.cmd.colorscheme "nightfox"
+vim.cmd.colorscheme = Persist.colorscheme()
 vim.o.encoding = 'utf-8'
 
 vim.o.history = 1000 -- Store a ton of history (default is 20)
