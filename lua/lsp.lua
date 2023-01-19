@@ -22,17 +22,18 @@ local on_attach = function(client, bufnr)
     local function bnoremap(...) h.bnoremap(bufnr, ...) end
 
     bnoremap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { silent = true })
-    bnoremap("n", "gD", "<cmd>Telescope lsp_implementations<CR>", { silent = true })
+    bnoremap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { silent = true })
+    bnoremap("n", "1gd", "<cmd>Telescope lsp_type_definitions<CR>", { silent = true })
+    bnoremap("n", "gm", "<cmd>Telescope lsp_implementations<CR>", { silent = true })
     bnoremap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { silent = true })
-    bnoremap("n", "1gD", "<cmd>Telescope lsp_type_definitions<CR>", { silent = true })
     bnoremap("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
     bnoremap("n", "gr", "<cmd>Telescope lsp_references<CR>", { silent = true })
     bnoremap("n", "1g/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true })
     bnoremap("n", "g/", "<cmd>Telescope lsp_workspace_symbols<CR>", { silent = true })
     bnoremap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { silent = true })
     bnoremap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true })
-    bnoremap("n", "<localleader>D", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
-    bnoremap("n", "<localleader>i", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
+    bnoremap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
+    bnoremap("n", "<localleader>d", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
     bnoremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true }) -- WARNING: lsp (this module) NOT vim.lsp.buf
     if client.name ~= "rust_analyzer" then
         bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
