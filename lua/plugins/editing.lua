@@ -73,10 +73,14 @@ return {
         end
     },
     {
-        'junegunn/vim-easy-align',
+        'echasnovski/mini.align',
         config = function()
-            vim.api.nvim_set_keymap('v', '<Enter>', '<Plug>(EasyAlign)', {})
-            vim.api.nvim_set_keymap('n', 'gA', '<Plug>(EasyAlign)', {})
+            require('mini.align').setup({
+                mappings = {
+                    start = 'gA',
+                    start_with_preview = '1gA',
+                },
+            })
         end
     },
     { 'michaeljsmith/vim-indent-object' },

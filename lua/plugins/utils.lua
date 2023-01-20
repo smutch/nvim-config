@@ -94,7 +94,13 @@ return {
             vim.api.nvim_set_keymap('n', '<leader>F', '<cmd>Neotree reveal<cr>', { noremap = true })
         end
     },
-    { 'elihunter173/dirbuf.nvim' },
+    {
+        'stevearc/oil.nvim',
+        config = function()
+            require("oil").setup()
+            vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+        end
+    },
     { "antoinemadec/FixCursorHold.nvim" },
     { 'folke/todo-comments.nvim', config = true },
     { 'uga-rosa/ccc.nvim', config = true },
@@ -137,7 +143,6 @@ return {
         end
     },
     { 'neomake/neomake' },
-    { 'danymat/neogen', config = true },
     { 'kevinhwang91/promise-async' },
     {
         'kevinhwang91/nvim-ufo',
