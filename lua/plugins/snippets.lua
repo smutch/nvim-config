@@ -1,8 +1,8 @@
 return {
-    { 'rafamadriz/friendly-snippets' },
     { 'onsails/lspkind-nvim' },
     {
         'L3MON4D3/LuaSnip',
+        dependencies = { 'rafamadriz/friendly-snippets' },
         config = function()
             local h = require 'helpers'
 
