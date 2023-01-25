@@ -161,14 +161,39 @@ h.noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=a
 vim.env.LAUNCHED_FROM_NVIM = 1
 vim.env.NVIM_LISTEN_ADDRESS = vim.v.servername
 
---  | hi! TermNormal guibg=#191726
-vim.cmd([[
-    augroup MyTerm
-        au!
-        au BufWinEnter,WinEnter,TermOpen term://* startinsert 
-        au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber
-    augroup END
-]])
+local term_augroup = vim.api.nvim_create_augroup("MyTerm", {})
+vim.api.nvim_create_autocmd({"TermOpen"}, {
+  pattern = {[[term://*]]},
+  group = term_augroup,
+  callback = function()
+      vim.cmd.startinsert()
+  end
+})
+vim.api.nvim_create_autocmd({"BufWinEnter","WinEnter","TermOpen"}, {
+  pattern = {[[term://*]]},
+  group = term_augroup,
+  callback = function()
+      local status, Color = pcall(require, "nightfox.lib.color")
+      if(status) then
+          local normal = vim.api.nvim_get_hl_by_name('Normal', {})
+          normal['background'] = Color.from_hex(string.format("%06x", normal['background'])):brighten(-5):to_hex()
+          vim.api.nvim_set_hl(0, "TermNormal", normal)
+      end
+      vim.wo.winhighlight = "Normal:TermNormal"
+      vim.wo.cursorline = false
+      vim.wo.number = false
+      vim.wo.relativenumber = false
+      vim.cmd.startinsert()
+  end
+})
+
+-- vim.cmd([[
+--     augroup MyTerm
+--         au!
+--         au BufWinEnter,WinEnter,TermOpen term://* startinsert 
+--         au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber
+--     augroup END
+-- ]])
 
 h.map('t', 'kj', [[<C-\><C-n>]])
 h.map('t', '<C-h>', [[<C-\><C-n><C-w>h]])
