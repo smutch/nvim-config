@@ -121,5 +121,6 @@
   "vim-unimpaired": { "branch": "master", "commit": "6d44a6dc2ec34607c41ec78acf81657248580bf1" },
   "vimtex": { "branch": "master", "commit": "c77ec4e15768ffcb97a96d1bf2df1ef58e94acdd" },
   "wgsl.vim": { "branch": "main", "commit": "fbe8f0dd179aec8525d6c93bb992e409b0e4e0ee" },
-  "zen-mode.nvim": { "branch": "main", "commit": "38a660094dd023176ed4d6ecb1fe028546717f78" }
+  "zen-mode.nvim": { "branch": "main", "commit": "38a660094dd023176ed4d6ecb1fe028546717f78" },
+  "zepl.vim": { "branch": "master", "commit": "a5dffabc3aa43fed526d50077f1ef28268e8d7cc" }
 }

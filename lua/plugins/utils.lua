@@ -187,4 +187,5 @@ return {
             })
         end
     },
+    { 'axvr/zepl.vim' }
 }
