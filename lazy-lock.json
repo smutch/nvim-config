@@ -49,6 +49,7 @@
   "neomake": { "branch": "master", "commit": "0556893d7fbc1948ac1a82cd0f41023d76a234b2" },
   "neotest": { "branch": "master", "commit": "6676edc3078b8936df989df639900dc9a70dfc8a" },
   "neotest-python": { "branch": "master", "commit": "e53920d145d37783c8d8428365a0a230e0a18cb5" },
+  "neotest-rust": { "branch": "main", "commit": "53db2f682e337c2188d81e8ecdf779bff869fb74" },
   "neovim-ayu": { "branch": "master", "commit": "ba749799e48a8c5065106989eb8bf9915b51081d" },
   "neural": { "branch": "master", "commit": "b26aa80ece36d3359a8addea8dd80fd454d3885e" },
   "nightfox.nvim": { "branch": "main", "commit": "f093297145e917f7ae4d0e09fc9c07ac40620361" },

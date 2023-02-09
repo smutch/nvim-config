@@ -115,12 +115,14 @@ return {
     { "nvim-treesitter/nvim-treesitter" },
     { "antoinemadec/FixCursorHold.nvim" },
     { 'rcarriga/neotest-python' },
+    { 'rouge8/neotest-rust' },
     {
         "rcarriga/neotest",
         config = function()
             require("neotest").setup({
                 adapters = {
                     require("neotest-python"),
+                    require("neotest-rust"),
                 },
             })
 
