@@ -19,7 +19,17 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-require("lazy").setup("plugins")
+require("lazy").setup("plugins",
+{
+    -- see https://github.com/folke/lazy.nvim/issues/462
+    concurrency = 32,
+    checker = {
+        enabled = true,
+        concurrency = 8,
+        frequency = 3600 * 24 * 7,
+    }
+}
+)
 
 require "lsp"
 require "winbar"
