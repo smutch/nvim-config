@@ -136,10 +136,16 @@ null_ls.setup {
         null_ls.builtins.formatting.prettier.with({
             filetypes = { "html", "json", "yaml", "markdown" },
             args = { "--print-width=1000" }
-        }), null_ls.builtins.formatting.nimpretty, null_ls.builtins.diagnostics.chktex
+        }),
+        null_ls.builtins.formatting.nimpretty,
+        null_ls.builtins.diagnostics.chktex,
+        null_ls.builtins.diagnostics.ruff.with({
+            args = { "--line-length=120" }
+        })
     },
     debounce = base_opts.flags.debounce_text_changes,
-    on_attach = on_attach
+    on_attach = on_attach,
+    fallback_severity = vim.diagnostic.severity.HINT
 }
 
 require'lspconfig'.nimls.setup(base_opts)
