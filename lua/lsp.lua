@@ -74,14 +74,14 @@ local base_opts = {
         pylsp = {
             plugins = { pycodestyle = { maxLineLength = 120 }, jedi = { environment = h.python_interpreter_path } }
         },
-        ['rust-analyzer'] = {
-            checkOnSave = {
-                allFeatures = true,
-                overrideCommand = {
-                    'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
-                }
-            }
-        },
+        -- ['rust-analyzer'] = {
+        --     checkOnSave = {
+        --         allFeatures = true,
+        --         overrideCommand = {
+        --             'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
+        --         }
+        --     }
+        -- },
         Lua = {
             diagnostics = { globals = { 'vim' } },
             workspace = { preloadFileSize = 500 },

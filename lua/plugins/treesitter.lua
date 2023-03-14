@@ -76,8 +76,7 @@ return {
                         },
                     },
                 }
-                local ft_to_parser = require('nvim-treesitter.parsers').filetype_to_parsername
-                ft_to_parser.astro = "tsx"
+                vim.treesitter.language.register("astro", "tsx")
         end
     },
     { 'nvim-treesitter/nvim-treesitter-context' },

@@ -35,6 +35,7 @@ return {
      { 'xiyaowong/telescope-emoji.nvim' },
      { 'nvim-telescope/telescope-symbols.nvim' },
      { 'nvim-telescope/telescope-ui-select.nvim' },
+     { 'tsakirist/telescope-lazy.nvim' },
      {
          'nvim-telescope/telescope.nvim',
          config = function()

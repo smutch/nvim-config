@@ -16,15 +16,13 @@ return {
 
      {
         "zbirenbaum/copilot.lua",
-        event = { "VimEnter" },
+        event = { "InsertEnter" },
         config = function()
-            vim.defer_fn(function()
-                require("copilot").setup({
-                    filetypes = {
-                        ["*"] = false -- disable for all non-listed filetypes in this table
-                    }
-                })
-            end, 100)
+            require("copilot").setup({
+                filetypes = {
+                    ["*"] = false -- disable for all non-listed filetypes in this table
+                }
+            })
         end
     },
     { "zbirenbaum/copilot-cmp", config = true },

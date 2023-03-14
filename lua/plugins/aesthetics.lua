@@ -5,6 +5,12 @@ return {
         config = function()
             require'nightfox'.setup {
                 options = { styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
+                groups = {
+                    nightfox = {
+                        -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
+                        VertSplit = { fg = "sel1" },
+                    },
+                }
             }
         end
     },
@@ -15,7 +21,6 @@ return {
         config = function() require'github-theme'.setup { theme_style = 'dark' } end
     },
     { 'rmehri01/onenord.nvim' },
-    { 'kyazdani42/nvim-web-devicons' },
     {
         'nvim-lualine/lualine.nvim',
         config = require'plugins.config.lualine'.config
@@ -31,13 +36,13 @@ return {
             vim.cmd [[highlight! link IndentBlanklineChar VertSplit]]
         end
     },
-    {
-        'gcmt/taboo.vim',
-        config = function()
-            vim.g.taboo_tab_format = " %I %f%m "
-            vim.g.taboo_renamed_tab_format = " %I %l%m "
-        end
-    },
+    -- {
+    --     'gcmt/taboo.vim',
+    --     config = function()
+    --         vim.g.taboo_tab_format = " %I %f%m "
+    --         vim.g.taboo_renamed_tab_format = " %I %l%m "
+    --     end
+    -- },
     { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = true },
     { 'kevinhwang91/nvim-hlslens' },
     {
