@@ -3,7 +3,7 @@ return {
     { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } },
     { 'anntzer/vim-cython', ft = { 'python', 'cython' } },
     { 'adamclaxon/taskpaper.vim', ft = { 'taskpaper', 'tp' } },
-    { 'jbyuki/nabla.nvim' },
+    -- { 'jbyuki/nabla.nvim' },
     {
         'lervag/vimtex',
         ft = 'tex',

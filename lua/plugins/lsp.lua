@@ -2,13 +2,13 @@ return {
     { 'williamboman/mason.nvim', config = true },
     { "williamboman/mason-lspconfig.nvim", config = true },
     { 'neovim/nvim-lspconfig' },
-    {
-        'ray-x/lsp_signature.nvim',
-        config = function()
-            require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
-            vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
-        end
-    },
+    -- {
+    --     'ray-x/lsp_signature.nvim',
+    --     config = function()
+    --         require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
+    --         vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
+    --     end
+    -- },
     { 'jose-elias-alvarez/null-ls.nvim' },
     {
         'kosayoda/nvim-lightbulb',

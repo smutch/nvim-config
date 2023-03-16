@@ -48,7 +48,7 @@ return {
                  }
              }
 
-             local extensions = { "fzy_native", "emoji", "neoclip", "ui-select" }
+             local extensions = { "fzy_native", "emoji", "neoclip", "ui-select", "lazy" }
              for _, extension in ipairs(extensions) do telescope.load_extension(extension) end
 
              h.noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
