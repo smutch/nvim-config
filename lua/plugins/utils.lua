@@ -211,6 +211,13 @@ return {
                 icons = 'both'
             }
 
+            vim.api.nvim_create_autocmd('TermOpen', {
+                pattern = "*",
+                callback = function(ev)
+                    vim.bo.buflisted = false
+                end
+            })
+
             vim.api.nvim_create_autocmd('FileType', {
                 callback = function(tbl)
                     local set_offset = require('bufferline.api').set_offset
