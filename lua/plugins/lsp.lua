@@ -30,7 +30,7 @@ return {
             require "helpers".noremap('n', '<leader>L', ':<C-u>lvimgrep // % | Trouble loclist<CR>')
         end
     },
-    { 'j-hui/fidget.nvim', config = true },
+    -- { 'j-hui/fidget.nvim', config = true },
     { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end },
     { 'simrat39/rust-tools.nvim' },
     {

@@ -90,7 +90,7 @@ return {
                     hijack_netrw_behavior = "disabled"
                 },
             })
-            vim.api.nvim_set_keymap('n', '<leader>F', '<cmd>Neotree reveal<cr>', { noremap = true })
+            vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>Neotree reveal<cr>', { noremap = true })
         end
     },
     {
@@ -133,7 +133,14 @@ return {
             vim.keymap.set('n', ']f', function() return require("neotest").jump.next({ status = "failed" }) end, {noremap = true, silent = true})
         end
     },
-    { 'rcarriga/nvim-notify', config = true },
+    {
+        'rcarriga/nvim-notify', 
+        config = function()
+            require("notify").setup {
+                top_down = false
+            }
+        end
+    },
     { 'folke/zen-mode.nvim', cmd = 'ZenMode', config = function() require("zen-mode").setup {} end },
     {
         'numToStr/FTerm.nvim',

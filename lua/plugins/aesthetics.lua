@@ -9,6 +9,11 @@ return {
                     nightfox = {
                         -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
                         VertSplit = { fg = "sel1" },
+                        BufferCurrent = { bg = "bg2", fg = "fg1" },
+                        BufferCurrentIndex   = { bg = "bg2", fg = "diag.info" },
+                        BufferCurrentMod     = { bg = "bg2", fg = "diag.warn" },
+                        BufferCurrentSign    = { bg = "bg2", fg = "diag.info" },
+                        BufferCurrentTarget  = { bg = "bg2", fg = "diag.error" },
                     },
                 },
             }
