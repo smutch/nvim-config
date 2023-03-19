@@ -32,7 +32,7 @@ require("lazy").setup("plugins",
 )
 
 require "lsp"
--- require "winbar"
+require "winbar"
 Persist = require "persist"
 local h = require "helpers"
 

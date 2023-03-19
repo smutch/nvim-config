@@ -8,18 +8,13 @@ return {
              vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
              require('auto-session').setup {
+                 auto_clean_after_session_restore = true,
                  pre_save_cmds = { "tabdo Neotree close" },
                  post_save_cmds = { "tabdo Neotree show" },
                  post_restore_cmds = { "stopinsert" },
              }
          end
      },
-     -- {
-     --     'moll/vim-bbye',
-     --     config = function()
-     --         vim.api.nvim_set_keymap('n', 'Q', ':Bdelete<CR>', { noremap = true, silent = true })
-     --     end
-     -- },
      {
          'bfredl/nvim-luadev',
          config = function()
@@ -91,6 +86,7 @@ return {
                 },
             })
             vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>Neotree reveal<cr>', { noremap = true })
+            vim.api.nvim_set_keymap('n', '<leader>tb', '<cmd>Neotree buffers<cr>', { noremap = true })
         end
     },
     {
@@ -137,7 +133,7 @@ return {
         'rcarriga/nvim-notify', 
         config = function()
             require("notify").setup {
-                top_down = false
+                top_down = true
             }
         end
     },
@@ -195,6 +191,7 @@ return {
     },
     { 'axvr/zepl.vim',
         config = function()
+            vim.cmd [[runtime zepl/contrib/python.vim]]
             vim.g.repl_config = {
                 python = {
                     cmd = "python",
@@ -203,95 +200,102 @@ return {
                 }
         end
     },
-    { 'romgrk/barbar.nvim',
-        dependencies = 'nvim-tree/nvim-web-devicons',
+    {
+        -- WARNING: Don't use this if barbar is enabled
+        'moll/vim-bbye',
         config = function()
-            require'bufferline'.setup {
-                icon_pinned = '',
-                icons = 'both'
-            }
-
-            vim.api.nvim_create_autocmd('TermOpen', {
-                pattern = "*",
-                callback = function(ev)
-                    vim.bo.buflisted = false
-                end
-            })
-
-            vim.api.nvim_create_autocmd('FileType', {
-                callback = function(tbl)
-                    local set_offset = require('bufferline.api').set_offset
-
-                    local bufwinid
-                    local last_width
-                    local autocmd = vim.api.nvim_create_autocmd('WinScrolled', {
-                        callback = function()
-                            bufwinid = bufwinid or vim.fn.bufwinid(tbl.buf)
-
-                            local width = vim.api.nvim_win_get_width(bufwinid)
-                            if width ~= last_width then
-                                set_offset(width, 'FileTree')
-                                last_width = width
-                            end
-                        end,
-                    })
-
-                    vim.api.nvim_create_autocmd('BufWipeout', {
-                        buffer = tbl.buf,
-                        callback = function()
-                            vim.api.nvim_del_autocmd(autocmd)
-                            set_offset(0)
-                        end,
-                        once = true,
-                    })
-                end,
-                pattern = 'NvimTree', -- or any other filetree's `ft`
-            })
-
-            local map = vim.api.nvim_set_keymap
-            local opts = { nnoremap = True, silent = True }
-            -- Move to previous/next
-            map('n', '[b', '<Cmd>BufferPrevious<CR>', opts)
-            map('n', ']b', '<Cmd>BufferNext<CR>', opts)
-            -- Re-order to previous/next
-            map('n', '<b', '<Cmd>BufferMovePrevious<CR>', opts)
-            map('n', '>b', '<Cmd>BufferMoveNext<CR>', opts)
-            -- Goto buffer in position...
-            map('n', '<BS>1', '<Cmd>BufferGoto 1<CR>', opts)
-            map('n', '<BS>2', '<Cmd>BufferGoto 2<CR>', opts)
-            map('n', '<BS>3', '<Cmd>BufferGoto 3<CR>', opts)
-            map('n', '<BS>4', '<Cmd>BufferGoto 4<CR>', opts)
-            map('n', '<BS>5', '<Cmd>BufferGoto 5<CR>', opts)
-            map('n', '<BS>6', '<Cmd>BufferGoto 6<CR>', opts)
-            map('n', '<BS>7', '<Cmd>BufferGoto 7<CR>', opts)
-            map('n', '<BS>8', '<Cmd>BufferGoto 8<CR>', opts)
-            map('n', '<BS>9', '<Cmd>BufferGoto 9<CR>', opts)
-            -- map('n', '<BS><BS>', '<Cmd>BufferLast<CR>', opts)
-            -- Pin/unpin buffer
-            map('n', '<BS>p', '<Cmd>BufferPin<CR>', opts)
-            -- Close buffer
-            map('n', 'Q', '<Cmd>BufferClose<CR>', opts)
-            -- Wipeout buffer
-            --                 :BufferWipeout
-            -- Close commands
-            --                 :BufferCloseAllButCurrent
-            --                 :BufferCloseAllButPinned
-            --                 :BufferCloseAllButCurrentOrPinned
-            --                 :BufferCloseBuffersLeft
-            --                 :BufferCloseBuffersRight
-            -- Magic buffer-picking mode
-            map('n', '<BS>=', '<Cmd>BufferPick<CR>', opts)
-            -- Sort automatically by...
-            map('n', '<BS>b', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
-            map('n', '<BS>d', '<Cmd>BufferOrderByDirectory<CR>', opts)
-            map('n', '<BS>l', '<Cmd>BufferOrderByLanguage<CR>', opts)
-            map('n', '<BS>w', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
-
-            -- Other:
-            -- :BarbarEnable - enables barbar (enabled by default)
-            -- :BarbarDisable - very bad command, should never be used
+            vim.api.nvim_set_keymap('n', 'Q', ':Bdelete<CR>', { noremap = true, silent = true })
         end
     },
+    -- { 'romgrk/barbar.nvim',
+    --     dependencies = 'nvim-tree/nvim-web-devicons',
+    --     config = function()
+    --         require'bufferline'.setup {
+    --             icon_pinned = '',
+    --             icons = 'both'
+    --         }
+
+    --         vim.api.nvim_create_autocmd('TermOpen', {
+    --             pattern = "*",
+    --             callback = function(ev)
+    --                 vim.bo.buflisted = false
+    --             end
+    --         })
+
+    --         vim.api.nvim_create_autocmd('FileType', {
+    --             callback = function(tbl)
+    --                 local set_offset = require('bufferline.api').set_offset
+
+    --                 local bufwinid
+    --                 local last_width
+    --                 local autocmd = vim.api.nvim_create_autocmd('WinScrolled', {
+    --                     callback = function()
+    --                         bufwinid = bufwinid or vim.fn.bufwinid(tbl.buf)
+
+    --                         local width = vim.api.nvim_win_get_width(bufwinid)
+    --                         if width ~= last_width then
+    --                             set_offset(width, 'FileTree')
+    --                             last_width = width
+    --                         end
+    --                     end,
+    --                 })
+
+    --                 vim.api.nvim_create_autocmd('BufWipeout', {
+    --                     buffer = tbl.buf,
+    --                     callback = function()
+    --                         vim.api.nvim_del_autocmd(autocmd)
+    --                         set_offset(0)
+    --                     end,
+    --                     once = true,
+    --                 })
+    --             end,
+    --             pattern = 'NvimTree', -- or any other filetree's `ft`
+    --         })
+
+    --         local map = vim.api.nvim_set_keymap
+    --         local opts = { nnoremap = True, silent = True }
+    --         -- Move to previous/next
+    --         map('n', '[b', '<Cmd>BufferPrevious<CR>', opts)
+    --         map('n', ']b', '<Cmd>BufferNext<CR>', opts)
+    --         -- Re-order to previous/next
+    --         map('n', '<b', '<Cmd>BufferMovePrevious<CR>', opts)
+    --         map('n', '>b', '<Cmd>BufferMoveNext<CR>', opts)
+    --         -- Goto buffer in position...
+    --         map('n', '<BS>1', '<Cmd>BufferGoto 1<CR>', opts)
+    --         map('n', '<BS>2', '<Cmd>BufferGoto 2<CR>', opts)
+    --         map('n', '<BS>3', '<Cmd>BufferGoto 3<CR>', opts)
+    --         map('n', '<BS>4', '<Cmd>BufferGoto 4<CR>', opts)
+    --         map('n', '<BS>5', '<Cmd>BufferGoto 5<CR>', opts)
+    --         map('n', '<BS>6', '<Cmd>BufferGoto 6<CR>', opts)
+    --         map('n', '<BS>7', '<Cmd>BufferGoto 7<CR>', opts)
+    --         map('n', '<BS>8', '<Cmd>BufferGoto 8<CR>', opts)
+    --         map('n', '<BS>9', '<Cmd>BufferGoto 9<CR>', opts)
+    --         -- map('n', '<BS><BS>', '<Cmd>BufferLast<CR>', opts)
+    --         -- Pin/unpin buffer
+    --         map('n', '<BS>p', '<Cmd>BufferPin<CR>', opts)
+    --         -- Close buffer
+    --         map('n', 'Q', '<Cmd>BufferClose<CR>', opts)
+    --         -- Wipeout buffer
+    --         --                 :BufferWipeout
+    --         -- Close commands
+    --         --                 :BufferCloseAllButCurrent
+    --         --                 :BufferCloseAllButPinned
+    --         --                 :BufferCloseAllButCurrentOrPinned
+    --         --                 :BufferCloseBuffersLeft
+    --         --                 :BufferCloseBuffersRight
+    --         -- Magic buffer-picking mode
+    --         map('n', '<BS>=', '<Cmd>BufferPick<CR>', opts)
+    --         -- Sort automatically by...
+    --         map('n', '<BS>b', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
+    --         map('n', '<BS>d', '<Cmd>BufferOrderByDirectory<CR>', opts)
+    --         map('n', '<BS>l', '<Cmd>BufferOrderByLanguage<CR>', opts)
+    --         map('n', '<BS>w', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
+
+    --         -- Other:
+    --         -- :BarbarEnable - enables barbar (enabled by default)
+    --         -- :BarbarDisable - very bad command, should never be used
+    --     end
+    -- },
     {
         "folke/which-key.nvim",
         config = function()

@@ -37,6 +37,11 @@ return {
      { 'nvim-telescope/telescope-ui-select.nvim' },
      { 'tsakirist/telescope-lazy.nvim' },
      {
+         'rmagatti/session-lens',
+         config = true,
+         depends = 'rmagatti/auto-session'
+     },
+     {
          'nvim-telescope/telescope.nvim',
          config = function()
              local h = require 'helpers'

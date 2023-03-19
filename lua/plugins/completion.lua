@@ -31,8 +31,10 @@ return {
         "dense-analysis/neural",
         config = function()
             require('neural').setup({
-                open_ai = {
-                    api_key = require"system".openai_api_key
+                source = {
+                    openai = {
+                        api_key = require"system".openai_api_key
+                    },
                 },
             })
         end,
@@ -40,7 +42,7 @@ return {
             'MunifTanjim/nui.nvim',
             'ElPiloto/significant.nvim'
         },
-        cmd = 'NeuralPrompt'
+        cmd = 'Neural'
     },
 
     {
