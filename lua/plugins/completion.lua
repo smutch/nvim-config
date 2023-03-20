@@ -18,9 +18,14 @@ return {
         "zbirenbaum/copilot.lua",
         event = { "InsertEnter" },
         config = function()
+            local system = require"system"
+            local enable = false
+            if system.enable_copilot then
+                enable = true
+            end
             require("copilot").setup({
                 filetypes = {
-                    ["*"] = false -- disable for all non-listed filetypes in this table
+                    ["*"] = enable
                 }
             })
         end
