@@ -18,15 +18,13 @@ return {
         "zbirenbaum/copilot.lua",
         event = { "InsertEnter" },
         config = function()
-            local system = require"system"
-            local enable = false
-            if system.enable_copilot then
-                enable = true
-            end
+            local enable = require"system".enable_copilot
+            if enable == nil then enable = false end
             require("copilot").setup({
                 filetypes = {
                     ["*"] = enable
-                }
+                },
+                copilot_node_command = vim.g.node_host_prog
             })
         end
     },
