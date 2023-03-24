@@ -33,7 +33,7 @@ M.winbar = function()
     --     location = '  ' .. location
     -- end
 
-    local modified = vim.o.modified and ' ' or ''
+    local modified = vim.o.modified and '  ' or ''
 
     return ' ' .. win_num .. modified .. location
     -- return ' ' .. win_num .. ' | ' .. modified .. '%f' .. location

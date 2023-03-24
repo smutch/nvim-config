@@ -59,7 +59,8 @@ return {
                     "prompt",
                     "TelescopePrompt",
                     "tex"
-                }, }
+                },
+            }
 
             require("hlslens").setup({
                 require("scrollbar.handlers.search").setup()
@@ -96,6 +97,12 @@ return {
                 },
                 messages = {
                     view_search = false
+                },
+                routes = {
+                    {
+                        filter = { event = "msg_show", kind = "", find = "written$" },
+                        opts = { skip = true },
+                    },
                 },
             })
         end
