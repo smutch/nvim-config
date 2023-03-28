@@ -127,7 +127,7 @@ return {
         end
     },
     {
-        'rcarriga/nvim-notify', 
+        'rcarriga/nvim-notify',
         config = function()
             require("notify").setup {
                 top_down = true
@@ -204,8 +204,8 @@ return {
             vim.api.nvim_set_keymap('n', 'Q', ':Bdelete<CR>', { noremap = true, silent = true })
         end
     },
-    { 
-        "lkhphuc/jupyter-kernel.nvim", 
+    {
+        "lkhphuc/jupyter-kernel.nvim",
         opts = {
             inspect = {
                 -- opts for vim.lsp.util.open_floating_preview

@@ -243,8 +243,19 @@ else
     vim.o.grepprg = "grep -nHRI $* ."
 end
 h.noremap('n', '<leader>*', [[:silent grep! "<C-r><C-w>"<CR>:Trouble quickfix<CR>]])
-vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args> | Trouble quickfix')
-h.noremap('n', '<leader>/', ':Grep ')
+-- vim.cmd('command! -nargs=+ -complete=file -bar Grep silent grep! <args> | Trouble quickfix')
+
+local function my_grep()
+    local opts = {}
+
+    if vim.bo.filetype == "oil" then
+        opts = { search_dirs = { require "oil".get_current_dir() } }
+    end
+
+    require "telescope.builtin".live_grep(opts)
+end
+
+vim.keymap.set('n', '<leader>/', my_grep, {noremap=true})
 
 -- handy mapping to fold around previous search results
 -- taken from http://vim.wikia.com/wiki/Folding_with_Regular_Expression
