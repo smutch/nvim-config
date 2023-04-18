@@ -132,6 +132,7 @@ return {
             require("notify").setup {
                 top_down = true
             }
+            vim.keymap.set('n', '<leader><bs>', require("notify").dismiss)
         end
     },
     { 'folke/zen-mode.nvim', cmd = 'ZenMode', config = function() require("zen-mode").setup {} end },
@@ -186,17 +187,6 @@ return {
             })
         end
     },
-    { 'axvr/zepl.vim',
-        config = function()
-            vim.cmd [[runtime zepl/contrib/python.vim]]
-            vim.g.repl_config = {
-                python = {
-                    cmd = "python",
-                    formatter = vim.fn['zepl#contrib#python#formatter']
-                    }
-                }
-        end
-    },
     {
         -- WARNING: Don't use this if barbar is enabled
         'moll/vim-bbye',
@@ -231,5 +221,33 @@ return {
                 -- refer to the configuration section below
             })
         end,
+    },
+    {
+        'hkupty/iron.nvim',
+        config = function()
+            local iron = require("iron.core")
+
+            iron.setup {
+                config = {
+                    -- Whether a repl should be discarded or not
+                    scratch_repl = true,
+                    repl_definition = {
+                        python = {
+                            -- Can be a table or a function that
+                            -- returns a table
+                            command = {"ipython"}
+                        }
+                    },
+                    -- How the repl window will be displayed
+                    repl_open_cmd = "vertical botright 80 split",
+                },
+                keymaps = {
+                    send_motion = "gz",
+                    visual_send = "gz",
+                    cr = "gZ",
+                },
+                ignore_blank_lines = true,
+            }
+        end
     },
 }
