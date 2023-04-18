@@ -23,7 +23,6 @@ return {
     {
         'projekt0n/github-nvim-theme',
         opt = true,
-        config = function() require'github-theme'.setup { theme_style = 'dark' } end
     },
     { 'rmehri01/onenord.nvim' },
     {
