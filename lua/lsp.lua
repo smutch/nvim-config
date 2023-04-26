@@ -74,6 +74,12 @@ local base_opts = {
         pylsp = {
             plugins = { pycodestyle = { maxLineLength = 120 }, jedi = { environment = h.python_interpreter_path } }
         },
+        pyright = {
+            python = {
+                pythonPath = h.python_interpreter_path,
+                analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } },
+            }
+        },
         -- ['rust-analyzer'] = {
         --     checkOnSave = {
         --         allFeatures = true,
@@ -87,7 +93,6 @@ local base_opts = {
             workspace = { preloadFileSize = 500 },
             format = { enable = false }
         }
-        -- ltex = { language = "en", additionalRules = { enablePickyRules = true }, disabledRules = {  } },
     }
 
 }

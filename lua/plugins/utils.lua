@@ -102,7 +102,7 @@ return {
             vim.api.nvim_set_keymap('n', '<leader>T', ':TagbarToggle<CR>', {})
         end
     },
-    { 'christoomey/vim-tmux-navigator' },
+    -- { 'christoomey/vim-tmux-navigator' },
     { "nvim-lua/plenary.nvim" },
     { "nvim-treesitter/nvim-treesitter" },
     { "antoinemadec/FixCursorHold.nvim" },
