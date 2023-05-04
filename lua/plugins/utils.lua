@@ -271,5 +271,20 @@ return {
             -- smart mode
             vim.keymap.set('n', '<leader>R', require('smart-splits').start_resize_mode)
         end
-    }
+    },
+    { "folke/neodev.nvim" },
+    {
+        "jackMort/ChatGPT.nvim",
+        event = "VeryLazy",
+        config = function()
+            vim.env.OPENAI_API_KEY = require"system".openai_api_key
+            require("chatgpt").setup()
+        end,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim"
+        }
+    },
+    { 'tiagovla/scope.nvim', config = true },
 }

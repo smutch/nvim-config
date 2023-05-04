@@ -31,24 +31,6 @@ return {
     { "zbirenbaum/copilot-cmp", config = true },
 
     {
-        "dense-analysis/neural",
-        config = function()
-            require('neural').setup({
-                source = {
-                    openai = {
-                        api_key = require"system".openai_api_key
-                    },
-                },
-            })
-        end,
-        depends = {
-            'MunifTanjim/nui.nvim',
-            'ElPiloto/significant.nvim'
-        },
-        cmd = 'Neural'
-    },
-
-    {
         'hrsh7th/nvim-cmp',
         config = function()
             vim.o.completeopt = 'menu,menuone,noselect'
