@@ -31,7 +31,13 @@ return {
     { "zbirenbaum/copilot-cmp", config = true },
 
     {
-        'hrsh7th/nvim-cmp',
+        -- 'hrsh7th/nvim-cmp',
+
+        -- TODO: Temporary fix for ghost text
+        -- https://github.com/hrsh7th/nvim-cmp/issues/1565
+        'soifou/nvim-cmp',
+        branch = 'ghost-text-fix',
+
         config = function()
             vim.o.completeopt = 'menu,menuone,noselect'
             local cmp = require 'cmp'
