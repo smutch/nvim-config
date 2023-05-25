@@ -147,6 +147,9 @@ null_ls.setup {
         null_ls.builtins.diagnostics.ruff.with({
             extra_args = { "--line-length=88" }
         }),
+        null_ls.builtins.diagnostics.mypy.with({
+            extra_args = { "--python-executable=" .. h.python_interpreter_path, "--install-types", "--non-interactive" }
+        }),
     },
     debounce = base_opts.flags.debounce_text_changes,
     on_attach = on_attach,
