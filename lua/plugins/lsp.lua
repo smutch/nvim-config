@@ -31,7 +31,6 @@ return {
         end
     },
     -- { 'j-hui/fidget.nvim', config = true },
-    { 'lewis6991/spellsitter.nvim', config = function() require"spellsitter".setup() end },
     { 'simrat39/rust-tools.nvim' },
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
