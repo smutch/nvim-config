@@ -32,6 +32,7 @@ return {
 
             require("luasnip.loaders.from_vscode").lazy_load()
             require("luasnip.loaders.from_lua").load({paths = vim.fn.stdpath("config") .. "/lua/snippets"})
+            require("luasnip.loaders.from_vscode").load({paths = vim.fn.stdpath("config") .. "/lua/snippets"})
         end
     },
     { 'danymat/neogen', config = function() require('neogen').setup({ snippet_engine = "luasnip" }) end },

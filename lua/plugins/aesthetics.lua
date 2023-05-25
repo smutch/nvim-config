@@ -73,7 +73,7 @@ return {
             ]])
         end
     },
-    { 
+    {
         'folke/noice.nvim',
         depends = { "MunifTanjim/nui.nvim" },
         config = function()

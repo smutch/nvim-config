@@ -1,0 +1,23 @@
+{
+  "common": {
+    "prefix": "common",
+    "body": [
+      " channels:",
+      "   - conda-forge",
+      " dependencies:",
+      "   - ipykernel",
+      "   - numpy",
+      "   - scipy",
+      "   - matplotlib",
+      "   - holoviews",
+      "   - hvplot",
+      "   - panel",
+      "   - xarray",
+      "   - polars",
+      "   - pandas",
+      "   - rich",
+      "   - typer",
+    ],
+    "description": "Common base packages"
+  }
+}
