@@ -16,3 +16,4 @@ tags
 thesaurus
 init.vim
 persist.json
+lazy-lock.json
