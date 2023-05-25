@@ -72,7 +72,7 @@ local base_opts = {
             analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } }
         },
         pylsp = {
-            plugins = { pycodestyle = { maxLineLength = 120 }, jedi = { environment = h.python_interpreter_path } }
+            plugins = { pycodestyle = { maxLineLength = 88 }, jedi = { environment = h.python_interpreter_path } }
         },
         pyright = {
             python = {
@@ -127,7 +127,7 @@ null_ls.setup {
             command = 'black',
             extra_args = function(params)
                 if not h.file_exists('pyproject.toml') then
-                    return { "-l", "120" }
+                    return { "-l", "88" }
                 else
                     return {}
                 end
@@ -137,7 +137,7 @@ null_ls.setup {
             command = 'isort'
         },
         null_ls.builtins.formatting.lua_format
-            .with { args = { "--column-limit=120", "--spaces-inside-table-braces", "-i" } },
+            .with { extra_args = { "--column-limit=88", "--spaces-inside-table-braces", "-i" } },
         null_ls.builtins.formatting.prettier.with({
             filetypes = { "html", "json", "yaml", "markdown" },
             args = { "--print-width=1000" }
@@ -145,8 +145,8 @@ null_ls.setup {
         null_ls.builtins.formatting.nimpretty,
         null_ls.builtins.diagnostics.chktex,
         null_ls.builtins.diagnostics.ruff.with({
-            args = { "--line-length=120" }
-        })
+            extra_args = { "--line-length=88" }
+        }),
     },
     debounce = base_opts.flags.debounce_text_changes,
     on_attach = on_attach,
