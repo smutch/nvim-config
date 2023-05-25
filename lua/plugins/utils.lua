@@ -69,6 +69,10 @@ return {
             vim.fn.sign_define("DiagnosticSignHint", {text = "", texthl = "DiagnosticSignHint"})
 
             require("neo-tree").setup({
+                source_selector = {
+                    winbar = true,
+                    statusline = false
+                },
                 filesystem = {
                     window = {
                         mappings = {
@@ -94,7 +98,20 @@ return {
         end
     },
     { "antoinemadec/FixCursorHold.nvim" },
-    { 'folke/todo-comments.nvim', config = true },
+    {
+        "folke/todo-comments.nvim",
+        config = function()
+            require"todo-comments".setup {
+                colors = {
+                    hint = { "Keyword", "#9d79d6" },
+                },
+                gui_style = {
+                    fg = "BOLD",
+                    bg = "BOLD",
+                },
+            }
+        end
+    },
     { 'uga-rosa/ccc.nvim', config = true },
     {
         'majutsushi/tagbar',
