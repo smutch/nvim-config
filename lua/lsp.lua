@@ -54,6 +54,10 @@ local on_attach = function(client, bufnr)
 
     vim.g.lsp_diagnostic_sign_priority = 100
 
+    if client.name == "ruff_lsp" then
+        client.server_capabilities.hoverProvider = false
+    end
+
     -- require('nvim-navic').attach(client, bufnr)
 end
 
@@ -80,14 +84,6 @@ local base_opts = {
                 analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } },
             }
         },
-        -- ['rust-analyzer'] = {
-        --     checkOnSave = {
-        --         allFeatures = true,
-        --         overrideCommand = {
-        --             'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
-        --         }
-        --     }
-        -- },
         Lua = {
             diagnostics = { globals = { 'vim' } },
             workspace = { preloadFileSize = 500 },
@@ -113,11 +109,26 @@ require"mason-lspconfig".setup_handlers({
     --     end
     -- end,
 
-    -- Let rust-tools (below) setup rust_analyzer for us
-    ["rust_analyzer"] = nil
+    -- Let rust-tools setup rust_analyzer for us
+    ["rust_analyzer"] = function()
+        require"rust-tools".setup({ server = base_opts, tools = { inlay_hints = { max_len_align = true, max_len_align_padding = 2 } } })
+    end,
+
+    -- -- We can't update ruff setting on the fly and have to do this seprately at init time
+    -- ruff_lsp = function()
+    --     local opts = vim.deepcopy(base_opts)
+    --     opts.before_init = function(initialize_parameters, config)
+    --         initialize_parameters.initializationOptions = {
+    --             settings = {
+    --                 interpreter = { h.python_interpreter_path }
+    --             }
+    --         }
+    --     end
+    --     require("lspconfig")["ruff_lsp"].setup(opts)
+    -- end
 })
 
-require"rust-tools".setup({ server = base_opts, tools = { inlay_hints = { max_len_align = true, max_len_align_padding = 2 } } })
+
 
 local null_ls = require("null-ls")
 null_ls.setup {
@@ -132,10 +143,11 @@ null_ls.setup {
                     return {}
                 end
             end
-        }, null_ls.builtins.formatting.isort.with {
-            -- command = h.python_prefix .. '/bin/isort'
-            command = 'isort'
         },
+        -- null_ls.builtins.formatting.isort.with {
+        --     -- command = h.python_prefix .. '/bin/isort'
+        --     command = 'isort'
+        -- },
         null_ls.builtins.formatting.lua_format
             .with { extra_args = { "--column-limit=88", "--spaces-inside-table-braces", "-i" } },
         null_ls.builtins.formatting.prettier.with({
@@ -144,9 +156,9 @@ null_ls.setup {
         }),
         null_ls.builtins.formatting.nimpretty,
         null_ls.builtins.diagnostics.chktex,
-        null_ls.builtins.diagnostics.ruff.with({
-            extra_args = { "--line-length=88" }
-        }),
+        -- null_ls.builtins.diagnostics.ruff.with({
+        --     extra_args = { "--line-length=88" }
+        -- }),
         null_ls.builtins.diagnostics.mypy.with({
             extra_args = { "--python-executable=" .. h.python_interpreter_path, "--install-types", "--non-interactive" }
         }),
@@ -156,11 +168,9 @@ null_ls.setup {
     fallback_severity = vim.diagnostic.severity.HINT
 }
 
-require'lspconfig'.nimls.setup(base_opts)
-
-local julia_opts = vim.deepcopy(base_opts)
-julia_opts.julia = { environmentPath = "./" }
-require'lspconfig'.julials.setup(julia_opts)
+-- local julia_opts = vim.deepcopy(base_opts)
+-- julia_opts.julia = { environmentPath = "./" }
+-- require'lspconfig'.julials.setup(julia_opts)
 
 -- local ltex_opts = vim.deepcopy(base_opts)
 -- ltex_opts.on_attach = function(client, buffer)
