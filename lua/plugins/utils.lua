@@ -284,7 +284,7 @@ return {
             vim.keymap.set('n', '<leader>R', require('smart-splits').start_resize_mode)
         end
     },
-    { "folke/neodev.nvim" },
+    { "folke/neodev.nvim", opts = {} },
     {
         "jackMort/ChatGPT.nvim",
         event = "VeryLazy",
