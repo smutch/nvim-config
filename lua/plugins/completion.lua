@@ -24,7 +24,9 @@ return {
                 filetypes = {
                     ["*"] = enable
                 },
-                copilot_node_command = vim.g.node_host_prog
+                copilot_node_command = vim.g.node_host_prog,
+                suggestion = { enabled = false },
+                panel = { enabled = false },
             })
         end
     },
@@ -35,9 +37,7 @@ return {
     --         model = "bigcode/starcoder", -- can be a model ID or an http endpoint
     --     }
     -- },
-
     { "zbirenbaum/copilot-cmp", config = true },
-
     {
         -- 'hrsh7th/nvim-cmp',
 
