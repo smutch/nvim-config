@@ -17,3 +17,4 @@ thesaurus
 init.vim
 persist.json
 lazy-lock.json
+lua/.luarc.json
