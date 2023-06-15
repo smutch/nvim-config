@@ -114,6 +114,7 @@ return {
     },
     { 'uga-rosa/ccc.nvim', config = true },
     -- { 'christoomey/vim-tmux-navigator' },
+    { 'simrat39/symbols-outline.nvim', config = true },
     { "nvim-lua/plenary.nvim" },
     { "nvim-treesitter/nvim-treesitter" },
     { "antoinemadec/FixCursorHold.nvim" },
