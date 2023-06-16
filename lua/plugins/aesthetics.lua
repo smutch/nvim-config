@@ -133,6 +133,10 @@ return {
               return vim.bo[buf].buftype == "help"
             end,
           },
+          {
+            ft = "fugitive",
+            size = { height = 0.33 },
+          },
         },
         left = {
           {
