@@ -104,6 +104,8 @@ return {
             require"todo-comments".setup {
                 colors = {
                     hint = { "Keyword", "#9d79d6" },
+                    warning = { "DiagnosticError", "#c94f6d" },
+                    error = { "DiagnosticWarn", "WarningMsg", "FBBF24" }
                 },
                 gui_style = {
                     fg = "BOLD",
@@ -247,7 +249,7 @@ return {
                         python = {
                             -- Can be a table or a function that
                             -- returns a table
-                            command = {"ipython"}
+                            command = {"ipython", "--profile=interactive"}
                         }
                     },
                     -- How the repl window will be displayed
