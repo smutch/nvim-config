@@ -19,7 +19,6 @@ return {
             }
         end
     },
-    { 'Shatur/neovim-ayu' },
     {
         'projekt0n/github-nvim-theme',
         opt = true,
@@ -40,13 +39,6 @@ return {
             vim.cmd [[highlight! link IndentBlanklineChar VertSplit]]
         end
     },
-    -- {
-    --     'gcmt/taboo.vim',
-    --     config = function()
-    --         vim.g.taboo_tab_format = " %I %f%m "
-    --         vim.g.taboo_renamed_tab_format = " %I %l%m "
-    --     end
-    -- },
     { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = true },
     { 'kevinhwang91/nvim-hlslens' },
     {
@@ -107,61 +99,4 @@ return {
         end
     },
     { 'nvim-tree/nvim-web-devicons' },
-    {
-      "folke/edgy.nvim",
-      event = "VeryLazy",
-      init = function()
-        vim.opt.laststatus = 3
-        vim.opt.splitkeep = "screen"
-      end,
-      opts = {
-        bottom = {
-          {
-            ft = "",
-            size = { height = 0.33 },
-            filter = function(buf, win)
-              return vim.bo[buf].buftype == "terminal"
-            end,
-          },
-          "Trouble",
-          { ft = "qf", title = "QuickFix" },
-        },
-        left = {
-          {
-            title = "Neo-Tree",
-            ft = "neo-tree",
-            filter = function(buf)
-              return vim.b[buf].neo_tree_source == "filesystem"
-            end,
-            pinned = true,
-            size = { height = 0.4 },
-          },
-          {
-            title = "Neo-Tree Buffers",
-            ft = "neo-tree",
-            filter = function(buf)
-              return vim.b[buf].neo_tree_source == "buffers"
-            end,
-            pinned = true,
-            open = "Neotree position=top buffers",
-          },
-          {
-            title = "Neo-Tree Git",
-            ft = "neo-tree",
-            filter = function(buf)
-              return vim.b[buf].neo_tree_source == "git_status"
-            end,
-            pinned = true,
-            open = "Neotree position=right git_status",
-          },
-          {
-            ft = "Outline",
-            pinned = true,
-            open = "SymbolsOutlineOpen",
-          },
-          -- any other neo-tree windows
-          "neo-tree",
-        },
-      },
-    },
 }

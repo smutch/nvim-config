@@ -58,39 +58,6 @@ return {
         end
     },
     {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v2.x",
-        config = function()
-            vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
-            vim.fn.sign_define("DiagnosticSignError", {text = " ", texthl = "DiagnosticSignError"})
-            vim.fn.sign_define("DiagnosticSignWarn", {text = " ", texthl = "DiagnosticSignWarn"})
-            vim.fn.sign_define("DiagnosticSignInfo", {text = " ", texthl = "DiagnosticSignInfo"})
-            vim.fn.sign_define("DiagnosticSignHint", {text = "", texthl = "DiagnosticSignHint"})
-
-            require("neo-tree").setup({
-                source_selector = {
-                    winbar = false,
-                    statusline = false
-                },
-                filesystem = {
-                    window = {
-                        mappings = {
-                            ["-"] = "navigate_up",
-                            ["<bs>"] = nil,
-                            ["S"] = "split_with_window_picker",
-                            ["s"] = "vsplit_with_window_picker",
-                            ["<cr>"] = "open_with_window_picker"
-                        },
-                    },
-                    hijack_netrw_behavior = "disabled"
-                },
-            })
-            vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>Neotree reveal<cr>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>tb', '<cmd>Neotree buffers<cr>', { noremap = true })
-        end
-    },
-    {
         'stevearc/oil.nvim',
         config = function()
             require("oil").setup()
@@ -116,8 +83,6 @@ return {
     },
     { 'uga-rosa/ccc.nvim', config = true },
     -- { 'christoomey/vim-tmux-navigator' },
-    { 'simrat39/symbols-outline.nvim', config = true },
-    { "nvim-lua/plenary.nvim" },
     { "nvim-treesitter/nvim-treesitter" },
     { "antoinemadec/FixCursorHold.nvim" },
     { 'rcarriga/neotest-python' },
@@ -136,8 +101,8 @@ return {
             vim.keymap.set('n', '<localleader>tR', function() return require("neotest").run.run(vim.fn.expand("%")) end)
             vim.keymap.set('n', '<localleader>tc', require("neotest").run.stop)
             vim.keymap.set('n', '<localleader>ts', require("neotest").summary.toggle)
-            vim.keymap.set('n', '[f', function() return require("neotest").jump.prev({ status = "failed" }) end, {noremap = true, silent = true})
-            vim.keymap.set('n', ']f', function() return require("neotest").jump.next({ status = "failed" }) end, {noremap = true, silent = true})
+            vim.keymap.set('n', '[t', function() return require("neotest").jump.prev({ status = "failed" }) end, {noremap = true, silent = true})
+            vim.keymap.set('n', ']t', function() return require("neotest").jump.next({ status = "failed" }) end, {noremap = true, silent = true})
         end
     },
     {
@@ -163,7 +128,7 @@ return {
     {
         'kevinhwang91/nvim-ufo',
         config = function()
-            vim.wo.foldcolumn = '0'  -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
+            vim.wo.foldcolumn = '1'  -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
             vim.o.foldlevelstart = 99
             vim.wo.foldenable = true
             vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
@@ -207,22 +172,6 @@ return {
         config = function()
             vim.api.nvim_set_keymap('n', 'Q', ':Bdelete<CR>', { noremap = true, silent = true })
         end
-    },
-    {
-        "lkhphuc/jupyter-kernel.nvim",
-        opts = {
-            inspect = {
-                -- opts for vim.lsp.util.open_floating_preview
-                window = {
-                    max_width = 120,
-                },
-            },
-            -- time to wait for kernel's response in seconds
-            timeout = 0.5,
-        },
-        cmd = {"JupyterAttach", "JupyterInspect", "JupyterExecute"},
-        build = ":UpdateRemotePlugins",
-        keys = { { "<localleader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel" } },
     },
     {
         "folke/which-key.nvim",
