@@ -128,14 +128,14 @@ return {
     {
         'kevinhwang91/nvim-ufo',
         config = function()
-            vim.wo.foldcolumn = '1'  -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
+            vim.wo.foldcolumn = '0'  -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
             vim.o.foldlevelstart = 99
             vim.wo.foldenable = true
             vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
             local handler = function(virtText, lnum, endLnum, width, truncate)
                 local newVirtText = {}
-                local suffix = ('  %d '):format(endLnum - lnum)
+                local suffix = (' 󰁂 %d '):format(endLnum - lnum)
                 local sufWidth = vim.fn.strdisplaywidth(suffix)
                 local targetWidth = width - sufWidth
                 local curWidth = 0

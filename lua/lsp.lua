@@ -56,13 +56,13 @@ local on_attach = function(client, bufnr)
     end
 
     vim.api.nvim_command(
-        'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticVirtualTextError"})')
+        'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticVirtualTextError"})')
     vim.api.nvim_command(
-        'call sign_define("DiagnosticSignWarning", {"text" : "", "texthl" : "DiagnosticVirtualTextWarning"})')
+        'call sign_define("DiagnosticSignWarn", {"text" : "⚠︎", "texthl" : "DiagnosticVirtualTextWarn"})')
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignInformation", {"text" : "", "texthl" : "DiagnosticVirtualTextInformation"})')
     vim.api.nvim_command(
-        'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticVirtualTextHint"})')
+        'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticVirtualTextHint"})')
 
     vim.g.lsp_diagnostic_sign_priority = 100
 
