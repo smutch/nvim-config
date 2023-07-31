@@ -62,9 +62,9 @@ return {
                 { name = 'luasnip', group_index = 1  },
                 { name = 'treesitter', group_index = 1  },
                 { name = 'copilot', group_index = 1  },
-                { name = 'calc', group_index = 2  },
-                { name = 'emoji', group_index = 2  },
-                { name = 'buffer', keyword_length = 5, group_index = 2 },
+                -- { name = 'calc', group_index = 2  },
+                -- { name = 'emoji', group_index = 2  },
+                { name = 'buffer', keyword_length = 5, group_index = 1 },
             }
 
             cmp.setup({
