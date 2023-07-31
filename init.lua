@@ -162,7 +162,7 @@ vim.on_key(toggle_hlsearch, ns)
 
 -- Paste without auto indent
 h.noremap('n', '<F2>', ':set invpaste paste?<CR>', {})
-vim.opt.pastetoggle = '<F2>'
+-- vim.opt.pastetoggle = '<F2>'
 
 -- Toggle auto paragraph formatting
 h.noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]], {})
