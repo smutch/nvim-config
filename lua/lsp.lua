@@ -16,6 +16,18 @@ vim.diagnostic.config({
     severity_sort = true,
 })
 
+local function toggle_lsp_virtual_text()
+    local conf = vim.diagnostic.config()
+    if conf.virtual_text == false then
+        conf.virtual_text = {spacing = 4}
+    else
+        conf.virtual_text = false
+    end
+    vim.diagnostic.config(conf)
+end
+
+vim.keymap.set("n", "gV", toggle_lsp_virtual_text, {noremap=true})
+
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
