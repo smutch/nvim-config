@@ -83,12 +83,26 @@ local base_opts = {
     flags = { debounce_text_changes = 250 },
 
     settings = {
-        python = {
-            pythonPath = h.python_interpreter_path,
-            analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } }
-        },
         pylsp = {
-            plugins = { pycodestyle = { maxLineLength = 88 }, jedi = { environment = h.python_interpreter_path } }
+            plugins = {
+                -- disable everything I don't want
+                autopep8 = { enabled = false },
+                yapf = { enabled = false },
+                pylint = { enabled = false },
+                pyflakes = { enabled = false },
+                pycodestyle = { enabled = false },
+
+                -- set up the stuff I do
+                black = { enabled = true },
+                jedi = { environment = h.python_interpreter_path, fuzzy = true },
+                ruff = { enabled = true, extendSelect = { "I", "F" } },
+                pylsp_mypy = {
+                    -- As of 2023-08-09, I can't get this to work. Currently using null-ls instead (see below).
+                    enabled = false,
+                    dmypy = true,
+                    overrides = { "--python-executable", h.python_interpreter_path, true } },
+                    report_progress = false
+            }
         },
         pyright = {
             python = {
@@ -145,17 +159,17 @@ require"mason-lspconfig".setup_handlers({
 local null_ls = require("null-ls")
 null_ls.setup {
     sources = {
-        null_ls.builtins.formatting.black.with {
-            -- command = h.python_prefix .. 'black',
-            command = 'black',
-            extra_args = function(params)
-                if not h.file_exists('pyproject.toml') then
-                    return { "-l", "88" }
-                else
-                    return {}
-                end
-            end
-        },
+        -- null_ls.builtins.formatting.black.with {
+        --     -- command = h.python_prefix .. 'black',
+        --     command = 'black',
+        --     extra_args = function(params)
+        --         if not h.file_exists('pyproject.toml') then
+        --             return { "-l", "88" }
+        --         else
+        --             return {}
+        --         end
+        --     end
+        -- },
         -- null_ls.builtins.formatting.isort.with {
         --     -- command = h.python_prefix .. '/bin/isort'
         --     command = 'isort'
@@ -171,9 +185,9 @@ null_ls.setup {
         -- null_ls.builtins.diagnostics.ruff.with({
         --     extra_args = { "--line-length=88" }
         -- }),
-        -- null_ls.builtins.diagnostics.mypy.with({
-        --     extra_args = { "--python-executable=" .. h.python_interpreter_path, "--install-types", "--non-interactive" }
-        -- }),
+        null_ls.builtins.diagnostics.mypy.with({
+            extra_args = { "--install-types" }
+        }),
     },
     debounce = base_opts.flags.debounce_text_changes,
     on_attach = on_attach,
