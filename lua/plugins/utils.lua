@@ -241,7 +241,9 @@ return {
         event = "VeryLazy",
         config = function()
             vim.env.OPENAI_API_KEY = require"system".openai_api_key
-            require("chatgpt").setup()
+            if vim.env.OPENAI_API_KEY ~= nil then
+                require("chatgpt").setup()
+            end
         end,
         dependencies = {
             "MunifTanjim/nui.nvim",
