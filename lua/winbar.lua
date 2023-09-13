@@ -43,14 +43,14 @@ vim.o.winbar = "%{%v:lua.require('winbar').winbar()%}"
 
 local augrp = vim.api.nvim_create_augroup("winbar", {})
 
-local function winbar_colors()
-    vim.api.nvim_set_hl(0, "WinBarNC", { link = "lualine_x_normal" })
-    vim.api.nvim_set_hl(0, "WinBar", { link = "lualine_c_normal" })
-end
+-- local function winbar_colors()
+--     vim.api.nvim_set_hl(0, "WinBarNC", { link = "lualine_x_normal" })
+--     vim.api.nvim_set_hl(0, "WinBar", { link = "lualine_c_normal" })
+-- end
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-    group = augrp,
-    callback = winbar_colors
-})
+-- vim.api.nvim_create_autocmd("ColorScheme", {
+--     group = augrp,
+--     callback = winbar_colors
+-- })
 
 return M

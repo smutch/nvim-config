@@ -1,32 +1,35 @@
 return {
-     { 'hrsh7th/cmp-nvim-lsp' },
-     { 'hrsh7th/cmp-buffer' },
-     { 'Saecki/crates.nvim', config = true },
-     { 'hrsh7th/cmp-path' },
-     { 'hrsh7th/cmp-nvim-lua' },
-     { 'kdheepak/cmp-latex-symbols' },
-     { 'f3fora/cmp-spell' },
-     { 'hrsh7th/cmp-calc' },
-     { 'ray-x/cmp-treesitter' },
-     { 'hrsh7th/cmp-emoji' },
-     { 'hrsh7th/cmp-omni' },
-     { 'hrsh7th/cmp-cmdline' },
-     { 'lukas-reineke/cmp-under-comparator' },
-     { 'saadparwaiz1/cmp_luasnip' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'hrsh7th/cmp-buffer' },
+    { 'Saecki/crates.nvim',                config = true },
+    { 'hrsh7th/cmp-path' },
+    { 'hrsh7th/cmp-nvim-lua' },
+    { 'kdheepak/cmp-latex-symbols' },
+    { 'f3fora/cmp-spell' },
+    { 'hrsh7th/cmp-calc' },
+    { 'ray-x/cmp-treesitter' },
+    { 'hrsh7th/cmp-emoji' },
+    { 'hrsh7th/cmp-omni' },
+    { 'hrsh7th/cmp-cmdline' },
+    { 'lukas-reineke/cmp-under-comparator' },
+    { 'saadparwaiz1/cmp_luasnip' },
 
-     {
+    {
         "zbirenbaum/copilot.lua",
         event = { "InsertEnter" },
         config = function()
-            local enable = require"system".enable_copilot
+            local enable = require "system".enable_copilot
             if enable == nil then enable = false end
             require("copilot").setup({
                 filetypes = {
                     ["*"] = enable
                 },
                 copilot_node_command = vim.g.node_host_prog,
-                suggestion = { enabled = false },
-                panel = { enabled = false },
+                suggestion = {
+                    enabled = true,
+                    auto_trigger = true,
+                },
+                panel = { enabled = true },
             })
         end
     },
@@ -37,15 +40,9 @@ return {
     --         model = "bigcode/starcoder", -- can be a model ID or an http endpoint
     --     }
     -- },
-    { "zbirenbaum/copilot-cmp", config = true },
+    -- { "zbirenbaum/copilot-cmp", config = true },
     {
-        -- 'hrsh7th/nvim-cmp',
-
-        -- TODO: Temporary fix for ghost text
-        -- https://github.com/hrsh7th/nvim-cmp/issues/1565
-        'soifou/nvim-cmp',
-        branch = 'ghost-text-fix',
-
+        'hrsh7th/nvim-cmp',
         config = function()
             vim.o.completeopt = 'menu,menuone,noselect'
             local cmp = require 'cmp'
@@ -53,24 +50,26 @@ return {
             local has_words_before = function()
                 if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
                 local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-                return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
+                return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
             end
 
             local default_sources = {
-                { name = 'path', group_index = 1  },
-                { name = 'nvim_lsp', group_index = 1  },
-                { name = 'luasnip', group_index = 1  },
-                { name = 'treesitter', group_index = 1  },
-                { name = 'copilot', group_index = 1  },
+                { name = 'path',       group_index = 1 },
+                { name = 'nvim_lsp',   group_index = 1 },
+                { name = 'luasnip',    group_index = 1 },
+                { name = 'treesitter', group_index = 1 },
+                -- { name = 'copilot', group_index = 1  },
                 -- { name = 'calc', group_index = 2  },
                 -- { name = 'emoji', group_index = 2  },
-                { name = 'buffer', keyword_length = 5, group_index = 1 },
+                { name = 'buffer',     keyword_length = 5, group_index = 1 },
             }
 
             cmp.setup({
-                snippet = { expand = function(args)
-                    require('luasnip').lsp_expand(args.body)
-                end },
+                snippet = {
+                    expand = function(args)
+                        require('luasnip').lsp_expand(args.body)
+                    end
+                },
                 mapping = {
                     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
                     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
@@ -78,8 +77,9 @@ return {
                     ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
                     ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
 
-                    ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
-                    ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+                    ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {
+                        'i' }),
+                    ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { 'i' }),
 
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         local luasnip = require 'luasnip'
@@ -112,14 +112,18 @@ return {
                         }
                     )
                 },
-                experimental = { native_menu = false, ghost_text = true },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
+                },
+                experimental = { native_menu = false, ghost_text = false },
                 sorting = {
                     priority_weight = 2,
                     comparators = {
                         cmp.config.compare.offset,
                         -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
                         cmp.config.compare.exact,
-                        require("copilot_cmp.comparators").prioritize,
+                        -- require("copilot_cmp.comparators").prioritize,
                         cmp.config.compare.score,
                         cmp.config.compare.recently_used,
                         cmp.config.compare.locality,
@@ -167,7 +171,7 @@ return {
                 group = augrp,
                 pattern = { "tex" },
                 callback = function()
-                    local sources = { { name = 'omni', group_index = 1 } , { name = 'latex_symbols', group_index = 1 } }
+                    local sources = { { name = 'omni', group_index = 1 }, { name = 'latex_symbols', group_index = 1 } }
                     vim.list_extend(sources, default_sources)
                     cmp.setup.buffer { sources = sources }
                 end

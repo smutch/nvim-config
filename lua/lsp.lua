@@ -9,7 +9,6 @@ vim.cmd("hi! link SignColumn Normal")
 
 vim.diagnostic.config({
     underline = true,
-    -- virtual_text = { spacing = 4 },
     virtual_text = false,
     signs = true,
     update_in_insert = false,
@@ -26,7 +25,7 @@ local function toggle_lsp_virtual_text()
     vim.diagnostic.config(conf)
 end
 
-vim.keymap.set("n", "gV", toggle_lsp_virtual_text, {noremap=true})
+vim.keymap.set("n", "gV", toggle_lsp_virtual_text, {noremap=true, desc="Toggle virtual text for LSP diagnostics"})
 
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
@@ -69,91 +68,74 @@ local on_attach = function(client, bufnr)
     if client.name == "ruff_lsp" then
         client.server_capabilities.hoverProvider = false
     end
-
-    -- require('nvim-navic').attach(client, bufnr)
 end
 
 -- nvim-ufo
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
-local base_opts = {
+local lspconfig = require("lspconfig")
+lspconfig.pylsp.setup {
     on_attach = on_attach,
     capabilities = capabilities,
-    flags = { debounce_text_changes = 250 },
+    plugins = {
+        -- disable everything I don't want
+        autopep8 = { enabled = false },
+        yapf = { enabled = false },
+        pylint = { enabled = false },
+        pyflakes = { enabled = false },
+        pycodestyle = { enabled = false },
 
-    settings = {
-        pylsp = {
-            plugins = {
-                -- disable everything I don't want
-                autopep8 = { enabled = false },
-                yapf = { enabled = false },
-                pylint = { enabled = false },
-                pyflakes = { enabled = false },
-                pycodestyle = { enabled = false },
-
-                -- set up the stuff I do
-                black = { enabled = true },
-                jedi = { environment = h.python_interpreter_path, fuzzy = true },
-                ruff = { enabled = true, extendSelect = { "I", "F" } },
-                pylsp_mypy = {
-                    -- As of 2023-08-09, I can't get this to work. Currently using null-ls instead (see below).
-                    enabled = false,
-                    dmypy = true,
-                    overrides = { "--python-executable", h.python_interpreter_path, true } },
-                    report_progress = false
-            }
-        },
-        pyright = {
-            python = {
-                pythonPath = h.python_interpreter_path,
-                analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, extraPaths = { vim.env.PYTHONPATH } },
-            }
-        },
-        Lua = {
-            diagnostics = { globals = { 'vim' } },
-            workspace = { preloadFileSize = 500 },
-            format = { enable = false }
+        -- set up the stuff I do
+        black = { enabled = true },
+        jedi = { environment = h.python_interpreter_path, fuzzy = true },
+        ruff = { enabled = true, extendSelect = { "I", "F" } },
+        pylsp_mypy = {
+            enabled = true,
+            dmypy = true,
+            -- As of 2023-08-09, I can't get this to work. Currently using null-ls instead (see below).
+            -- overrides = { "--python-executable", h.python_interpreter_path, true },
+            report_progress = false
         }
     }
-
 }
 
--- Use mason to set up automatically installed servers
-require"mason-lspconfig".setup_handlers({
-    function(server_name) -- default handler (optional)
-        require("lspconfig")[server_name].setup(base_opts)
-    end,
-    -- Customize the options passed to the server
-    -- ["clangd"] = function()
-    --     if vim.g.clangd_bin then
-    --         -- This is for systems (like OzSTAR) where glibc is too old to be compatible
-    --         -- with binary releases of clangd...
-    --         local opts = vim.deepcopy(base_opts)
-    --         opts.cmd = { vim.g.clangd_bin, "--background-index" }
-    --         require"lspconfig".clangd.setup(opts)
-    --     end
-    -- end,
+-- lspconfig.pyright.setup {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     python = {
+--         analysis = { typeCheckingMode = "off" }  -- <- This seems to be ignored
+--     }
+-- }
 
-    -- Let rust-tools setup rust_analyzer for us
-    ["rust_analyzer"] = function()
-        require"rust-tools".setup({ server = base_opts, tools = { inlay_hints = { max_len_align = true, max_len_align_padding = 2 } } })
-    end,
+lspconfig.lua_ls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    diagnostics = { globals = { 'vim' } },
+    workspace = { preloadFileSize = 500 },
+    format = { enable = false }
+}
 
-    -- -- We can't update ruff setting on the fly and have to do this seprately at init time
-    -- ruff_lsp = function()
-    --     local opts = vim.deepcopy(base_opts)
-    --     opts.before_init = function(initialize_parameters, config)
-    --         initialize_parameters.initializationOptions = {
-    --             settings = {
-    --                 interpreter = { h.python_interpreter_path }
-    --             }
-    --         }
-    --     end
-    --     require("lspconfig")["ruff_lsp"].setup(opts)
-    -- end
-})
+lspconfig.julials.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    julia = {
+        environmentPath = "./"
+    }
+}
 
+lspconfig.rust_analyzer.setup {
+    server = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    },
+    tools = {
+        inlay_hints = {
+            max_len_align = true,
+            max_len_align_padding = 2
+        }
+    }
+}
 
 
 local null_ls = require("null-ls")
@@ -174,8 +156,6 @@ null_ls.setup {
         --     -- command = h.python_prefix .. '/bin/isort'
         --     command = 'isort'
         -- },
-        null_ls.builtins.formatting.lua_format
-            .with { extra_args = { "--column-limit=88", "--spaces-inside-table-braces", "-i" } },
         null_ls.builtins.formatting.prettier.with({
             filetypes = { "html", "json", "yaml", "markdown" },
             args = { "--print-width=1000" }
@@ -185,29 +165,12 @@ null_ls.setup {
         -- null_ls.builtins.diagnostics.ruff.with({
         --     extra_args = { "--line-length=88" }
         -- }),
-        null_ls.builtins.diagnostics.mypy.with({
-            extra_args = { "--install-types" }
-        }),
+        -- null_ls.builtins.diagnostics.mypy.with({
+        --     extra_args = { "--install-types" }
+        -- }),
     },
-    debounce = base_opts.flags.debounce_text_changes,
     on_attach = on_attach,
     fallback_severity = vim.diagnostic.severity.HINT
 }
-
--- local julia_opts = vim.deepcopy(base_opts)
--- julia_opts.julia = { environmentPath = "./" }
--- require'lspconfig'.julials.setup(julia_opts)
-
--- local ltex_opts = vim.deepcopy(base_opts)
--- ltex_opts.on_attach = function(client, buffer)
---     on_attach(client, buffer)
---     require("ltex_extra").setup {
---         load_langs = { "en-AU" },
---         init_check = true,
---         path = ".ltex",
---     }
--- end
--- ltex_opts.filetypes = {"tex"}
--- require 'lspconfig'.ltex.setup(ltex_opts)
 
 return M

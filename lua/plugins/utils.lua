@@ -242,6 +242,7 @@ return {
         config = function()
             vim.env.OPENAI_API_KEY = require"system".openai_api_key
             if vim.env.OPENAI_API_KEY ~= nil then
+	        vim.env.OPENAI_API_HOST = "api.openai.com"
                 require("chatgpt").setup()
             end
         end,

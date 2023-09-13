@@ -1,32 +1,40 @@
 return {
-    { 'navarasu/onedark.nvim' },
+    {
+        'AlexvZyl/nordic.nvim',
+        lazy = false,
+        priority = 1000,
+        config = function()
+            -- require 'nordic'.load()
+            require 'nordic'.setup {
+                bold_keywords = true,
+                bright_border = true,
+            }
+        end
+    },
     {
         'EdenEast/nightfox.nvim',
+        -- lazy = false,
         config = function()
-            require'nightfox'.setup {
+            require 'nightfox'.setup {
                 options = { styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
                 groups = {
                     nightfox = {
                         -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
-                        VertSplit = { fg = "sel1" },
-                        BufferCurrent = { bg = "bg2", fg = "fg1" },
-                        BufferCurrentIndex   = { bg = "bg2", fg = "diag.info" },
-                        BufferCurrentMod     = { bg = "bg2", fg = "diag.warn" },
-                        BufferCurrentSign    = { bg = "bg2", fg = "diag.info" },
-                        BufferCurrentTarget  = { bg = "bg2", fg = "diag.error" },
+                        VertSplit           = { fg = "sel1" },
+                        BufferCurrent       = { bg = "bg2", fg = "fg1" },
+                        BufferCurrentIndex  = { bg = "bg2", fg = "diag.info" },
+                        BufferCurrentMod    = { bg = "bg2", fg = "diag.warn" },
+                        BufferCurrentSign   = { bg = "bg2", fg = "diag.info" },
+                        BufferCurrentTarget = { bg = "bg2", fg = "diag.error" },
                     },
                 },
             }
         end
     },
     {
-        'projekt0n/github-nvim-theme',
-        opt = true,
-    },
-    { 'rmehri01/onenord.nvim' },
-    {
         'nvim-lualine/lualine.nvim',
-        config = require'plugins.config.lualine'.config
+	lazy = false,
+        config = require 'plugins.config.lualine'.config,
     },
     {
         'lukas-reineke/indent-blankline.nvim',
@@ -39,10 +47,9 @@ return {
             vim.cmd [[highlight! link IndentBlanklineChar VertSplit]]
         end
     },
-    { 'https://gitlab.com/yorickpeterse/nvim-pqf.git', config = true },
-    { 'kevinhwang91/nvim-hlslens' },
     {
         'petertriho/nvim-scrollbar',
+        dependencies = { 'kevinhwang91/nvim-hlslens' },
         config = function()
             require("scrollbar").setup {
                 handle = { color = "#4C566A" },
@@ -68,6 +75,7 @@ return {
     {
         'folke/noice.nvim',
         depends = { "MunifTanjim/nui.nvim" },
+        lazy = false,
         config = function()
             require("noice").setup({
                 lsp = {
@@ -80,11 +88,11 @@ return {
                 },
                 -- you can enable a preset for easier configuration
                 presets = {
-                    bottom_search = true, -- use a classic bottom cmdline for search
-                    command_palette = true, -- position the cmdline and popupmenu together
+                    bottom_search = true,         -- use a classic bottom cmdline for search
+                    command_palette = true,       -- position the cmdline and popupmenu together
                     long_message_to_split = true, -- long messages will be sent to a split
-                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = false, -- add a border to hover docs and signature help
+                    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false,       -- add a border to hover docs and signature help
                 },
                 messages = {
                     view_search = false
@@ -98,5 +106,5 @@ return {
             })
         end
     },
-    { 'nvim-tree/nvim-web-devicons' },
+    { 'nvim-tree/nvim-web-devicons', lazy = true },
 }

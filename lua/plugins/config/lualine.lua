@@ -76,7 +76,8 @@ function M.statusline()
 
     require('lualine').setup {
         options = {
-            theme = bubbles_theme,
+            -- theme = bubbles_theme,
+            theme = "nordic",
             component_separators = '|',
             section_separators = { left = '', right = '' },
         },
