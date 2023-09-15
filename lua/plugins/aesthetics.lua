@@ -122,4 +122,67 @@ return {
         end
     },
     { 'nvim-tree/nvim-web-devicons', lazy = true },
+    {
+        'nanozuki/tabby.nvim',
+        config = function()
+            local function tabline(line)
+                local ll_theme = require 'lualine.themes.auto'
+                local theme = {
+                    fill = ll_theme.normal.c,
+                    head = ll_theme.visual.a,
+                    current_tab = ll_theme.normal.a,
+                    tab = ll_theme.normal.b,
+                    win = ll_theme.normal.b,
+                    tail = ll_theme.normal.b,
+                }
+
+                return {
+                    {
+                        { ' 󰯉 ', hl = theme.head },
+                        line.sep('', theme.head, theme.fill),
+                    },
+                    line.tabs().foreach(function(tab)
+                        local hl = tab.is_current() and theme.current_tab or theme.tab
+                        return {
+                            line.sep('', hl, theme.fill),
+                            tab.is_current() and '' or '󰆣',
+                            tab.number(),
+                            tab.name(),
+                            tab.close_btn(''),
+                            line.sep('', hl, theme.fill),
+                            hl = hl,
+                            margin = ' ',
+                        }
+                    end),
+                    line.spacer(),
+                    line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+                        return {
+                            line.sep('', theme.win, theme.fill),
+                            win.is_current() and '' or '',
+                            win.buf_name(),
+                            line.sep('', theme.win, theme.fill),
+                            hl = theme.win,
+                            margin = ' ',
+                        }
+                    end),
+                    {
+                        line.sep('', theme.tail, theme.fill),
+                    },
+                    hl = theme.fill,
+                }
+            end
+
+            require('tabby.tabline').set(tabline)
+
+
+            -- This doesn't do anything for some reason. Will need to work this out at a later date!
+            -- local augroup = vim.api.nvim_create_augroup("MyTabby", {})
+            -- vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+            --     group = augroup,
+            --     callback = function()
+            --         require('tabby.tabline').set(tabline)
+            --     end
+            -- })
+        end
+    }
 }
