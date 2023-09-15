@@ -22,7 +22,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins",
 {
     -- see https://github.com/folke/lazy.nvim/issues/462
-    concurrency = 32,
+    concurrency = 64,
     checker = {
         enabled = true,
         concurrency = 8,

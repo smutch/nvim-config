@@ -8,12 +8,15 @@ return {
             require 'nordic'.setup {
                 bold_keywords = true,
                 bright_border = true,
+                reduced_blue = true,
+                -- swap_backgrounds = true,
+                cursorline = { theme = 'light', blend = 1.0, },
             }
         end
     },
     {
         'EdenEast/nightfox.nvim',
-        -- lazy = false,
+        lazy = true,
         config = function()
             require 'nightfox'.setup {
                 options = { styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
@@ -33,7 +36,7 @@ return {
     },
     {
         'nvim-lualine/lualine.nvim',
-	lazy = false,
+        lazy = false,
         config = require 'plugins.config.lualine'.config,
     },
     {
@@ -101,6 +104,18 @@ return {
                     {
                         filter = { event = "msg_show", kind = "", find = "written$" },
                         opts = { skip = true },
+                    },
+                },
+                views = {
+                    cmdline_popup = {
+                        border = {
+                            style = "none",
+                            padding = { 1, 3 },
+                        },
+                        filter_options = {},
+                        win_options = {
+                            winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+                        },
                     },
                 },
             })

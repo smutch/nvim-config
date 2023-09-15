@@ -1,7 +1,7 @@
 return {
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-buffer' },
-    { 'Saecki/crates.nvim',                config = true },
+    { 'Saecki/crates.nvim',                config = true, lazy = true },
     { 'hrsh7th/cmp-path' },
     { 'hrsh7th/cmp-nvim-lua' },
     { 'kdheepak/cmp-latex-symbols' },

@@ -43,8 +43,15 @@ return {
             local telescope = require 'telescope'
             telescope.setup {
                 pickers = {
-                    find_files = { theme = "dropdown" } },
-                    extensions = { ["ui-select"] = { require("telescope.themes").get_dropdown() }
+                    find_files = { theme = "dropdown" },
+                    git_files = { theme = "dropdown" },
+                    old_files = { theme = "dropdown" },
+                    buffers = { theme = "dropdown" },
+                    marks = { theme = "dropdown" },
+                    emoji = { theme = "dropdown" },
+                    symbols = { theme = "dropdown" },
+                },
+                extensions = { ["ui-select"] = { require("telescope.themes").get_dropdown() }
                 }
             }
 
@@ -66,12 +73,14 @@ return {
             h.noremap('n', '<leader>fe', '<cmd>Telescope emoji<cr>')
             h.noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
             h.noremap('n', '<leader>fs', '<cmd>Telescope symbols<cr>')
-            vim.keymap.set('n', 'z=', function() require'telescope.builtin'.spell_suggest(require'telescope.themes'.get_dropdown{}) end, {noremap=true})
+            vim.keymap.set('n', 'z=',
+                function() require 'telescope.builtin'.spell_suggest(require 'telescope.themes'.get_dropdown {}) end,
+                { noremap = true })
 
             -- to fix gub introduced into neovim by vim patch
             -- (https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1510001730)
             local augroup = vim.api.nvim_create_augroup("Telescope", {})
-            vim.api.nvim_create_autocmd({"WinLeave"}, {
+            vim.api.nvim_create_autocmd({ "WinLeave" }, {
                 group = augroup,
                 callback = function()
                     if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
@@ -79,7 +88,6 @@ return {
                     end
                 end
             })
-
         end
     }
 }

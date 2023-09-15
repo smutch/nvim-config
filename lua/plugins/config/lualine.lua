@@ -40,23 +40,23 @@ function M.statusline()
 
     local colors = sync_colors()
 
-    local bubbles_theme = {
-        normal = {
-            a = { fg = colors.black, bg = colors.violet },
-            b = { fg = colors.white, bg = colors.grey },
-            c = { fg = colors.black, bg = colors.black },
-        },
+    -- local bubbles_theme = {
+    --     normal = {
+    --         a = { fg = colors.black, bg = colors.violet },
+    --         b = { fg = colors.white, bg = colors.grey },
+    --         c = { fg = colors.black, bg = colors.black },
+    --     },
 
-        insert = { a = { fg = colors.black, bg = colors.blue } },
-        visual = { a = { fg = colors.black, bg = colors.cyan } },
-        replace = { a = { fg = colors.black, bg = colors.red } },
+    --     insert = { a = { fg = colors.black, bg = colors.blue } },
+    --     visual = { a = { fg = colors.black, bg = colors.cyan } },
+    --     replace = { a = { fg = colors.black, bg = colors.red } },
 
-        inactive = {
-            a = { fg = colors.white, bg = colors.black },
-            b = { fg = colors.white, bg = colors.black },
-            c = { fg = colors.black, bg = colors.black },
-        },
-    }
+    --     inactive = {
+    --         a = { fg = colors.white, bg = colors.black },
+    --         b = { fg = colors.white, bg = colors.black },
+    --         c = { fg = colors.black, bg = colors.black },
+    --     },
+    -- }
 
     local lsp_server = function ()
         local msg = ''
@@ -77,7 +77,7 @@ function M.statusline()
     require('lualine').setup {
         options = {
             -- theme = bubbles_theme,
-            theme = "nordic",
+            -- theme = "nordic",
             component_separators = '|',
             section_separators = { left = '', right = '' },
         },

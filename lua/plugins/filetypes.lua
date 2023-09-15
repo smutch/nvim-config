@@ -1,8 +1,8 @@
 return {
-    { 'vim-python/python-syntax', ft = { 'python' } },
+    { 'vim-python/python-syntax',      ft = { 'python' } },
     { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } },
-    { 'anntzer/vim-cython', ft = { 'python', 'cython' } },
-    { 'adamclaxon/taskpaper.vim', ft = { 'taskpaper', 'tp' } },
+    { 'anntzer/vim-cython',            ft = { 'python', 'cython' } },
+    { 'adamclaxon/taskpaper.vim',      ft = { 'taskpaper', 'tp' } },
     -- { 'jbyuki/nabla.nvim' },
     {
         'lervag/vimtex',
@@ -16,17 +16,25 @@ return {
         end
     },
     { "vim-pandoc/vim-pandoc-syntax" },
-    { "vim-pandoc/vim-pandoc", ft = { 'markdown', 'quarto', 'pandoc' } },
-    { 'vim-scripts/scons.vim', ft = { 'scons' } },
-    { 'Glench/Vim-Jinja2-Syntax', ft = { 'html' } },
-    { 'mattn/emmet-vim', ft = { 'html', 'css', 'sass', 'jinja.html' } },
-    { 'cespare/vim-toml', ft = { 'toml' } },
-    { 'tikhomirov/vim-glsl'},
-    { 'DingDean/wgsl.vim'},
-    { 'snakemake/snakemake', rtp = 'misc/vim' },
+    { "vim-pandoc/vim-pandoc",       ft = { 'markdown', 'quarto', 'pandoc' } },
+    { 'vim-scripts/scons.vim',       ft = { 'scons' } },
+    { 'Glench/Vim-Jinja2-Syntax',    ft = { 'html' } },
+    { 'mattn/emmet-vim',             ft = { 'html', 'css', 'sass', 'jinja.html' } },
+    { 'cespare/vim-toml',            ft = { 'toml' } },
+    { 'tikhomirov/vim-glsl' },
+    { 'DingDean/wgsl.vim' },
+    {
+        'snakemake/snakemake',
+        ft = 'snakemake',
+        config = function(plugin)
+            vim.opt.rtp:append(plugin.dir .. "/misc/vim")
+        end
+    },
     { 'NoahTheDuke/vim-just' },
-    { 'alaviss/nim.nvim', ft = { 'nim' } },
-    { 'quarto-dev/quarto-nvim',
+    { 'alaviss/nim.nvim',    ft = { 'nim' } },
+    {
+        'quarto-dev/quarto-nvim',
+        lazy = true,
         dependencies = {
             'jmbuhr/otter.nvim',
             'neovim/nvim-lspconfig'
@@ -47,5 +55,5 @@ return {
             }
         end
     },
-    {'kaarmu/typst.vim', ft = { 'typst' } },
+    { 'kaarmu/typst.vim', ft = { 'typst' } },
 }

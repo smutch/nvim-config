@@ -1,52 +1,66 @@
 return {
-     { 'nvim-lua/plenary.nvim' },
-     { 'tpope/vim-unimpaired' },
-     { 'tpope/vim-eunuch' },
-     {
-         'rmagatti/auto-session',
-         config = function()
-             vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+    {
+        'nvim-lua/plenary.nvim',
+        lazy = true,
+    },
+    { 'tpope/vim-unimpaired' },
+    { 'tpope/vim-eunuch' },
+    {
+        'rmagatti/auto-session',
+        config = function()
+            vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
-             require('auto-session').setup {
-                 auto_clean_after_session_restore = true,
-                 pre_save_cmds = { "tabdo Neotree close" },
-                 post_save_cmds = { "tabdo Neotree show" },
-                 post_restore_cmds = { "stopinsert" },
-             }
-         end
-     },
-     {
-         'bfredl/nvim-luadev',
-         config = function()
-             local augroup = vim.api.nvim_create_augroup("LuadDev", {})
+            require('auto-session').setup {
+                auto_clean_after_session_restore = true,
+                post_restore_cmds = { "stopinsert" },
+            }
+        end
+    },
+    {
+        'bfredl/nvim-luadev',
+        config = function()
+            local augroup = vim.api.nvim_create_augroup("LuadDev", {})
 
-             vim.api.nvim_create_autocmd("BufEnter", {
-                 pattern = "*nvim-lua*",
-                 group = augroup,
-                 callback = function()
-                     local buffer = vim.api.nvim_get_current_buf()
-                     vim.keymap.set("n", "<localleader>r", "<PLug>(Luadev-Run)", { buffer = buffer })
-                     vim.keymap.set("n", "<localleader>l", "<Plug>(Luadev-RunLine)", { buffer = buffer })
-                     vim.keymap.set("n", "<localleader>w", "<Plug>(Luadev-RunWord)", { buffer = buffer })
-                 end
-             })
-         end
-     },
-     { 'RRethy/vim-illuminate', config = function() require'illuminate'.configure {} end },
-     { 'sindrets/diffview.nvim' },
-     {
+            vim.api.nvim_create_autocmd("BufEnter", {
+                pattern = "*nvim-lua*",
+                group = augroup,
+                callback = function()
+                    local buffer = vim.api.nvim_get_current_buf()
+                    vim.keymap.set("n", "<localleader>r", "<PLug>(Luadev-Run)", { buffer = buffer })
+                    vim.keymap.set("n", "<localleader>l", "<Plug>(Luadev-RunLine)", { buffer = buffer })
+                    vim.keymap.set("n", "<localleader>w", "<Plug>(Luadev-RunWord)", { buffer = buffer })
+                end
+            })
+        end
+    },
+    {
+        'RRethy/vim-illuminate',
+        config = function()
+            require 'illuminate'.configure {
+                providers = {
+                    -- 'lsp',
+                    'treesitter',
+                    'regex',
+                }
+
+            }
+        end
+    },
+    { 'sindrets/diffview.nvim' },
+    {
         'Canop/nvim-bacon',
+        lazy = true,
         config = function()
             vim.keymap.set('n', '<leader>bn', ':BaconLoad<CR>:w<CR>:BaconNext<CR>', { noremap = true })
             vim.keymap.set('n', '<leader>bg', ':BaconList<CR>', { noremap = true })
-        end
+        end,
     },
     { "MunifTanjim/nui.nvim" },
     {
         's1n7ax/nvim-window-picker',
         version = "1.*",
         config = function()
-            require'window-picker'.setup({
+            require 'window-picker'.setup({
                 filter_rules = {
                     bo = {
                         filetype = { 'neo-tree', "neo-tree-popup", "notify", "quickfix" },
@@ -64,11 +78,10 @@ return {
             vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         end
     },
-    { "antoinemadec/FixCursorHold.nvim" },
     {
         "folke/todo-comments.nvim",
         config = function()
-            require"todo-comments".setup {
+            require "todo-comments".setup {
                 colors = {
                     hint = { "Keyword", "#9d79d6" },
                     warning = { "DiagnosticError", "#c94f6d" },
@@ -81,14 +94,15 @@ return {
             }
         end
     },
-    { 'uga-rosa/ccc.nvim', config = true },
-    -- { 'christoomey/vim-tmux-navigator' },
+    { 'uga-rosa/ccc.nvim',              config = true, lazy = true },
     { "nvim-treesitter/nvim-treesitter" },
-    { "antoinemadec/FixCursorHold.nvim" },
-    { 'rcarriga/neotest-python' },
-    { 'rouge8/neotest-rust' },
     {
         "rcarriga/neotest",
+        lazy = true,
+        dependencies = {
+            'rcarriga/neotest-python',
+            'rouge8/neotest-rust',
+        },
         config = function()
             require("neotest").setup({
                 adapters = {
@@ -101,8 +115,10 @@ return {
             vim.keymap.set('n', '<localleader>tR', function() return require("neotest").run.run(vim.fn.expand("%")) end)
             vim.keymap.set('n', '<localleader>tc', require("neotest").run.stop)
             vim.keymap.set('n', '<localleader>ts', require("neotest").summary.toggle)
-            vim.keymap.set('n', '[t', function() return require("neotest").jump.prev({ status = "failed" }) end, {noremap = true, silent = true})
-            vim.keymap.set('n', ']t', function() return require("neotest").jump.next({ status = "failed" }) end, {noremap = true, silent = true})
+            vim.keymap.set('n', '[t', function() return require("neotest").jump.prev({ status = "failed" }) end,
+                { noremap = true, silent = true })
+            vim.keymap.set('n', ']t', function() return require("neotest").jump.next({ status = "failed" }) end,
+                { noremap = true, silent = true })
         end
     },
     {
@@ -114,21 +130,34 @@ return {
             vim.keymap.set('n', '<leader><bs>', require("notify").dismiss)
         end
     },
-    { 'folke/zen-mode.nvim', cmd = 'ZenMode', config = function() require("zen-mode").setup {} end },
+    {
+        'folke/zen-mode.nvim',
+        cmd = 'ZenMode',
+        config = function()
+            require("zen-mode").setup {
+                wezterm = {
+                    enabled = true
+                }
+            }
+        end
+    },
     {
         'numToStr/FTerm.nvim',
         config = function()
-            vim.keymap.set('n', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', {noremap = true})
-            vim.keymap.set('t', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', {noremap = true})
+            vim.keymap.set('n', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
+            vim.keymap.set('t', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
             vim.keymap.set('n', '<leader>gl', '<CMD>lua require("FTerm").scratch({ cmd = "lazygit" })<CR>')
         end
     },
     { 'neomake/neomake' },
-    { 'kevinhwang91/promise-async' },
     {
         'kevinhwang91/nvim-ufo',
+        dependencies = {
+            'kevinhwang91/promise-async',
+        },
         config = function()
-            vim.wo.foldcolumn = '0'  -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
+            vim.wo.foldcolumn =
+            '0' -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
             vim.o.foldlevelstart = 99
             vim.wo.foldenable = true
             vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
@@ -147,7 +176,7 @@ return {
                     else
                         chunkText = truncate(chunkText, targetWidth - curWidth)
                         local hlGroup = chunk[2]
-                        table.insert(newVirtText, {chunkText, hlGroup})
+                        table.insert(newVirtText, { chunkText, hlGroup })
                         chunkWidth = vim.fn.strdisplaywidth(chunkText)
                         -- str width returned from truncate() may less than 2nd argument, need padding
                         if curWidth + chunkWidth < targetWidth then
@@ -157,7 +186,7 @@ return {
                     end
                     curWidth = curWidth + chunkWidth
                 end
-                table.insert(newVirtText, {suffix, 'MoreMsg'})
+                table.insert(newVirtText, { suffix, 'MoreMsg' })
                 return newVirtText
             end
 
@@ -187,6 +216,7 @@ return {
     },
     {
         'hkupty/iron.nvim',
+        lazy = true,
         config = function()
             local iron = require("iron.core")
 
@@ -198,7 +228,7 @@ return {
                         python = {
                             -- Can be a table or a function that
                             -- returns a table
-                            command = {"ipython", "--profile=interactive"}
+                            command = { "ipython", "--profile=interactive" }
                         }
                     },
                     -- How the repl window will be displayed
@@ -253,4 +283,14 @@ return {
         }
     },
     { 'tiagovla/scope.nvim', config = true },
+    {
+        'shortcuts/no-neck-pain.nvim',
+        config = function()
+            require "no-neck-pain".setup {
+                width = 120,
+            }
+        end,
+        lazy = true,
+        cmd = { 'NoNeckPain' }
+    },
 }

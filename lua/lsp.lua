@@ -18,14 +18,14 @@ vim.diagnostic.config({
 local function toggle_lsp_virtual_text()
     local conf = vim.diagnostic.config()
     if conf.virtual_text == false then
-        conf.virtual_text = {spacing = 4}
+        conf.virtual_text = { spacing = 4 }
     else
         conf.virtual_text = false
     end
     vim.diagnostic.config(conf)
 end
 
-vim.keymap.set("n", "gV", toggle_lsp_virtual_text, {noremap=true, desc="Toggle virtual text for LSP diagnostics"})
+vim.keymap.set("n", "gV", toggle_lsp_virtual_text, { noremap = true, desc = "Toggle virtual text for LSP diagnostics" })
 
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
@@ -45,23 +45,23 @@ local on_attach = function(client, bufnr)
     bnoremap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true })
     bnoremap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
     bnoremap("n", "<localleader>d", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
-    bnoremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true }) -- WARNING: lsp (this module) NOT vim.lsp.buf
+    bnoremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true })
     if client.name ~= "rust_analyzer" then
         bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
         bnoremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
     else
-        vim.keymap.set("n", "ga", require'rust-tools'.code_action_group.code_action_group, { buffer = bufnr })
-        vim.keymap.set("n", "K", require'rust-tools'.hover_actions.hover_actions, { buffer = bufnr })
+        vim.keymap.set("n", "ga", require 'rust-tools'.code_action_group.code_action_group, { buffer = bufnr })
+        vim.keymap.set("n", "K", require 'rust-tools'.hover_actions.hover_actions, { buffer = bufnr })
     end
 
     vim.api.nvim_command(
-        'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticVirtualTextError"})')
+        'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticSignError"})')
     vim.api.nvim_command(
-        'call sign_define("DiagnosticSignWarn", {"text" : "⚠︎", "texthl" : "DiagnosticVirtualTextWarn"})')
+        'call sign_define("DiagnosticSignWarn", {"text" : "", "texthl" : "DiagnosticSignWarn"})')
     vim.api.nvim_command(
-        'call sign_define("DiagnosticSignInformation", {"text" : "", "texthl" : "DiagnosticVirtualTextInformation"})')
+        'call sign_define("DiagnosticSignInformation", {"text" : "", "texthl" : "DiagnosticSignInformation"})')
     vim.api.nvim_command(
-        'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticVirtualTextHint"})')
+        'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticSignHint"})')
 
     vim.g.lsp_diagnostic_sign_priority = 100
 
@@ -78,24 +78,28 @@ local lspconfig = require("lspconfig")
 lspconfig.pylsp.setup {
     on_attach = on_attach,
     capabilities = capabilities,
-    plugins = {
-        -- disable everything I don't want
-        autopep8 = { enabled = false },
-        yapf = { enabled = false },
-        pylint = { enabled = false },
-        pyflakes = { enabled = false },
-        pycodestyle = { enabled = false },
+    settings = {
+        pylsp = {
+            plugins = {
+                -- disable everything I don't want
+                autopep8 = { enabled = false },
+                yapf = { enabled = false },
+                pylint = { enabled = false },
+                pyflakes = { enabled = false },
+                pycodestyle = { enabled = false },
 
-        -- set up the stuff I do
-        black = { enabled = true },
-        jedi = { environment = h.python_interpreter_path, fuzzy = true },
-        ruff = { enabled = true, extendSelect = { "I", "F" } },
-        pylsp_mypy = {
-            enabled = true,
-            dmypy = true,
-            -- As of 2023-08-09, I can't get this to work. Currently using null-ls instead (see below).
-            -- overrides = { "--python-executable", h.python_interpreter_path, true },
-            report_progress = false
+                -- set up the stuff I do
+                black = { enabled = true },
+                jedi = { environment = h.python_interpreter_path, fuzzy = true },
+                ruff = { enabled = true, extendSelect = { "I", "F" } },
+                pylsp_mypy = {
+                    enabled = true,
+                    dmypy = true,
+                    -- As of 2023-08-09, I can't get this to work. Currently using null-ls instead (see below).
+                    -- overrides = { "--python-executable", h.python_interpreter_path, true },
+                    report_progress = false
+                }
+            }
         }
     }
 }
@@ -125,14 +129,16 @@ lspconfig.julials.setup {
 }
 
 lspconfig.rust_analyzer.setup {
-    server = {
-        on_attach = on_attach,
-        capabilities = capabilities,
-    },
-    tools = {
-        inlay_hints = {
-            max_len_align = true,
-            max_len_align_padding = 2
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        ['rust-analyzer'] = {
+            tools = {
+                inlay_hints = {
+                    max_len_align = true,
+                    max_len_align_padding = 2
+                }
+            }
         }
     }
 }

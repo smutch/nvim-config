@@ -17,6 +17,9 @@ return {
         'lewis6991/gitsigns.nvim',
         config = function()
             require('gitsigns').setup({
+                signs = {
+                    untracked    = { text = '╿' },
+                },
                 on_attach = function(bufnr)
                     local gs = require("gitsigns")
                     vim.keymap.set("n", "]h", gs.next_hunk, { noremap = true })
