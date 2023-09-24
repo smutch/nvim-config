@@ -55,5 +55,11 @@ return {
             }
         end
     },
-    { 'kaarmu/typst.vim', ft = { 'typst' } },
+    {
+        'kaarmu/typst.vim',
+        ft = { 'typst' },
+        config = function()
+            vim.g.typst_pdf_viewer = "Skim"
+        end
+    },
 }

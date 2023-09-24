@@ -39,9 +39,9 @@ M.winbar = function()
     -- return ' ' .. win_num .. ' | ' .. modified .. '%f' .. location
 end
 
-vim.o.winbar = "%{%v:lua.require('winbar').winbar()%}"
+-- vim.o.winbar = "%{%v:lua.require('winbar').winbar()%}"
 
-local augrp = vim.api.nvim_create_augroup("winbar", {})
+-- local augrp = vim.api.nvim_create_augroup("winbar", {})
 
 -- local function winbar_colors()
 --     vim.api.nvim_set_hl(0, "WinBarNC", { link = "lualine_x_normal" })

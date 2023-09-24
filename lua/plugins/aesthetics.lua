@@ -173,6 +173,7 @@ return {
             end
 
             require('tabby.tabline').set(tabline)
+            vim.opt.showtabline = 2
 
 
             -- This doesn't do anything for some reason. Will need to work this out at a later date!
