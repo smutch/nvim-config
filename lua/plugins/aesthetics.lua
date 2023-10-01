@@ -42,12 +42,11 @@ return {
     {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
-            require("indent_blankline").setup {
-                char = '│',
-                show_current_context = true,
-                buftype_exclude = { "terminal" }
+            require("ibl").setup {
+                indent = { char = '│' },
+                scope = { enabled = true },
+                exclude = { buftypes = { "terminal" } }
             }
-            vim.cmd [[highlight! link IndentBlanklineChar VertSplit]]
         end
     },
     {
