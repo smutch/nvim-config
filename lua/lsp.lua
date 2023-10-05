@@ -87,6 +87,7 @@ lspconfig.pylsp.setup {
                 pylint = { enabled = false },
                 pyflakes = { enabled = false },
                 pycodestyle = { enabled = false },
+                mccabe = { enabled = false },
 
                 -- set up the stuff I do
                 black = { enabled = true },
