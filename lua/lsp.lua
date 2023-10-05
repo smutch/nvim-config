@@ -152,6 +152,12 @@ require 'lspconfig'.typst_lsp.setup {
     }
 }
 
+require 'lspconfig'.hls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { 'haskell', 'lhaskell', 'cabal' },
+}
+
 local null_ls = require("null-ls")
 null_ls.setup {
     sources = {
