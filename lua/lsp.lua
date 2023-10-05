@@ -144,10 +144,12 @@ lspconfig.rust_analyzer.setup {
     }
 }
 
-require'lspconfig'.typst_lsp.setup{
-	settings = {
-		exportPdf = "onSave" -- Choose onType, onSave or never.
-	}
+require 'lspconfig'.typst_lsp.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        exportPdf = "onSave" -- Choose onType, onSave or never.
+    }
 }
 
 local null_ls = require("null-ls")
