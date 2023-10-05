@@ -44,7 +44,7 @@ return {
         config = function()
             require("ibl").setup {
                 indent = { char = '│' },
-                scope = { enabled = true },
+                scope = { enabled = true, highlight = { "Special" } },
                 exclude = { buftypes = { "terminal" } }
             }
         end
@@ -113,7 +113,7 @@ return {
                         },
                         filter_options = {},
                         win_options = {
-                            winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+                            winhighlight = "NormalFloat:NormalFloat", -- ,FloatBorder:FloatBorder",
                         },
                     },
                 },
@@ -155,6 +155,9 @@ return {
                     end),
                     line.spacer(),
                     line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+                        if win.buf().type() == 'nofile' then
+                            return ''
+                        end
                         return {
                             line.sep('', theme.win, theme.fill),
                             win.is_current() and '' or '',

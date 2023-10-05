@@ -86,7 +86,7 @@ function M.statusline()
                 { 'mode', separator = { left = '' }, right_padding = 2 },
             },
             lualine_b = {
-                'filename',
+                -- 'filename',
                 'branch',
                 {
                     'diagnostics',
