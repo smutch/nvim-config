@@ -216,7 +216,7 @@ return {
     },
     {
         'hkupty/iron.nvim',
-        lazy = true,
+        command = "IronRepl",
         config = function()
             local iron = require("iron.core")
 
