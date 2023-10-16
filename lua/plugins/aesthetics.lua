@@ -44,7 +44,7 @@ return {
         config = function()
             require("ibl").setup {
                 indent = { char = '│' },
-                scope = { enabled = true, highlight = { "Special" } },
+                scope = { enabled = true, show_start = false, show_end = false, highlight = { "Structure" } },
                 exclude = { buftypes = { "terminal" } }
             }
         end
@@ -113,7 +113,10 @@ return {
                         },
                         filter_options = {},
                         win_options = {
-                            winhighlight = "NormalFloat:NormalFloat", -- ,FloatBorder:FloatBorder",
+                            winhighlight = {
+                                Normal = "NormalFloat",
+                                FloatBorder = "FloatBorder",
+                            },
                         },
                     },
                 },

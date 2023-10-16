@@ -158,6 +158,16 @@ require 'lspconfig'.hls.setup {
     filetypes = { 'haskell', 'lhaskell', 'cabal' },
 }
 
+require 'lspconfig'.nil_ls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+require 'lspconfig'.ocamllsp.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
 local null_ls = require("null-ls")
 null_ls.setup {
     sources = {
@@ -181,6 +191,7 @@ null_ls.setup {
             args = { "--print-width=1000" }
         }),
         null_ls.builtins.formatting.nimpretty,
+        null_ls.builtins.formatting.ocamlformat,
         null_ls.builtins.diagnostics.chktex,
         -- null_ls.builtins.diagnostics.ruff.with({
         --     extra_args = { "--line-length=88" }
