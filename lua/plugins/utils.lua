@@ -270,9 +270,9 @@ return {
         "jackMort/ChatGPT.nvim",
         event = "VeryLazy",
         config = function()
-            vim.env.OPENAI_API_KEY = require"system".openai_api_key
+            vim.env.OPENAI_API_KEY = require "system".openai_api_key
             if vim.env.OPENAI_API_KEY ~= nil then
-	        vim.env.OPENAI_API_HOST = "api.openai.com"
+                vim.env.OPENAI_API_HOST = "api.openai.com"
                 require("chatgpt").setup()
             end
         end,
@@ -282,7 +282,7 @@ return {
             "nvim-telescope/telescope.nvim"
         }
     },
-    { 'tiagovla/scope.nvim', config = true },
+    { 'tiagovla/scope.nvim',    config = true },
     {
         'shortcuts/no-neck-pain.nvim',
         config = function()
@@ -293,4 +293,9 @@ return {
         lazy = true,
         cmd = { 'NoNeckPain' }
     },
+    { 'nvim-pack/nvim-spectre', config = true },
+    {
+        'stevearc/overseer.nvim',
+        opts = {},
+    }
 }
