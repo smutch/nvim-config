@@ -1,6 +1,14 @@
 return {
     { 'williamboman/mason.nvim', config = true },
     { "williamboman/mason-lspconfig.nvim", config = true },
+    { 'WhoIsSethDaniel/mason-tool-installer.nvim', opts = {
+        ensure_installed = {
+            'lua-language-server',
+            'stylua',
+            'shellcheck',
+            'python-lsp-server',
+        }
+    }},
     { 'neovim/nvim-lspconfig' },
     -- {
     --     'ray-x/lsp_signature.nvim',
@@ -14,7 +22,7 @@ return {
         'kosayoda/nvim-lightbulb',
         config = function()
             local augrp = vim.api.nvim_create_augroup("Projects", {})
-            vim.api.nvim_create_autocmd("CursorHold,CursorHoldI", {
+            vim.api.nvim_create_autocmd({"CursorHold" , "CursorHoldI"}, {
                 group = augrp,
                 pattern = { "*" },
                 callback = require'nvim-lightbulb'.update_lightbulb
@@ -31,7 +39,7 @@ return {
         end
     },
     -- { 'j-hui/fidget.nvim', config = true },
-    { 'simrat39/rust-tools.nvim' },
+    { 'simrat39/rust-tools.nvim', config = true },
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         config = function()
