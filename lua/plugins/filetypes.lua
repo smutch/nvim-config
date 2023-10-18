@@ -19,8 +19,14 @@ return {
     { "vim-pandoc/vim-pandoc",       ft = { 'markdown', 'quarto', 'pandoc' } },
     { 'vim-scripts/scons.vim',       ft = { 'scons' } },
     { 'Glench/Vim-Jinja2-Syntax',    ft = { 'html' } },
-    { 'mattn/emmet-vim',             ft = { 'html', 'css', 'sass', 'jinja.html', 'markdown', 'markdown.pandoc' } },
-    { 'cespare/vim-toml',            ft = { 'toml' } },
+    {
+        'mattn/emmet-vim',
+        ft = { 'html', 'css', 'sass', 'jinja.html', 'markdown', 'markdown.pandoc' },
+        init = function()
+            vim.g.user_emmet_leader_key = '<M-y>'
+        end
+    },
+    { 'cespare/vim-toml',   ft = { 'toml' } },
     { 'tikhomirov/vim-glsl' },
     { 'DingDean/wgsl.vim' },
     {
