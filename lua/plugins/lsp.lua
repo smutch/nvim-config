@@ -17,7 +17,7 @@ return {
     --         vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
     --     end
     -- },
-    { 'jose-elias-alvarez/null-ls.nvim' },
+    { 'nvimtools/none-ls.nvim' },
     {
         'kosayoda/nvim-lightbulb',
         config = function()
