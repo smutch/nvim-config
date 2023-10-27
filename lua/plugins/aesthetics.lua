@@ -44,7 +44,7 @@ return {
         config = function()
             require("ibl").setup {
                 indent = { char = '│' },
-                scope = { enabled = true, show_start = false, show_end = false, highlight = { "Structure" } },
+                scope = { enabled = true, show_start = false, show_end = false, highlight = { "Number" } },
                 exclude = { buftypes = { "terminal" } }
             }
         end

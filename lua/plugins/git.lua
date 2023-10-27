@@ -30,5 +30,5 @@ return {
             })
         end
     },
-    { 'f-person/git-blame.nvim', init = function() vim.g.gitblame_enabled = 0 end },
+    { 'f-person/git-blame.nvim', config = {enabled = false} },
 }
