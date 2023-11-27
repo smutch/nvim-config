@@ -53,30 +53,30 @@ return {
                 }
             }
 
-            dap.configurations.rust = {
-                {
-                    type = "codelldb",
-                    request = "launch",
-                    cwd = '${workspaceFolder}',
-                    console = 'integratedTerminal',
-                    stopOnEntry = false,
-                    program = function()
-                        local program
-                        vim.ui.input({ prompt = 'executable: ' }, function(input)
-                            program = Path:new(input):absolute()
-                        end)
-                        return program
-                    end,
-                    args = function()
-                        local args
-                        vim.ui.input({ prompt = 'arguments: ' }, function(input) args = vim.split(input, " ") end)
-                        return args
-                    end
-                    -- args = function()
-                    --     return vim.ui.input({ prompt = 'args: ' }, function(input) return vim.split(input, " ") end)
-                    -- end
-                }
-            }
+            -- dap.configurations.rust = {
+            --     {
+            --         type = "codelldb",
+            --         request = "launch",
+            --         cwd = '${workspaceFolder}',
+            --         console = 'integratedTerminal',
+            --         stopOnEntry = false,
+            --         program = function()
+            --             local program
+            --             vim.ui.input({ prompt = 'executable: ' }, function(input)
+            --                 program = Path:new(input):absolute()
+            --             end)
+            --             return program
+            --         end,
+            --         args = function()
+            --             local args
+            --             vim.ui.input({ prompt = 'arguments: ' }, function(input) args = vim.split(input, " ") end)
+            --             return args
+            --         end
+            --         -- args = function()
+            --         --     return vim.ui.input({ prompt = 'args: ' }, function(input) return vim.split(input, " ") end)
+            --         -- end
+            --     }
+            -- }
 
             dap.adapters.python = {
                 type = 'executable',

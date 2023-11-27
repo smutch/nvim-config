@@ -46,13 +46,13 @@ local on_attach = function(client, bufnr)
     bnoremap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
     bnoremap("n", "<localleader>d", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
     bnoremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true })
-    if client.name ~= "rust_analyzer" then
+    -- if client.name ~= "rust_analyzer" then
         bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
         bnoremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
-    else
-        vim.keymap.set("n", "ga", require 'rust-tools'.code_action_group.code_action_group, { buffer = bufnr })
-        vim.keymap.set("n", "K", require 'rust-tools'.hover_actions.hover_actions, { buffer = bufnr })
-    end
+    -- else
+        -- vim.keymap.set("n", "ga", require 'rust-tools'.code_action_group.code_action_group, { buffer = bufnr })
+        -- vim.keymap.set("n", "K", require 'rust-tools'.hover_actions.hover_actions, { buffer = bufnr })
+    -- end
 
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticSignError"})')
@@ -129,20 +129,20 @@ lspconfig.julials.setup {
     }
 }
 
-lspconfig.rust_analyzer.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        ['rust-analyzer'] = {
-            tools = {
-                inlay_hints = {
-                    max_len_align = true,
-                    max_len_align_padding = 2
-                }
-            }
-        }
-    }
-}
+-- lspconfig.rust_analyzer.setup {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     settings = {
+--         ['rust-analyzer'] = {
+--             tools = {
+--                 inlay_hints = {
+--                     max_len_align = true,
+--                     max_len_align_padding = 2
+--                 }
+--             }
+--         }
+--     }
+-- }
 
 require 'lspconfig'.typst_lsp.setup {
     on_attach = on_attach,

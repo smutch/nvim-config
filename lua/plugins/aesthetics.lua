@@ -12,11 +12,13 @@ return {
                 -- swap_backgrounds = true,
                 cursorline = { theme = 'light', blend = 1.0, },
             }
+            vim.api.nvim_set_hl(0, "SpellBad", {cterm={undercurl=true}, undercurl=true, bg="#c5727a"})
         end
     },
     {
         'EdenEast/nightfox.nvim',
         lazy = true,
+        -- priority = 1000,
         config = function()
             require 'nightfox'.setup {
                 options = { styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
