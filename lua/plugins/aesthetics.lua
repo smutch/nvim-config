@@ -17,8 +17,8 @@ return {
     },
     {
         'EdenEast/nightfox.nvim',
-        lazy = true,
-        -- priority = 1000,
+        lazy = false,
+        priority = 1000,
         config = function()
             require 'nightfox'.setup {
                 options = { styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
