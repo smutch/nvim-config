@@ -46,13 +46,15 @@ local on_attach = function(client, bufnr)
     bnoremap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
     bnoremap("n", "<localleader>d", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
     bnoremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true })
-    -- if client.name ~= "rust_analyzer" then
-        bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+    bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+    if client.name ~= "rust_analyzer" then
         bnoremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
-    -- else
-        -- vim.keymap.set("n", "ga", require 'rust-tools'.code_action_group.code_action_group, { buffer = bufnr })
-        -- vim.keymap.set("n", "K", require 'rust-tools'.hover_actions.hover_actions, { buffer = bufnr })
-    -- end
+    else
+        vim.keymap.set("n", "K", function() vim.cmd.RustLsp { 'hover', 'actions' } end,
+            { noremap = true, silent = true, buffer = bufnr })
+        vim.keymap.set("n", "gL", function() vim.cmd.RustLsp('explainError') end,
+            { noremap = true, silent = true, buffer = bufnr })
+    end
 
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticSignError"})')
@@ -64,6 +66,10 @@ local on_attach = function(client, bufnr)
         'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticSignHint"})')
 
     vim.g.lsp_diagnostic_sign_priority = 100
+
+    if client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(bufnr, true)
+    end
 
     if client.name == "ruff_lsp" then
         client.server_capabilities.hoverProvider = false
@@ -205,4 +211,5 @@ null_ls.setup {
     fallback_severity = vim.diagnostic.severity.HINT
 }
 
+M.on_attach = on_attach
 return M
