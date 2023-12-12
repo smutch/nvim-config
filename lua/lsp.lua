@@ -25,6 +25,14 @@ local function toggle_lsp_virtual_text()
     vim.diagnostic.config(conf)
 end
 
+local function toggle_lsp_inlay_hints(bufnr)
+    if vim.lsp.inlay_hint.is_enabled(bufnr) then
+        vim.lsp.inlay_hint.enable(bufnr, false)
+    else
+        vim.lsp.inlay_hint.enable(bufnr, true)
+    end
+end
+
 vim.keymap.set("n", "gV", toggle_lsp_virtual_text, { noremap = true, desc = "Toggle virtual text for LSP diagnostics" })
 
 local on_attach = function(client, bufnr)
@@ -69,6 +77,7 @@ local on_attach = function(client, bufnr)
 
     if client.server_capabilities.inlayHintProvider then
         vim.lsp.inlay_hint.enable(bufnr, true)
+        vim.keymap.set("n", "gI", toggle_lsp_inlay_hints, { noremap = true, desc = "Toggle inlay hints" })
     end
 
     if client.name == "ruff_lsp" then
