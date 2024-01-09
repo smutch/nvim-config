@@ -106,13 +106,12 @@ lspconfig.pylsp.setup {
 
                 -- set up the stuff I do
                 black = { enabled = true },
-                jedi = { environment = h.python_interpreter_path, fuzzy = true },
+                jedi = { environment = h.python_prefix, fuzzy = true },
                 ruff = { enabled = true, extendSelect = { "I", "F" } },
                 pylsp_mypy = {
                     enabled = true,
                     dmypy = true,
-                    -- As of 2023-08-09, I can't get this to work. Currently using null-ls instead (see below).
-                    -- overrides = { "--python-executable", h.python_interpreter_path, true },
+                    overrides = { "--python-executable", h.python_interpreter_path, true },
                     report_progress = false
                 }
             }

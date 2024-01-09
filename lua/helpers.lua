@@ -46,7 +46,7 @@ if vim.env.VIRTUAL_ENV then
 elseif Path:new("./poetry.lock"):exists() then
     python_prefix = string.sub(vim.fn.system('poetry env info --path'), 0, -2)
 elseif Path:new("./pixi.lock"):exists() then
-    python_prefix = "./pixi/env"
+    python_prefix = string.sub(vim.fn.system('pixi --quiet run --locked "which python"'), 0, -13)
 elseif vim.env.CONDA_PREFIX then
     python_prefix = vim.env.CONDA_PREFIX
 elseif is_hatch_project() then
