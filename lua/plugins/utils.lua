@@ -282,7 +282,8 @@ return {
             "nvim-telescope/telescope.nvim"
         }
     },
-    { 'tiagovla/scope.nvim',    config = true },
+    { 'gptlang/CopilotChat.nvim' },
+    { 'tiagovla/scope.nvim',     config = true },
     {
         'shortcuts/no-neck-pain.nvim',
         config = function()
