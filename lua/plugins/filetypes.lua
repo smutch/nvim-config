@@ -21,7 +21,7 @@ return {
     { 'Glench/Vim-Jinja2-Syntax',    ft = { 'html' } },
     {
         'mattn/emmet-vim',
-        ft = { 'html', 'css', 'sass', 'jinja.html', 'markdown', 'markdown.pandoc' },
+        ft = { 'html', 'css', 'sass', 'jinja.html', 'markdown', 'markdown.pandoc', 'astro' },
         init = function()
             vim.g.user_emmet_leader_key = '<M-y>'
         end

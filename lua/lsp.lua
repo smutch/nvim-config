@@ -182,6 +182,16 @@ require 'lspconfig'.ocamllsp.setup {
     capabilities = capabilities,
 }
 
+require 'lspconfig'.astro.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+require 'lspconfig'.tailwindCSS.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
 local null_ls = require("null-ls")
 null_ls.setup {
     sources = {
@@ -201,7 +211,7 @@ null_ls.setup {
         --     command = 'isort'
         -- },
         null_ls.builtins.formatting.prettier.with({
-            filetypes = { "html", "json", "yaml", "markdown" },
+            filetypes = { "html", "json", "yaml", "markdown", "astro" },
             args = { "--print-width=1000" }
         }),
         null_ls.builtins.formatting.nimpretty,

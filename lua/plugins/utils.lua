@@ -94,7 +94,7 @@ return {
             }
         end
     },
-    { 'uga-rosa/ccc.nvim',              config = true, lazy = true },
+    { 'uga-rosa/ccc.nvim',              config = true, ft = { "astro", "html", "css", "scss", "lua", "vim" } },
     { "nvim-treesitter/nvim-treesitter" },
     {
         "rcarriga/neotest",
@@ -282,8 +282,20 @@ return {
             "nvim-telescope/telescope.nvim"
         }
     },
-    { 'gptlang/CopilotChat.nvim' },
-    { 'tiagovla/scope.nvim',     config = true },
+    {
+        'gptlang/CopilotChat.nvim',
+        config = function()
+            local function chat()
+                if vim.api.nvim_buf_get_option(0, 'buftype') ~= "nofile" then
+                    vim.cmd("vsplit | wincmd l")
+                end
+                local message = vim.fn.input("Message: ")
+                vim.cmd("CopilotChat " .. message)
+            end
+            vim.keymap.set('n', '<leader>cc', chat)
+        end
+    },
+    { 'tiagovla/scope.nvim',    config = true },
     {
         'shortcuts/no-neck-pain.nvim',
         config = function()
@@ -297,6 +309,11 @@ return {
     { 'nvim-pack/nvim-spectre', config = true },
     {
         'stevearc/overseer.nvim',
-        opts = {},
-    }
+        config = function()
+            require 'overseer'.setup()
+            vim.keymap.set('n', '<leader>ot', '<CMD>OverseerToggle<CR>', { noremap = true })
+            vim.keymap.set('n', '<leader>or', '<CMD>OverseerRun<CR>', { noremap = true })
+            vim.keymap.set('n', '<leader>oo', '<CMD>OverseerQuickAction restart<CR>', { noremap = true })
+        end,
+    },
 }
