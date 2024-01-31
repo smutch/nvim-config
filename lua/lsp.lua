@@ -197,6 +197,12 @@ require 'lspconfig'.clangd.setup {
     capabilities = capabilities,
 }
 
+require 'lspconfig'.emmet_language_server.setup {
+    filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact", "astro" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
 local null_ls = require("null-ls")
 null_ls.setup {
     sources = {

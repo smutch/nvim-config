@@ -11,7 +11,6 @@ return {
         end
     },
     { 'tpope/vim-rsi' },
-    -- { 'ggandor/leap.nvim', config = function() require('leap').set_default_keymaps() end },
     {
         "folke/flash.nvim",
         event = "VeryLazy",

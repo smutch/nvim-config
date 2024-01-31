@@ -13,13 +13,6 @@ return {
         }
     },
     { 'neovim/nvim-lspconfig' },
-    -- {
-    --     'ray-x/lsp_signature.nvim',
-    --     config = function()
-    --         require'lsp_signature'.setup { fix_pos = true, hint_enable = false, hint_prefix = " " }
-    --         vim.cmd([[hi link LspSignatureActiveParameter SpellBad]])
-    --     end
-    -- },
     { 'nvimtools/none-ls.nvim' },
     {
         'kosayoda/nvim-lightbulb',

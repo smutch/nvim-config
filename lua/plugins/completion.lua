@@ -33,13 +33,6 @@ return {
             })
         end
     },
-    -- {
-    --     'huggingface/hfcc.nvim',
-    --     opts = {
-    --         api_token = require"system".hf_api_token,
-    --         model = "bigcode/starcoder", -- can be a model ID or an http endpoint
-    --     }
-    -- },
     -- { "zbirenbaum/copilot-cmp", config = true },
     {
         'hrsh7th/nvim-cmp',

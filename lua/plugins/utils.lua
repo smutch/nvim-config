@@ -47,30 +47,21 @@ return {
         end
     },
     { 'sindrets/diffview.nvim' },
-    {
-        'Canop/nvim-bacon',
-        lazy = true,
-        config = function()
-            vim.keymap.set('n', '<leader>bn', ':BaconLoad<CR>:w<CR>:BaconNext<CR>', { noremap = true })
-            vim.keymap.set('n', '<leader>bg', ':BaconList<CR>', { noremap = true })
-        end,
-    },
-    { "MunifTanjim/nui.nvim" },
-    {
-        's1n7ax/nvim-window-picker',
-        version = "1.*",
-        config = function()
-            require 'window-picker'.setup({
-                filter_rules = {
-                    bo = {
-                        filetype = { 'neo-tree', "neo-tree-popup", "notify", "quickfix" },
-                        buftype = { 'terminal' },
-                    },
-                },
-                other_win_hl_color = '#e35e4f',
-            })
-        end
-    },
+    -- {
+    --     's1n7ax/nvim-window-picker',
+    --     version = "1.*",
+    --     config = function()
+    --         require 'window-picker'.setup({
+    --             filter_rules = {
+    --                 bo = {
+    --                     filetype = { 'neo-tree', "neo-tree-popup", "notify", "quickfix" },
+    --                     buftype = { 'terminal' },
+    --                 },
+    --             },
+    --             other_win_hl_color = '#e35e4f',
+    --         })
+    --     end
+    -- },
     {
         'stevearc/oil.nvim',
         config = function()
@@ -135,8 +126,8 @@ return {
     {
         'numToStr/FTerm.nvim',
         config = function()
-            vim.keymap.set('n', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
-            vim.keymap.set('t', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
+            vim.keymap.set('n', '<leader>tt', '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
+            vim.keymap.set('t', '<leader>tt', '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
             vim.keymap.set('n', '<leader>gl', '<CMD>lua require("FTerm").scratch({ cmd = "lazygit" })<CR>')
         end
     },
