@@ -183,17 +183,17 @@ vim.api.nvim_create_autocmd({"BufWinEnter","WinEnter","TermOpen"}, {
   pattern = {[[term://*]]},
   group = term_augroup,
   callback = function()
-      local status, Color = pcall(require, "nightfox.lib.color")
-      if(status) then
-          local normal = vim.api.nvim_get_hl_by_name('Normal', {})
-          normal['background'] = Color.from_hex(string.format("%06x", normal['background'])):brighten(-5):to_hex()
-          vim.api.nvim_set_hl(0, "TermNormal", normal)
-      end
-      vim.wo.winhighlight = "Normal:TermNormal"
+      -- local status, Color = pcall(require, "nightfox.lib.color")
+      -- if(status) then
+      --     local normal = vim.api.nvim_get_hl_by_name('Normal', {})
+      --     normal['background'] = Color.from_hex(string.format("%06x", normal['background'])):brighten(-5):to_hex()
+      --     vim.api.nvim_set_hl(0, "TermNormal", normal)
+      -- end
+      -- vim.wo.winhighlight = "Normal:TermNormal"
       vim.wo.cursorline = false
       vim.wo.number = false
       vim.wo.relativenumber = false
-      vim.cmd.startinsert()
+      -- vim.cmd.startinsert()
   end
 })
 

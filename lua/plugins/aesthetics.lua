@@ -12,7 +12,7 @@ return {
                 -- swap_backgrounds = true,
                 cursorline = { theme = 'light', blend = 1.0, },
             }
-            vim.api.nvim_set_hl(0, "SpellBad", {cterm={undercurl=true}, undercurl=true, bg="#c5727a"})
+            vim.api.nvim_set_hl(0, "SpellBad", { cterm = { undercurl = true }, undercurl = true, bg = "#c5727a" })
         end
     },
     {
@@ -26,6 +26,7 @@ return {
                     nightfox = {
                         -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
                         VertSplit           = { fg = "sel1" },
+                        WinSeparator        = { fg = "sel1" },
                         BufferCurrent       = { bg = "bg2", fg = "fg1" },
                         BufferCurrentIndex  = { bg = "bg2", fg = "diag.info" },
                         BufferCurrentMod    = { bg = "bg2", fg = "diag.warn" },
@@ -74,6 +75,15 @@ return {
             autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
             augroup END
             ]])
+        end
+    },
+    {
+        'rcarriga/nvim-notify',
+        config = function()
+            require("notify").setup {
+                top_down = false
+            }
+            vim.keymap.set('n', '<leader><bs>', require("notify").dismiss)
         end
     },
     {
@@ -127,71 +137,59 @@ return {
     },
     { 'nvim-tree/nvim-web-devicons', lazy = true },
     {
-        'nanozuki/tabby.nvim',
+        'b0o/incline.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons' },
         config = function()
-            local function tabline(line)
-                local ll_theme = require 'lualine.themes.auto'
-                local theme = {
-                    fill = ll_theme.normal.c,
-                    head = ll_theme.visual.a,
-                    current_tab = ll_theme.normal.a,
-                    tab = ll_theme.normal.b,
-                    win = ll_theme.normal.b,
-                    tail = ll_theme.normal.b,
-                }
+            require('incline').setup {
+                render = function(props)
+                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+                    local ft_icon, ft_color = require('nvim-web-devicons').get_icon_color(filename)
+                    local modified = vim.bo[props.buf].modified and 'bold,italic' or 'bold'
 
-                return {
-                    {
-                        { ' 󰯉 ', hl = theme.head },
-                        line.sep('', theme.head, theme.fill),
-                    },
-                    line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
-                        if win.buf().type() == 'nofile' then
-                            return ''
+                    local function get_git_diff()
+                        local icons = { removed = ' ', changed = ' ', added = ' ' }
+                        icons['changed'] = icons.modified
+                        local signs = vim.b[props.buf].gitsigns_status_dict
+                        local labels = {}
+                        if signs == nil then
+                            return labels
                         end
-                        return {
-                            line.sep('', theme.win, theme.fill),
-                            win.is_current() and '' or '',
-                            win.buf_name(),
-                            win.buf().is_changed() and { '', hl = {fg = theme.head.bg }} or '',
-                            line.sep('', theme.win, theme.fill),
-                            hl = theme.win,
-                            margin = ' ',
-                        }
-                    end),
-                    line.spacer(),
-                    line.tabs().foreach(function(tab)
-                        local hl = tab.is_current() and theme.current_tab or theme.tab
-                        return {
-                            line.sep('', hl, theme.fill),
-                            tab.is_current() and '' or '󰆣',
-                            tab.number(),
-                            tab.name(),
-                            tab.close_btn(''),
-                            line.sep('', hl, theme.fill),
-                            hl = hl,
-                            margin = ' ',
-                        }
-                    end),
-                    {
-                        line.sep('', theme.tail, theme.fill),
-                    },
-                    hl = theme.fill,
-                }
-            end
+                        for name, icon in pairs(icons) do
+                            if tonumber(signs[name]) and signs[name] > 0 then
+                                table.insert(labels, { icon .. signs[name] .. ' ', group = 'Diff' .. name })
+                            end
+                        end
+                        if #labels > 0 then
+                            table.insert(labels, { '│ ' })
+                        end
+                        return labels
+                    end
+                    local function get_diagnostic_label()
+                        local icons = { error = '', warn = '', info = '', hint = '' }
+                        local label = {}
 
-            require('tabby.tabline').set(tabline)
-            vim.opt.showtabline = 2
+                        for severity, icon in pairs(icons) do
+                            local n = #vim.diagnostic.get(props.buf,
+                                { severity = vim.diagnostic.severity[string.upper(severity)] })
+                            if n > 0 then
+                                table.insert(label, { icon .. ' ' .. n .. ' ', group = 'DiagnosticSign' .. severity })
+                            end
+                        end
+                        if #label > 0 then
+                            table.insert(label, { '│ ' })
+                        end
+                        return label
+                    end
 
-
-            -- This doesn't do anything for some reason. Will need to work this out at a later date!
-            -- local augroup = vim.api.nvim_create_augroup("MyTabby", {})
-            -- vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-            --     group = augroup,
-            --     callback = function()
-            --         require('tabby.tabline').set(tabline)
-            --     end
-            -- })
+                    return {
+                        { get_diagnostic_label() },
+                        { get_git_diff() },
+                        { (ft_icon or '') .. ' ', guifg = ft_color, guibg = 'none' },
+                        { filename .. ' ', gui = modified },
+                        { '┊  ' .. vim.api.nvim_win_get_number(props.win), group = 'DevIconWindows' },
+                    }
+                end,
+            }
         end
     }
 }

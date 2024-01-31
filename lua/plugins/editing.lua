@@ -163,4 +163,5 @@ return {
         end
     },
     { 'NMAC427/guess-indent.nvim', opts = {} },
+    { 'andymass/vim-matchup', opts = {} },
 }

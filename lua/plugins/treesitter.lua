@@ -38,46 +38,51 @@ return {
 
                             -- -- Or you can define your own textobjects like this
                             -- ["iF"] = {
-                                --     python = "(function_definition) @function",
-                                --     cpp = "(function_definition) @function",
-                                --     c = "(function_definition) @function",
-                                --     java = "(method_declaration) @function",
-                                -- },
-                            }
+                            --     python = "(function_definition) @function",
+                            --     cpp = "(function_definition) @function",
+                            --     c = "(function_definition) @function",
+                            --     java = "(method_declaration) @function",
+                            -- },
+                        }
+                    },
+                    swap = {
+                        enable = true,
+                        swap_next = { ["<leader>a"] = "@parameter.inner" },
+                        swap_previous = { ["<leader>A"] = "@parameter.inner" }
+                    },
+                    lsp_interop = {
+                        enable = true,
+                        border = 'none',
+                        peek_definition_code = { ["<leader>df"] = "@function.outer", ["<leader>dF"] = "@class.outer" }
+                    },
+                    move = {
+                        enable = true,
+                        set_jumps = false,     -- whether to set jumps in the jumplist
+                        goto_next_start = {
+                            ["]m"] = "@function.outer",
+                            ["]]"] = "@class.outer",
                         },
-                        swap = {
-                            enable = true,
-                            swap_next = { ["<leader>a"] = "@parameter.inner" },
-                            swap_previous = { ["<leader>A"] = "@parameter.inner" }
+                        goto_next_end = {
+                            ["]M"] = "@function.outer",
+                            ["]["] = "@class.outer",
                         },
-                        lsp_interop = {
-                            enable = true,
-                            border = 'none',
-                            peek_definition_code = { ["<leader>df"] = "@function.outer", ["<leader>dF"] = "@class.outer" }
+                        goto_previous_start = {
+                            ["[m"] = "@function.outer",
+                            ["[["] = "@class.outer",
                         },
-                        move = {
-                            enable = true,
-                            set_jumps = false, -- whether to set jumps in the jumplist
-                            goto_next_start = {
-                                ["]m"] = "@function.outer",
-                                ["]]"] = "@class.outer",
-                            },
-                            goto_next_end = {
-                                ["]M"] = "@function.outer",
-                                ["]["] = "@class.outer",
-                            },
-                            goto_previous_start = {
-                                ["[m"] = "@function.outer",
-                                ["[["] = "@class.outer",
-                            },
-                            goto_previous_end = {
-                                ["[M"] = "@function.outer",
-                                ["[]"] = "@class.outer",
-                            },
+                        goto_previous_end = {
+                            ["[M"] = "@function.outer",
+                            ["[]"] = "@class.outer",
                         },
                     },
-                }
-                vim.treesitter.language.register("astro", "tsx")
+                },
+                matchup = {
+                    enable = true, -- mandatory, false will disable the whole extension
+                    -- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+                    -- [options]
+                },
+            }
+            vim.treesitter.language.register("astro", "tsx")
         end
     },
     { 'nvim-treesitter/nvim-treesitter-context' },

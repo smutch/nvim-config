@@ -122,15 +122,6 @@ return {
         end
     },
     {
-        'rcarriga/nvim-notify',
-        config = function()
-            require("notify").setup {
-                top_down = true
-            }
-            vim.keymap.set('n', '<leader><bs>', require("notify").dismiss)
-        end
-    },
-    {
         'folke/zen-mode.nvim',
         cmd = 'ZenMode',
         config = function()
@@ -283,17 +274,22 @@ return {
         }
     },
     {
-        'gptlang/CopilotChat.nvim',
-        config = function()
-            local function chat()
-                if vim.api.nvim_buf_get_option(0, 'buftype') ~= "nofile" then
-                    vim.cmd("vsplit | wincmd l")
-                end
-                local message = vim.fn.input("Message: ")
-                vim.cmd("CopilotChat " .. message)
-            end
-            vim.keymap.set('n', '<leader>cc', chat)
-        end
+        'jellydn/CopilotChat.nvim',
+        opts = {
+            mode = "split", -- newbuffer or split  , default: newbuffer
+        },
+        build = function()
+            vim.defer_fn(function()
+                vim.cmd("UpdateRemotePlugins")
+                vim.notify("CopilotChat - Updated remote plugins. Please restart Neovim.")
+            end, 3000)
+        end,
+        event = "VeryLazy",
+        keys = {
+            { "<leader>cc<space>", ":CopilotChat ", desc = "CopilotChat" },
+            { "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
+            { "<leader>cct", "<cmd>CopilotChatTests<cr>",   desc = "CopilotChat - Generate tests" },
+        },
     },
     { 'tiagovla/scope.nvim',    config = true },
     {
