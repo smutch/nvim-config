@@ -34,7 +34,6 @@ return {
             require "helpers".noremap('n', '<leader>L', ':<C-u>lvimgrep // % | Trouble loclist<CR>')
         end
     },
-    -- { 'j-hui/fidget.nvim', config = true },
     {
         'mrcjkb/rustaceanvim',
         version = '^3', -- Recommended

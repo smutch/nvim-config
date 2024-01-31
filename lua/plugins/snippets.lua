@@ -31,9 +31,20 @@ return {
             vim.api.nvim_create_user_command("LuaSnipEdit", require("luasnip.loaders").edit_snippet_files, {})
 
             require("luasnip.loaders.from_vscode").lazy_load()
-            require("luasnip.loaders.from_lua").load({paths = vim.fn.stdpath("config") .. "/lua/snippets"})
-            require("luasnip.loaders.from_vscode").load({paths = vim.fn.stdpath("config") .. "/lua/snippets"})
+            require("luasnip.loaders.from_lua").load({ paths = vim.fn.stdpath("config") .. "/lua/snippets" })
+            require("luasnip.loaders.from_vscode").load({ paths = vim.fn.stdpath("config") .. "/lua/snippets" })
         end
     },
-    { 'danymat/neogen', config = function() require('neogen').setup({ snippet_engine = "luasnip" }) end },
+    { 'danymat/neogen',      config = function() require('neogen').setup({ snippet_engine = "luasnip" }) end },
+    {
+        "chrisgrieser/nvim-scissors",
+        dependencies = "nvim-telescope/telescope.nvim",
+        config = function()
+            require 'scissors'.setup {
+                snippetDir = vim.fn.stdpath("config") .. "/lua/snippets"
+            }
+            vim.api.nvim_create_user_command("EditSnippet", require("scissors").editSnippet, {})
+            vim.api.nvim_create_user_command("AddNewSnippet", require("scissors").addNewSnippet, {})
+        end
+    },
 }

@@ -131,6 +131,12 @@ return {
                             },
                         },
                     },
+                    mini = {
+                        position = {
+                            row = 1,
+                            col = "100%",
+                        },
+                    }
                 },
             })
         end

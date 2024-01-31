@@ -1,12 +1,13 @@
 return {
     {
-        'windwp/nvim-autopairs', config = function()
+        'windwp/nvim-autopairs',
+        config = function()
             local autopairs = require 'nvim-autopairs'
             autopairs.setup {}
             autopairs.get_rule('"""'):with_move(
-            function(opts)
-                return opts.char == opts.next_char:sub(1, 1)
-            end
+                function(opts)
+                    return opts.char == opts.next_char:sub(1, 1)
+                end
             )
         end
     },
@@ -15,7 +16,11 @@ return {
         "folke/flash.nvim",
         event = "VeryLazy",
         ---@type Flash.Config
-        opts = {},
+        opts = {
+            modes = {
+                search = { enabled = false }
+            }
+        },
         keys = {
             {
                 "s",
@@ -110,8 +115,10 @@ return {
             map('n', 'g>b', api.call('comment.blockwise.current', 'g@$'), { expr = true, desc = 'Comment current block' })
 
             map('n', 'g<', api.call('uncomment.linewise', 'g@'), { expr = true, desc = 'Uncomment region linewise' })
-            map('n', 'g<c', api.call('uncomment.linewise.current', 'g@$'), { expr = true, desc = 'Uncomment current line' })
-            map('n', 'g<b', api.call('uncomment.blockwise.current', 'g@$'), { expr = true, desc = 'Uncomment current block' })
+            map('n', 'g<c', api.call('uncomment.linewise.current', 'g@$'),
+                { expr = true, desc = 'Uncomment current line' })
+            map('n', 'g<b', api.call('uncomment.blockwise.current', 'g@$'),
+                { expr = true, desc = 'Uncomment current block' })
 
             local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
 
@@ -149,8 +156,8 @@ return {
             vim.cmd([[autocmd FileType markdown let b:surround_105 = "*\r*" "italics]])
         end
     },
-    { 'jeffkreeftmeijer/vim-numbertoggle'},
-    { 'chrisbra/unicode.vim'},
+    { 'jeffkreeftmeijer/vim-numbertoggle' },
+    { 'chrisbra/unicode.vim' },
     { 'wellle/targets.vim' },
     {
         'edluffy/specs.nvim',
@@ -162,5 +169,5 @@ return {
         end
     },
     { 'NMAC427/guess-indent.nvim', opts = {} },
-    { 'andymass/vim-matchup', opts = {} },
+    { 'andymass/vim-matchup',      opts = {} },
 }
