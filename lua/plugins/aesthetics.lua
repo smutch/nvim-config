@@ -116,6 +116,10 @@ return {
                         filter = { event = "msg_show", kind = "", find = "written$" },
                         opts = { skip = true },
                     },
+                    {
+                        filter = { error = true, find = "E486" },
+                        view = "mini"
+                    },
                 },
                 views = {
                     cmdline_popup = {
