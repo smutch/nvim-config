@@ -126,8 +126,8 @@ return {
     {
         'numToStr/FTerm.nvim',
         config = function()
-            vim.keymap.set('n', '<leader>tt', '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
-            vim.keymap.set('t', '<leader>tt', '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
+            vim.keymap.set('n', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
+            vim.keymap.set('t', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
             vim.keymap.set('n', '<leader>gl', '<CMD>lua require("FTerm").scratch({ cmd = "lazygit" })<CR>')
         end
     },
@@ -268,18 +268,31 @@ return {
         'jellydn/CopilotChat.nvim',
         opts = {
             mode = "split", -- newbuffer or split  , default: newbuffer
+            prompts = {
+                Docs = "Generate docstrings for this code. If this is Python code, use google-style docstrings."
+            },
         },
         build = function()
-            vim.defer_fn(function()
-                vim.cmd("UpdateRemotePlugins")
-                vim.notify("CopilotChat - Updated remote plugins. Please restart Neovim.")
-            end, 3000)
+            vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
         end,
         event = "VeryLazy",
         keys = {
-            { "<leader>cc<space>", ":CopilotChat ", desc = "CopilotChat" },
-            { "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-            { "<leader>cct", "<cmd>CopilotChatTests<cr>",   desc = "CopilotChat - Generate tests" },
+            { "<leader>cc<space>", ":CopilotChat ",               desc = "CopilotChat" },
+            { "<leader>cce",       "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
+            { "<leader>cct",       "<cmd>CopilotChatTests<cr>",   desc = "CopilotChat - Generate tests" },
+            { "<leader>ccd",       "<cmd>CopilotChatDocs<cr>",    desc = "CopilotChat - Generate docs" },
+            {
+                "<leader>ccv",
+                ":CopilotChatVisual",
+                mode = "x",
+                desc = "CopilotChat - Open in vertical split",
+            },
+            {
+                "<leader>ccx",
+                ":CopilotChatInPlace<cr>",
+                mode = "x",
+                desc = "CopilotChat - Run in-place code",
+            },
         },
     },
     { 'tiagovla/scope.nvim',    config = true },
