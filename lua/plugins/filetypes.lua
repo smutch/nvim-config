@@ -19,13 +19,13 @@ return {
     { "vim-pandoc/vim-pandoc",       ft = { 'markdown', 'quarto', 'pandoc' } },
     { 'vim-scripts/scons.vim',       ft = { 'scons' } },
     { 'Glench/Vim-Jinja2-Syntax',    ft = { 'html' } },
-    {
-        'mattn/emmet-vim',
-        ft = { 'html', 'css', 'sass', 'jinja.html', 'markdown', 'markdown.pandoc', 'astro' },
-        init = function()
-            vim.g.user_emmet_leader_key = '<M-y>'
-        end
-    },
+    -- {
+    --     'mattn/emmet-vim',
+    --     ft = { 'html', 'css', 'sass', 'jinja.html', 'markdown', 'markdown.pandoc', 'astro' },
+    --     init = function()
+    --         vim.g.user_emmet_leader_key = '<M-y>'
+    --     end
+    -- },
     { 'cespare/vim-toml',   ft = { 'toml' } },
     { 'tikhomirov/vim-glsl' },
     { 'DingDean/wgsl.vim' },
@@ -40,7 +40,7 @@ return {
     { 'alaviss/nim.nvim',    ft = { 'nim' } },
     {
         'quarto-dev/quarto-nvim',
-        lazy = true,
+        fd = "quarto",
         dependencies = {
             'jmbuhr/otter.nvim',
             'neovim/nvim-lspconfig'

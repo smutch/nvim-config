@@ -159,15 +159,15 @@ return {
     { 'jeffkreeftmeijer/vim-numbertoggle' },
     { 'chrisbra/unicode.vim' },
     { 'wellle/targets.vim' },
-    {
-        'edluffy/specs.nvim',
-        config = function()
-            require('specs').setup {
-                popup = { inc_ms = 10, width = 50, winhl = "DiffText", resizer = require('specs').slide_resizer },
-                ignore_filetypes = { "rust" }
-            }
-        end
-    },
+    -- {
+    --     'edluffy/specs.nvim',
+    --     config = function()
+    --         require('specs').setup {
+    --             popup = { inc_ms = 10, width = 50, winhl = "DiffText", resizer = require('specs').slide_resizer },
+    --             ignore_filetypes = { "rust" }
+    --         }
+    --     end
+    -- },
     { 'NMAC427/guess-indent.nvim', opts = {} },
     { 'andymass/vim-matchup',      opts = {} },
 }

@@ -103,11 +103,11 @@ lspconfig.pylsp.setup {
                 pyflakes = { enabled = false },
                 pycodestyle = { enabled = false },
                 mccabe = { enabled = false },
+                black = { enabled = false },
 
                 -- set up the stuff I do
-                black = { enabled = true },
                 jedi = { environment = h.python_prefix, fuzzy = true },
-                ruff = { enabled = true, extendSelect = { "I", "F" } },
+                ruff = { enabled = true, formatEnabled = true, extendSelect = { "I", "F" } },
                 pylsp_mypy = {
                     enabled = true,
                     dmypy = true,

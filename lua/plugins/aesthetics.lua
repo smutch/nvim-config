@@ -117,6 +117,10 @@ return {
                         opts = { skip = true },
                     },
                     {
+                        filter = { event = "msg_show", kind = "", find = "^/" },
+                        opts = { skip = true },
+                    },
+                    {
                         filter = { error = true, find = "E486" },
                         view = "mini"
                     },
