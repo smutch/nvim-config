@@ -197,6 +197,16 @@ require 'lspconfig'.clangd.setup {
     capabilities = capabilities,
 }
 
+require 'lspconfig'.svelte.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+require 'lspconfig'.eslint.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
 require 'lspconfig'.emmet_language_server.setup {
     filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact", "astro" },
     on_attach = on_attach,
