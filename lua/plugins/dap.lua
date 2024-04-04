@@ -4,7 +4,7 @@ return {
         lazy = "VeryLazy",
         config = function()
             local dap = require 'dap'
-            local Path = require 'plenary.path'
+            -- local Path = require 'plenary.path'
 
             vim.keymap.set("n", "<leader>dc", require 'dap'.continue, { silent = true, noremap = true })
             vim.keymap.set("n", "<leader>dn", require 'dap'.step_over, { silent = true, noremap = true })
@@ -112,6 +112,7 @@ return {
     },
     {
         'rcarriga/nvim-dap-ui',
+        dependencies = {"nvim-neotest/nvim-nio"},
         init = function()
             local dap, dapui = require("dap"), require("dapui")
             dapui.setup()
