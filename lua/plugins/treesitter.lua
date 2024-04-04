@@ -85,7 +85,7 @@ return {
             vim.treesitter.language.register("astro", "tsx")
         end
     },
-    { 'nvim-treesitter/nvim-treesitter-context' },
+    -- { 'nvim-treesitter/nvim-treesitter-context' },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'nvim-treesitter/playground' },
     {
