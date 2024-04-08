@@ -69,7 +69,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignWarn", {"text" : "", "texthl" : "DiagnosticSignWarn"})')
     vim.api.nvim_command(
-        'call sign_define("DiagnosticSignInformation", {"text" : "", "texthl" : "DiagnosticSignInformation"})')
+        'call sign_define("DiagnosticSignInfo", {"text" : "", "texthl" : "DiagnosticSignInfo"})')
     vim.api.nvim_command(
         'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticSignHint"})')
 
