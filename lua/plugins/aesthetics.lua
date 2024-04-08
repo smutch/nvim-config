@@ -39,6 +39,7 @@ return {
     },
     {
         'nvim-lualine/lualine.nvim',
+        dependencies =  { "abeldekat/harpoonline", version = "*" },
         lazy = false,
         config = require 'plugins.config.lualine'.config,
     },

@@ -56,6 +56,11 @@ function M.statusline()
         return msg
     end
 
+    local harpoonline = require("harpoonline")
+    harpoonline.setup({
+        on_update = function() require("lualine").refresh() end,
+      })
+
     require('lualine').setup {
         options = {
             -- theme = "nordic",
@@ -80,7 +85,7 @@ function M.statusline()
                 --     },
                 -- }
             },
-            lualine_c = { },
+            lualine_c = { {harpoonline.format, separator = { right = '' }} },
             lualine_x = { },
             lualine_y = {
                 {
