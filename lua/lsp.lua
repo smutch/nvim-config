@@ -207,8 +207,6 @@ null_ls.setup {
         }),
         null_ls.builtins.formatting.nimpretty,
         null_ls.builtins.formatting.ocamlformat,
-        null_ls.builtins.diagnostics.chktex,
-        null_ls.builtins.formatting.beautysh,
         -- null_ls.builtins.diagnostics.ruff.with({
         --     extra_args = { "--line-length=88" }
         -- }),

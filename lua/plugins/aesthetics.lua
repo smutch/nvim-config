@@ -168,6 +168,11 @@ return {
     },
     { 'nvim-tree/nvim-web-devicons', lazy = true },
     {
+        'SmiteshP/nvim-navic',
+        lazy = true,
+        opts = { depth_limit = 3 }
+    },
+    {
         'b0o/incline.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons', 'SmiteshP/nvim-navic' },
         config = function()
@@ -196,7 +201,13 @@ return {
                         guibg = '#0d1326',
                     }
                     if props.focused then
-                        for _, item in ipairs(navic.get_data(props.buf) or {}) do
+                        for ii, item in ipairs(navic.get_data(props.buf) or {}) do
+                            if ii == 4 then 
+                                table.insert(res, {
+                                    { ' ... ',     group = 'NavicSeparator' },
+                                })
+                                break
+                            end
                             table.insert(res, {
                                 { ' > ',     group = 'NavicSeparator' },
                                 { item.icon, group = 'NavicIcons' .. item.type },
@@ -204,9 +215,10 @@ return {
                             })
                         end
                     end
-                    table.insert(res, { ' │  ' .. vim.api.nvim_win_get_number(props.win) .. ' ', group = 'DevIconWindows' })
+                    table.insert(res,
+                        { ' │  ' .. vim.api.nvim_win_get_number(props.win) .. ' ', group = 'DevIconWindows' })
 
-                    return  res
+                    return res
                 end,
             }
         end
