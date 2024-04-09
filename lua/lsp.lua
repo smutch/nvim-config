@@ -89,128 +89,94 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
-local lspconfig = require("lspconfig")
-lspconfig.pylsp.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        pylsp = {
-            plugins = {
-                -- disable everything I don't want
-                autopep8 = { enabled = false },
-                yapf = { enabled = false },
-                pylint = { enabled = false },
-                pyflakes = { enabled = false },
-                pycodestyle = { enabled = false },
-                mccabe = { enabled = false },
-                black = { enabled = false },
+require("mason-lspconfig").setup_handlers {
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
+    function(server_name) -- default handler (optional)
+        require("lspconfig")[server_name].setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+        }
+    end,
+    -- Next, you can provide a dedicated handler for specific servers.
+    -- For example, a handler override for the `rust_analyzer`:
+    ["pylsp"] = function()
+        require("lspconfig").pylsp.setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            settings = {
+                pylsp = {
+                    plugins = {
+                        -- disable everything I don't want
+                        autopep8 = { enabled = false },
+                        yapf = { enabled = false },
+                        pylint = { enabled = false },
+                        pyflakes = { enabled = false },
+                        pycodestyle = { enabled = false },
+                        mccabe = { enabled = false },
+                        black = { enabled = false },
 
-                -- set up the stuff I do
-                jedi = { environment = h.python_prefix, fuzzy = true },
-                ruff = { enabled = true, formatEnabled = true, extendSelect = { "I", "F" } },
-                pylsp_mypy = {
-                    enabled = true,
-                    dmypy = true,
-                    overrides = { "--python-executable", h.python_interpreter_path, true },
-                    report_progress = false
+                        -- set up the stuff I do
+                        jedi = { environment = h.python_prefix, fuzzy = true },
+                        ruff = { enabled = true, formatEnabled = true, extendSelect = { "I", "F" } },
+                        pylsp_mypy = {
+                            enabled = true,
+                            dmypy = true,
+                            overrides = { "--python-executable", h.python_interpreter_path, true },
+                            report_progress = false
+                        }
+                    }
                 }
             }
         }
-    }
-}
+    end,
 
--- lspconfig.pyright.setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---     python = {
---         analysis = { typeCheckingMode = "off" }  -- <- This seems to be ignored
---     }
--- }
+    ["lua_ls"] = function()
+        require("lspconfig").lua_ls.setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            diagnostics = { globals = { 'vim' } },
+            workspace = { preloadFileSize = 500 },
+            format = { enable = false }
+        }
+    end,
 
-lspconfig.lua_ls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    diagnostics = { globals = { 'vim' } },
-    workspace = { preloadFileSize = 500 },
-    format = { enable = false }
-}
+    ["julials"] = function()
+        require "lspconfig".julials.setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            julia = {
+                environmentPath = "./"
+            }
+        }
+    end,
 
-lspconfig.julials.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    julia = {
-        environmentPath = "./"
-    }
-}
+    ["typst_lsp"] = function()
+        require "lspconfig".typst_lsp.setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            settings = {
+                exportPdf = "onSave" -- Choose onType, onSave or never.
+            }
+        }
+    end,
 
--- lspconfig.rust_analyzer.setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---     settings = {
---         ['rust-analyzer'] = {
---             tools = {
---                 inlay_hints = {
---                     max_len_align = true,
---                     max_len_align_padding = 2
---                 }
---             }
---         }
---     }
--- }
+    ["hls"] = function()
+        require "lspconfig".hls.setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            filetypes = { 'haskell', 'lhaskell', 'cabal' },
+        }
+    end,
 
-require 'lspconfig'.typst_lsp.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        exportPdf = "onSave" -- Choose onType, onSave or never.
-    }
-}
-
-require 'lspconfig'.hls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { 'haskell', 'lhaskell', 'cabal' },
-}
-
-require 'lspconfig'.nil_ls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require 'lspconfig'.ocamllsp.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require 'lspconfig'.astro.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require 'lspconfig'.tailwindCSS.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require 'lspconfig'.clangd.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require 'lspconfig'.svelte.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require 'lspconfig'.eslint.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require 'lspconfig'.emmet_language_server.setup {
-    filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact", "astro" },
-    on_attach = on_attach,
-    capabilities = capabilities,
+    ["emmet_language_server"] = function()
+        require 'lspconfig'.emmet_language_server.setup {
+            filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact", "astro" },
+            on_attach = on_attach,
+            capabilities = capabilities,
+        }
+    end
 }
 
 local null_ls = require("null-ls")
