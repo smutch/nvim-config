@@ -83,6 +83,10 @@ local on_attach = function(client, bufnr)
     if client.name == "ruff_lsp" then
         client.server_capabilities.hoverProvider = false
     end
+
+    if client.server_capabilities.documentSymbolProvider then
+        require"nvim-navic".attach(client, bufnr)
+    end
 end
 
 -- nvim-ufo

@@ -434,30 +434,5 @@ return {
                 )
             end
         end
-        -- keys = vim.list_extend({
-        --     -- {
-        --     --     "<leader>hq",
-        --     --     function()
-        --     --         local harpoon = require "harpoon"
-        --     --         harpoon.ui:toggle_quick_menu(harpoon:list())
-        --     --     end,
-        --     --     desc = "Harpoon - Toggle Quick Menu"
-        --     -- },
-        --     {
-        --         "<leader>ha",
-        --         function() require "harpoon":list():add() end,
-        --         desc = "Harpoon - Add"
-        --     },
-        --     {
-        --         "<leader>hl",
-        --         function() require "harpoon":list():next() end,
-        --         desc = "Harpoon - Next"
-        --     },
-        --     {
-        --         "<leader>hh",
-        --         function() require "harpoon":list():prev() end,
-        --         desc = "Harpoon - Previous"
-        --     },
-        -- }, harpoon_maps),
     },
 }

@@ -74,16 +74,12 @@ function M.statusline()
             lualine_b = {
                 -- 'filename',
                 'branch',
-                -- {
-                --     'diagnostics',
-                --     sources = { 'nvim_diagnostic' },
-                --     symbols = { error = ' ', warn = ' ', info = ' ' },
-                --     diagnostics_color = {
-                --         color_error = { fg = colors.red },
-                --         color_warn = { fg = colors.yellow },
-                --         color_info = { fg = colors.cyan },
-                --     },
-                -- }
+                'diff',
+                {
+                    'diagnostics',
+                    sources = { 'nvim_lsp' },
+                    symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰨹 ' },
+                }
             },
             lualine_c = { {harpoonline.format, separator = { right = '' }} },
             lualine_x = { },
