@@ -31,13 +31,16 @@ return {
             }
         end
     },
-    { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
-    { 'xiyaowong/telescope-emoji.nvim' },
-    { 'nvim-telescope/telescope-symbols.nvim' },
-    { 'nvim-telescope/telescope-ui-select.nvim' },
-    { 'tsakirist/telescope-lazy.nvim' },
     {
         'nvim-telescope/telescope.nvim',
+        dependencies = { "polirritmico/telescope-lazy-plugins.nvim",
+            { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
+            'xiyaowong/telescope-emoji.nvim',
+            'nvim-telescope/telescope-symbols.nvim',
+            'nvim-telescope/telescope-ui-select.nvim',
+            "nvim-lua/plenary.nvim",
+            "debugloop/telescope-undo.nvim",
+        },
         config = function()
             local h = require 'helpers'
             local telescope = require 'telescope'
@@ -55,7 +58,7 @@ return {
                 }
             }
 
-            local extensions = { "fzy_native", "emoji", "neoclip", "ui-select", "lazy" }
+            local extensions = { "fzy_native", "emoji", "neoclip", "ui-select", "lazy_plugins", "undo" }
             for _, extension in ipairs(extensions) do telescope.load_extension(extension) end
 
             h.noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
@@ -73,7 +76,8 @@ return {
             h.noremap('n', '<leader>fe', '<cmd>Telescope emoji<cr>')
             h.noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
             h.noremap('n', '<leader>fs', '<cmd>Telescope symbols<cr>')
-            h.noremap('n', '<leader>fp', '<cmd>Telescope lazy<cr>')
+            h.noremap('n', '<leader>fp', '<cmd>Telescope lazy_plugins<cr>')
+            h.noremap('n', '<leader>fu', '<cmd>Telescope undo<cr>')
             vim.keymap.set('n', 'z=',
                 function() require 'telescope.builtin'.spell_suggest(require 'telescope.themes'.get_dropdown {}) end,
                 { noremap = true })
