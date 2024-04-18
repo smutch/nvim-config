@@ -10,7 +10,7 @@ return {
                     custom_captures = { ["variable"] = "Normal" },
                     additional_vim_regex_highlighting = false -- WARNING: Must be set to false for spellsitter plugin
                 },
-                ensure_installed = { "c", "python", "lua", "bash", "make", "cmake", "toml", "yaml", "cpp", "cuda", "json", "rust", "vim", "html", "css", "bibtex", "markdown", "rst", "comment" },
+                ensure_installed = { "c", "python", "lua", "bash", "make", "cmake", "toml", "yaml", "cpp", "cuda", "json", "rust", "vim", "html", "css", "bibtex", "markdown", "rst", "comment", "diff" },
                 incremental_selection = { enable = false },
                 refactor = {
                     highlight_definitions = { enable = true },
