@@ -9,26 +9,26 @@ vim.o.termguicolors = true
 -- plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins",
-{
-    -- see https://github.com/folke/lazy.nvim/issues/462
-    concurrency = 64,
-    checker = {
-        enabled = true,
-        concurrency = 8,
-        frequency = 3600 * 24 * 7,
+    {
+        -- see https://github.com/folke/lazy.nvim/issues/462
+        concurrency = 64,
+        checker = {
+            enabled = true,
+            concurrency = 8,
+            frequency = 3600 * 24 * 7,
+        }
     }
-}
 )
 
 require "lsp"
@@ -42,28 +42,28 @@ local h = require "helpers"
 vim.cmd.colorscheme = Persist.colorscheme()
 vim.o.encoding = 'utf-8'
 
-vim.o.history = 1000 -- Store a ton of history (default is 20)
-vim.o.wildmenu = true -- show list instead of just completing
-vim.o.autoread = true -- Automatically re-read changed files
-vim.o.hidden = true -- Don't unload a buffer when abandoning it
-vim.o.mouse = "a" -- enable mouse for all modes settings
-vim.opt.clipboard:append{ unnamedplus = true } -- To work in tmux
-vim.o.spelllang = "en_gb" -- British spelling
-vim.o.showmode = false -- Don't show the current mode
+vim.o.history = 1000                           -- Store a ton of history (default is 20)
+vim.o.wildmenu = true                          -- show list instead of just completing
+vim.o.autoread = true                          -- Automatically re-read changed files
+vim.o.hidden = true                            -- Don't unload a buffer when abandoning it
+vim.o.mouse = "a"                              -- enable mouse for all modes settings
+vim.opt.clipboard:append { unnamedplus = true } -- To work in tmux
+vim.o.spelllang = "en_gb"                      -- British spelling
+vim.o.showmode = false                         -- Don't show the current mode
 
-vim.o.secure = true -- Secure mode for reading vimrc, exrc files etc. in current dir
-vim.o.exrc = true -- Allow the use of folder dependent settings
+vim.o.secure = true                            -- Secure mode for reading vimrc, exrc files etc. in current dir
+vim.o.exrc = true                              -- Allow the use of folder dependent settings
 
-vim.g.netrw_altfile = 1 -- Prev buffer command excludes netrw buffers
+vim.g.netrw_altfile = 1                        -- Prev buffer command excludes netrw buffers
 
 -- What to write in sessions
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,globals"
 
 vim.o.backspace = "indent,eol,start" -- Sane backspace
-vim.o.autoindent = true -- Autoindent
-vim.o.smartindent = false -- Turning this off as messes with python comment indents.
-vim.o.wrap = true -- Wrap lines
-vim.o.linebreak = true -- Wrap at breaks
+vim.o.autoindent = true              -- Autoindent
+vim.o.smartindent = false            -- Turning this off as messes with python comment indents.
+vim.o.wrap = true                    -- Wrap lines
+vim.o.linebreak = true               -- Wrap at breaks
 vim.o.textwidth = 0
 vim.o.wrapmargin = 0
 vim.o.display = "lastline"
@@ -96,17 +96,17 @@ vim.o.gdefault = true -- g flag on sed subs automatically
 vim.o.backupdir = os.getenv('HOME') .. "/.nvim_backup"
 vim.o.directory = os.getenv('HOME') .. "/.nvim_backup"
 vim.o.undodir = os.getenv('HOME') .. "/.nvim_backup/undo" -- where to save undo histories
-vim.o.undofile = true -- Save undo's after file closes
+vim.o.undofile = true                                     -- Save undo's after file closes
 
-vim.opt.diffopt:append{ "algorithm:patience" }  -- use the patience algo for diffs
+vim.opt.diffopt:append { "algorithm:patience" }           -- use the patience algo for diffs
 
 -- ignores
 vim.o.wildignore = vim.o.wildignore ..
-                       '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
+    '*.o,*.obj,*.pyc,*.aux,*.blg,*.fls,*.blg,*.fdb_latexmk,*.latexmain,.DS_Store,Session.vim,Project.vim,tags,.tags,.sconsign.dblite,.ccls-cache'
 vim.o.suffixes = '.bak,.o,.info,.swp,.obj'
 
 -- by default, use the last focussed split for opening new items
-vim.opt.switchbuf:append{ uselast = true }
+vim.opt.switchbuf:append { uselast = true }
 
 -- }}}
 
@@ -149,14 +149,14 @@ h.map('n', '<C-x>', '<Nop>')
 h.noremap('', [[|]], '<Esc>:<C-u>noh<CR>', { silent = true })
 local ns = vim.api.nvim_create_namespace('toggle_hlsearch')
 local function toggle_hlsearch(char)
-  if vim.fn.mode() == 'n' then
-    local keys = { '<CR>', 'n', 'N', '*', '#', '?', '/' }
-    local new_hlsearch = vim.tbl_contains(keys, vim.fn.keytrans(char))
+    if vim.fn.mode() == 'n' then
+        local keys = { '<CR>', 'n', 'N', '*', '#', '?', '/' }
+        local new_hlsearch = vim.tbl_contains(keys, vim.fn.keytrans(char))
 
-    if vim.opt.hlsearch:get() ~= new_hlsearch then
-      vim.opt.hlsearch = new_hlsearch
+        if vim.opt.hlsearch:get() ~= new_hlsearch then
+            vim.opt.hlsearch = new_hlsearch
+        end
     end
-  end
 end
 vim.on_key(toggle_hlsearch, ns)
 
@@ -172,38 +172,30 @@ vim.env.LAUNCHED_FROM_NVIM = 1
 vim.env.NVIM_LISTEN_ADDRESS = vim.v.servername
 
 local term_augroup = vim.api.nvim_create_augroup("MyTerm", {})
-vim.api.nvim_create_autocmd({"TermOpen"}, {
-  pattern = {[[term://*]]},
-  group = term_augroup,
-  callback = function()
-      vim.cmd.startinsert()
-  end
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
+    pattern = { [[term://*]] },
+    group = term_augroup,
+    callback = function()
+        vim.cmd.startinsert()
+    end
 })
-vim.api.nvim_create_autocmd({"BufWinEnter","WinEnter","TermOpen"}, {
-  pattern = {[[term://*]]},
-  group = term_augroup,
-  callback = function()
-      -- local status, Color = pcall(require, "nightfox.lib.color")
-      -- if(status) then
-      --     local normal = vim.api.nvim_get_hl_by_name('Normal', {})
-      --     normal['background'] = Color.from_hex(string.format("%06x", normal['background'])):brighten(-5):to_hex()
-      --     vim.api.nvim_set_hl(0, "TermNormal", normal)
-      -- end
-      -- vim.wo.winhighlight = "Normal:TermNormal"
-      vim.wo.cursorline = false
-      vim.wo.number = false
-      vim.wo.relativenumber = false
-      -- vim.cmd.startinsert()
-  end
+vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter", "TermOpen" }, {
+    pattern = { [[term://*]] },
+    group = term_augroup,
+    callback = function()
+        local status, Color = pcall(require, "nightfox.lib.color")
+        if (status) then
+            local normal = vim.api.nvim_get_hl(0, { name = 'Normal' })
+            local bg = Color.from_hex(string.format("%06x", normal.bg)):brighten(-3):to_hex()
+            vim.api.nvim_set_hl(0, "TermNormal", {bg=bg})
+        end
+        vim.wo.winhighlight = "Normal:TermNormal"
+        vim.wo.cursorline = false
+        vim.wo.number = false
+        vim.wo.relativenumber = false
+        -- vim.cmd.startinsert()
+    end
 })
-
--- vim.cmd([[
---     augroup MyTerm
---         au!
---         au BufWinEnter,WinEnter,TermOpen term://* startinsert 
---         au TermOpen * setlocal winhighlight=Normal:TermNormal | setlocal nocursorline nonumber norelativenumber
---     augroup END
--- ]])
 
 h.map('t', 'kj', [[<C-\><C-n>]])
 h.map('t', '<C-h>', [[<C-\><C-n><C-h>]])
@@ -255,7 +247,7 @@ local function my_grep()
     require "telescope.builtin".live_grep(opts)
 end
 
-vim.keymap.set('n', '<leader>/', my_grep, {noremap=true})
+vim.keymap.set('n', '<leader>/', my_grep, { noremap = true })
 
 -- handy mapping to fold around previous search results
 -- taken from http://vim.wikia.com/wiki/Folding_with_Regular_Expression
@@ -281,6 +273,7 @@ function SearchFold()
         vim.w.searchfold_on = 0
     end
 end
+
 vim.cmd('command! SearchFold call s:SearchFold()')
 h.noremap('n', '<localleader>z', ':SearchFold<CR>')
 
@@ -304,6 +297,7 @@ function QFOpenInWindow()
         vim.cmd("exec ':' " .. linenumber .. 'cc')
     end
 end
+
 vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e <cmd>lua QFOpenInWindow()<CR>]])
 
 -- Edit rc files
@@ -320,7 +314,7 @@ local function smart_dd()
         return "dd"
     end
 end
-vim.keymap.set('n', 'dd', smart_dd, {noremap=true, expr = true})
+vim.keymap.set('n', 'dd', smart_dd, { noremap = true, expr = true })
 
 -- Capture output from a vim command (like :version or :messages) into a split scratch buffer.
 --  (credit: ctechols, https://gist.github.com/ctechols/c6f7c900b09be5a31dc8)
