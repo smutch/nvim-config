@@ -44,26 +44,32 @@ return {
     {
         "shellRaining/hlchunk.nvim",
         event = { "UIEnter" },
-        opts = {
-            chunk = {
-                enable = true,
-                use_treesitter = true,
-                chars = {
-                    horizontal_line = "━",
-                    vertical_line = "┃",
-                    left_top = "┏",
-                    left_bottom = "┗",
-                    right_arrow = "━",
+        config = function()
+            local hlchunk = require "hlchunk"
+            local ft = require "hlchunk.utils.filetype"
+            local exclude_filetypes = vim.list_extend(ft.exclude_filetypes, { oil = true })
+            hlchunk.setup({
+                chunk = {
+                    enable = true,
+                    use_treesitter = true,
+                    exclude_filetypes = exclude_filetypes,
+                    chars = {
+                        horizontal_line = "━",
+                        vertical_line = "┃",
+                        left_top = "┏",
+                        left_bottom = "┗",
+                        right_arrow = "━",
+                    },
                 },
-            },
-            blank = {
-                enable = false,
-            },
-            line_num = {
-                enable = false,
-                use_treesitter = true,
-            },
-        }
+                blank = {
+                    enable = false,
+                },
+                line_num = {
+                    enable = false,
+                    use_treesitter = true,
+                },
+            })
+        end
     },
     {
         'petertriho/nvim-scrollbar',
@@ -93,10 +99,10 @@ return {
     {
         'rcarriga/nvim-notify',
         config = function()
-            require 'notify'.setup {top_down = false}
+            require 'notify'.setup { top_down = false }
         end,
         keys = {
-            {"<leader><bs>", function() require("notify").dismiss{} end, desc="Dismiss notification"},
+            { "<leader><bs>", function() require("notify").dismiss {} end, desc = "Dismiss notification" },
         },
     },
     {
