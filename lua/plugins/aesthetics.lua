@@ -19,23 +19,21 @@ return {
         'EdenEast/nightfox.nvim',
         lazy = false,
         priority = 1000,
-        config = function()
-            require 'nightfox'.setup {
-                options = { styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
-                groups = {
-                    nightfox = {
-                        -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
-                        VertSplit           = { fg = "sel1" },
-                        WinSeparator        = { fg = "sel1" },
-                        BufferCurrent       = { bg = "bg2", fg = "fg1" },
-                        BufferCurrentIndex  = { bg = "bg2", fg = "diag.info" },
-                        BufferCurrentMod    = { bg = "bg2", fg = "diag.warn" },
-                        BufferCurrentSign   = { bg = "bg2", fg = "diag.info" },
-                        BufferCurrentTarget = { bg = "bg2", fg = "diag.error" },
-                    },
+        opts = {
+            options = { dim_inactive = true, styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
+            groups = {
+                nightfox = {
+                    -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
+                    VertSplit           = { fg = "sel1" },
+                    WinSeparator        = { fg = "sel1" },
+                    BufferCurrent       = { bg = "bg2", fg = "fg1" },
+                    BufferCurrentIndex  = { bg = "bg2", fg = "diag.info" },
+                    BufferCurrentMod    = { bg = "bg2", fg = "diag.warn" },
+                    BufferCurrentSign   = { bg = "bg2", fg = "diag.info" },
+                    BufferCurrentTarget = { bg = "bg2", fg = "diag.error" },
                 },
-            }
-        end
+            },
+        }
     },
     {
         'nvim-lualine/lualine.nvim',
@@ -46,28 +44,26 @@ return {
     {
         "shellRaining/hlchunk.nvim",
         event = { "UIEnter" },
-        config = function()
-            require("hlchunk").setup({
-                chunk = {
-                    enable = true,
-                    use_treesitter = true,
-                    chars = {
-                        horizontal_line = "━",
-                        vertical_line = "┃",
-                        left_top = "┏",
-                        left_bottom = "┗",
-                        right_arrow = "━",
-                    },
+        opts = {
+            chunk = {
+                enable = true,
+                use_treesitter = true,
+                chars = {
+                    horizontal_line = "━",
+                    vertical_line = "┃",
+                    left_top = "┏",
+                    left_bottom = "┗",
+                    right_arrow = "━",
                 },
-                blank = {
-                    enable = false,
-                },
-                line_num = {
-                    enable = false,
-                    use_treesitter = true,
-                },
-            })
-        end
+            },
+            blank = {
+                enable = false,
+            },
+            line_num = {
+                enable = false,
+                use_treesitter = true,
+            },
+        }
     },
     {
         'petertriho/nvim-scrollbar',
@@ -97,11 +93,11 @@ return {
     {
         'rcarriga/nvim-notify',
         config = function()
-            require("notify").setup {
-                top_down = false
-            }
-            vim.keymap.set('n', '<leader><bs>', require("notify").dismiss)
-        end
+            require 'notify'.setup {top_down = false}
+        end,
+        keys = {
+            {"<leader><bs>", function() require("notify").dismiss{} end, desc="Dismiss notification"},
+        },
     },
     {
         'folke/noice.nvim',
@@ -202,9 +198,9 @@ return {
                     }
                     if props.focused then
                         for ii, item in ipairs(navic.get_data(props.buf) or {}) do
-                            if ii == 4 then 
+                            if ii == 4 then
                                 table.insert(res, {
-                                    { ' ... ',     group = 'NavicSeparator' },
+                                    { ' ... ', group = 'NavicSeparator' },
                                 })
                                 break
                             end
