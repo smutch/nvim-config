@@ -16,6 +16,12 @@ local function theme_colors()
     local colorscheme = vim.api.nvim_exec("colorscheme", true)
     if string.find(colorscheme, "fox") then
         local palette = require('nightfox.palette').load(vim.g.colors_name)
+        -- local Color = require("nightfox.lib.color")
+        -- local bg = Color.from_hex(palette.bg1)
+        local bg = palette.bg2
+        if vim.o.background == "light" then
+            bg = palette.bg1
+        end
         colors = {
             blue   = palette.blue.base,
             cyan   = palette.cyan.base,
@@ -28,7 +34,7 @@ local function theme_colors()
             yellow = palette.yellow.base,
             fg1 = palette.white.dim,
             fg2 = palette.yellow.dim,
-            bg1 = palette.bg1
+            bg1 = bg,
         }
     end
 

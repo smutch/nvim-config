@@ -176,6 +176,10 @@ return {
             "SmiteshP/nvim-navic",
             "nvim-tree/nvim-web-devicons",
         },
-        config = true
+        opts = {
+            theme = {
+                basename = { fg = "#baa386", bold = true },
+            }
+        }
     }
 }
