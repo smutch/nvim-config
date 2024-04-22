@@ -1,6 +1,6 @@
 local M = {}
 
-local function sync_colors()
+local function theme_colors()
     -- default colors
     local colors = {
         blue   = '#80a0ff',
@@ -17,19 +17,56 @@ local function sync_colors()
     if string.find(colorscheme, "fox") then
         local palette = require('nightfox.palette').load(vim.g.colors_name)
         colors = {
-            blue     = palette.blue.base,
-            cyan     = palette.cyan.base,
-            black    = palette.black.dark,
-            white    = palette.white.base,
-            red      = palette.red.base,
-            violet   = palette.magenta.dim,
-            green    = palette.green.base,
-            grey     = palette.bg3,
-            yellow   = palette.yellow.base,
+            blue   = palette.blue.base,
+            cyan   = palette.cyan.base,
+            black  = palette.black.base,
+            white  = palette.white.base,
+            red    = palette.red.base,
+            violet = palette.magenta.dim,
+            green  = palette.green.base,
+            grey   = palette.bg3,
+            yellow = palette.yellow.base,
         }
     end
 
-    return colors
+    return {
+        normal = {
+            a = { bg = "NONE", fg = colors.white, gui = 'bold' },
+            b = { bg = "NONE", fg = colors.white },
+            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
+            z = { bg = "NONE", fg = colors.white },
+        },
+        insert = {
+            a = { bg = colors.blue, fg = colors.black, gui = 'bold' },
+            b = { bg = "NONE", fg = colors.white },
+            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
+            z = { bg = "NONE", fg = colors.white },
+        },
+        visual = {
+            a = { bg = colors.yellow, fg = colors.black, gui = 'bold' },
+            b = { bj = "NONE", fg = colors.white },
+            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
+            z = { bg = "NONE", fg = colors.white },
+        },
+        replace = {
+            a = { bg = colors.red, fg = colors.black, gui = 'bold' },
+            b = { bg = "NONE", fg = colors.white },
+            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
+            z = { bg = "NONE", fg = colors.white },
+        },
+        command = {
+            a = { bg = colors.green, fg = colors.black, gui = 'bold' },
+            b = { bg = "NONE", fg = colors.white },
+            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
+            z = { bg = "NONE", fg = colors.white },
+        },
+        inactive = {
+            a = { bg = "NONE", fg = colors.gray, gui = 'bold' },
+            b = { bg = "NONE", fg = colors.gray },
+            c = { bg = "NONE", fg = colors.gray },
+            z = { bg = "NONE", fg = colors.white },
+        }
+    }
 end
 
 
@@ -38,9 +75,7 @@ function M.statusline()
     -- Author: lokesh-krishna
     -- MIT license, see LICENSE for more details.
 
-    -- local colors = sync_colors()
-
-    local lsp_server = function ()
+    local lsp_server = function()
         local msg = ''
         local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
         local clients = vim.lsp.get_active_clients()
@@ -59,17 +94,19 @@ function M.statusline()
     local harpoonline = require("harpoonline")
     harpoonline.setup({
         on_update = function() require("lualine").refresh() end,
-      })
+    })
+
+    local colors = theme_colors()
 
     require('lualine').setup {
         options = {
-            -- theme = "nordic",
+            theme = colors,
             component_separators = '|',
-            section_separators = { left = '', right = '' },
+            section_separators = { left = '', right = '' },
         },
         sections = {
             lualine_a = {
-                { 'mode', separator = { left = '' }, right_padding = 2 },
+                { 'mode', right_padding = 2 },
             },
             lualine_b = {
                 -- 'filename',
@@ -79,37 +116,35 @@ function M.statusline()
                     'diagnostics',
                     sources = { 'nvim_lsp' },
                     symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰨹 ' },
-                }
+                },
+                { harpoonline.format }
             },
-            lualine_c = { {harpoonline.format, separator = { right = '' }} },
-            lualine_x = { },
+            lualine_c = { { '%=', separator = '' }, 'filename' },
+            lualine_x = {},
             lualine_y = {
                 {
                     lsp_server,
                     icon = '󰿘',
-                    color = { fg = '#ffffff', gui = 'bold' },
                 },
                 'filetype',
                 'progress',
                 {
                     'fileformat',
-                    separator = {
-                        right = ''
-                    },
                     right_padding = 2
                 }
             },
             lualine_z = {
-                { 'location', separator = { right = '' }, left_padding = 2 },
+                { 'location', left_padding = 2 },
             },
         },
         inactive_sections = {
-            lualine_a = { 'filename' },
+            -- these are to remove the defaults
+            lualine_a = {},
             lualine_b = {},
+            lualine_y = {},
+            lualine_z = {},
             lualine_c = {},
             lualine_x = {},
-            lualine_y = {},
-            lualine_z = { 'location' },
         },
         tabline = {},
         extensions = {
@@ -123,7 +158,6 @@ function M.statusline()
             "trouble",
         },
     }
-
 end
 
 function M.config()
@@ -135,7 +169,6 @@ function M.config()
         callback = setup.statusline,
         group = augroup
     })
-
 end
 
 return M
