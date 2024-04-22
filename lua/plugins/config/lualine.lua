@@ -26,45 +26,48 @@ local function theme_colors()
             green  = palette.green.base,
             grey   = palette.bg3,
             yellow = palette.yellow.base,
+            fg1 = palette.white.dim,
+            fg2 = palette.yellow.dim,
+            bg1 = palette.bg1
         }
     end
 
     return {
         normal = {
-            a = { bg = "NONE", fg = colors.white, gui = 'bold' },
-            b = { bg = "NONE", fg = colors.white },
-            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
-            z = { bg = "NONE", fg = colors.white },
+            a = { bg = colors.bg1, fg = colors.fg1, gui = 'bold' },
+            b = { bg = colors.bg1, fg = colors.fg1 },
+            c = { bg = colors.bg1, fg = colors.fg2 },
+            z = { bg = colors.bg1, fg = colors.fg1 },
         },
         insert = {
             a = { bg = colors.blue, fg = colors.black, gui = 'bold' },
-            b = { bg = "NONE", fg = colors.white },
-            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
-            z = { bg = "NONE", fg = colors.white },
+            b = { bg = colors.bg1, fg = colors.fg1 },
+            c = { bg = colors.bg1, fg = colors.fg2 },
+            z = { bg = colors.bg1, fg = colors.fg1 },
         },
         visual = {
             a = { bg = colors.yellow, fg = colors.black, gui = 'bold' },
-            b = { bj = "NONE", fg = colors.white },
-            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
-            z = { bg = "NONE", fg = colors.white },
+            b = { bg = colors.bg1, fg = colors.fg1 },
+            c = { bg = colors.bg1, fg = colors.fg2 },
+            z = { bg = colors.bg1, fg = colors.fg1 },
         },
         replace = {
             a = { bg = colors.red, fg = colors.black, gui = 'bold' },
-            b = { bg = "NONE", fg = colors.white },
-            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
-            z = { bg = "NONE", fg = colors.white },
+            b = { bg = colors.bg1, fg = colors.fg1 },
+            c = { bg = colors.bg1, fg = colors.fg2 },
+            z = { bg = colors.bg1, fg = colors.fg1 },
         },
         command = {
             a = { bg = colors.green, fg = colors.black, gui = 'bold' },
-            b = { bg = "NONE", fg = colors.white },
-            c = { bg = "NONE", fg = colors.white, gui = 'bold'  },
-            z = { bg = "NONE", fg = colors.white },
+            b = { bg = colors.bg1, fg = colors.fg1 },
+            c = { bg = colors.bg1, fg = colors.fg2 },
+            z = { bg = colors.bg1, fg = colors.fg1 },
         },
         inactive = {
-            a = { bg = "NONE", fg = colors.gray, gui = 'bold' },
-            b = { bg = "NONE", fg = colors.gray },
-            c = { bg = "NONE", fg = colors.gray },
-            z = { bg = "NONE", fg = colors.white },
+            a = { bg = colors.bg1, fg = colors.gray, gui = 'bold' },
+            b = { bg = colors.bg1, fg = colors.gray },
+            c = { bg = colors.bg1, fg = colors.fg2 },
+            z = { bg = colors.bg1, fg = colors.gray },
         }
     }
 end
@@ -122,12 +125,14 @@ function M.statusline()
             lualine_c = { { '%=', separator = '' }, 'filename' },
             lualine_x = {},
             lualine_y = {
+                'copilot',
                 {
                     lsp_server,
                     icon = '󰿘',
                 },
                 'filetype',
                 'progress',
+                'encoding',
                 {
                     'fileformat',
                     right_padding = 2
