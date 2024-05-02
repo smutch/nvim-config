@@ -27,9 +27,17 @@ end
 
 local function toggle_lsp_inlay_hints(bufnr)
     if vim.lsp.inlay_hint.is_enabled(bufnr) then
-        vim.lsp.inlay_hint.enable(bufnr, false)
+        if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
+            vim.lsp.inlay_hint.enable(bufnr, false)
+        else
+            vim.lsp.inlay_hint.enable(false, {bufnr=bufnr})
+        end
     else
-        vim.lsp.inlay_hint.enable(bufnr, true)
+        if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
+            vim.lsp.inlay_hint.enable(bufnr, true)
+        else
+            vim.lsp.inlay_hint.enable(true, {bufnr=bufnr})
+        end
     end
 end
 
@@ -76,7 +84,11 @@ local on_attach = function(client, bufnr)
     vim.g.lsp_diagnostic_sign_priority = 100
 
     if client.server_capabilities.inlayHintProvider then
-        vim.lsp.inlay_hint.enable(bufnr, true)
+        if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
+            vim.lsp.inlay_hint.enable(bufnr, true)
+        else
+            vim.lsp.inlay_hint.enable(true, {bufnr=bufnr})
+        end
         vim.keymap.set("n", "gI", toggle_lsp_inlay_hints, { noremap = true, desc = "Toggle inlay hints" })
     end
 
