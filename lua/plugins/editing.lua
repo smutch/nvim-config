@@ -144,6 +144,12 @@ return {
     --         }
     --     end
     -- },
-    { 'NMAC427/guess-indent.nvim', opts = {} },
-    { 'andymass/vim-matchup',      opts = {} },
+    { 'NMAC427/guess-indent.nvim',        opts = {} },
+    { 'andymass/vim-matchup',             opts = {} },
+    {
+        'Wansmer/treesj',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' },
+        opts = { use_default_keymaps = false, },
+        keys = { { '<leader>j', function() require('treesj').toggle() end, desc = "toggle join/merge" } },
+    }
 }

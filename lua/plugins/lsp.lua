@@ -71,5 +71,10 @@ return {
             vim.diagnostic.config({ virtual_lines = false })
             vim.keymap.set("", "<Leader>D", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
         end
-    }
+    },
+    -- TODO: Come back and try this again when more mature. Really love the idea!
+    -- {
+    --     "RaafatTurki/corn.nvim",
+    --     config = true
+    -- }
 }
