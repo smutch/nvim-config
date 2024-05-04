@@ -362,12 +362,27 @@ return {
     { 'nvim-pack/nvim-spectre', config = true },
     {
         'stevearc/overseer.nvim',
-        config = function()
-            require 'overseer'.setup()
-            vim.keymap.set('n', '<leader>ot', '<CMD>OverseerToggle<CR>', { noremap = true })
-            vim.keymap.set('n', '<leader>or', '<CMD>OverseerRun<CR>', { noremap = true })
-            vim.keymap.set('n', '<leader>oo', '<CMD>OverseerQuickAction restart<CR>', { noremap = true })
-        end,
+        opts = {
+            task_list = {
+                bindings = {
+                    ["<C-l>"] = false,
+                    ["<C-h>"] = false,
+                    ["L"] = "IncreaseDetail",
+                    ["H"] = "DecreaseDetail",
+                    ["gL"] = "IncreaseAllDetail",
+                    ["gH"] = "DecreaseAllDetail",
+                    ["<C-k>"] = false,
+                    ["<C-j>"] = false,
+                    ["<C-u>"] = "ScrollOutputUp",
+                    ["<C-d>"] = "ScrollOutputDown",
+                }
+            },
+        },
+        keys = {
+            {'<leader>ot', '<CMD>OverseerToggle<CR>', desc="Overseer - toggle"},
+            {'<leader>or', '<CMD>OverseerRun<CR>', desc = "Overseer - run"},
+            {'<leader>oo', '<CMD>OverseerQuickAction restart<CR>', desc = "Overseer - restart"},
+        }
     },
     {
         "ThePrimeagen/harpoon",
