@@ -480,5 +480,9 @@ return {
                 end,
             })
         end,
+    },
+    {
+        "Makaze/watch.nvim",
+        cmd = { "WatchStart", "WatchStop", "WatchFile" },
     }
 }
