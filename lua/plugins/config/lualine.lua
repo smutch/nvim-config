@@ -126,7 +126,8 @@ function M.statusline()
                     sources = { 'nvim_lsp' },
                     symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰨹 ' },
                 },
-                { harpoonline.format }
+                { harpoonline.format },
+                { "overseer" }
             },
             lualine_c = { { '%=', separator = '' }, 'filename' },
             lualine_x = {},
