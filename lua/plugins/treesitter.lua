@@ -47,13 +47,12 @@ return {
                     },
                     swap = {
                         enable = true,
-                        swap_next = { ["<leader>a"] = "@parameter.inner" },
-                        swap_previous = { ["<leader>A"] = "@parameter.inner" }
+                        swap_next = { ["gs"] = "@parameter.inner" },
+                        swap_previous = { ["gS"] = "@parameter.inner" }
                     },
                     lsp_interop = {
                         enable = true,
-                        border = 'none',
-                        peek_definition_code = { ["<leader>df"] = "@function.outer", ["<leader>dF"] = "@class.outer" }
+                        peek_definition_code = { ["<localleader>pf"] = "@function.outer", ["<localleader>pF"] = "@class.outer" }
                     },
                     move = {
                         enable = true,

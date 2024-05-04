@@ -281,18 +281,28 @@ return {
             prompts = {
                 Docs = {
                     prompt =
-                    '/COPILOT_REFACTOR Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, google-style docstrings for Python etc.',
+                    '/COPILOT_GENERATE Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, google-style docstrings for Python etc.',
                 },
             },
             -- default window options
             window = {
                 layout = 'vertical', -- 'vertical', 'horizontal', 'float'
+                width = 0.33,        -- Width of the window
             },
+
+            mappings = {
+                reset = {
+                    normal = 'gr'
+                },
+                accept_diff = {
+                    normal = 'ga',
+                },
+            }
         },
         event = "VeryLazy",
         keys = {
             {
-                "<leader>cch",
+                "<leader>ah",
                 function()
                     local actions = require("CopilotChat.actions")
                     require("CopilotChat.integrations.telescope").pick(actions.help_actions())
@@ -301,72 +311,41 @@ return {
             },
             -- Show prompts actions with telescope
             {
-                "<leader>ccp",
+                "<leader>aa",
                 function()
                     local actions = require("CopilotChat.actions")
                     require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
                 end,
                 desc = "CopilotChat - Prompt actions",
             },
-            { "<leader>cce", "<cmd>CopilotChatExplain<cr>",       desc = "CopilotChat - Explain code" },
-            { "<leader>cct", "<cmd>CopilotChatTests<cr>",         desc = "CopilotChat - Generate tests" },
-            { "<leader>ccr", "<cmd>CopilotChatReview<cr>",        desc = "CopilotChat - Review code" },
-            { "<leader>ccR", "<cmd>CopilotChatRefactor<cr>",      desc = "CopilotChat - Refactor code" },
-            { "<leader>ccn", "<cmd>CopilotChatBetterNamings<cr>", desc = "CopilotChat - Better Naming" },
-            -- Chat with Copilot in visual mode
             {
-                "<leader>ccv",
-                ":CopilotChatVisual",
-                mode = "x",
-                desc = "CopilotChat - Open in vertical split",
-            },
-            {
-                "<leader>ccx",
-                ":CopilotChatInline<cr>",
-                mode = "x",
-                desc = "CopilotChat - Inline chat",
-            },
-            -- Custom input for CopilotChat
-            {
-                "<leader>cci",
+                "<leader>ac",
                 function()
-                    local input = vim.fn.input("Ask Copilot: ")
+                    local input = vim.fn.input("Chat: ")
                     if input ~= "" then
                         vim.cmd("CopilotChat " .. input)
                     end
                 end,
-                desc = "CopilotChat - Ask input",
-            },
-            -- Generate commit message based on the git diff
-            {
-                "<leader>ccm",
-                "<cmd>CopilotChatCommit<cr>",
-                desc = "CopilotChat - Generate commit message for all changes",
+                desc = "CopilotChat - Ask with no context",
             },
             {
-                "<leader>ccM",
-                "<cmd>CopilotChatCommitStaged<cr>",
-                desc = "CopilotChat - Generate commit message for staged changes",
-            },
-            -- Quick chat with Copilot
-            {
-                "<leader>ccq",
+                "<leader>ab",
                 function()
-                    local input = vim.fn.input("Quick Chat: ")
+                    local input = vim.fn.input("Chat (buf): ")
                     if input ~= "" then
                         vim.cmd("CopilotChatBuffer " .. input)
                     end
                 end,
-                desc = "CopilotChat - Quick chat",
+                desc = "CopilotChat - Chat with buffer as context",
             },
-            -- Debug
-            { "<leader>ccd", "<cmd>CopilotChatDebugInfo<cr>",     desc = "CopilotChat - Debug Info" },
-            -- Fix the issue with diagnostic
-            { "<leader>ccf", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "CopilotChat - Fix Diagnostic" },
-            -- Clear buffer and chat history
-            { "<leader>ccl", "<cmd>CopilotChatReset<cr>",         desc = "CopilotChat - Clear buffer and chat history" },
-            -- Toggle Copilot Chat Vsplit
-            { "<leader>ccv", "<cmd>CopilotChatToggle<cr>",        desc = "CopilotChat - Toggle Vsplit" },
+            {
+                "<leader>al",
+                function()
+                    vim.fn.setreg("C", require("CopilotChat").response(), { "l" })
+                end,
+                desc = "CopilotChat - Yank last response to \"C",
+            },
+            { "<leader>at", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle window" },
         },
     },
     { 'tiagovla/scope.nvim',    config = true },
@@ -438,7 +417,7 @@ return {
     {
         'nvim-tree/nvim-tree.lua',
         keys = {
-            {"g-", "<CMD>NvimTreeToggle<CR>", desc = "NvimTree - Toggle"},
+            { "g-", "<CMD>NvimTreeToggle<CR>", desc = "NvimTree - Toggle" },
         },
         config = function()
             local HEIGHT_RATIO = 0.8
