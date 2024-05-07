@@ -19,13 +19,12 @@ return {
     { "vim-pandoc/vim-pandoc",       ft = { 'markdown', 'quarto', 'pandoc' } },
     { 'vim-scripts/scons.vim',       ft = { 'scons' } },
     { 'Glench/Vim-Jinja2-Syntax',    ft = { 'html' } },
-    -- {
-    --     'mattn/emmet-vim',
-    --     ft = { 'html', 'css', 'sass', 'jinja.html', 'markdown', 'markdown.pandoc', 'astro' },
-    --     init = function()
-    --         vim.g.user_emmet_leader_key = '<M-y>'
-    --     end
-    -- },
+    {
+        'MeanderingProgrammer/markdown.nvim',
+        name = 'render-markdown',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' },
+        opts = { file_types = { 'markdown.pandoc' }, }
+    },
     { 'cespare/vim-toml',   ft = { 'toml' } },
     { 'tikhomirov/vim-glsl' },
     { 'DingDean/wgsl.vim' },

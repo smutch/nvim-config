@@ -47,12 +47,11 @@ return {
         config = function()
             local hlchunk = require "hlchunk"
             local ft = require "hlchunk.utils.filetype"
-            local exclude_filetypes = vim.list_extend(ft.exclude_filetypes, { oil = true })
+            ft.exclude_filetypes["oil"] = true
             hlchunk.setup({
                 chunk = {
                     enable = true,
                     use_treesitter = true,
-                    exclude_filetypes = exclude_filetypes,
                     chars = {
                         horizontal_line = "━",
                         vertical_line = "┃",

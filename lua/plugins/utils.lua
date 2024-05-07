@@ -198,7 +198,7 @@ return {
     },
     {
         'hkupty/iron.nvim',
-        command = "IronRepl",
+        cmd = { "IronRepl" },
         config = function()
             local iron = require("iron.core")
 
@@ -359,7 +359,7 @@ return {
         lazy = true,
         cmd = { 'NoNeckPain' }
     },
-    { 'nvim-pack/nvim-spectre', config = true },
+    { 'nvim-pack/nvim-spectre', config = true, cmd = {"Spectre"} },
     {
         'stevearc/overseer.nvim',
         opts = {

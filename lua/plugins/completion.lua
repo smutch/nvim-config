@@ -1,10 +1,10 @@
 return {
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-buffer' },
-    { 'Saecki/crates.nvim',                config = true, lazy = true },
+    { 'Saecki/crates.nvim', config = true, ft = { "rust", "toml" } },
     { 'hrsh7th/cmp-path' },
     { 'hrsh7th/cmp-nvim-lua' },
-    { 'kdheepak/cmp-latex-symbols' },
+    { 'kdheepak/cmp-latex-symbols', ft = { "latex" } },
     { 'f3fora/cmp-spell' },
     { 'hrsh7th/cmp-calc' },
     { 'ray-x/cmp-treesitter' },

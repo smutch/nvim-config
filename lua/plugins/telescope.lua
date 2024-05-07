@@ -33,6 +33,7 @@ return {
     },
     {
         'nvim-telescope/telescope.nvim',
+        lazy = "VeryLazy",
         dependencies = { "polirritmico/telescope-lazy-plugins.nvim",
             { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
             'xiyaowong/telescope-emoji.nvim',
