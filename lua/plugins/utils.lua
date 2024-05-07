@@ -227,25 +227,22 @@ return {
     },
     {
         'mrjones2014/smart-splits.nvim',
-        config = function()
-            require('smart-splits').setup()
-            vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
-            vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
-            vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
-            vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
-            -- moving between splits
-            vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
-            vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
-            vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
-            vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
-            -- swapping buffers between windows
-            vim.keymap.set('n', '<leader>bh', require('smart-splits').swap_buf_left)
-            vim.keymap.set('n', '<leader>bj', require('smart-splits').swap_buf_down)
-            vim.keymap.set('n', '<leader>bk', require('smart-splits').swap_buf_up)
-            vim.keymap.set('n', '<leader>bl', require('smart-splits').swap_buf_right)
-            -- smart mode
-            vim.keymap.set('n', '<leader>R', require('smart-splits').start_resize_mode)
-        end
+        config = true,
+        keys = {
+            { 'n', '<A-h>',      function() require('smart-splits').resize_left() end,       desc = "smart-splits - resize left" },
+            { 'n', '<A-j>',      function() require('smart-splits').resize_down() end,       desc = "smart-splits - resize down" },
+            { 'n', '<A-k>',      function() require('smart-splits').resize_up() end,         desc = "smart-splits - resize up" },
+            { 'n', '<A-l>',      function() require('smart-splits').resize_right() end,      desc = "smart-splits - resize right" },
+            { 'n', '<C-h>',      function() require('smart-splits').move_cursor_left() end,  desc = "smart-splits - move cursor left" },
+            { 'n', '<C-j>',      function() require('smart-splits').move_cursor_down() end,  desc = "smart-splits - move cursor down" },
+            { 'n', '<C-k>',      function() require('smart-splits').move_cursor_up() end,    desc = "smart-splits - move cursor up" },
+            { 'n', '<C-l>',      function() require('smart-splits').move_cursor_right() end, desc = "smart-splits - move cursor right" },
+            { 'n', '<leader>bh', function() require('smart-splits').swap_buf_left() end,     desc = "smart-splits - swap buffer left" },
+            { 'n', '<leader>bj', function() require('smart-splits').swap_buf_down() end,     desc = "smart-splits - swap buffer down" },
+            { 'n', '<leader>bk', function() require('smart-splits').swap_buf_up() end,       desc = "smart-splits - swap buffer up" },
+            { 'n', '<leader>bl', function() require('smart-splits').swap_buf_right() end,    desc = "smart-splits - swap buffer right" },
+            { 'n', '<leader>R',  function() require('smart-splits').start_resize_mode() end, desc = "smart-splits - enter resize mode" },
+        }
     },
     { "folke/neodev.nvim", opts = {} },
     {
@@ -359,7 +356,7 @@ return {
         lazy = true,
         cmd = { 'NoNeckPain' }
     },
-    { 'nvim-pack/nvim-spectre', config = true, cmd = {"Spectre"} },
+    { 'nvim-pack/nvim-spectre', config = true, cmd = { "Spectre" } },
     {
         'stevearc/overseer.nvim',
         opts = {
@@ -379,9 +376,9 @@ return {
             },
         },
         keys = {
-            {'<leader>ot', '<CMD>OverseerToggle<CR>', desc="Overseer - toggle"},
-            {'<leader>or', '<CMD>OverseerRun<CR>', desc = "Overseer - run"},
-            {'<leader>oo', '<CMD>OverseerQuickAction restart<CR>', desc = "Overseer - restart"},
+            { '<leader>ot', '<CMD>OverseerToggle<CR>',              desc = "Overseer - toggle" },
+            { '<leader>or', '<CMD>OverseerRun<CR>',                 desc = "Overseer - run" },
+            { '<leader>oo', '<CMD>OverseerQuickAction restart<CR>', desc = "Overseer - restart" },
         }
     },
     {
