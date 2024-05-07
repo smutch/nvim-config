@@ -20,7 +20,7 @@ return {
         lazy = false,
         priority = 1000,
         opts = {
-            options = { dim_inactive = true, styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
+            options = { dim_inactive = false, styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
             groups = {
                 nightfox = {
                     -- As with specs and palettes, a specific style's value will be used over the `all`'s value.

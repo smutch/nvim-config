@@ -34,13 +34,14 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         lazy = "VeryLazy",
-        dependencies = { "polirritmico/telescope-lazy-plugins.nvim",
+        dependencies = {
+            { "polirritmico/telescope-lazy-plugins.nvim", lazy = "VeryLazy" },
             { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
-            'xiyaowong/telescope-emoji.nvim',
-            'nvim-telescope/telescope-symbols.nvim',
-            'nvim-telescope/telescope-ui-select.nvim',
-            "nvim-lua/plenary.nvim",
-            "debugloop/telescope-undo.nvim",
+            { 'xiyaowong/telescope-emoji.nvim',           lazy = "VeryLazy" },
+            { 'nvim-telescope/telescope-symbols.nvim',    lazy = "VeryLazy" },
+            { 'nvim-telescope/telescope-ui-select.nvim',  lazy = "VeryLazy" },
+            { "nvim-lua/plenary.nvim",                    lazy = "VeryLazy" },
+            { "debugloop/telescope-undo.nvim",            lazy = "VeryLazy" },
         },
         config = function()
             local h = require 'helpers'
@@ -48,12 +49,12 @@ return {
             telescope.setup {
                 pickers = {
                     find_files = { theme = "dropdown" },
-                    git_files = { theme = "dropdown" },
-                    old_files = { theme = "dropdown" },
-                    buffers = { theme = "dropdown" },
-                    marks = { theme = "dropdown" },
-                    emoji = { theme = "dropdown" },
-                    symbols = { theme = "dropdown" },
+                    git_files  = { theme = "dropdown" },
+                    old_files  = { theme = "dropdown" },
+                    buffers    = { theme = "dropdown" },
+                    marks      = { theme = "dropdown" },
+                    emoji      = { theme = "dropdown" },
+                    symbols    = { theme = "dropdown" },
                 },
                 extensions = { ["ui-select"] = { require("telescope.themes").get_dropdown() }
                 }
@@ -62,23 +63,36 @@ return {
             local extensions = { "fzy_native", "emoji", "neoclip", "ui-select", "lazy_plugins", "undo" }
             for _, extension in ipairs(extensions) do telescope.load_extension(extension) end
 
-            h.noremap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
-            h.noremap('n', '<leader>fg', '<cmd>Telescope git_files<cr>')
-            h.noremap('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
-            h.noremap('n', '<leader>fh', '<cmd>Telescope oldfiles<cr>')
-            h.noremap('n', '<leader>f?', '<cmd>Telescope help_tags<cr>')
-            h.noremap('n', '<leader>f:', '<cmd>Telescope commands<cr>')
-            h.noremap('n', '<leader>fm', '<cmd>Telescope marks<cr>')
-            h.noremap('n', '<leader>fl', '<cmd>Telescope loclist<cr>')
-            h.noremap('n', '<leader>fq', '<cmd>Telescope quickfix<cr>')
-            h.noremap('n', [[<leader>f"]], '<cmd>Telescope registers<cr>')
-            h.noremap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>')
-            h.noremap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>')
-            h.noremap('n', '<leader>fe', '<cmd>Telescope emoji<cr>')
-            h.noremap('n', '<leader>f<leader>', '<cmd>Telescope<cr>')
-            h.noremap('n', '<leader>fs', '<cmd>Telescope symbols<cr>')
-            h.noremap('n', '<leader>fp', '<cmd>Telescope lazy_plugins<cr>')
-            h.noremap('n', '<leader>fu', '<cmd>Telescope undo<cr>')
+            vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>',
+                { noremap = true, desc = "Telescope - files" })
+            vim.keymap.set('n', '<leader>fg', '<cmd>Telescope git_files<cr>',
+                { noremap = true, desc = "Telescope - git files" })
+            vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>',
+                { noremap = true, desc = "Telescope - buffers" })
+            vim.keymap.set('n', '<leader>fh', '<cmd>Telescope oldfiles<cr>',
+                { noremap = true, desc = "Telescope - history" })
+            vim.keymap.set('n', '<leader>f?', '<cmd>Telescope help_tags<cr>',
+                { noremap = true, desc = "Telescope - help tags" })
+            vim.keymap.set('n', '<leader>f:', '<cmd>Telescope commands<cr>',
+                { noremap = true, desc = "Telescope - commands" })
+            vim.keymap.set('n', '<leader>fm', '<cmd>Telescope marks<cr>', { noremap = true, desc = "Telescope - marks" })
+            vim.keymap.set('n', '<leader>fl', '<cmd>Telescope loclist<cr>',
+                { noremap = true, desc = "Telescope - loclist" })
+            vim.keymap.set('n', '<leader>fq', '<cmd>Telescope quickfix<cr>',
+                { noremap = true, desc = "Telescope - quickfix" })
+            vim.keymap.set('n', [[<leader>f"]], '<cmd>Telescope registers<cr>',
+                { noremap = true, desc = "Telescope - registers" })
+            vim.keymap.set('n', '<leader>fk', '<cmd>Telescope keymaps<cr>',
+                { noremap = true, desc = "Telescope - keymaps" })
+            vim.keymap.set('n', '<leader>ft', '<cmd>Telescope treesitter<cr>',
+                { noremap = true, desc = "Telescope - treesitter" })
+            vim.keymap.set('n', '<leader>fe', '<cmd>Telescope emoji<cr>', { noremap = true, desc = "Telescope - emoji" })
+            vim.keymap.set('n', '<leader>f<leader>', '<cmd>Telescope<cr>', { noremap = true, desc = "Telescope" })
+            vim.keymap.set('n', '<leader>fs', '<cmd>Telescope symbols<cr>',
+                { noremap = true, desc = "Telescope - symbols" })
+            vim.keymap.set('n', '<leader>fp', '<cmd>Telescope lazy_plugins<cr>',
+                { noremap = true, desc = "Telescope - plugins" })
+            vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<cr>', { noremap = true, desc = "Telescope - undo" })
             vim.keymap.set('n', 'z=',
                 function() require 'telescope.builtin'.spell_suggest(require 'telescope.themes'.get_dropdown {}) end,
                 { noremap = true })
