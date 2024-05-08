@@ -41,7 +41,9 @@ local function is_hatch_project()
 end
 
 local python_prefix = "/usr"
-if vim.env.VIRTUAL_ENV then
+if vim.g.python_prefix then
+    python_prefix = vim.g.python_prefix
+elseif vim.env.VIRTUAL_ENV then
     python_prefix = vim.env.VIRTUAL_ENV
 elseif Path:new("./poetry.lock"):exists() then
     python_prefix = string.sub(vim.fn.system('poetry env info --path'), 0, -2)
@@ -62,5 +64,6 @@ end
 
 M.python_interpreter_path = python_interpreter_path
 M.python_prefix = python_prefix
+vim.g.python_prefix = python_prefix
 
 return M

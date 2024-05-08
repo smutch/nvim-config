@@ -6,14 +6,34 @@ return {
     { 'tpope/vim-unimpaired' },
     { 'tpope/vim-eunuch' },
     {
-        'rmagatti/auto-session',
+        'stevearc/resession.nvim',
         config = function()
-            vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+            local resession = require("resession")
+            resession.setup({
+                extensions = {
+                    overseer = {
+                    }
+                }
+            })
+            vim.api.nvim_create_autocmd("VimEnter", {
+                callback = function()
+                    -- Only load the session if nvim was started with no args
+                    if vim.fn.argc(-1) == 0 then
+                        -- Save these to a different directory, so our manual sessions don't get polluted
+                        resession.load(vim.fn.getcwd(), { dir = "dirsession", silence_errors = true })
+                    end
+                end,
+                nested = true,
+            })
+            vim.api.nvim_create_autocmd("VimLeavePre", {
+                callback = function()
+                    resession.save(vim.fn.getcwd(), { dir = "dirsession", notify = false })
+                end,
+            })
 
-            require('auto-session').setup {
-                auto_clean_after_session_restore = true,
-                post_restore_cmds = { "stopinsert" },
-            }
+            vim.keymap.set("n", "<leader>ss", resession.save, { desc = "Save session" })
+            vim.keymap.set("n", "<leader>sl", resession.load, { desc = "Load session" })
+            vim.keymap.set("n", "<leader>sd", resession.delete, { desc = "Delete session" })
         end
     },
     {
@@ -229,19 +249,19 @@ return {
         'mrjones2014/smart-splits.nvim',
         config = true,
         keys = {
-            { 'n', '<A-h>',      function() require('smart-splits').resize_left() end,       desc = "smart-splits - resize left" },
-            { 'n', '<A-j>',      function() require('smart-splits').resize_down() end,       desc = "smart-splits - resize down" },
-            { 'n', '<A-k>',      function() require('smart-splits').resize_up() end,         desc = "smart-splits - resize up" },
-            { 'n', '<A-l>',      function() require('smart-splits').resize_right() end,      desc = "smart-splits - resize right" },
-            { 'n', '<C-h>',      function() require('smart-splits').move_cursor_left() end,  desc = "smart-splits - move cursor left" },
-            { 'n', '<C-j>',      function() require('smart-splits').move_cursor_down() end,  desc = "smart-splits - move cursor down" },
-            { 'n', '<C-k>',      function() require('smart-splits').move_cursor_up() end,    desc = "smart-splits - move cursor up" },
-            { 'n', '<C-l>',      function() require('smart-splits').move_cursor_right() end, desc = "smart-splits - move cursor right" },
-            { 'n', '<leader>bh', function() require('smart-splits').swap_buf_left() end,     desc = "smart-splits - swap buffer left" },
-            { 'n', '<leader>bj', function() require('smart-splits').swap_buf_down() end,     desc = "smart-splits - swap buffer down" },
-            { 'n', '<leader>bk', function() require('smart-splits').swap_buf_up() end,       desc = "smart-splits - swap buffer up" },
-            { 'n', '<leader>bl', function() require('smart-splits').swap_buf_right() end,    desc = "smart-splits - swap buffer right" },
-            { 'n', '<leader>R',  function() require('smart-splits').start_resize_mode() end, desc = "smart-splits - enter resize mode" },
+            { '<A-h>',      function() require('smart-splits').resize_left() end,       desc = "smart-splits - resize left" },
+            { '<A-j>',      function() require('smart-splits').resize_down() end,       desc = "smart-splits - resize down" },
+            { '<A-k>',      function() require('smart-splits').resize_up() end,         desc = "smart-splits - resize up" },
+            { '<A-l>',      function() require('smart-splits').resize_right() end,      desc = "smart-splits - resize right" },
+            { '<C-h>',      function() require('smart-splits').move_cursor_left() end,  desc = "smart-splits - move cursor left" },
+            { '<C-j>',      function() require('smart-splits').move_cursor_down() end,  desc = "smart-splits - move cursor down" },
+            { '<C-k>',      function() require('smart-splits').move_cursor_up() end,    desc = "smart-splits - move cursor up" },
+            { '<C-l>',      function() require('smart-splits').move_cursor_right() end, desc = "smart-splits - move cursor right" },
+            { '<leader>bh', function() require('smart-splits').swap_buf_left() end,     desc = "smart-splits - swap buffer left" },
+            { '<leader>bj', function() require('smart-splits').swap_buf_down() end,     desc = "smart-splits - swap buffer down" },
+            { '<leader>bk', function() require('smart-splits').swap_buf_up() end,       desc = "smart-splits - swap buffer up" },
+            { '<leader>bl', function() require('smart-splits').swap_buf_right() end,    desc = "smart-splits - swap buffer right" },
+            { '<leader>R',  function() require('smart-splits').start_resize_mode() end, desc = "smart-splits - enter resize mode" },
         }
     },
     { "folke/neodev.nvim", opts = {} },

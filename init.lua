@@ -120,8 +120,7 @@ h.noremap('n', '<BS><BS>', '<C-S-^>')
 -- Make Y behave like other capital
 h.noremap('n', 'Y', 'y$')
 
--- Easy on the fingers save and window manipulation bindings
-h.noremap('n', '<leader>s', ':w<CR>')
+-- Easy on the fingers window manipulation bindings
 h.noremap('n', '<leader>w', '<C-w>')
 
 -- Quick switch to directory of current file
@@ -142,8 +141,8 @@ h.noremap('n', '<BS>t', ':exe "tabn ".g:lasttab<CR>')
 vim.cmd([[au TabLeave * let g:lasttab = tabpagenr()]])
 
 -- Disable increment number up / down - *way* too dangerous...
-h.map('n', '<C-a>', '<Nop>')
-h.map('n', '<C-x>', '<Nop>')
+-- h.map('n', '<C-a>', '<Nop>')
+-- h.map('n', '<C-x>', '<Nop>')
 
 -- Turn off search highlighting
 h.noremap('', [[|]], '<Esc>:<C-u>noh<CR>', { silent = true })
@@ -162,7 +161,6 @@ vim.on_key(toggle_hlsearch, ns)
 
 -- Paste without auto indent
 h.noremap('n', '<F2>', ':set invpaste paste?<CR>', {})
--- vim.opt.pastetoggle = '<F2>'
 
 -- Toggle auto paragraph formatting
 h.noremap('n', 'coa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]], {})
