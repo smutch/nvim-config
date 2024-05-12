@@ -365,7 +365,7 @@ return {
             { "<leader>at", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle window" },
         },
     },
-    { 'tiagovla/scope.nvim',    config = true },
+    { 'tiagovla/scope.nvim', config = true },
     {
         'shortcuts/no-neck-pain.nvim',
         config = function()
@@ -376,7 +376,15 @@ return {
         lazy = true,
         cmd = { 'NoNeckPain' }
     },
-    { 'nvim-pack/nvim-spectre', config = true, cmd = { "Spectre" } },
+    {
+        'MagicDuck/grug-far.nvim',
+        opts = {},
+        keys = {
+            { '<leader>s*', function() require('grug-far').grug_far({ prefills = { search = vim.fn.expand("<cword>") } }) end, desc = 'Grug - replace cursor word' },
+            { '<leader>s%', function() require('grug-far').grug_far({ prefills = { flags = vim.fn.expand("%") } }) end,        desc = 'Grug - limit to current file' },
+        },
+        cmd = { 'GrugFar' }
+    },
     {
         'stevearc/overseer.nvim',
         opts = {

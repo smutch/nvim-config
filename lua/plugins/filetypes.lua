@@ -6,7 +6,7 @@ return {
     -- { 'jbyuki/nabla.nvim' },
     {
         'lervag/vimtex',
-        ft = 'tex',
+        ft = { 'tex' },
         config = function()
             vim.g.vimtex_compiler_latexmk = { build_dir = './build' }
             vim.g.vimtex_quickfix_mode = 0
@@ -15,7 +15,7 @@ return {
             vim.g.vimtex_compiler_progname = 'nvr'
         end
     },
-    { "vim-pandoc/vim-pandoc-syntax" },
+    { "vim-pandoc/vim-pandoc-syntax", ft = { 'markdown.pandoc', 'pandoc' } },
     { "vim-pandoc/vim-pandoc",       ft = { 'markdown', 'quarto', 'pandoc' } },
     { 'vim-scripts/scons.vim',       ft = { 'scons' } },
     { 'Glench/Vim-Jinja2-Syntax',    ft = { 'html' } },
@@ -23,7 +23,8 @@ return {
         'MeanderingProgrammer/markdown.nvim',
         name = 'render-markdown',
         dependencies = { 'nvim-treesitter/nvim-treesitter' },
-        opts = { file_types = { 'markdown.pandoc' }, }
+        opts = { file_types = { 'markdown.pandoc' }, },
+        ft = { 'markdown', 'pandoc', 'quarto', 'markdown.pandoc' },
     },
     { 'cespare/vim-toml',   ft = { 'toml' } },
     { 'tikhomirov/vim-glsl' },
@@ -35,7 +36,7 @@ return {
             vim.opt.rtp:append(plugin.dir .. "/misc/vim")
         end
     },
-    { 'NoahTheDuke/vim-just' },
+    { 'NoahTheDuke/vim-just', ft = { 'just' } },
     { 'alaviss/nim.nvim',    ft = { 'nim' } },
     {
         'quarto-dev/quarto-nvim',
