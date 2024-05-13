@@ -47,7 +47,9 @@ return {
         config = function()
             local hlchunk = require "hlchunk"
             local ft = require "hlchunk.utils.filetype"
-            ft.exclude_filetypes["oil"] = true
+            for t in pairs({"oil", "fugitive"}) do
+                ft.exclude_filetypes[t] = true
+            end
             hlchunk.setup({
                 chunk = {
                     enable = true,
@@ -68,31 +70,6 @@ return {
                     use_treesitter = true,
                 },
             })
-        end
-    },
-    {
-        'petertriho/nvim-scrollbar',
-        dependencies = { 'kevinhwang91/nvim-hlslens' },
-        config = function()
-            require("scrollbar").setup {
-                handle = { color = "#4C566A" },
-                excluded_filetypes = {
-                    "prompt",
-                    "TelescopePrompt",
-                    "tex"
-                },
-            }
-
-            require("hlslens").setup({
-                require("scrollbar.handlers.search").setup()
-            })
-
-            vim.cmd([[
-            augroup scrollbar_search_hide
-            autocmd!
-            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
-            augroup END
-            ]])
         end
     },
     {

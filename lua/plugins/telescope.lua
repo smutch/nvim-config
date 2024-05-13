@@ -1,6 +1,10 @@
 return {
     {
         "AckslD/nvim-neoclip.lua",
+        lazy = "VeryLazy",
+        dependencies = {
+            { 'nvim-telescope/telescope.nvim' }
+        },
         config = function()
             require('neoclip').setup()
             vim.api.nvim_set_keymap('n', '<leader>fv', '<cmd>Telescope neoclip<cr>', { noremap = true })
