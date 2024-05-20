@@ -3,13 +3,13 @@ return {
     {
         'tpope/vim-fugitive',
         config = function()
-            vim.api.nvim_set_keymap('n', 'git', ':Git', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>gs', ':Git<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>ga', ':Git commit -a<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>gd', ':Git diff<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>gP', ':Git pull<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>gp', ':Git push<CR>', { noremap = true })
-            vim.api.nvim_set_keymap('n', '<leader>g/', ':Git grep<CR>', { noremap = true })
+            vim.keymap.set('n', 'git', ':Git')
+            vim.keymap.set('n', '<leader>gs', ':Git<CR>')
+            vim.keymap.set('n', '<leader>ga', ':Git commit -a<CR>')
+            vim.keymap.set('n', '<leader>gd', ':Git diff<CR>')
+            vim.keymap.set('n', '<leader>gP', ':Git pull<CR>')
+            vim.keymap.set('n', '<leader>gp', ':Git push<CR>')
+            vim.keymap.set('n', '<leader>g/', ':Git grep<CR>')
         end
     },
     { 'junegunn/gv.vim' },

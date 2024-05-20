@@ -1,9 +1,5 @@
 return {
-    { 'vim-python/python-syntax',      ft = { 'python' } },
-    { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } },
-    { 'anntzer/vim-cython',            ft = { 'python', 'cython' } },
     { 'adamclaxon/taskpaper.vim',      ft = { 'taskpaper', 'tp' } },
-    -- { 'jbyuki/nabla.nvim' },
     {
         'lervag/vimtex',
         ft = { 'tex' },
@@ -17,8 +13,6 @@ return {
     },
     { "vim-pandoc/vim-pandoc-syntax", ft = { 'markdown.pandoc', 'pandoc' } },
     { "vim-pandoc/vim-pandoc",       ft = { 'markdown', 'quarto', 'pandoc' } },
-    { 'vim-scripts/scons.vim',       ft = { 'scons' } },
-    { 'Glench/Vim-Jinja2-Syntax',    ft = { 'html' } },
     {
         'MeanderingProgrammer/markdown.nvim',
         name = 'render-markdown',
@@ -26,9 +20,6 @@ return {
         opts = { file_types = { 'markdown.pandoc' }, },
         ft = { 'markdown', 'pandoc', 'quarto', 'markdown.pandoc' },
     },
-    { 'cespare/vim-toml',   ft = { 'toml' } },
-    { 'tikhomirov/vim-glsl' },
-    { 'DingDean/wgsl.vim' },
     {
         'snakemake/snakemake',
         ft = 'snakemake',
@@ -36,8 +27,6 @@ return {
             vim.opt.rtp:append(plugin.dir .. "/misc/vim")
         end
     },
-    { 'NoahTheDuke/vim-just', ft = { 'just' } },
-    { 'alaviss/nim.nvim',    ft = { 'nim' } },
     {
         'quarto-dev/quarto-nvim',
         fd = "quarto",
@@ -68,4 +57,5 @@ return {
             vim.g.typst_pdf_viewer = "Skim"
         end
     },
+    { "folke/neodev.nvim", opts = {} },
 }

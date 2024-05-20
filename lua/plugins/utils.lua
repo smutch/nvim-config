@@ -1,8 +1,5 @@
 return {
-    {
-        'nvim-lua/plenary.nvim',
-        lazy = true,
-    },
+    { 'nvim-lua/plenary.nvim', lazy = true },
     { 'tpope/vim-unimpaired' },
     { 'tpope/vim-eunuch' },
     {
@@ -31,9 +28,9 @@ return {
                 end,
             })
 
-            vim.keymap.set("n", "<leader>ss", resession.save, { desc = "Save session" })
-            vim.keymap.set("n", "<leader>sl", resession.load, { desc = "Load session" })
-            vim.keymap.set("n", "<leader>sd", resession.delete, { desc = "Delete session" })
+            vim.api.nvim_create_user_command('SessionSave', resession.save, { desc = "Save session" })
+            vim.api.nvim_create_user_command('SessionLoad', resession.load, { desc = "Load session" })
+            vim.api.nvim.create_user_command('SessionDelete', resession.delete, { desc = "Delete session" })
         end
     },
     {
@@ -55,6 +52,7 @@ return {
     },
     {
         'RRethy/vim-illuminate',
+        lazy = "VeryLazy",
         config = function()
             require 'illuminate'.configure {
                 providers = {
@@ -66,22 +64,7 @@ return {
             }
         end
     },
-    { 'sindrets/diffview.nvim' },
-    -- {
-    --     's1n7ax/nvim-window-picker',
-    --     version = "1.*",
-    --     config = function()
-    --         require 'window-picker'.setup({
-    --             filter_rules = {
-    --                 bo = {
-    --                     filetype = { 'neo-tree', "neo-tree-popup", "notify", "quickfix" },
-    --                     buftype = { 'terminal' },
-    --                 },
-    --             },
-    --             other_win_hl_color = '#e35e4f',
-    --         })
-    --     end
-    -- },
+    { 'sindrets/diffview.nvim', lazy = "VeryLazy" },
     {
         'stevearc/oil.nvim',
         config = function()
@@ -89,24 +72,7 @@ return {
             vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         end
     },
-    {
-        "folke/todo-comments.nvim",
-        config = function()
-            require "todo-comments".setup {
-                colors = {
-                    hint = { "Keyword", "#9d79d6" },
-                    warning = { "DiagnosticError", "#c94f6d" },
-                    error = { "DiagnosticWarn", "WarningMsg", "FBBF24" }
-                },
-                gui_style = {
-                    fg = "BOLD",
-                    bg = "BOLD",
-                },
-            }
-        end
-    },
-    { 'uga-rosa/ccc.nvim',              config = true, ft = { "astro", "html", "css", "scss", "lua", "vim" } },
-    { "nvim-treesitter/nvim-treesitter" },
+    { 'uga-rosa/ccc.nvim',      config = true,    ft = { "astro", "html", "css", "scss", "lua", "vim" } },
     {
         "rcarriga/neotest",
         lazy = true,
@@ -151,15 +117,15 @@ return {
             vim.keymap.set('n', '<leader>gl', '<CMD>lua require("FTerm").scratch({ cmd = "lazygit" })<CR>')
         end
     },
-    { 'neomake/neomake' },
     {
         'kevinhwang91/nvim-ufo',
         dependencies = {
             'kevinhwang91/promise-async',
         },
         config = function()
-            vim.wo.foldcolumn =
-            '0' -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
+            -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
+            vim.wo.foldcolumn = '0'
+
             vim.o.foldlevelstart = 99
             vim.wo.foldenable = true
             vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
@@ -192,9 +158,7 @@ return {
                 return newVirtText
             end
 
-            require('ufo').setup({
-                fold_virt_text_handler = handler
-            })
+            require('ufo').setup({ fold_virt_text_handler = handler })
         end
     },
     {
@@ -209,11 +173,7 @@ return {
         config = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
-            require("which-key").setup({
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            })
+            require("which-key").setup {}
         end,
     },
     {
@@ -264,107 +224,6 @@ return {
             { '<leader>R',  function() require('smart-splits').start_resize_mode() end, desc = "smart-splits - enter resize mode" },
         }
     },
-    { "folke/neodev.nvim", opts = {} },
-    {
-        "jackMort/ChatGPT.nvim",
-        event = "VeryLazy",
-        config = function()
-            vim.env.OPENAI_API_KEY = require "system".openai_api_key
-            if vim.env.OPENAI_API_KEY ~= nil then
-                vim.env.OPENAI_API_HOST = "api.openai.com"
-                require("chatgpt").setup()
-            end
-        end,
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim"
-        }
-    },
-    {
-        'CopilotC-Nvim/CopilotChat.nvim',
-        branch = "canary",
-        dependencies = {
-            { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-            { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
-        },
-        opts = {
-            context = 'manual',               -- Context to use, 'buffers', 'buffer' or 'manual'
-            show_user_selection = true,       -- Shows user selection in chat
-            show_folds = true,                -- Shows folds for sections in chat
-            clear_chat_on_new_prompt = false, -- Clears chat on every new prompt
-            auto_follow_cursor = true,        -- Auto-follow cursor in chat
-            -- default prompts
-            prompts = {
-                Docs = {
-                    prompt =
-                    '/COPILOT_GENERATE Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, google-style docstrings for Python etc.',
-                },
-            },
-            -- default window options
-            window = {
-                layout = 'vertical', -- 'vertical', 'horizontal', 'float'
-                width = 0.33,        -- Width of the window
-            },
-
-            mappings = {
-                reset = {
-                    normal = 'gr'
-                },
-                accept_diff = {
-                    normal = 'ga',
-                },
-            }
-        },
-        event = "VeryLazy",
-        keys = {
-            {
-                "<leader>ah",
-                function()
-                    local actions = require("CopilotChat.actions")
-                    require("CopilotChat.integrations.telescope").pick(actions.help_actions())
-                end,
-                desc = "CopilotChat - Help actions",
-            },
-            -- Show prompts actions with telescope
-            {
-                "<leader>aa",
-                function()
-                    local actions = require("CopilotChat.actions")
-                    require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-                end,
-                desc = "CopilotChat - Prompt actions",
-            },
-            {
-                "<leader>ac",
-                function()
-                    local input = vim.fn.input("Chat: ")
-                    if input ~= "" then
-                        vim.cmd("CopilotChat " .. input)
-                    end
-                end,
-                desc = "CopilotChat - Ask with no context",
-            },
-            {
-                "<leader>ab",
-                function()
-                    local input = vim.fn.input("Chat (buf): ")
-                    if input ~= "" then
-                        vim.cmd("CopilotChatBuffer " .. input)
-                    end
-                end,
-                desc = "CopilotChat - Chat with buffer as context",
-            },
-            {
-                "<leader>al",
-                function()
-                    vim.fn.setreg("C", require("CopilotChat").response(), { "l" })
-                end,
-                desc = "CopilotChat - Yank last response to \"C",
-            },
-            { "<leader>at", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle window" },
-        },
-    },
     { 'tiagovla/scope.nvim', config = true },
     {
         'shortcuts/no-neck-pain.nvim',
@@ -387,6 +246,7 @@ return {
     },
     {
         'stevearc/overseer.nvim',
+        lazy = "VeryLazy",
         opts = {
             task_list = {
                 bindings = {
@@ -510,5 +370,6 @@ return {
     {
         "Makaze/watch.nvim",
         cmd = { "WatchStart", "WatchStop", "WatchFile" },
-    }
+    },
+    { 'danymat/neogen',      config = function() require('neogen').setup({ snippet_engine = "luasnip" }) end },
 }

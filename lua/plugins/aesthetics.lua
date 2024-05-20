@@ -1,21 +1,5 @@
 return {
     {
-        'AlexvZyl/nordic.nvim',
-        lazy = false,
-        priority = 1000,
-        config = function()
-            -- require 'nordic'.load()
-            require 'nordic'.setup {
-                bold_keywords = true,
-                bright_border = true,
-                reduced_blue = true,
-                -- swap_backgrounds = true,
-                cursorline = { theme = 'light', blend = 1.0, },
-            }
-            vim.api.nvim_set_hl(0, "SpellBad", { cterm = { undercurl = true }, undercurl = true, bg = "#c5727a" })
-        end
-    },
-    {
         'EdenEast/nightfox.nvim',
         lazy = false,
         priority = 1000,
@@ -39,7 +23,7 @@ return {
         'nvim-lualine/lualine.nvim',
         dependencies = { "abeldekat/harpoonline", 'AndreM222/copilot-lualine' },
         lazy = false,
-        config = require 'plugins.config.lualine'.config,
+        config = require 'statusline',
     },
     {
         "shellRaining/hlchunk.nvim",
@@ -47,7 +31,7 @@ return {
         config = function()
             local hlchunk = require "hlchunk"
             local ft = require "hlchunk.utils.filetype"
-            for t in pairs({"oil", "fugitive"}) do
+            for t in pairs({ "oil", "fugitive" }) do
                 ft.exclude_filetypes[t] = true
             end
             hlchunk.setup({
@@ -157,5 +141,22 @@ return {
                 basename = { fg = "#baa386", bold = true },
             }
         }
-    }
+    },
+    {
+        "folke/todo-comments.nvim",
+        lazy = "VeryLazy",
+        config = function()
+            require "todo-comments".setup {
+                colors = {
+                    hint = { "Keyword", "#9d79d6" },
+                    warning = { "DiagnosticError", "#c94f6d" },
+                    error = { "DiagnosticWarn", "WarningMsg", "FBBF24" }
+                },
+                gui_style = {
+                    fg = "BOLD",
+                    bg = "BOLD",
+                },
+            }
+        end
+    },
 }
