@@ -30,7 +30,7 @@ return {
 
             vim.api.nvim_create_user_command('SessionSave', resession.save, { desc = "Save session" })
             vim.api.nvim_create_user_command('SessionLoad', resession.load, { desc = "Load session" })
-            vim.api.nvim.create_user_command('SessionDelete', resession.delete, { desc = "Delete session" })
+            vim.api.nvim_create_user_command('SessionDelete', resession.delete, { desc = "Delete session" })
         end
     },
     {

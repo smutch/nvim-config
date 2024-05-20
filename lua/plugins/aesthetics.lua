@@ -3,27 +3,37 @@ return {
         'EdenEast/nightfox.nvim',
         lazy = false,
         priority = 1000,
-        opts = {
-            options = { dim_inactive = false, styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
-            groups = {
-                nightfox = {
-                    -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
-                    VertSplit           = { fg = "sel1" },
-                    WinSeparator        = { fg = "sel1" },
-                    BufferCurrent       = { bg = "bg2", fg = "fg1" },
-                    BufferCurrentIndex  = { bg = "bg2", fg = "diag.info" },
-                    BufferCurrentMod    = { bg = "bg2", fg = "diag.warn" },
-                    BufferCurrentSign   = { bg = "bg2", fg = "diag.info" },
-                    BufferCurrentTarget = { bg = "bg2", fg = "diag.error" },
+        config = function()
+            require('nightfox').setup {
+                options = { dim_inactive = false, styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
+                groups = {
+                    nightfox = {
+                        -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
+                        VertSplit           = { fg = "sel1" },
+                        WinSeparator        = { fg = "sel1" },
+                        BufferCurrent       = { bg = "bg2", fg = "fg1" },
+                        BufferCurrentIndex  = { bg = "bg2", fg = "diag.info" },
+                        BufferCurrentMod    = { bg = "bg2", fg = "diag.warn" },
+                        BufferCurrentSign   = { bg = "bg2", fg = "diag.info" },
+                        BufferCurrentTarget = { bg = "bg2", fg = "diag.error" },
+                    },
                 },
-            },
-        }
+            }
+            vim.cmd.colorscheme('nightfox')
+        end
     },
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { "abeldekat/harpoonline", 'AndreM222/copilot-lualine' },
         lazy = false,
-        config = require 'statusline',
+        config = function()
+            require "statusline"
+            local augroup = vim.api.nvim_create_augroup("lualine_colors", {})
+            vim.api.nvim_create_autocmd("ColorScheme", {
+                callback = function() require "statusline" end,
+                group = augroup
+            })
+        end
     },
     {
         "shellRaining/hlchunk.nvim",

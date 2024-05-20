@@ -1,5 +1,3 @@
-local M = {}
-
 local function theme_colors()
     -- default colors
     local colors = {
@@ -79,108 +77,93 @@ local function theme_colors()
 end
 
 
-function M.statusline()
-    -- Bubbles config for lualine
-    -- Author: lokesh-krishna
-    -- MIT license, see LICENSE for more details.
+-- Bubbles config for lualine
+-- Author: lokesh-krishna
+-- MIT license, see LICENSE for more details.
 
-    local lsp_server = function()
-        local msg = ''
-        local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-        local clients = vim.lsp.get_active_clients()
-        if next(clients) == nil then
-            return msg
-        end
-        for _, client in ipairs(clients) do
-            local filetypes = client.config.filetypes
-            if filetypes and client.name ~= "null-ls" and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                return client.name
-            end
-        end
+local lsp_server = function()
+    local msg = ''
+    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local clients = vim.lsp.get_active_clients()
+    if next(clients) == nil then
         return msg
     end
-
-    local harpoonline = require("harpoonline")
-    harpoonline.setup({
-        on_update = function() require("lualine").refresh() end,
-    })
-
-    local colors = theme_colors()
-
-    require('lualine').setup {
-        options = {
-            theme = colors,
-            component_separators = '|',
-            section_separators = { left = '', right = '' },
-        },
-        sections = {
-            lualine_a = {
-                { 'mode', right_padding = 2 },
-            },
-            lualine_b = {
-                -- 'filename',
-                'branch',
-                'diff',
-                {
-                    'diagnostics',
-                    sources = { 'nvim_lsp' },
-                    symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰨹 ' },
-                },
-                { harpoonline.format },
-                { "overseer" }
-            },
-            lualine_c = { { '%=', separator = '' }, 'filename' },
-            lualine_x = {},
-            lualine_y = {
-                'copilot',
-                {
-                    lsp_server,
-                    icon = '󰿘',
-                },
-                'filetype',
-                'progress',
-                'encoding',
-                {
-                    'fileformat',
-                    right_padding = 2
-                }
-            },
-            lualine_z = {
-                { 'location', left_padding = 2 },
-            },
-        },
-        inactive_sections = {
-            -- these are to remove the defaults
-            lualine_a = {},
-            lualine_b = {},
-            lualine_y = {},
-            lualine_z = {},
-            lualine_c = {},
-            lualine_x = {},
-        },
-        tabline = {},
-        extensions = {
-            "fugitive",
-            "fzf",
-            "lazy",
-            "man",
-            "neo-tree",
-            "nvim-dap-ui",
-            "quickfix",
-            "trouble",
-        },
-    }
+    for _, client in ipairs(clients) do
+        local filetypes = client.config.filetypes
+        if filetypes and client.name ~= "null-ls" and vim.fn.index(filetypes, buf_ft) ~= -1 then
+            return client.name
+        end
+    end
+    return msg
 end
 
-function M.config()
-    local setup = require('plugins.config.lualine')
-    setup.statusline()
+local harpoonline = require("harpoonline")
+harpoonline.setup({
+    on_update = function() require("lualine").refresh() end,
+})
 
-    local augroup = vim.api.nvim_create_augroup("lualine_colors", {})
-    vim.api.nvim_create_autocmd("ColorScheme", {
-        callback = setup.statusline,
-        group = augroup
-    })
-end
+local colors = theme_colors()
 
-return M
+require('lualine').setup {
+    options = {
+        theme = colors,
+        component_separators = '|',
+        section_separators = { left = '', right = '' },
+    },
+    sections = {
+        lualine_a = {
+            { 'mode', right_padding = 2 },
+        },
+        lualine_b = {
+            -- 'filename',
+            'branch',
+            'diff',
+            {
+                'diagnostics',
+                sources = { 'nvim_lsp' },
+                symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰨹 ' },
+            },
+            { harpoonline.format },
+            { "overseer" }
+        },
+        lualine_c = { { '%=', separator = '' }, 'filename' },
+        lualine_x = {},
+        lualine_y = {
+            'copilot',
+            {
+                lsp_server,
+                icon = '󰿘',
+            },
+            'filetype',
+            'progress',
+            'encoding',
+            {
+                'fileformat',
+                right_padding = 2
+            }
+        },
+        lualine_z = {
+            { 'location', left_padding = 2 },
+        },
+    },
+    inactive_sections = {
+        -- these are to remove the defaults
+        lualine_a = {},
+        lualine_b = {},
+        lualine_y = {},
+        lualine_z = {},
+        lualine_c = {},
+        lualine_x = {},
+    },
+    tabline = {},
+    extensions = {
+        "fugitive",
+        "fzf",
+        "lazy",
+        "man",
+        "neo-tree",
+        "nvim-dap-ui",
+        "quickfix",
+        "trouble",
+    },
+}

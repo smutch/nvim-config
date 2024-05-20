@@ -16,5 +16,3 @@ vim.o.undodir = os.getenv('HOME') .. "/.nvim_backup/undo"
 vim.o.undofile = true
 
 vim.opt.diffopt:append { "algorithm:patience" }
-
-vim.o.colorscheme = "nighfox"

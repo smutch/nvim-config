@@ -5,7 +5,7 @@ return {
             local autopairs = require 'nvim-autopairs'
             local cond = require 'nvim-autopairs.conds'
             autopairs.setup {}
-            autopairs.get_rule('"'):with_pair(cond.not_before_regex('"', 1))
+            -- autopairs.get_rule('"'):with_pair(cond.not_before_regex('"', 1))
         end
     },
     { 'tpope/vim-rsi' },
@@ -118,7 +118,7 @@ return {
         end
     },
     { 'michaeljsmith/vim-indent-object' },
-    { 'tpope/vim-surround', config = true },
+    { 'tpope/vim-surround' },
     { 'jeffkreeftmeijer/vim-numbertoggle' },
     { 'chrisbra/unicode.vim' },
     { 'wellle/targets.vim' },
