@@ -1,18 +1,25 @@
 return {
-    { 'williamboman/mason.nvim',           config = true },
-    { "williamboman/mason-lspconfig.nvim", config = true },
     {
-        'WhoIsSethDaniel/mason-tool-installer.nvim',
-        opts = {
-            ensure_installed = {
-                'lua-language-server',
-                'stylua',
-                'shellcheck',
-                'python-lsp-server',
-            }
-        }
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            { 'williamboman/mason.nvim',           config = true },
+            { "williamboman/mason-lspconfig.nvim", config = true },
+            {
+                'WhoIsSethDaniel/mason-tool-installer.nvim',
+                opts = {
+                    ensure_installed = {
+                        'lua-language-server',
+                        'stylua',
+                        'shellcheck',
+                        'python-lsp-server',
+                    }
+                }
+            },
+        },
+        config = function()
+            require 'lsp'
+        end
     },
-    { 'neovim/nvim-lspconfig' },
     { 'nvimtools/none-ls.nvim' },
     {
         'kosayoda/nvim-lightbulb',
@@ -46,7 +53,7 @@ return {
                 },
                 -- LSP configuration
                 server = {
-                    on_attach = require'lsp'.on_attach,
+                    on_attach = require 'lsp'.on_attach,
                     -- settings = {
                     --     -- rust-analyzer language server configuration
                     --     ['rust-analyzer'] = {

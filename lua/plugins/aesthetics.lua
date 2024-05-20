@@ -41,7 +41,7 @@ return {
         config = function()
             local hlchunk = require "hlchunk"
             local ft = require "hlchunk.utils.filetype"
-            for t in pairs({ "oil", "fugitive" }) do
+            for _, t in pairs({ "oil", "fugitive" }) do
                 ft.exclude_filetypes[t] = true
             end
             hlchunk.setup({

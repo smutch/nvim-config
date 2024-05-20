@@ -46,25 +46,23 @@ vim.keymap.set("n", "gV", toggle_lsp_virtual_text, { noremap = true, desc = "Tog
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
-    local function bnoremap(...) h.bnoremap(bufnr, ...) end
-
-    bnoremap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { silent = true })
-    bnoremap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { silent = true })
-    bnoremap("n", "1gd", "<cmd>Telescope lsp_type_definitions<CR>", { silent = true })
-    bnoremap("n", "gm", "<cmd>Telescope lsp_implementations<CR>", { silent = true })
-    bnoremap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { silent = true })
-    bnoremap("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true })
-    bnoremap("n", "gr", "<cmd>Telescope lsp_references<CR>", { silent = true })
-    bnoremap("n", "1g/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true })
-    bnoremap("n", "g/", ":Telescope lsp_dynamic_workspace_symbols<CR>", { silent = true })
-    bnoremap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { silent = true })
-    bnoremap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true })
-    bnoremap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true })
-    bnoremap("n", "<localleader>d", "<cmd>Trouble document_diagnostics<cr>", { silent = true })
-    bnoremap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true })
-    bnoremap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+    vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "1gd", "<cmd>Telescope lsp_type_definitions<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "gm", "<cmd>Telescope lsp_implementations<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "1g/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "g/", ":Telescope lsp_dynamic_workspace_symbols<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "<localleader>d", "<cmd>Trouble document_diagnostics<cr>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true, buffer = 0 })
     if client.name ~= "rust_analyzer" then
-        bnoremap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
+        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true, buffer = 0 })
     else
         vim.keymap.set("n", "K", function() vim.cmd.RustLsp { 'hover', 'actions' } end,
             { noremap = true, silent = true, buffer = bufnr })
