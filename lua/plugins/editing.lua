@@ -3,12 +3,9 @@ return {
         'windwp/nvim-autopairs',
         config = function()
             local autopairs = require 'nvim-autopairs'
+            local cond = require 'nvim-autopairs.conds'
             autopairs.setup {}
-            autopairs.get_rule('"""'):with_move(
-                function(opts)
-                    return opts.char == opts.next_char:sub(1, 1)
-                end
-            )
+            -- autopairs.get_rule('"'):with_pair(cond.not_before_regex('"', 1))
         end
     },
     { 'tpope/vim-rsi' },
@@ -121,29 +118,10 @@ return {
         end
     },
     { 'michaeljsmith/vim-indent-object' },
-    {
-        'tpope/vim-surround',
-        config = function()
-            -- Extra surround mappings for particular filetypes
-            -- Markdown
-            vim.cmd([[autocmd FileType markdown let b:surround_109 = "\\\\(\r\\\\)" "math]])
-            vim.cmd([[autocmd FileType markdown let b:surround_115 = "~~\r~~" "strikeout]])
-            vim.cmd([[autocmd FileType markdown let b:surround_98 = "**\r**" "bold]])
-            vim.cmd([[autocmd FileType markdown let b:surround_105 = "*\r*" "italics]])
-        end
-    },
+    { 'tpope/vim-surround' },
     { 'jeffkreeftmeijer/vim-numbertoggle' },
     { 'chrisbra/unicode.vim' },
     { 'wellle/targets.vim' },
-    -- {
-    --     'edluffy/specs.nvim',
-    --     config = function()
-    --         require('specs').setup {
-    --             popup = { inc_ms = 10, width = 50, winhl = "DiffText", resizer = require('specs').slide_resizer },
-    --             ignore_filetypes = { "rust" }
-    --         }
-    --     end
-    -- },
     { 'NMAC427/guess-indent.nvim',        opts = {} },
     { 'andymass/vim-matchup',             opts = {} },
     {
