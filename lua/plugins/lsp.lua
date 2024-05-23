@@ -15,9 +15,22 @@ return {
                     }
                 }
             },
+            {
+                "folke/neodev.nvim",
+                config = function()
+                    require("neodev").setup({
+                        override = function(root_dir, library)
+                            if root_dir:find("plugin", 1, true) == 1 then
+                                library.enabled = true
+                                library.plugins = true
+                            end
+                        end
+                    })
+                end
+            },
         },
         config = function()
-            require 'lsp'
+            require 'plugins.config.lsp'
         end
     },
     { 'nvimtools/none-ls.nvim' },
@@ -35,7 +48,6 @@ return {
     },
     {
         'folke/lsp-trouble.nvim',
-        lazy = "VeryLazy",
         config = function()
             require "trouble".setup()
             -- Load up last search in buffer into the location list and open it

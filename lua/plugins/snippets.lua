@@ -4,8 +4,6 @@ return {
         'L3MON4D3/LuaSnip',
         dependencies = { 'rafamadriz/friendly-snippets' },
         config = function()
-            local h = require 'helpers'
-
             function _G.luasnip_map_forward()
                 local luasnip = require 'luasnip'
                 if luasnip.expand_or_jumpable() then
@@ -24,10 +22,10 @@ return {
                 return false
             end
 
-            vim.keymap.set('i', '<C-y>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
-            vim.keymap.set('s', '<C-y>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
-            vim.keymap.set('i', '<C-Y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
-            vim.keymap.set('s', '<C-Y>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
+            vim.keymap.set('i', '<C-k>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
+            vim.keymap.set('s', '<C-k>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
+            vim.keymap.set('i', '<C-j>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
+            vim.keymap.set('s', '<C-j>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
             vim.api.nvim_create_user_command("LuaSnipEdit", require("luasnip.loaders").edit_snippet_files, {})
 
             require("luasnip.loaders.from_vscode").lazy_load()

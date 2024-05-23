@@ -1,5 +1,5 @@
 return {
-    { 'adamclaxon/taskpaper.vim',      ft = { 'taskpaper', 'tp' } },
+    { 'adamclaxon/taskpaper.vim',     ft = { 'taskpaper', 'tp' } },
     {
         'lervag/vimtex',
         ft = { 'tex' },
@@ -12,7 +12,7 @@ return {
         end
     },
     { "vim-pandoc/vim-pandoc-syntax", ft = { 'markdown.pandoc', 'pandoc' } },
-    { "vim-pandoc/vim-pandoc",       ft = { 'markdown', 'quarto', 'pandoc' } },
+    { "vim-pandoc/vim-pandoc",        ft = { 'markdown', 'quarto', 'pandoc' } },
     {
         'MeanderingProgrammer/markdown.nvim',
         name = 'render-markdown',
@@ -29,7 +29,7 @@ return {
     },
     {
         'quarto-dev/quarto-nvim',
-        fd = "quarto",
+        ft = "quarto",
         dependencies = {
             'jmbuhr/otter.nvim',
             'neovim/nvim-lspconfig'
@@ -57,5 +57,4 @@ return {
             vim.g.typst_pdf_viewer = "Skim"
         end
     },
-    { "folke/neodev.nvim", opts = {} },
 }

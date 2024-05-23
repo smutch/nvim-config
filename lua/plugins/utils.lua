@@ -1,7 +1,7 @@
 return {
     { 'nvim-lua/plenary.nvim', lazy = true },
     { 'tpope/vim-unimpaired' },
-    { 'tpope/vim-eunuch' },
+    { 'tpope/vim-eunuch', event = "VeryLazy" },
     {
         'stevearc/resession.nvim',
         config = function()
@@ -52,7 +52,7 @@ return {
     },
     {
         'RRethy/vim-illuminate',
-        lazy = "VeryLazy",
+        event = "VeryLazy",
         config = function()
             require 'illuminate'.configure {
                 providers = {
@@ -64,7 +64,7 @@ return {
             }
         end
     },
-    { 'sindrets/diffview.nvim', lazy = "VeryLazy" },
+    { 'sindrets/diffview.nvim', event = "VeryLazy" },
     {
         'stevearc/oil.nvim',
         config = function()
@@ -246,7 +246,7 @@ return {
     },
     {
         'stevearc/overseer.nvim',
-        lazy = "VeryLazy",
+        event = "VeryLazy",
         opts = {
             task_list = {
                 bindings = {
@@ -273,7 +273,7 @@ return {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
         dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-        lazy = "VeryLazy",
+        event = "VeryLazy",
         config = function()
             local harpoon = require "harpoon"
             harpoon:setup {}

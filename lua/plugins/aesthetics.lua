@@ -27,10 +27,10 @@ return {
         dependencies = { "abeldekat/harpoonline", 'AndreM222/copilot-lualine' },
         lazy = false,
         config = function()
-            require "statusline"
+            require 'plugins.config.statusline'
             local augroup = vim.api.nvim_create_augroup("lualine_colors", {})
             vim.api.nvim_create_autocmd("ColorScheme", {
-                callback = function() require "statusline" end,
+                callback = function() require 'plugins.config.statusline' end,
                 group = augroup
             })
         end
@@ -154,7 +154,7 @@ return {
     },
     {
         "folke/todo-comments.nvim",
-        lazy = "VeryLazy",
+        event = "VeryLazy",
         config = function()
             require "todo-comments".setup {
                 colors = {
