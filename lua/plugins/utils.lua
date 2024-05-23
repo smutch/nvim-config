@@ -1,7 +1,7 @@
 return {
     { 'nvim-lua/plenary.nvim', lazy = true },
-    { 'tpope/vim-unimpaired' },
-    { 'tpope/vim-eunuch', event = "VeryLazy" },
+    { 'tpope/vim-unimpaired',  event = "VeryLazy" },
+    { 'tpope/vim-eunuch',      event = "VeryLazy" },
     {
         'stevearc/resession.nvim',
         config = function()
@@ -64,15 +64,16 @@ return {
             }
         end
     },
-    { 'sindrets/diffview.nvim', event = "VeryLazy" },
+    { 'sindrets/diffview.nvim', cmd = "DiffViewOpen" },
     {
         'stevearc/oil.nvim',
+        event = "VeryLazy",
         config = function()
             require("oil").setup()
             vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         end
     },
-    { 'uga-rosa/ccc.nvim',      config = true,    ft = { "astro", "html", "css", "scss", "lua", "vim" } },
+    { 'uga-rosa/ccc.nvim',      config = true,     ft = { "astro", "html", "css", "scss", "lua", "vim" } },
     {
         "rcarriga/neotest",
         lazy = true,
@@ -81,7 +82,7 @@ return {
             'rouge8/neotest-rust',
         },
         config = function()
-            require("neotest").setup({
+            require("neotest").setup({ ---@diagnostic disable-line:missing-fields
                 adapters = {
                     require("neotest-python"),
                     require("neotest-rust"),
@@ -111,11 +112,12 @@ return {
     },
     {
         'numToStr/FTerm.nvim',
-        config = function()
-            vim.keymap.set('n', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
-            vim.keymap.set('t', [[<M-\>]], '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true })
-            vim.keymap.set('n', '<leader>gl', '<CMD>lua require("FTerm").scratch({ cmd = "lazygit" })<CR>')
-        end
+        config = true,
+        keys = {
+            { [[<M-\>]],    '<CMD>lua require("FTerm").toggle()<CR>',                     desc = "FTerm - toggle", mode = "n" },
+            { [[<M-\>]],    '<CMD>lua require("FTerm").toggle()<CR>',                     desc = "FTerm - toggle", mode = "t" },
+            { '<leader>gl', '<CMD>lua require("FTerm").scratch({ cmd = "lazygit" })<CR>', desc = "FTerm - lazygit" },
+        }
     },
     {
         'kevinhwang91/nvim-ufo',
@@ -164,6 +166,7 @@ return {
     {
         -- WARNING: Don't use this if barbar is enabled
         'moll/vim-bbye',
+        event = "VeryLazy",
         config = function()
             vim.api.nvim_set_keymap('n', 'Q', ':Bdelete<CR>', { noremap = true, silent = true })
         end
@@ -368,8 +371,8 @@ return {
         end,
     },
     {
-        "Makaze/watch.nvim",
-        cmd = { "WatchStart", "WatchStop", "WatchFile" },
+        'danymat/neogen',
+        cmd = "Neogen",
+        config = function() require('neogen').setup({ snippet_engine = "luasnip" }) end
     },
-    { 'danymat/neogen',      config = function() require('neogen').setup({ snippet_engine = "luasnip" }) end },
 }
