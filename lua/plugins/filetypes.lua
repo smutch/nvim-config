@@ -11,8 +11,6 @@ return {
             vim.g.vimtex_compiler_progname = 'nvr'
         end
     },
-    { "vim-pandoc/vim-pandoc-syntax", ft = { 'markdown.pandoc', 'pandoc' } },
-    { "vim-pandoc/vim-pandoc",        ft = { 'markdown', 'quarto', 'pandoc' } },
     {
         'MeanderingProgrammer/markdown.nvim',
         name = 'render-markdown',

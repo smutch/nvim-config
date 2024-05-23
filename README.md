@@ -1,7 +1,7 @@
 nvim-setup
 =========
 
-My Neovim setup.  As of writing, nvim >= 0.5 is required.
+My Neovim setup.  As of writing, nvim >= 0.10 is required.
 
 
 Usage
