@@ -1,5 +1,20 @@
 return {
     {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- Library items can be absolute paths
+                -- "~/projects/my-awesome-lib",
+                -- Or relative, which means they will be resolved as a plugin
+                -- "LazyVim",
+                -- When relative, you can also provide a path to the library in the plugin dir
+                "luvit-meta/library", -- see below
+            },
+        },
+    },
+    { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+    {
         'neovim/nvim-lspconfig',
         dependencies = {
             { 'williamboman/mason.nvim',           config = true },
@@ -15,19 +30,6 @@ return {
                     }
                 }
             },
-            {
-                "folke/neodev.nvim",
-                config = function()
-                    require("neodev").setup({
-                        override = function(root_dir, library)
-                            if root_dir:find("plugin", 1, true) == 1 then
-                                library.enabled = true
-                                library.plugins = true
-                            end
-                        end
-                    })
-                end
-            },
         },
         config = function()
             require 'plugins.config.lsp'
@@ -37,13 +39,13 @@ return {
     {
         'kosayoda/nvim-lightbulb',
         config = function()
+            vim.fn.sign_define('LightBulbSign', { text = "", texthl = "", linehl = "", numhl = "" })
             local augrp = vim.api.nvim_create_augroup("Projects", {})
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
                 group = augrp,
                 pattern = { "*" },
                 callback = require 'nvim-lightbulb'.update_lightbulb
             })
-            vim.fn.sign_define('LightBulbSign', { text = "", texthl = "", linehl = "", numhl = "" })
         end
     },
     {
@@ -56,7 +58,7 @@ return {
     },
     {
         'mrcjkb/rustaceanvim',
-        version = '^3', -- Recommended
+        version = '^4', -- Recommended
         ft = { 'rust' },
         config = function()
             vim.g.rustaceanvim = {
@@ -65,7 +67,7 @@ return {
                 },
                 -- LSP configuration
                 server = {
-                    on_attach = require 'lsp'.on_attach,
+                    on_attach = require 'plugins.config.lsp'.on_attach,
                     -- settings = {
                     --     -- rust-analyzer language server configuration
                     --     ['rust-analyzer'] = {

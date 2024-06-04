@@ -67,13 +67,16 @@ return {
     { 'sindrets/diffview.nvim', cmd = "DiffViewOpen" },
     {
         'stevearc/oil.nvim',
-        event = "VeryLazy",
         config = function()
-            require("oil").setup()
+            require("oil").setup {
+                columns = {
+                    "icon", "permissions", "size", "mtime"
+                }
+            }
             vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         end
     },
-    { 'uga-rosa/ccc.nvim',      config = true,     ft = { "astro", "html", "css", "scss", "lua", "vim" } },
+    { 'uga-rosa/ccc.nvim',      config = true,       ft = { "astro", "html", "css", "scss", "lua", "vim" } },
     {
         "rcarriga/neotest",
         lazy = true,

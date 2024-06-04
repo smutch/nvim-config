@@ -17,6 +17,7 @@ return {
             'lukas-reineke/cmp-under-comparator',
             'saadparwaiz1/cmp_luasnip',
             'jmbuhr/otter.nvim',
+            'folke/lazydev.nvim',
         },
         config = function() require 'plugins.config.completion' end
     }

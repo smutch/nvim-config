@@ -23,6 +23,14 @@ return {
         end
     },
     {
+        "slugbyte/lackluster.nvim",
+        lazy = false,
+        init = function()
+            vim.cmd.colorscheme("lackluster")
+            -- vim.cmd.colorscheme("lackluster-hack")
+        end,
+    },
+    {
         'nvim-lualine/lualine.nvim',
         dependencies = { "abeldekat/harpoonline", 'AndreM222/copilot-lualine' },
         lazy = false,
