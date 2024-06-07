@@ -14,7 +14,6 @@ return {
     { "Bilal2453/luvit-meta",  lazy = true }, -- optional `vim.uv` typings
     {
         'neovim/nvim-lspconfig',
-        'hrsh7th/nvim-cmp',
         dependencies = {
             { 'williamboman/mason.nvim',           config = true },
             { "williamboman/mason-lspconfig.nvim", config = true },
