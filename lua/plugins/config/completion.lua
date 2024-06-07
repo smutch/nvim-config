@@ -12,12 +12,14 @@ local has_words_before = function()
 end
 
 local common_sources = {
-    { name = 'path',       group_index = 0 },
-    { name = 'nvim_lsp',   group_index = 0 },
-    { name = 'luasnip',    group_index = 0 },
-    { name = 'lazydev',    group_index = 0 },
-    { name = 'treesitter', group_index = 0 },
-    { name = 'buffer',     keyword_length = 5, group_index = 0 },
+    { name = 'path'},
+    { name = 'nvim_lsp'},
+    { name = 'lazydev'},
+    { name = 'conjure'},
+    { name = 'otter'},
+    { name = 'luasnip'},
+    { name = 'treesitter'},
+    { name = 'buffer', keyword_length = 5},
 }
 
 cmp.setup({ ---@diagnostic disable-line: redundant-parameter
@@ -97,7 +99,7 @@ vim.api.nvim_create_autocmd("FileType", {
     group = augrp,
     pattern = { "lua" },
     callback = function()
-        local sources = { { name = 'nvim_lua', group_index = 1 } }
+        local sources = { { name = 'nvim_lua'} }
         vim.list_extend(sources, common_sources)
         cmp.setup.buffer { sources = sources }
     end
@@ -106,7 +108,7 @@ vim.api.nvim_create_autocmd("FileType", {
     group = augrp,
     pattern = { "toml" },
     callback = function()
-        local sources = { { name = 'crates', group_index = 1 } }
+        local sources = { { name = 'crates'} }
         vim.list_extend(sources, common_sources)
         cmp.setup.buffer { sources = sources }
     end
@@ -115,7 +117,7 @@ vim.api.nvim_create_autocmd("FileType", {
     group = augrp,
     pattern = { "tex" },
     callback = function()
-        local sources = { { name = 'omni', group_index = 1 }, { name = 'latex_symbols', group_index = 1 } }
+        local sources = { { name = 'omni'}, { name = 'latex_symbols'} }
         vim.list_extend(sources, common_sources)
         cmp.setup.buffer { sources = sources }
     end
