@@ -3,7 +3,7 @@ return {
     {
         'tpope/vim-fugitive',
         config = function()
-            vim.keymap.set('n', 'git', ':Git')
+            vim.keymap.set('n', '<leader>g:', ':Git ')
             vim.keymap.set('n', '<leader>gs', ':Git<CR>')
             vim.keymap.set('n', '<leader>ga', ':Git commit -a<CR>')
             vim.keymap.set('n', '<leader>gd', ':Git diff<CR>')
