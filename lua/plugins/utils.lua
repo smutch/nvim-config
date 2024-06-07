@@ -273,6 +273,7 @@ return {
             { '<leader>ot', '<CMD>OverseerToggle<CR>',              desc = "Overseer - toggle" },
             { '<leader>or', '<CMD>OverseerRun<CR>',                 desc = "Overseer - run" },
             { '<leader>oo', '<CMD>OverseerQuickAction restart<CR>', desc = "Overseer - restart" },
+            { '<leader>ob', '<CMD>OverseerLoadBundle<CR>',          desc = "Overseer - load bundle" },
         }
     },
     {

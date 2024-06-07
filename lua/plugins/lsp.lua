@@ -26,7 +26,8 @@ return {
                         'lua-language-server',
                         'stylua',
                         'shellcheck',
-                        'python-lsp-server',
+                        'basedpyright',
+                        'ruff-lsp'
                     }
                 }
             },
@@ -91,7 +92,7 @@ return {
         config = function()
             require("lsp_lines").setup()
             vim.diagnostic.config({ virtual_lines = false })
-            vim.keymap.set("", "<Leader>D", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+            vim.keymap.set("", "gP", require("lsp_lines").toggle, { desc = "Toggle lsp_lines (p)roblems" })
         end
     },
     -- TODO: Come back and try this again when more mature. Really love the idea!

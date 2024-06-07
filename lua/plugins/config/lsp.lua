@@ -30,18 +30,18 @@ local function toggle_lsp_inlay_hints(bufnr)
         if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
             vim.lsp.inlay_hint.enable(bufnr, false)
         else
-            vim.lsp.inlay_hint.enable(false, {bufnr=bufnr})
+            vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
         end
     else
         if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
             vim.lsp.inlay_hint.enable(bufnr, true)
         else
-            vim.lsp.inlay_hint.enable(true, {bufnr=bufnr})
+            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
     end
 end
 
-vim.keymap.set("n", "gV", toggle_lsp_virtual_text, { noremap = true, desc = "Toggle virtual text for LSP diagnostics" })
+vim.keymap.set("n", "gV", toggle_lsp_virtual_text, { noremap = true, desc = "Toggle (v)irtual text for LSP diagnostics" })
 
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
@@ -53,8 +53,8 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "1g/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "g/", ":Telescope lsp_dynamic_workspace_symbols<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "g/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "g?", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true, buffer = 0 })
@@ -83,11 +83,11 @@ local on_attach = function(client, bufnr)
 
     if client.server_capabilities.inlayHintProvider then
         if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
-            vim.lsp.inlay_hint.enable(bufnr, true)
+            vim.lsp.inlay_hint.enable(bufnr, false)
         else
-            vim.lsp.inlay_hint.enable(true, {bufnr=bufnr})
+            vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
         end
-        vim.keymap.set("n", "gI", toggle_lsp_inlay_hints, { noremap = true, desc = "Toggle inlay hints" })
+        vim.keymap.set("n", "gI", toggle_lsp_inlay_hints, { noremap = true, desc = "Toggle (i)nlay hints" })
     end
 
     if client.name == "ruff_lsp" then
@@ -95,7 +95,7 @@ local on_attach = function(client, bufnr)
     end
 
     if client.server_capabilities.documentSymbolProvider then
-        require"nvim-navic".attach(client, bufnr)
+        require "nvim-navic".attach(client, bufnr)
     end
 end
 
@@ -104,45 +104,18 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
 require("mason-lspconfig").setup_handlers {
-    -- The first entry (without a key) will be the default handler
-    -- and will be called for each installed server that doesn't have
-    -- a dedicated handler.
     function(server_name) -- default handler (optional)
         require("lspconfig")[server_name].setup {
             on_attach = on_attach,
             capabilities = capabilities,
         }
     end,
-    -- Next, you can provide a dedicated handler for specific servers.
-    -- For example, a handler override for the `rust_analyzer`:
-    ["pylsp"] = function()
-        require("lspconfig").pylsp.setup {
+
+    ["basedpyright"] = function()
+        require("lspconfig").basedpyright.setup {
             on_attach = on_attach,
             capabilities = capabilities,
-            settings = {
-                pylsp = {
-                    plugins = {
-                        -- disable everything I don't want
-                        autopep8 = { enabled = false },
-                        yapf = { enabled = false },
-                        pylint = { enabled = false },
-                        pyflakes = { enabled = false },
-                        pycodestyle = { enabled = false },
-                        mccabe = { enabled = false },
-                        black = { enabled = false },
-
-                        -- set up the stuff I do
-                        jedi = { environment = h.python_prefix, fuzzy = true },
-                        ruff = { enabled = true, formatEnabled = true, extendSelect = { "I", "F" } },
-                        pylsp_mypy = {
-                            enabled = true,
-                            dmypy = true,
-                            overrides = { "--python-executable", h.python_interpreter_path, true },
-                            report_progress = false
-                        }
-                    }
-                }
-            }
+            basedpyright = { analysis = { typeCheckingMode = "standard" } }
         }
     end,
 
@@ -195,8 +168,6 @@ require("mason-lspconfig").setup_handlers {
     -- Rustacean.nvim demands that we don't set up the LSP server here...
     ["rust_analyzer"] = function() end
 }
-
-require'lspconfig'.racket_langserver.setup{}
 
 local null_ls = require("null-ls")
 null_ls.setup {
