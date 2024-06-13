@@ -115,7 +115,9 @@ require("mason-lspconfig").setup_handlers {
         require("lspconfig").basedpyright.setup {
             on_attach = on_attach,
             capabilities = capabilities,
-            basedpyright = { analysis = { typeCheckingMode = "standard" } }
+            settings = {
+                basedpyright = { analysis = { typeCheckingMode = "standard" }, },
+            }
         }
     end,
 
@@ -133,8 +135,10 @@ require("mason-lspconfig").setup_handlers {
         require "lspconfig".julials.setup {
             on_attach = on_attach,
             capabilities = capabilities,
-            julia = {
-                environmentPath = "./"
+            settings = {
+                julia = {
+                    environmentPath = "./"
+                }
             }
         }
     end,
