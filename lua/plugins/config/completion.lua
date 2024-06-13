@@ -37,7 +37,7 @@ cmp.setup({ ---@diagnostic disable-line: redundant-parameter
         ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4)),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete()),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
 
         ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
             { 'i' }),
