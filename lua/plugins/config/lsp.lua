@@ -169,6 +169,30 @@ require("mason-lspconfig").setup_handlers {
     ["rust_analyzer"] = function() end
 }
 
+local augrp = vim.api.nvim_create_augroup("LSP", {})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'janet' },
+    group = augrp,
+    callback = function(ev)
+        if string.sub(vim.fn.expand('%'), 1, string.len("conjure-log")) == "conjure-log" then
+            return
+        end
+        vim.lsp.start({
+            name = 'janet-lsp',
+            cmd = { 'janet-lsp' },
+            root_dir = (function()
+                local root = vim.fs.root(ev.buf, { 'project.janet' })
+                if not root then
+                    root = vim.fs.dirname(vim.fn.expand('%:p'))
+                end
+                return root
+            end)(),
+            on_attach = on_attach,
+            capabilities = capabilities,
+        })
+    end,
+})
+
 local null_ls = require("null-ls")
 null_ls.setup {
     sources = {
