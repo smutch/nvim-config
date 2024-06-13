@@ -12,14 +12,14 @@ local has_words_before = function()
 end
 
 local common_sources = {
-    { name = 'path'},
-    { name = 'nvim_lsp'},
-    { name = 'lazydev', group = 0},
-    { name = 'conjure'},
-    { name = 'otter'},
-    { name = 'luasnip'},
-    { name = 'treesitter'},
-    { name = 'buffer', keyword_length = 5},
+    { name = 'path' },
+    { name = 'nvim_lsp' },
+    { name = 'lazydev',   group = 0 },
+    { name = 'conjure' },
+    { name = 'otter' },
+    { name = 'luasnip' },
+    { name = 'treesitter' },
+    { name = 'buffer',    keyword_length = 5 },
 }
 
 cmp.setup({ ---@diagnostic disable-line: redundant-parameter
@@ -37,7 +37,14 @@ cmp.setup({ ---@diagnostic disable-line: redundant-parameter
         ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4)),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete()),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+
+        ['<CR>'] = cmp.mapping(function(fallback)
+            if cmp.visible() and cmp.get_selected_entry() then
+                cmp.confirm()
+            else
+                fallback()
+            end
+        end),
 
         ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
             { 'i' }),
@@ -99,7 +106,7 @@ vim.api.nvim_create_autocmd("FileType", {
     group = augrp,
     pattern = { "lua" },
     callback = function()
-        local sources = { { name = 'nvim_lua'} }
+        local sources = { { name = 'nvim_lua' } }
         vim.list_extend(sources, common_sources)
         cmp.setup.buffer { sources = sources }
     end
@@ -108,7 +115,7 @@ vim.api.nvim_create_autocmd("FileType", {
     group = augrp,
     pattern = { "toml" },
     callback = function()
-        local sources = { { name = 'crates'} }
+        local sources = { { name = 'crates' } }
         vim.list_extend(sources, common_sources)
         cmp.setup.buffer { sources = sources }
     end
@@ -117,7 +124,7 @@ vim.api.nvim_create_autocmd("FileType", {
     group = augrp,
     pattern = { "tex" },
     callback = function()
-        local sources = { { name = 'omni'}, { name = 'latex_symbols'} }
+        local sources = { { name = 'omni' }, { name = 'latex_symbols' } }
         vim.list_extend(sources, common_sources)
         cmp.setup.buffer { sources = sources }
     end
