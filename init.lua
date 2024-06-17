@@ -24,3 +24,6 @@ require("lazy").setup("plugins",
         }
     }
 )
+
+vim.api.nvim_create_user_command("Erc", function() vim.cmd("edit ~/.config/nvim/init.lua") end, {})
+vim.api.nvim_create_user_command("Eplug", function() vim.cmd("edit ~/.config/nvim/lua/plugins") end, {})
