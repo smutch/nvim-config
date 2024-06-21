@@ -40,35 +40,42 @@ return {
         dependencies = {
             { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
             { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
+            { "hrsh7th/nvim-cmp" },
         },
-        opts = {
-            context = 'manual',               -- Context to use, 'buffers', 'buffer' or 'manual'
-            show_user_selection = true,       -- Shows user selection in chat
-            show_folds = true,                -- Shows folds for sections in chat
-            clear_chat_on_new_prompt = false, -- Clears chat on every new prompt
-            auto_follow_cursor = true,        -- Auto-follow cursor in chat
-            -- default prompts
-            prompts = {
-                Docs = {
-                    prompt =
-                    '/COPILOT_GENERATE Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, google-style docstrings for Python etc.',
+        config = function()
+            require("CopilotChat.integrations.cmp").setup()
+            require("CopilotChat").setup {
+                context = 'manual',           -- Context to use, 'buffers', 'buffer' or 'manual'
+                show_user_selection = true,   -- Shows user selection in chat
+                show_folds = true,            -- Shows folds for sections in chat
+                clear_chat_on_new_prompt = false, -- Clears chat on every new prompt
+                auto_follow_cursor = true,    -- Auto-follow cursor in chat
+                -- default prompts
+                prompts = {
+                    Docs = {
+                        prompt =
+                        '/COPILOT_GENERATE Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, google-style docstrings for Python etc.',
+                    },
                 },
-            },
-            -- default window options
-            window = {
-                layout = 'vertical', -- 'vertical', 'horizontal', 'float'
-                width = 0.33,        -- Width of the window
-            },
+                -- default window options
+                window = {
+                    layout = 'vertical', -- 'vertical', 'horizontal', 'float'
+                    width = 0.33,    -- Width of the window
+                },
 
-            mappings = {
-                reset = {
-                    normal = 'gr'
-                },
-                accept_diff = {
-                    normal = 'ga',
-                },
+                mappings = {
+                    complete = {
+                        insert = '',
+                    },
+                    reset = {
+                        normal = 'gr'
+                    },
+                    accept_diff = {
+                        normal = 'ga',
+                    },
+                }
             }
-        },
+        end,
         event = "VeryLazy",
         keys = {
             {
@@ -89,7 +96,21 @@ return {
                 desc = "CopilotChat - Prompt actions",
             },
             {
-                "<leader>ac",
+                "<leader>ab",
+                function()
+                    require("CopilotChat").toggle({ selection = require("CopilotChat.select").buffer })
+                end,
+                desc = "CopilotChat - buffer",
+            },
+            {
+                "<leader>as",
+                function()
+                    require("CopilotChat").toggle()
+                end,
+                desc = "CopilotChat - selection / current line",
+            },
+            {
+                "<leader>aq",
                 function()
                     local input = vim.fn.input("Chat: ")
                     if input ~= "" then
@@ -97,16 +118,6 @@ return {
                     end
                 end,
                 desc = "CopilotChat - Ask with no context",
-            },
-            {
-                "<leader>ab",
-                function()
-                    local input = vim.fn.input("Chat (buf): ")
-                    if input ~= "" then
-                        vim.cmd("CopilotChatBuffer " .. input)
-                    end
-                end,
-                desc = "CopilotChat - Chat with buffer as context",
             },
             {
                 "<leader>al",
