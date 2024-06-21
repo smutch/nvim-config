@@ -28,9 +28,9 @@ return {
                 end,
             })
 
-            vim.api.nvim_create_user_command('SessionSave', resession.save, { desc = "Save session" })
-            vim.api.nvim_create_user_command('SessionLoad', resession.load, { desc = "Load session" })
-            vim.api.nvim_create_user_command('SessionDelete', resession.delete, { desc = "Delete session" })
+            vim.api.nvim_create_user_command('SessionSave', function() require("resession").save() end, { desc = "Save session" })
+            vim.api.nvim_create_user_command('SessionLoad', function() require("resession").load() end, { desc = "Load session" })
+            vim.api.nvim_create_user_command('SessionDelete', function() require("resession").delete() end, { desc = "Delete session" })
         end
     },
     {
