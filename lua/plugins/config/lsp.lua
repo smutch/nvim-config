@@ -41,7 +41,8 @@ local function toggle_lsp_inlay_hints(bufnr)
     end
 end
 
-vim.keymap.set("n", "<leader>lv", toggle_lsp_virtual_text, { noremap = true, desc = "Toggle (v)irtual text for LSP diagnostics" })
+vim.keymap.set("n", "<leader>lv", toggle_lsp_virtual_text,
+    { noremap = true, desc = "Toggle (v)irtual text for LSP diagnostics" })
 
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
@@ -90,10 +91,6 @@ local on_attach = function(client, bufnr)
         vim.keymap.set("n", "<leader>lI", toggle_lsp_inlay_hints, { noremap = true, desc = "Toggle (i)nlay hints" })
     end
 
-    if client.name == "ruff_lsp" then
-        client.server_capabilities.hoverProvider = false
-    end
-
     if client.server_capabilities.documentSymbolProvider then
         require "nvim-navic".attach(client, bufnr)
     end
@@ -119,6 +116,15 @@ require("mason-lspconfig").setup_handlers {
                 basedpyright = { analysis = { typeCheckingMode = "standard" }, },
             }
         }
+    end,
+
+    ["ruff"] = function()
+        require("lspconfig").ruff.setup({
+            on_attach = function(client, bufnr)
+                client.server_capabilities.hoverProvider = false
+                on_attach(client, bufnr)
+            end,
+        })
     end,
 
     ["lua_ls"] = function()

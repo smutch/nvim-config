@@ -25,7 +25,7 @@ return {
                         'stylua',
                         'shellcheck',
                         'basedpyright',
-                        'ruff-lsp'
+                        'ruff'
                     }
                 }
             },
