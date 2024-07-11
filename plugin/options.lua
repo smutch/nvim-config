@@ -8,6 +8,7 @@ vim.o.shiftwidth = 4
 vim.o.laststatus = 3
 vim.opt.listchars = { tab = [[▸\ ]], eol = '↵', trail = '·' }
 vim.o.number = false -- Don't show line numbers
+vim.o.ignorecase = true
 vim.o.smartcase = true
 
 vim.o.backupdir = os.getenv('HOME') .. "/.nvim_backup"
