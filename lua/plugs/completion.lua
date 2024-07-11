@@ -18,6 +18,6 @@ return {
             'saadparwaiz1/cmp_luasnip',
             'jmbuhr/otter.nvim',
         },
-        config = function() require 'plugins.config.completion' end
+        config = function() require 'plugs.config.completion' end
     }
 }

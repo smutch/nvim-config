@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-fields
+
 require 'nvim-treesitter.install'.compilers = { 'gcc' }
 require 'nvim-treesitter.configs'.setup {
     highlight = {
@@ -26,6 +28,7 @@ require 'nvim-treesitter.configs'.setup {
         "rst",
         "comment",
         "diff",
+        "markdown_inline"
     },
     incremental_selection = { enable = false },
     refactor = {
@@ -98,3 +101,4 @@ require 'nvim-treesitter.configs'.setup {
     },
 }
 vim.treesitter.language.register("astro", "tsx")
+vim.treesitter.language.register("markdown", "mdx")

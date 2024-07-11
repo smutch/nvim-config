@@ -31,10 +31,10 @@ return {
         dependencies = { "abeldekat/harpoonline", 'AndreM222/copilot-lualine' },
         lazy = false,
         config = function()
-            require 'plugins.config.statusline'
+            require 'plugs.config.statusline'
             local augroup = vim.api.nvim_create_augroup("lualine_colors", {})
             vim.api.nvim_create_autocmd("ColorScheme", {
-                callback = function() require 'plugins.config.statusline' end,
+                callback = function() require 'plugs.config.statusline' end,
                 group = augroup
             })
         end
@@ -86,7 +86,7 @@ return {
         config = function()
             require("noice").setup({
                 lsp = {
-                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    -- override markdown rendering so that **cmp** and other plugs use **Treesitter**
                     override = {
                         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                         ["vim.lsp.util.stylize_markdown"] = true,

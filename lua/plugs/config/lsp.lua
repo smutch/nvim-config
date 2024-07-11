@@ -187,9 +187,13 @@ vim.api.nvim_create_autocmd('FileType', {
         if string.sub(vim.fn.expand('%'), 1, string.len("conjure-log")) == "conjure-log" then
             return
         end
+        local path = "janet-lsp"
+        if vim.fn.has('macunix') == 1 then
+            path = vim.trim(vim.fn.system([[brew info janet | rg -A1 Installed | tail -n1 | cut -d' ' -f1]])) .. "/bin/janet-lsp"
+        end
         vim.lsp.start({
             name = 'janet-lsp',
-            cmd = { 'janet-lsp' },
+            cmd = { path },
             root_dir = (function()
                 local root = vim.fs.root(ev.buf, { 'project.janet' })
                 if not root then

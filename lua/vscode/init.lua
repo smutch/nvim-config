@@ -15,7 +15,7 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-require("lazy").setup("vscode/plugins",
+require("lazy").setup("vscode/plugs",
 {
     -- see https://github.com/folke/lazy.nvim/issues/462
     concurrency = 32,

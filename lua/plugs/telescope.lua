@@ -47,6 +47,6 @@ return {
             { "nvim-lua/plenary.nvim",                    event = "VeryLazy" },
             { "debugloop/telescope-undo.nvim",            event = "VeryLazy" },
         },
-        config = function() require 'plugins.config.telescope' end
+        config = function() require 'plugs.config.telescope' end
     }
 }

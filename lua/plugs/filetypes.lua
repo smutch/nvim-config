@@ -12,12 +12,20 @@ return {
         end
     },
     {
-        'MeanderingProgrammer/markdown.nvim',
-        name = 'render-markdown',
-        dependencies = { 'nvim-treesitter/nvim-treesitter' },
-        opts = { file_types = { 'markdown.pandoc', 'markdown', 'quarto', 'pandoc' }, },
+        "OXY2DEV/markview.nvim",
+        dependencies = {
+            "nvim-tree/nvim-web-devicons", -- Used by the code bloxks
+        },
         ft = { 'markdown', 'pandoc', 'quarto', 'markdown.pandoc' },
+        opts = {},
     },
+    -- {
+    --     'MeanderingProgrammer/markdown.nvim',
+    --     name = 'render-markdown',
+    --     dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    --     opts = { file_types = { 'markdown.pandoc', 'markdown', 'quarto', 'pandoc' }, },
+    --     ft = { 'markdown', 'pandoc', 'quarto', 'markdown.pandoc' },
+    -- },
     {
         'snakemake/snakemake',
         ft = 'snakemake',

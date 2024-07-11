@@ -31,7 +31,7 @@ return {
             },
         },
         config = function()
-            require 'plugins.config.lsp'
+            require 'plugs.config.lsp'
         end
     },
     { 'nvimtools/none-ls.nvim' },
@@ -66,7 +66,7 @@ return {
                 },
                 -- LSP configuration
                 server = {
-                    on_attach = require 'plugins.config.lsp'.on_attach,
+                    on_attach = require 'plugs.config.lsp'.on_attach,
                     -- settings = {
                     --     -- rust-analyzer language server configuration
                     --     ['rust-analyzer'] = {

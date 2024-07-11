@@ -15,7 +15,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins",
+require("lazy").setup("plugs",
     {
         checker = {
             enabled = true,
@@ -26,4 +26,4 @@ require("lazy").setup("plugins",
 )
 
 vim.api.nvim_create_user_command("Erc", function() vim.cmd("edit ~/.config/nvim/init.lua") end, {})
-vim.api.nvim_create_user_command("Eplug", function() vim.cmd("edit ~/.config/nvim/lua/plugins") end, {})
+vim.api.nvim_create_user_command("Eplug", function() vim.cmd("edit ~/.config/nvim/lua/plugs") end, {})

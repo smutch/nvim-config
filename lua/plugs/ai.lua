@@ -122,7 +122,7 @@ return {
             {
                 "<leader>al",
                 function()
-                    vim.fn.setreg("C", require("CopilotChat").response(), { "l" })
+                    vim.fn.setreg("C", require("CopilotChat").response(), "l")
                 end,
                 desc = "CopilotChat - Yank last response to \"C",
             },
