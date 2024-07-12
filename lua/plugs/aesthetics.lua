@@ -16,6 +16,7 @@ return {
                         BufferCurrentMod    = { bg = "bg2", fg = "diag.warn" },
                         BufferCurrentSign   = { bg = "bg2", fg = "diag.info" },
                         BufferCurrentTarget = { bg = "bg2", fg = "diag.error" },
+                        MatchParen          = { bg = "bg3", fg = "diag.error" },
                     },
                 },
             }

@@ -41,8 +41,8 @@ local function toggle_lsp_inlay_hints(bufnr)
     end
 end
 
-vim.keymap.set("n", "<leader>lv", toggle_lsp_virtual_text,
-    { noremap = true, desc = "Toggle (v)irtual text for LSP diagnostics" })
+-- vim.keymap.set("n", "<leader>lv", toggle_lsp_virtual_text,
+--     { noremap = true, desc = "Toggle (v)irtual text for LSP diagnostics" })
 
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
