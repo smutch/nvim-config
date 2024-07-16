@@ -64,7 +64,7 @@ return {
             }
         end
     },
-    { 'sindrets/diffview.nvim', cmd = "DiffViewOpen" },
+    { 'sindrets/diffview.nvim', cmd = "DiffviewOpen" },
     {
         'stevearc/oil.nvim',
         config = function()
