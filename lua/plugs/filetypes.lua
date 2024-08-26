@@ -16,7 +16,7 @@ return {
         dependencies = {
             "nvim-tree/nvim-web-devicons", -- Used by the code bloxks
         },
-        ft = { 'markdown', 'pandoc', 'quarto', 'markdown.pandoc' },
+        ft = { 'markdown', 'pandoc', 'quarto', 'markdown.pandoc', 'Avante' },
         opts = {},
     },
     -- {
