@@ -39,7 +39,6 @@ return {
         'nvim-telescope/telescope.nvim',
         event = "VeryLazy",
         dependencies = {
-            { "polirritmico/telescope-lazy-plugins.nvim", event = "VeryLazy" },
             { 'nvim-telescope/telescope-fzy-native.nvim', run = 'make -C deps/fzy-lua-native' },
             { 'xiyaowong/telescope-emoji.nvim',           event = "VeryLazy" },
             { 'nvim-telescope/telescope-symbols.nvim',    event = "VeryLazy" },

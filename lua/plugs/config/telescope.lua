@@ -9,11 +9,12 @@ telescope.setup {
 		emoji      = { theme = "dropdown" },
 		symbols    = { theme = "dropdown" },
 	},
-	extensions = { ["ui-select"] = { require("telescope.themes").get_dropdown() }
+	extensions = {
+		["ui-select"] = { require("telescope.themes").get_dropdown() },
 	}
 }
 
-local extensions = { "fzy_native", "emoji", "neoclip", "ui-select", "lazy_plugins", "undo" }
+local extensions = { "fzy_native", "emoji", "neoclip", "ui-select", "undo" }
 for _, extension in ipairs(extensions) do telescope.load_extension(extension) end
 
 vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>',
@@ -43,8 +44,6 @@ vim.keymap.set('n', '<leader>fe', '<cmd>Telescope emoji<cr>', { noremap = true, 
 vim.keymap.set('n', '<leader>f<leader>', '<cmd>Telescope<cr>', { noremap = true, desc = "Telescope" })
 vim.keymap.set('n', '<leader>fs', '<cmd>Telescope symbols<cr>',
 	{ noremap = true, desc = "Telescope - symbols" })
-vim.keymap.set('n', '<leader>fp', '<cmd>Telescope lazy_plugins<cr>',
-	{ noremap = true, desc = "Telescope - plugins" })
 vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<cr>', { noremap = true, desc = "Telescope - undo" })
 vim.keymap.set('n', 'z=',
 	function() require 'telescope.builtin'.spell_suggest(require 'telescope.themes'.get_dropdown {}) end,
