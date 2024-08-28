@@ -28,9 +28,12 @@ return {
                 end,
             })
 
-            vim.api.nvim_create_user_command('SessionSave', function() require("resession").save() end, { desc = "Save session" })
-            vim.api.nvim_create_user_command('SessionLoad', function() require("resession").load() end, { desc = "Load session" })
-            vim.api.nvim_create_user_command('SessionDelete', function() require("resession").delete() end, { desc = "Delete session" })
+            vim.api.nvim_create_user_command('SessionSave', function() require("resession").save() end,
+                { desc = "Save session" })
+            vim.api.nvim_create_user_command('SessionLoad', function() require("resession").load() end,
+                { desc = "Load session" })
+            vim.api.nvim_create_user_command('SessionDelete', function() require("resession").delete() end,
+                { desc = "Delete session" })
         end
     },
     {
@@ -410,4 +413,9 @@ return {
         cmd = "Neogen",
         config = function() require('neogen').setup({ snippet_engine = "luasnip" }) end
     },
+    {
+        'stevearc/quicker.nvim',
+        event = "FileType qf",
+        opts = {},
+    }
 }
