@@ -20,10 +20,11 @@ return {
     },
     {
         "yetone/avante.nvim",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
+        cmd = "AvanteAsk",
         build = "make",
         opts = {
-            provider = "copilot",
+            provider = "claude",
         },
         dependencies = {
             "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
