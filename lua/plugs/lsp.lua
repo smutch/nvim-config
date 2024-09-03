@@ -101,7 +101,11 @@ return {
     {
         "rachartier/tiny-inline-diagnostic.nvim",
         event = "VeryLazy",
-        opts = {},
+        opts = {
+            hi = {
+                background = "#1d2939", -- Can be a highlight or a hexadecimal color (#RRGGBB)
+            }
+        },
         keys = {
             { "<leader>lv", function() require('tiny-inline-diagnostic').toggle() end, desc = "Toggle (v)irtual text diagnostics" },
         },
