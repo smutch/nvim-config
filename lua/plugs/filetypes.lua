@@ -80,4 +80,15 @@ return {
             vim.g["conjure#filetype#janet"] = "conjure.client.janet.stdio"
         end,
     },
+    {
+        "gpanders/nvim-parinfer",
+        ft = { "clojure", "fennel", "racket", "janet" },
+    },
+    {
+        "OXY2DEV/helpview.nvim",
+        lazy = false, -- Recommended
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter"
+        }
+    }
 }

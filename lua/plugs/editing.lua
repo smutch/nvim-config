@@ -3,9 +3,9 @@ return {
         'windwp/nvim-autopairs',
         config = function()
             local autopairs = require 'nvim-autopairs'
-            local cond = require 'nvim-autopairs.conds'
-            autopairs.setup {}
-            -- autopairs.get_rule('"'):with_pair(cond.not_before_regex('"', 1))
+            autopairs.setup {
+                disable_filetype = { "TelescopePrompt", "vim", "clojure", "fennel", "racket", "janet" }
+            }
         end
     },
     { 'tpope/vim-rsi' },
