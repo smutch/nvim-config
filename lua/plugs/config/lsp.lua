@@ -189,7 +189,8 @@ vim.api.nvim_create_autocmd('FileType', {
         end
         local path = "janet-lsp"
         if vim.fn.has('macunix') == 1 then
-            path = vim.trim(vim.fn.system([[brew info janet | rg -A1 Installed | tail -n1 | cut -d' ' -f1]])) .. "/bin/janet-lsp"
+            -- path = vim.trim(vim.fn.system([[brew info janet | rg -A1 Installed | tail -n1 | cut -d' ' -f1]])) .. "/bin/janet-lsp"
+            path = "/opt/homebrew/bin/janet-lsp"
         end
         vim.lsp.start({
             name = 'janet-lsp',
