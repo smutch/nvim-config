@@ -24,7 +24,11 @@ return {
         cmd = "AvanteAsk",
         build = "make",
         opts = {
-            provider = "claude",
+            provider = (function()
+                local provider = require "system".avante_provider
+                if provider == nil then provider = "copilot" end
+                return provider
+            end)(),
         },
         dependencies = {
             "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
