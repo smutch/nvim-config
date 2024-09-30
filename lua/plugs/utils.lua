@@ -242,18 +242,19 @@ return {
             }
         end,
         cmd = { 'NoNeckPain' },
-        keys = {
-            { '<leader>n', '<CMD>NoNeckPain<CR>', desc = "NoNeckPain - toggle" },
-        }
     },
     {
         'MagicDuck/grug-far.nvim',
         opts = {},
-        keys = {
-            { '<leader>s*', function() require('grug-far').grug_far({ prefills = { search = vim.fn.expand("<cword>") } }) end, desc = 'Grug - replace cursor word' },
-            { '<leader>s%', function() require('grug-far').grug_far({ prefills = { flags = vim.fn.expand("%") } }) end,        desc = 'Grug - limit to current file' },
-        },
-        cmd = { 'GrugFar' }
+        cmd = function()
+            vim.api.nvim_create_user_command('GrugFarWord', function()
+                require('grug-far').grug_far({ prefills = { search = vim.fn.expand("<cword>") } })
+            end, { desc = 'Grug - replace current word' })
+            vim.api.nvim_create_user_command('GrugFarCurFile', function()
+                require('grug-far').grug_far({ prefills = { flags = vim.fn.expand("%") } })
+            end, { desc = 'Grug - limit to current file' })
+            return { 'GrugFarWord', 'GrugFarCurFile', 'GrugFar' }
+        end
     },
     {
         'stevearc/overseer.nvim',
@@ -417,5 +418,15 @@ return {
         'stevearc/quicker.nvim',
         event = "FileType qf",
         opts = {},
+    },
+    {
+        "ryoppippi/vim-svelte-inspector",
+        dependencies = {
+            "willothy/flatten.nvim",
+            "lewis6991/fileline.nvim",
+            "nvim-lua/plenary.nvim",
+        },
+        lazy = true,
+        config = true,
     }
 }
