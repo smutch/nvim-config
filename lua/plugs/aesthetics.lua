@@ -5,7 +5,7 @@ return {
         priority = 1000,
         config = function()
             require('nightfox').setup {
-                options = { dim_inactive = false, styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
+                options = { dim_inactive = false, styles = { comments = "italic", keywords = "bold", types = "italic,bold" }, inverse = { match_paren = true } },
                 groups = {
                     nightfox = {
                         -- As with specs and palettes, a specific style's value will be used over the `all`'s value.
@@ -20,12 +20,29 @@ return {
                     },
                 },
             }
+        end,
+        init = function()
             vim.cmd.colorscheme('nightfox')
         end
     },
     {
-        "slugbyte/lackluster.nvim",
+        'jesseleite/nvim-noirbuddy',
+        dependencies = { 'tjdevries/colorbuddy.nvim' },
         lazy = true,
+        -- priority = 1000,
+        opts = {
+            preset = 'minimal',
+            styles = {
+                italic = true,
+                bold = true,
+                underline = true,
+                undercurl = true,
+            },
+            colors = {
+                background = '#181820',
+                primary = '#957FB8',
+            },
+        },
     },
     {
         'nvim-lualine/lualine.nvim',

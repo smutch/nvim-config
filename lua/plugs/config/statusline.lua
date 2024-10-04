@@ -12,29 +12,35 @@ local function theme_colors()
     }
 
     local colorscheme = vim.api.nvim_exec("colorscheme", true)
+
+    local palette
     if string.find(colorscheme, "fox") then
-        local palette = require('nightfox.palette').load(vim.g.colors_name)
-        -- local Color = require("nightfox.lib.color")
-        -- local bg = Color.from_hex(palette.bg1)
-        local bg = palette.bg2
-        if vim.o.background == "light" then
-            bg = palette.bg1
-        end
-        colors = {
-            blue   = palette.blue.base,
-            cyan   = palette.cyan.base,
-            black  = palette.black.base,
-            white  = palette.white.base,
-            red    = palette.red.base,
-            violet = palette.magenta.dim,
-            green  = palette.green.base,
-            grey   = palette.bg3,
-            yellow = palette.yellow.base,
-            fg1 = palette.white.dim,
-            fg2 = palette.yellow.dim,
-            bg1 = bg,
-        }
+        palette = require('nightfox.palette').load(vim.g.colors_name)
+    else
+        palette = require('nightfox.palette').load("nightfox")
     end
+
+    local bg = palette.bg2
+    if string.find(colorscheme, "noirbuddy") then
+        local noirbuddy = require'noirbuddy.colors'.all()
+        bg = noirbuddy.background
+    elseif vim.o.background == "light" then
+        bg = palette.bg1
+    end
+    colors = {
+        blue   = palette.blue.base,
+        cyan   = palette.cyan.base,
+        black  = palette.black.base,
+        white  = palette.white.base,
+        red    = palette.red.base,
+        violet = palette.magenta.dim,
+        green  = palette.green.base,
+        grey   = palette.bg3,
+        yellow = palette.yellow.base,
+        fg1    = palette.white.dim,
+        fg2    = palette.yellow.dim,
+        bg1    = bg,
+    }
 
     return {
         normal = {
@@ -104,9 +110,11 @@ harpoonline.setup({
 
 local colors = theme_colors()
 
+-- local noirbuddy_ll = require'noirbuddy.plugins.lualine'
 require('lualine').setup {
     options = {
         theme = colors,
+        -- theme = noirbuddy_ll.theme,
         component_separators = '|',
         section_separators = { left = '', right = '' },
     },
