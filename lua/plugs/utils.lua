@@ -81,6 +81,16 @@ return {
     },
     { 'uga-rosa/ccc.nvim',      config = true,       ft = { "astro", "html", "css", "scss", "lua", "vim" } },
     {
+        "nvchad/minty",
+        lazy = true,
+        dependencies = { "nvchad/volt", },
+        config = function()
+            vim.api.nvim_create_user_command('Huefy', function() require('minty.huefy').open() end, { desc = 'Minty - huefy' })
+            vim.api.nvim_create_user_command('Shades', function() require('minty.shades').open() end, { desc = 'Minty - shades' })
+        end,
+        cmd = { "Huefy", "Shades" }
+    },
+    {
         "rcarriga/neotest",
         lazy = true,
         dependencies = {

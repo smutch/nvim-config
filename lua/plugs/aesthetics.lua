@@ -1,8 +1,8 @@
 return {
     {
         'EdenEast/nightfox.nvim',
-        lazy = false,
-        priority = 1000,
+        lazy = true,
+        -- priority = 1000,
         config = function()
             require('nightfox').setup {
                 options = { dim_inactive = false, styles = { comments = "italic", keywords = "bold", types = "italic,bold" }, inverse = { match_paren = true } },
@@ -21,15 +21,15 @@ return {
                 },
             }
         end,
-        init = function()
-            vim.cmd.colorscheme('nightfox')
-        end
+        -- init = function()
+        --     vim.cmd.colorscheme('nightfox')
+        -- end
     },
     {
         'jesseleite/nvim-noirbuddy',
         dependencies = { 'tjdevries/colorbuddy.nvim' },
-        lazy = true,
-        -- priority = 1000,
+        lazy = false,
+        priority = 1000,
         opts = {
             preset = 'minimal',
             styles = {
@@ -39,8 +39,9 @@ return {
                 undercurl = true,
             },
             colors = {
-                background = '#181820',
+                background = '#15151c',
                 primary = '#957FB8',
+                diagnostic_error = "#cc002c"
             },
         },
     },

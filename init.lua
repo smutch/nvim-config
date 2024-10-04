@@ -27,7 +27,7 @@ require("lazy").setup("plugs",
             frequency = 3600 * 24 * 7,
         },
         install = {
-            colorscheme = { "nightfox" },
+            colorscheme = { "noirbuddy" },
             missing = true
         }
     }
