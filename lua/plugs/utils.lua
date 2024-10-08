@@ -186,34 +186,39 @@ return {
         end,
     },
     {
-        'hkupty/iron.nvim',
-        cmd = { "IronRepl" },
-        config = function()
-            local iron = require("iron.core")
-
-            iron.setup {
-                config = {
-                    -- Whether a repl should be discarded or not
-                    scratch_repl = true,
-                    repl_definition = {
-                        python = {
-                            -- Can be a table or a function that
-                            -- returns a table
-                            command = { "ipython", "--profile=interactive" }
-                        }
-                    },
-                    -- How the repl window will be displayed
-                    repl_open_cmd = "vertical botright 80 split",
-                },
-                keymaps = {
-                    send_motion = "gz",
-                    visual_send = "gz",
-                    cr = "gZ",
-                },
-                ignore_blank_lines = true,
-            }
-        end
+        "benlubas/molten-nvim",
+        lazy = true,
+        version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+        dependencies = { "willothy/wezterm.nvim" },
+        build = ":UpdateRemotePlugins",
+        init = function()
+            -- these are examples, not defaults. Please see the readme
+            vim.g.molten_image_provider = "wezterm"
+            vim.g.molten_output_win_max_height = 20
+            vim.g.molten_auto_open_output = false
+        end,
+        keys = {
+            { "<localleader>mi", "<cmd>MoltenInit<CR>",                  desc = "molten - initialize",                mode = "n" },
+            { "gz",              "<cmd>MoltenEvaluateOperator<CR>",      desc = "molten - run operator selection",    mode = "n" },
+            { "gZ",              "<cmd>MoltenEvaluateLine<CR>",          desc = "molten - evaluate line",             mode = "n" },
+            { "<localleader>mr", "<cmd>MoltenReevaluateCell<CR>",        desc = "molten - re-evaluate cell",          mode = "n" },
+            { "gz",              "<cmd><C-u>MoltenEvaluateVisual<CR>gv", desc = "molten - evaluate visual selection", mode = "v" },
+            { "<localleader>md", "<cmd>MoltenDelete<CR>",                desc = "molten - delete cell",               mode = "n" },
+            { "<localleader>mh", "<cmd>MoltenHideOutput<CR>",            desc = "molten - hide output",               mode = "n" },
+            { "<localleader>ms", "<cmd>noautocmd MoltenEnterOutput<CR>", desc = "molten - show/enter output",         mode = "n" },
+        },
+        cmd = {
+            "MoltenInit",
+            "MoltenEvaluateOperator",
+            "MoltenEvaluateLine",
+            "MoltenReevaluateCell",
+            "MoltenEvaluateVisual",
+            "MoltenDelete",
+            "MoltenHideOutput",
+            "MoltenEnterOutput",
+        }
     },
+    { "willothy/wezterm.nvim", config = true },
     {
         'mrjones2014/smart-splits.nvim',
         config = true,
@@ -233,7 +238,7 @@ return {
             { '<leader>R',  function() require('smart-splits').start_resize_mode() end, desc = "smart-splits - enter resize mode" },
         }
     },
-    { 'tiagovla/scope.nvim', config = true },
+    { 'tiagovla/scope.nvim',   config = true },
     {
         'shortcuts/no-neck-pain.nvim',
         config = function()
