@@ -20,13 +20,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugs",
-    {
-        checker = {
-            enabled = true,
-            concurrency = 16,
-            frequency = 3600 * 24 * 7,
-        }
-    }
+    vim.tbl_extend(
+        "error",
+        {
+            checker = {
+                enabled = true,
+                concurrency = 16,
+                frequency = 3600 * 24 * 7,
+            }
+        },
+        require "init-vscode"
+    )
 )
 
 vim.api.nvim_create_user_command("Erc", function() vim.cmd("edit ~/.config/nvim/init.lua") end, {})

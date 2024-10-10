@@ -3,7 +3,7 @@
 require 'nvim-treesitter.install'.compilers = { 'gcc' }
 require 'nvim-treesitter.configs'.setup {
     highlight = {
-        enable = true, -- false will disable the whole extension
+        enable = (function() if vim.g.vscode then return false else return true end end)(), -- false will disable the whole extension
         -- disable = { "c", "rust" },  -- list of language that will be disabled
         -- custom_captures = { ["variable"] = "Normal" },
     },
