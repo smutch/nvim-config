@@ -214,7 +214,6 @@ return {
             vim.g.molten_auto_open_output = false
         end
     },
-    { "willothy/wezterm.nvim", config = true },
     {
         'mrjones2014/smart-splits.nvim',
         config = true,

@@ -90,5 +90,6 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-treesitter"
         }
-    }
+    },
+    { "GCBallesteros/jupytext.nvim", opts = {style = "percent"} }
 }
