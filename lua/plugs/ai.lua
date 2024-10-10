@@ -20,7 +20,7 @@ return {
     },
     {
         "yetone/avante.nvim",
-        -- event = "VeryLazy",
+        event = "VeryLazy",
         cmd = "AvanteAsk",
         build = "make",
         opts = {
