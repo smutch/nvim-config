@@ -191,32 +191,28 @@ return {
         version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
         dependencies = { "willothy/wezterm.nvim" },
         build = ":UpdateRemotePlugins",
+        config = function()
+            vim.keymap.set("n", "<localleader>mi", "<cmd>MoltenInit<CR>", { desc = "molten - initialize", silent = true })
+            vim.keymap.set("n", "gz", "<cmd>MoltenEvaluateOperator<CR>",
+                { desc = "molten - run operator selection", silent = true })
+            vim.keymap.set("n", "gZ", "<cmd>MoltenEvaluateLine<CR>", { desc = "molten - evaluate line", silent = true })
+            vim.keymap.set("n", "<localleader>mr", "<cmd>MoltenReevaluateCell<CR>",
+                { desc = "molten - re-evaluate cell", silent = true })
+            vim.keymap.set("v", "gz", "<cmd><C-u>MoltenEvaluateVisual<CR>gv",
+                { desc = "molten - evaluate visual selection", silent = true })
+            vim.keymap.set("n", "<localleader>md", "<cmd>MoltenDelete<CR>",
+                { desc = "molten - delete cell", silent = true })
+            vim.keymap.set("n", "<localleader>mh", "<cmd>MoltenHideOutput<CR>",
+                { desc = "molten - hide output", silent = true })
+            vim.keymap.set("n", "<localleader>ms", "<cmd>noautocmd MoltenEnterOutput<CR>",
+                { desc = "molten - show/enter output", silent = true })
+        end,
         init = function()
             -- these are examples, not defaults. Please see the readme
             vim.g.molten_image_provider = "wezterm"
             vim.g.molten_output_win_max_height = 20
             vim.g.molten_auto_open_output = false
-        end,
-        keys = {
-            { "<localleader>mi", "<cmd>MoltenInit<CR>",                  desc = "molten - initialize",                mode = "n" },
-            { "gz",              "<cmd>MoltenEvaluateOperator<CR>",      desc = "molten - run operator selection",    mode = "n" },
-            { "gZ",              "<cmd>MoltenEvaluateLine<CR>",          desc = "molten - evaluate line",             mode = "n" },
-            { "<localleader>mr", "<cmd>MoltenReevaluateCell<CR>",        desc = "molten - re-evaluate cell",          mode = "n" },
-            { "gz",              "<cmd><C-u>MoltenEvaluateVisual<CR>gv", desc = "molten - evaluate visual selection", mode = "v" },
-            { "<localleader>md", "<cmd>MoltenDelete<CR>",                desc = "molten - delete cell",               mode = "n" },
-            { "<localleader>mh", "<cmd>MoltenHideOutput<CR>",            desc = "molten - hide output",               mode = "n" },
-            { "<localleader>ms", "<cmd>noautocmd MoltenEnterOutput<CR>", desc = "molten - show/enter output",         mode = "n" },
-        },
-        cmd = {
-            "MoltenInit",
-            "MoltenEvaluateOperator",
-            "MoltenEvaluateLine",
-            "MoltenReevaluateCell",
-            "MoltenEvaluateVisual",
-            "MoltenDelete",
-            "MoltenHideOutput",
-            "MoltenEnterOutput",
-        }
+        end
     },
     { "willothy/wezterm.nvim", config = true },
     {
