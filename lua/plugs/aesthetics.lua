@@ -1,8 +1,8 @@
 return {
     {
         'EdenEast/nightfox.nvim',
-        lazy = false,
-        priority = 1000,
+        -- lazy = false,
+        -- priority = 1000,
         config = function()
             require('nightfox').setup {
                 options = { dim_inactive = false, styles = { comments = "italic", keywords = "bold", types = "italic,bold" } },
@@ -20,12 +20,46 @@ return {
                     },
                 },
             }
-            vim.cmd.colorscheme('nightfox')
+            -- vim.cmd.colorscheme('nightfox')
+        end
+    },
+    {
+        'rose-pine/neovim',
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require "rose-pine".setup {
+                styles = {
+                    bold = true,
+                    italic = false,
+                    transparency = false,
+                },
+                before_highlight = function(group, highlight, palette)
+                    -- Disable all undercurls
+                    -- print(group, highlight, palette)
+                    if string.match(string.lower(group), "comment") then
+                        highlight.italic = true
+                    end
+                end,
+            }
+            vim.cmd.colorscheme('rose-pine-moon')
+
+            -- for some reason rose-pine sets this and we want it back to 3!
+            vim.o.laststatus = 3
         end
     },
     {
         "slugbyte/lackluster.nvim",
-        lazy = true,
+        -- lazy = false,
+        -- priority = 1000,
+        config = function()
+            require "lackluster".setup {
+                tweak_syntax = {
+                    comment = "#4c4c4c",
+                }
+            }
+            -- vim.cmd.colorscheme('lackluster-mint')
+        end
     },
     {
         'nvim-lualine/lualine.nvim',

@@ -30,9 +30,9 @@ local function theme_colors()
             green  = palette.green.base,
             grey   = palette.bg3,
             yellow = palette.yellow.base,
-            fg1 = palette.white.dim,
-            fg2 = palette.yellow.dim,
-            bg1 = bg,
+            fg1    = palette.white.dim,
+            fg2    = palette.yellow.dim,
+            bg1    = bg,
         }
     end
 
@@ -106,7 +106,13 @@ local colors = theme_colors()
 
 require('lualine').setup {
     options = {
-        theme = colors,
+        theme = (function()
+            if string.find(vim.g.colors_name, "rose-") then
+                return 'rose-pine-alt'
+            else
+                return colors
+            end
+        end)(),
         component_separators = '|',
         section_separators = { left = '', right = '' },
     },
