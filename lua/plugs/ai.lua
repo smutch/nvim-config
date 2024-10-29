@@ -65,7 +65,7 @@ return {
             { "<M-a>",          "<cmd>CodeCompanionActions<cr>",     mode = "v" },
             { "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", mode = "n" },
             { "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", mode = "v" },
-            { "ga",             "<cmd>CodeCompanionChat Add<cr>",    mode = "v" },
+            { "<LocalLeader>p", "<cmd>CodeCompanionChat Add<cr>",    mode = "v" },
         }
     }
 }

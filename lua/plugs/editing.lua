@@ -141,16 +141,17 @@ return {
             local set = vim.keymap.set
 
             -- Add or skip cursor above/below the main cursor.
-            set({ "n", "v" }, "<S-up>", function() mc.lineAddCursor(-1) end)
-            set({ "n", "v" }, "<S-down>", function() mc.lineAddCursor(1) end)
-            set({ "n", "v" }, "<up>", function() mc.lineSkipCursor(-1) end)
-            set({ "n", "v" }, "<down>", function() mc.lineSkipCursor(1) end)
+            set({ "n", "v" }, "g<up>", function() mc.lineAddCursor(-1) end)
+            set({ "n", "v" }, "g<down>", function() mc.lineAddCursor(1) end)
+            set({ "n", "v" }, "g<S-up>", function() mc.lineSkipCursor(-1) end)
+            set({ "n", "v" }, "g<S-down>", function() mc.lineSkipCursor(1) end)
 
             -- Add or skip adding a new cursor by matching word/selection
-            set({ "n", "v" }, "<M-d>", function() mc.matchAddCursor(1) end)
-            set({ "n", "v" }, "<M-s>", function() mc.matchSkipCursor(1) end)
-            set({ "n", "v" }, "<M-D>", function() mc.matchAddCursor(-1) end)
-            set({ "n", "v" }, "<M-S>", function() mc.matchSkipCursor(-1) end)
+            set({ "n", "v" }, "gl", function() mc.matchAddCursor(1) end)
+            set({ "n", "v" }, "g>", function() mc.matchSkipCursor(1) end)
+            set({ "n", "v" }, "gL", function() mc.matchAddCursor(-1) end)
+            set({ "n", "v" }, "g<", function() mc.matchSkipCursor(-1) end)
+            set({ "n", "v" }, "ga", function() mc.matchAllAddCursors() end)
 
             -- You can also add cursors with any motion you prefer:
             -- set("n", "<right>", function()
@@ -161,11 +162,11 @@ return {
             -- end)
 
             -- Rotate the main cursor.
-            set({ "n", "v" }, "<S-left>", mc.nextCursor)
-            set({ "n", "v" }, "<S-right>", mc.prevCursor)
+            set({ "n", "v" }, "g<left>", mc.nextCursor)
+            set({ "n", "v" }, "g<right>", mc.prevCursor)
 
             -- Delete the main cursor.
-            set({ "n", "v" }, "<S-x>", mc.deleteCursor)
+            set({ "n", "v" }, "<c-x>", mc.deleteCursor)
 
             -- Add and remove cursors with control + left click.
             set("n", "<c-leftmouse>", mc.handleMouse)
@@ -204,7 +205,7 @@ return {
             set("v", "A", mc.appendVisual)
 
             -- match new cursors within visual selections by regex.
-            set("v", "M", mc.matchCursors)
+            set("v", "ga", mc.matchCursors)
 
             -- -- Rotate visual selection contents.
             -- set("v", "<leader>{",
