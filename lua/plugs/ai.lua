@@ -18,25 +18,6 @@ return {
             })
         end
     },
-    -- {
-    --     "yetone/avante.nvim",
-    --     event = "VeryLazy",
-    --     cmd = "AvanteAsk",
-    --     build = "make",
-    --     opts = {
-    --         provider = (function()
-    --             local provider = require "system".avante_provider
-    --             if provider == nil then provider = "copilot" end
-    --             return provider
-    --         end)(),
-    --     },
-    --     dependencies = {
-    --         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    --         "stevearc/dressing.nvim",
-    --         "nvim-lua/plenary.nvim",
-    --         "MunifTanjim/nui.nvim",
-    --     },
-    -- },
     {
         "olimorris/codecompanion.nvim",
         event = "VeryLazy",
@@ -51,21 +32,38 @@ return {
             require "codecompanion".setup {
                 strategies = {
                     chat = {
-                        adapter = "copilot",
+                        adapter = "anthropic",
                     },
                     inline = {
                         adapter = "copilot",
                     },
                 },
+                adapters = {
+                    anthropic = function()
+                        return require("codecompanion.adapters").extend("anthropic", {
+                            env = {
+                                api_key = require "system".anthropic_api_key,
+                            },
+                        })
+                    end,
+                    -- Doesn't work yet!
+                    -- copilot = function()
+                    --     return require("codecompanion.adapters").extend("copilot", {
+                    --         env = {
+                    --             model = "claude-3.5-sonnet"
+                    --         },
+                    --     })
+                    -- end,
+                },
             }
             vim.cmd([[cab cc CodeCompanion]])
         end,
         keys = {
-            { "<M-a>",          "<cmd>CodeCompanionActions<cr>",     mode = "n" },
-            { "<M-a>",          "<cmd>CodeCompanionActions<cr>",     mode = "v" },
-            { "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", mode = "n" },
-            { "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", mode = "v" },
-            { "<LocalLeader>p", "<cmd>CodeCompanionChat Add<cr>",    mode = "v" },
+            { "<M-c>",          "<cmd>CodeCompanionActions<cr>",     mode = "n" },
+            { "<M-c>",          "<cmd>CodeCompanionActions<cr>",     mode = "v" },
+            { "<LocalLeader>c", "<cmd>CodeCompanionChat Toggle<cr>", mode = "n" },
+            { "<LocalLeader>c", "<cmd>CodeCompanionChat Toggle<cr>", mode = "v" },
+            { "<LocalLeader>a", "<cmd>CodeCompanionChat Add<cr>",    mode = "v" },
         }
     }
 }
