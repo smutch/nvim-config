@@ -32,7 +32,7 @@ return {
             require "codecompanion".setup {
                 strategies = {
                     chat = {
-                        adapter = "anthropic",
+                        adapter = "copilot",  -- copilot defaults to claude-sonent now! 🎉 
                     },
                     inline = {
                         adapter = "copilot",
@@ -46,14 +46,6 @@ return {
                             },
                         })
                     end,
-                    -- Doesn't work yet!
-                    -- copilot = function()
-                    --     return require("codecompanion.adapters").extend("copilot", {
-                    --         env = {
-                    --             model = "claude-3.5-sonnet"
-                    --         },
-                    --     })
-                    -- end,
                 },
             }
             vim.cmd([[cab cc CodeCompanion]])
