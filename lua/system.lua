@@ -1,0 +1,2 @@
+local G = {}
+return G
