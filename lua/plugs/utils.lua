@@ -428,5 +428,30 @@ return {
         },
         lazy = true,
         config = true,
+    },
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            bigfile = { enabled = true },
+            notifier = {
+                enabled = true,
+                top_down = false,
+            },
+            quickfile = { enabled = true },
+            statuscolumn = { enabled = true },
+            styles = {
+                notification = {
+                    style = "minimal",
+                    wo = { wrap = true } -- Wrap notifications
+                }
+            },
+        },
+        keys = {
+            { "<leader>lm", function() Snacks.rename() end,                desc = "Rename File" },
+            { "<leader>nh", function() Snacks.notifier.show_history() end, desc = "(N)otify (h)istory" },
+            { "<leader>nc", function() Snacks.notifier.hide() end,         desc = "(N)otify (c)lear" },
+        },
     }
 }
