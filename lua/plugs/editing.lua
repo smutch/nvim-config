@@ -120,11 +120,11 @@ return {
             set({ "n", "v" }, "g<S-down>", function() mc.lineSkipCursor(1) end)
 
             -- Add or skip adding a new cursor by matching word/selection
-            set({ "n", "v" }, "gl", function() mc.matchAddCursor(1) end)
-            set({ "n", "v" }, "g>", function() mc.matchSkipCursor(1) end)
-            set({ "n", "v" }, "gL", function() mc.matchAddCursor(-1) end)
-            set({ "n", "v" }, "g<", function() mc.matchSkipCursor(-1) end)
-            set({ "n", "v" }, "ga", function() mc.matchAllAddCursors() end)
+            set({ "n", "v" }, "<M-d>", function() mc.matchAddCursor(1) end)
+            set({ "n", "v" }, "<M->>", function() mc.matchSkipCursor(1) end)
+            set({ "n", "v" }, "<M-S-d>", function() mc.matchAddCursor(-1) end)
+            set({ "n", "v" }, "<M-<>", function() mc.matchSkipCursor(-1) end)
+            set({ "n", "v" }, "<M-*>", function() mc.matchAllAddCursors() end)
 
             -- You can also add cursors with any motion you prefer:
             -- set("n", "<right>", function()
@@ -178,7 +178,7 @@ return {
             set("v", "A", mc.appendVisual)
 
             -- match new cursors within visual selections by regex.
-            set("v", "ga", mc.matchCursors)
+            set("v", "<M-/>", mc.matchCursors)
 
             -- -- Rotate visual selection contents.
             -- set("v", "<leader>{",
