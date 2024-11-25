@@ -106,15 +106,6 @@ return {
         end
     },
     {
-        'rcarriga/nvim-notify',
-        config = function()
-            require 'notify'.setup { top_down = false }
-        end,
-        keys = {
-            { "<leader><bs>", function() require("notify").dismiss {} end, desc = "Dismiss notification" },
-        },
-    },
-    {
         'folke/noice.nvim',
         depends = { "MunifTanjim/nui.nvim" },
         lazy = false,
