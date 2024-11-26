@@ -21,3 +21,4 @@ lua/.luarc.json
 /pyproject.toml
 /.python-version
 /uv.lock
+/lua/system.lua
