@@ -67,7 +67,6 @@ return {
             }
         end
     },
-    { 'sindrets/diffview.nvim', cmd = "DiffviewOpen" },
     {
         'stevearc/oil.nvim',
         config = function()
@@ -79,7 +78,7 @@ return {
             vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         end
     },
-    { 'uga-rosa/ccc.nvim',      config = true,       ft = { "astro", "html", "css", "scss", "lua", "vim" } },
+    { 'uga-rosa/ccc.nvim',   config = true, ft = { "astro", "html", "css", "scss", "lua", "vim" } },
     {
         "rcarriga/neotest",
         lazy = true,
@@ -186,33 +185,24 @@ return {
         end,
     },
     {
-        'hkupty/iron.nvim',
-        cmd = { "IronRepl" },
-        config = function()
-            local iron = require("iron.core")
-
-            iron.setup {
-                config = {
-                    -- Whether a repl should be discarded or not
-                    scratch_repl = true,
-                    repl_definition = {
-                        python = {
-                            -- Can be a table or a function that
-                            -- returns a table
-                            command = { "ipython", "--profile=interactive" }
-                        }
-                    },
-                    -- How the repl window will be displayed
-                    repl_open_cmd = "vertical botright 80 split",
-                },
-                keymaps = {
-                    send_motion = "gz",
-                    visual_send = "gz",
-                    cr = "gZ",
-                },
-                ignore_blank_lines = true,
-            }
-        end
+        "benlubas/molten-nvim",
+        version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+        build = ":UpdateRemotePlugins",
+        init = function()
+            vim.g.molten_output_win_max_height = 12
+        end,
+        keys = {
+            { "<localleader>mi", "<cmd>MoltenInit<CR>",                  mode = "n", desc = "Molten - init" },
+            { "<localleader>me", "<cmd>MoltenEvaluateOperator<CR>",      mode = "n", desc = "Molten - eval op" },
+            { "<localleader>mr", "<cmd>MoltenReevaluateCell<CR>",        mode = "n", desc = "Molten - reeval cell" },
+            { "<localleader>mr", "<cmd><C-u>MoltenEvaluateVisual<CR>gv", mode = "v", desc = "Molten - eval visual" },
+            { "<localleader>ms", "<cmd>noautocmd MoltenEnterOutput<CR>", mode = "n", desc = "Molten - enter output" },
+            { "<localleader>mh", "<cmd>MoltenHideOutput<CR>",            mode = "n", desc = "Molten - hide output" },
+            { "<localleader>md", "<cmd>MoltenDelete<CR>",                mode = "n", desc = "Molten - delete" },
+        },
+        cmd = {
+            "MoltenInit",
+        },
     },
     {
         'mrjones2014/smart-splits.nvim',
@@ -233,7 +223,7 @@ return {
             { '<leader>R',  function() require('smart-splits').start_resize_mode() end, desc = "smart-splits - enter resize mode" },
         }
     },
-    { 'tiagovla/scope.nvim',        config = true },
+    { 'tiagovla/scope.nvim', config = true },
     {
         'shortcuts/no-neck-pain.nvim',
         config = function()
@@ -495,4 +485,8 @@ return {
             -- see below for full list of options 👇
         },
     },
+    {
+        "sphamba/smear-cursor.nvim",
+        opts = {},
+    }
 }
