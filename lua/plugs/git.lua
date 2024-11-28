@@ -31,4 +31,5 @@ return {
         end
     },
     { 'f-person/git-blame.nvim', config = {enabled = false} },
+    { 'sindrets/diffview.nvim', cmd = "DiffviewOpen" },
 }
