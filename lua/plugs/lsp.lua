@@ -100,7 +100,6 @@ return {
     -- }
     {
         "rachartier/tiny-inline-diagnostic.nvim",
-        event = "VeryLazy",
         opts = {
             hi = {
                 background = "#1d2939", -- Can be a highlight or a hexadecimal color (#RRGGBB)
