@@ -21,10 +21,10 @@ return {
                 return false
             end
 
-            vim.keymap.set('i', '<C-k>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
-            vim.keymap.set('s', '<C-k>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
-            vim.keymap.set('i', '<C-j>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
-            vim.keymap.set('s', '<C-j>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
+            vim.keymap.set('i', '<A-k>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
+            vim.keymap.set('s', '<A-k>', '<cmd>call v:lua.luasnip_map_forward()<cr>')
+            vim.keymap.set('i', '<A-j>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
+            vim.keymap.set('s', '<A-j>', '<cmd>call v:lua.luasnip_map_backward()<cr>')
             vim.api.nvim_create_user_command("LuaSnipEdit", require("luasnip.loaders").edit_snippet_files, {})
 
             require("luasnip.loaders.from_vscode").lazy_load()
