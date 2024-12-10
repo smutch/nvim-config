@@ -60,7 +60,6 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "g/", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "<leader>ld", "<cmd>Trouble document_diagnostics<cr>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<localleader>f", "<cmd>lua vim.lsp.buf.format()<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true, buffer = 0 })
     if client.name ~= "rust_analyzer" then
         vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true, buffer = 0 })
@@ -176,7 +175,15 @@ require("mason-lspconfig").setup_handlers {
     end,
 
     -- Rustacean.nvim demands that we don't set up the LSP server here...
-    ["rust_analyzer"] = function() end
+    ["rust_analyzer"] = function() end,
+
+    ["ts_ls"] = function()
+        require 'lspconfig'.ts_ls.setup {
+            filetypes = { "typescript", "javascript", "js", "ojs" },
+            on_attach = on_attach,
+            capabilities = capabilities,
+        }
+    end
 }
 
 local augrp = vim.api.nvim_create_augroup("LSP", {})
@@ -208,41 +215,25 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
-local null_ls = require("null-ls")
-null_ls.setup {
-    sources = {
-        -- null_ls.builtins.formatting.black.with {
-        --     -- command = h.python_prefix .. 'black',
-        --     command = 'black',
-        --     extra_args = function(params)
-        --         if not h.file_exists('pyproject.toml') then
-        --             return { "-l", "88" }
-        --         else
-        --             return {}
-        --         end
-        --     end
-        -- },
-        -- null_ls.builtins.formatting.isort.with {
-        --     -- command = h.python_prefix .. '/bin/isort'
-        --     command = 'isort'
-        -- },
-        null_ls.builtins.formatting.prettier.with({
-            filetypes = { "html", "json", "yaml", "markdown" },
-            args = { "--print-width=1000" }
-        }),
-        null_ls.builtins.formatting.nimpretty,
-        null_ls.builtins.formatting.ocamlformat,
-        null_ls.builtins.formatting.shfmt,
-        -- null_ls.builtins.diagnostics.ruff.with({
-        --     extra_args = { "--line-length=88" }
-        -- }),
-        -- null_ls.builtins.diagnostics.mypy.with({
-        --     extra_args = { "--install-types" }
-        -- }),
+require 'conform'.setup {
+    formatters_by_ft = {
+        lua = { "stylua" },
+        -- Conform will run multiple formatters sequentially
+        python = { "ruff_format" },
+        -- You can customize some of the format options for the filetype (:help conform.format)
+        rust = { "rustfmt", lsp_format = "fallback" },
+        -- Conform will run the first available formatter
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        html = { "prettierd", "prettier", stop_after_first = true },
+        json = { "prettierd", "prettier", stop_after_first = true },
+        yaml = { "prettierd", "prettier", stop_after_first = true },
+        markdown = { "prettierd", "prettier", stop_after_first = true },
+        bash = { "shfmt" },
+        sh = { "shfmt" },
+        quarto = { 'injected' },
     },
-    on_attach = on_attach,
-    fallback_severity = vim.diagnostic.severity.HINT
 }
+vim.keymap.set("n", "<localleader>f", "<cmd>lua require('conform').format()<CR>", { silent = true })
 
 M.on_attach = on_attach
 return M
