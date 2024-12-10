@@ -31,7 +31,6 @@ require 'nvim-treesitter.configs'.setup {
         "markdown_inline",
         "regex",
         "sql",
-        "latex",
         "typst"
     },
     incremental_selection = { enable = false },
