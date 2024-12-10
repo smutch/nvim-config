@@ -74,37 +74,37 @@ return {
             })
         end
     },
-    {
-        "shellRaining/hlchunk.nvim",
-        event = { "UIEnter" },
-        config = function()
-            local hlchunk = require "hlchunk"
-            local ft = require "hlchunk.utils.filetype"
-            for _, t in pairs({ "oil", "fugitive" }) do
-                ft.exclude_filetypes[t] = true
-            end
-            hlchunk.setup({
-                chunk = {
-                    enable = true,
-                    use_treesitter = true,
-                    chars = {
-                        horizontal_line = "━",
-                        vertical_line = "┃",
-                        left_top = "┏",
-                        left_bottom = "┗",
-                        right_arrow = "━",
-                    },
-                },
-                blank = {
-                    enable = false,
-                },
-                line_num = {
-                    enable = false,
-                    use_treesitter = true,
-                },
-            })
-        end
-    },
+    -- {
+    --     "shellRaining/hlchunk.nvim",
+    --     event = { "UIEnter" },
+    --     config = function()
+    --         local hlchunk = require "hlchunk"
+    --         local ft = require "hlchunk.utils.filetype"
+    --         for _, t in pairs({ "oil", "fugitive" }) do
+    --             ft.exclude_filetypes[t] = true
+    --         end
+    --         hlchunk.setup({
+    --             chunk = {
+    --                 enable = true,
+    --                 use_treesitter = true,
+    --                 chars = {
+    --                     horizontal_line = "━",
+    --                     vertical_line = "┃",
+    --                     left_top = "┏",
+    --                     left_bottom = "┗",
+    --                     right_arrow = "━",
+    --                 },
+    --             },
+    --             blank = {
+    --                 enable = false,
+    --             },
+    --             line_num = {
+    --                 enable = false,
+    --                 use_treesitter = true,
+    --             },
+    --         })
+    --     end
+    -- },
     {
         'folke/noice.nvim',
         depends = { "MunifTanjim/nui.nvim" },
