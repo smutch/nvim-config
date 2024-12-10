@@ -233,7 +233,7 @@ require 'conform'.setup {
         quarto = { 'injected' },
     },
 }
-vim.keymap.set("n", "<localleader>f", "<cmd>lua require('conform').format()<CR>", { silent = true, buffer = 0 })
+vim.keymap.set("n", "<localleader>f", "<cmd>lua require('conform').format()<CR>", { silent = true })
 
 M.on_attach = on_attach
 return M
