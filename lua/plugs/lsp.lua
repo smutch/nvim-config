@@ -34,6 +34,7 @@ return {
             require 'plugs.config.lsp'
         end
     },
+    { 'nvimtools/none-ls.nvim' },
     {
         'kosayoda/nvim-lightbulb',
         config = function()
@@ -99,10 +100,7 @@ return {
     -- }
     {
         "rachartier/tiny-inline-diagnostic.nvim",
-        event = "VeryLazy",
-        proiority = 1000,
         opts = {
-            preset = "modern",
             hi = {
                 background = "#1d2939", -- Can be a highlight or a hexadecimal color (#RRGGBB)
             }
@@ -110,9 +108,5 @@ return {
         keys = {
             { "<leader>lv", function() require('tiny-inline-diagnostic').toggle() end, desc = "Toggle (v)irtual text diagnostics" },
         },
-    },
-    {
-        'stevearc/conform.nvim',
     }
-
 }

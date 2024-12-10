@@ -1,5 +1,5 @@
 return {
-    { 'adamclaxon/taskpaper.vim',    ft = { 'taskpaper', 'tp' } },
+    { 'adamclaxon/taskpaper.vim', ft = { 'taskpaper', 'tp' } },
     {
         'lervag/vimtex',
         ft = { 'tex' },
@@ -55,7 +55,7 @@ return {
             require 'quarto'.setup {
                 lspFeatures = {
                     enabled = true,
-                    languages = { 'r', 'python', 'julia', 'javascript' },
+                    languages = { 'r', 'python', 'julia' },
                     diagnostics = {
                         enabled = true,
                         triggers = { "BufWrite" }
@@ -76,16 +76,9 @@ return {
             vim.keymap.set("n", "<localleader>qA", runner.run_all, { desc = "run all cells", silent = true })
             vim.keymap.set("n", "<localleader>ql", runner.run_line, { desc = "run line", silent = true })
             vim.keymap.set("v", "gz", runner.run_range, { desc = "run visual range", silent = true })
-            vim.keymap.set('n', '<localleader>qp', require 'quarto'.quartoPreview, { desc = "quarto preview", silent = true })
             vim.keymap.set("n", "<localleader>QA", function()
                 runner.run_all(true)
             end, { desc = "run all cells of all languages", silent = true })
-
-            vim.filetype.add {
-                extension = {
-                    ojs = 'javascript',
-                },
-            }
         end,
         cmd = { "QuartoPreview", "QuartoActivate" }
     },
@@ -124,5 +117,5 @@ return {
             "nvim-treesitter/nvim-treesitter"
         }
     },
-    { "GCBallesteros/jupytext.nvim", opts = { style = "percent" } }
+    { "GCBallesteros/jupytext.nvim", opts = {style = "percent"} }
 }

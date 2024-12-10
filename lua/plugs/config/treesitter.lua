@@ -28,11 +28,7 @@ require 'nvim-treesitter.configs'.setup {
         "rst",
         "comment",
         "diff",
-        "markdown_inline",
-        "regex",
-        "sql",
-        "latex",
-        "typst"
+        "markdown_inline"
     },
     incremental_selection = { enable = false },
     refactor = {
