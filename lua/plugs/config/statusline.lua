@@ -130,7 +130,8 @@ require('lualine').setup {
                 symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰨹 ' },
             },
             { harpoonline.format },
-            { "overseer" }
+            { "overseer" },
+            { "macro_recording", "%S" }
         },
         lualine_c = { { '%=', separator = '' }, 'filename' },
         lualine_x = {},
