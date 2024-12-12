@@ -500,9 +500,10 @@ return {
             bufdelete = { enabled = true },
             indent = {
                 enabled = true,
-                indent = { only_scope = true },
+                indent = { only_scope = true, only_current = true },
                 chunk = {
                     enabled = true,
+                    only_current = true,
                     char = {
                         horizontal = "━",
                         vertical = "┃",
