@@ -113,6 +113,7 @@ return {
         end,
     },
     {
+        -- TODO: Replace with snacks
         "folke/zen-mode.nvim",
         cmd = "ZenMode",
         config = function()
@@ -500,7 +501,11 @@ return {
             bufdelete = { enabled = true },
             indent = {
                 enabled = true,
-                indent = { only_scope = true, only_current = true },
+                indent = {
+                    enabled = false,
+                    only_scope = true,
+                    only_current = true,
+                },
                 chunk = {
                     enabled = true,
                     only_current = true,
