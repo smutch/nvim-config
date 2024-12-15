@@ -2,7 +2,7 @@ vim.env.LAUNCHED_FROM_NVIM = 1
 vim.env.NVIM_LISTEN_ADDRESS = vim.v.servername
 
 local term_augroup = vim.api.nvim_create_augroup("MyTerm", {})
-vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter", "TermOpen" }, {
+vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
     pattern = { [[term://*]] },
     group = term_augroup,
     callback = function()
