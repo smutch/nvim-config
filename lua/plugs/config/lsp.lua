@@ -64,20 +64,18 @@ local on_attach = function(client, bufnr)
     if client.name ~= "rust_analyzer" then
         vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true, buffer = 0 })
     else
-        vim.keymap.set("n", "K", function() vim.cmd.RustLsp { 'hover', 'actions' } end,
-            { noremap = true, silent = true, buffer = bufnr })
-        vim.keymap.set("n", "<leader>le", function() vim.cmd.RustLsp('explainError') end,
-            { noremap = true, silent = true, buffer = bufnr })
+        vim.keymap.set("n", "K", function()
+            vim.cmd.RustLsp({ "hover", "actions" })
+        end, { noremap = true, silent = true, buffer = bufnr })
+        vim.keymap.set("n", "<leader>le", function()
+            vim.cmd.RustLsp("explainError")
+        end, { noremap = true, silent = true, buffer = bufnr })
     end
 
-    vim.api.nvim_command(
-        'call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticSignError"})')
-    vim.api.nvim_command(
-        'call sign_define("DiagnosticSignWarn", {"text" : "", "texthl" : "DiagnosticSignWarn"})')
-    vim.api.nvim_command(
-        'call sign_define("DiagnosticSignInfo", {"text" : "", "texthl" : "DiagnosticSignInfo"})')
-    vim.api.nvim_command(
-        'call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticSignHint"})')
+    vim.api.nvim_command('call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticSignError"})')
+    vim.api.nvim_command('call sign_define("DiagnosticSignWarn", {"text" : "", "texthl" : "DiagnosticSignWarn"})')
+    vim.api.nvim_command('call sign_define("DiagnosticSignInfo", {"text" : "", "texthl" : "DiagnosticSignInfo"})')
+    vim.api.nvim_command('call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticSignHint"})')
 
     vim.g.lsp_diagnostic_sign_priority = 100
 
@@ -91,31 +89,31 @@ local on_attach = function(client, bufnr)
     end
 
     if client.server_capabilities.documentSymbolProvider then
-        require "nvim-navic".attach(client, bufnr)
+        require("nvim-navic").attach(client, bufnr)
     end
 end
 
-local capabilities = require('blink.cmp').get_lsp_capabilities()
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 -- nvim-ufo
 capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
-require("mason-lspconfig").setup_handlers {
+require("mason-lspconfig").setup_handlers({
     function(server_name) -- default handler (optional)
-        require("lspconfig")[server_name].setup {
+        require("lspconfig")[server_name].setup({
             on_attach = on_attach,
             capabilities = capabilities,
-        }
+        })
     end,
 
     ["basedpyright"] = function()
-        require("lspconfig").basedpyright.setup {
+        require("lspconfig").basedpyright.setup({
             on_attach = on_attach,
             capabilities = capabilities,
             settings = {
-                basedpyright = { analysis = { typeCheckingMode = "standard" }, },
-            }
-        }
+                basedpyright = { analysis = { typeCheckingMode = "standard" } },
+            },
+        })
     end,
 
     ["ruff"] = function()
@@ -128,85 +126,97 @@ require("mason-lspconfig").setup_handlers {
     end,
 
     ["lua_ls"] = function()
-        require("lspconfig").lua_ls.setup {
+        require("lspconfig").lua_ls.setup({
             on_attach = on_attach,
             capabilities = capabilities,
-            diagnostics = { globals = { 'vim' } },
+            diagnostics = { globals = { "vim" } },
             workspace = { preloadFileSize = 500 },
-            format = { enable = false }
-        }
+            format = { enable = false },
+        })
     end,
 
     ["julials"] = function()
-        require "lspconfig".julials.setup {
+        require("lspconfig").julials.setup({
             on_attach = on_attach,
             capabilities = capabilities,
             settings = {
                 julia = {
-                    environmentPath = "./"
-                }
-            }
-        }
+                    environmentPath = "./",
+                },
+            },
+        })
     end,
 
     ["typst_lsp"] = function()
-        require "lspconfig".typst_lsp.setup {
+        require("lspconfig").typst_lsp.setup({
             on_attach = on_attach,
             capabilities = capabilities,
             settings = {
-                exportPdf = "onSave" -- Choose onType, onSave or never.
-            }
-        }
+                exportPdf = "onSave", -- Choose onType, onSave or never.
+            },
+        })
     end,
 
     ["hls"] = function()
-        require "lspconfig".hls.setup {
+        require("lspconfig").hls.setup({
             on_attach = on_attach,
             capabilities = capabilities,
-            filetypes = { 'haskell', 'lhaskell', 'cabal' },
-        }
+            filetypes = { "haskell", "lhaskell", "cabal" },
+        })
     end,
 
     ["emmet_language_server"] = function()
-        require 'lspconfig'.emmet_language_server.setup {
-            filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact", "astro" },
+        require("lspconfig").emmet_language_server.setup({
+            filetypes = {
+                "css",
+                "eruby",
+                "html",
+                "javascript",
+                "javascriptreact",
+                "less",
+                "sass",
+                "scss",
+                "pug",
+                "typescriptreact",
+                "astro",
+            },
             on_attach = on_attach,
             capabilities = capabilities,
-        }
+        })
     end,
 
     -- Rustacean.nvim demands that we don't set up the LSP server here...
     ["rust_analyzer"] = function() end,
 
     ["ts_ls"] = function()
-        require 'lspconfig'.ts_ls.setup {
+        require("lspconfig").ts_ls.setup({
             filetypes = { "typescript", "javascript", "js", "ojs" },
             on_attach = on_attach,
             capabilities = capabilities,
-        }
-    end
-}
+        })
+    end,
+})
 
 local augrp = vim.api.nvim_create_augroup("LSP", {})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'janet' },
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "janet" },
     group = augrp,
     callback = function(ev)
-        if string.sub(vim.fn.expand('%'), 1, string.len("conjure-log")) == "conjure-log" then
+        if string.sub(vim.fn.expand("%"), 1, string.len("conjure-log")) == "conjure-log" then
             return
         end
         local path = "janet-lsp"
-        if vim.fn.has('macunix') == 1 then
+        if vim.fn.has("macunix") == 1 then
             -- path = vim.trim(vim.fn.system([[brew info janet | rg -A1 Installed | tail -n1 | cut -d' ' -f1]])) .. "/bin/janet-lsp"
             path = "/opt/homebrew/bin/janet-lsp"
         end
         vim.lsp.start({
-            name = 'janet-lsp',
+            name = "janet-lsp",
             cmd = { path },
             root_dir = (function()
-                local root = vim.fs.root(ev.buf, { 'project.janet' })
+                local root = vim.fs.root(ev.buf, { "project.janet" })
                 if not root then
-                    root = vim.fs.dirname(vim.fn.expand('%:p'))
+                    root = vim.fs.dirname(vim.fn.expand("%:p"))
                 end
                 return root
             end)(),
@@ -216,13 +226,16 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
-require 'conform'.setup {
+require("conform").setup({
+    default_format_opts = {
+        lsp_format = "fallback",
+    },
     formatters_by_ft = {
         lua = { "stylua" },
         -- Conform will run multiple formatters sequentially
         python = { "ruff_format" },
         -- You can customize some of the format options for the filetype (:help conform.format)
-        rust = { "rustfmt", lsp_format = "fallback" },
+        rust = { "rustfmt" },
         -- Conform will run the first available formatter
         javascript = { "prettierd", "prettier", stop_after_first = true },
         html = { "prettierd", "prettier", stop_after_first = true },
@@ -231,9 +244,9 @@ require 'conform'.setup {
         markdown = { "prettierd", "prettier", stop_after_first = true },
         bash = { "shfmt" },
         sh = { "shfmt" },
-        quarto = { 'injected' },
+        quarto = { "injected" },
     },
-}
+})
 vim.keymap.set("n", "<localleader>f", "<cmd>lua require('conform').format()<CR>", { silent = true })
 
 M.on_attach = on_attach
