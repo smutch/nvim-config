@@ -116,6 +116,7 @@ return {
             vim.g["conjure#debug"] = false
             vim.g["conjure#filetypes"] = { "clojure", "fennel", "racket", "janet" }
             vim.g["conjure#filetype#janet"] = "conjure.client.janet.stdio"
+            vim.g["conjure#mapping#doc_word"] = "gk"
         end,
     },
     {
