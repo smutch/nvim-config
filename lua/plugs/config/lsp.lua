@@ -147,16 +147,6 @@ require("mason-lspconfig").setup_handlers({
         })
     end,
 
-    ["typst_lsp"] = function()
-        require("lspconfig").typst_lsp.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            settings = {
-                exportPdf = "onSave", -- Choose onType, onSave or never.
-            },
-        })
-    end,
-
     ["hls"] = function()
         require("lspconfig").hls.setup({
             on_attach = on_attach,
