@@ -199,6 +199,7 @@ return {
     {
         "mrjones2014/smart-splits.nvim",
         config = true,
+        lazy = false,
         keys = {
             {
                 "<A-left>",
