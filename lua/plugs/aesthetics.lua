@@ -173,13 +173,21 @@ return {
             })
         end,
     },
-    { "nvim-tree/nvim-web-devicons", lazy = true },
+    {
+        "echasnovski/mini.icons",
+        version = "*",
+        config = function()
+            local mini_icons = require("mini.icons")
+            mini_icons.setup()
+            mini_icons.mock_nvim_web_devicons()
+        end,
+    },
     {
         "utilyre/barbecue.nvim",
         name = "barbecue",
         dependencies = {
             "SmiteshP/nvim-navic",
-            "nvim-tree/nvim-web-devicons",
+            "echasnovski/mini.icons",
         },
         opts = {
             theme = {
