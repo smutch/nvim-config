@@ -1,5 +1,4 @@
 local cmp = require("blink.cmp")
-local luasnip = require("luasnip")
 
 cmp.setup({
     -- 'default' for mappings similar to built-in completion
@@ -27,39 +26,41 @@ cmp.setup({
         -- Useful for when your theme doesn't support blink.cmp
         -- will be removed in a future release
         use_nvim_cmp_as_default = true,
-        nerd_font_variant = "mono",
     },
 
     snippets = {
-        expand = function(snippet)
-            luasnip.lsp_expand(snippet)
-        end,
-        active = function(filter)
-            if filter and filter.direction then
-                return luasnip.jumpable(filter.direction)
-            end
-            return luasnip.in_snippet()
-        end,
-        jump = function(direction)
-            luasnip.jump(direction)
-        end,
+        preset = "luasnip",
     },
 
     sources = {
-        default = { "lsp", "path", "luasnip", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer" },
     },
 
     -- experimental
     -- signature = { enabled = true },
-    completion = {
-        accept = {
-            -- experimental
-            auto_brackets = { enabled = true },
-        },
-        list = { selection = "auto_insert" },
-    },
 
-    -- allows extending the providers array elsewhere in your config
-    -- without having to redefine it
-    opts_extend = { "sources.default" },
+    completion = {
+        list = {
+            selection = {
+                preselect = function(ctx)
+                    return ctx.mode ~= "cmdline"
+                end,
+                auto_insert = function(ctx)
+                    return ctx.mode ~= "cmdline"
+                end,
+            },
+        },
+        menu = {
+            -- auto_show = function(ctx)
+            --     return ctx.mode ~= "cmdline"
+            -- end,
+            -- nvim-cmp style menu
+            draw = {
+                columns = {
+                    { "label", "label_description", gap = 1 },
+                    { "kind_icon", "kind" },
+                },
+            },
+        },
+    },
 })
