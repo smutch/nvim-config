@@ -352,7 +352,7 @@ return {
             local harpoon = require("harpoon")
             harpoon:setup({})
 
-            local conf = require("telescope.config").values
+            -- local conf = require("telescope.config").values
             local function toggle_telescope(harpoon_files)
                 local finder = function()
                     local paths = {}
@@ -521,7 +521,7 @@ return {
             },
             lazygit = { enabled = true },
             scroll = { enabled = false },
-            terminal = { enabled = true },
+            terminal = { enabled = true, win = { style = "terminal", position = "left" } },
             notifier = {
                 enabled = true,
                 top_down = false,
@@ -558,7 +558,14 @@ return {
                 function()
                     Snacks.terminal.toggle()
                 end,
-                desc = "Toggle Terminal",
+                desc = "Toggle Terminal (left)",
+            },
+            {
+                [[<M-|>]],
+                function()
+                    Snacks.terminal.toggle(nil, { win = { position = "bottom" } })
+                end,
+                desc = "Toggle Terminal (bottom)",
             },
             {
                 "<leader>lm",
