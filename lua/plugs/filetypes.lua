@@ -17,7 +17,9 @@ return {
             "echasnovski/mini.icons",
         },
         ft = { "markdown", "pandoc", "quarto", "markdown.pandoc", "Avante", "codecompanion" },
-        opts = {},
+        opts = {
+            hybrid_modes = { "n" }
+        },
     },
     {
         "snakemake/snakemake",
