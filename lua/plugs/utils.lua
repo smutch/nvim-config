@@ -177,24 +177,18 @@ return {
         end,
     },
     {
-        "benlubas/molten-nvim",
-        version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
-        build = ":UpdateRemotePlugins",
+        "jpalardy/vim-slime",
         init = function()
-            vim.g.molten_output_win_max_height = 12
+            vim.g.slime_target = "tmux"
+            vim.g.slime_no_mappings = 1
+            vim.g.slime_bracketed_paste = 1
+            vim.g.slime_python_ipython = 1
         end,
         keys = {
-            { "<localleader>mi", "<cmd>MoltenInit<CR>", mode = "n", desc = "Molten - init" },
-            { "<localleader>me", "<cmd>MoltenEvaluateOperator<CR>", mode = "n", desc = "Molten - eval op" },
-            { "<localleader>mr", "<cmd>MoltenReevaluateCell<CR>", mode = "n", desc = "Molten - reeval cell" },
-            { "<localleader>mr", "<cmd><C-u>MoltenEvaluateVisual<CR>gv", mode = "v", desc = "Molten - eval visual" },
-            { "<localleader>ms", "<cmd>noautocmd MoltenEnterOutput<CR>", mode = "n", desc = "Molten - enter output" },
-            { "<localleader>mh", "<cmd>MoltenHideOutput<CR>", mode = "n", desc = "Molten - hide output" },
-            { "<localleader>md", "<cmd>MoltenDelete<CR>", mode = "n", desc = "Molten - delete" },
-        },
-        cmd = {
-            "MoltenInit",
-        },
+            { "gz", "<Plug>SlimeRegionSend", mode = 'v', desc = "Send region" },
+            { "gz", "<Plug>SlimeMotionSend", desc = "Send motion" },
+            { "gZ", "<Plug>SlimeLineSend", desc = "Send line" },
+        }
     },
     {
         "mrjones2014/smart-splits.nvim",
