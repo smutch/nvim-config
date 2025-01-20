@@ -515,7 +515,7 @@ return {
             },
             lazygit = { enabled = true },
             scroll = { enabled = false },
-            terminal = { enabled = true, win = { style = "terminal", position = "left" } },
+            terminal = { enabled = true },
             notifier = {
                 enabled = true,
                 top_down = false,
@@ -550,7 +550,7 @@ return {
             {
                 [[<M-\>]],
                 function()
-                    Snacks.terminal.toggle()
+                    Snacks.terminal.toggle(nil, { win = { position = "left" } })
                 end,
                 desc = "Toggle Terminal (left)",
             },
