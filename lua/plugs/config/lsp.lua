@@ -1,7 +1,7 @@
 -- LSP
 local M = {}
 
-local h = require 'helpers'
+local h = require("helpers")
 -- vim.lsp.set_log_level("debug")
 
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
@@ -112,7 +112,7 @@ require("mason-lspconfig").setup_handlers({
             capabilities = capabilities,
             settings = {
                 basedpyright = { analysis = { typeCheckingMode = "standard" } },
-                python = { pythonPath = h.python_interpreter_path }
+                python = { pythonPath = h.python_interpreter_path },
             },
         })
     end,
@@ -182,6 +182,16 @@ require("mason-lspconfig").setup_handlers({
     ["ts_ls"] = function()
         require("lspconfig").ts_ls.setup({
             filetypes = { "typescript", "javascript", "js", "ojs" },
+            on_attach = on_attach,
+            capabilities = capabilities,
+        })
+    end,
+
+    ["tinymist"] = function()
+        require("lspconfig").tinymist.setup({
+            settings = {
+                formatterMode = "typstyle",
+            },
             on_attach = on_attach,
             capabilities = capabilities,
         })
