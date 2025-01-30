@@ -600,6 +600,8 @@ return {
     },
     {
         "sphamba/smear-cursor.nvim",
-        opts = {},
+        opts = {
+            filetypes_disabled = { "terminal", "qf", "snacks_terminal" }
+        },
     },
 }
