@@ -11,61 +11,60 @@ return {
             },
         },
     },
-    { "Bilal2453/luvit-meta", lazy = true },  -- optional `vim.uv` typings
+    { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
     {
-        'neovim/nvim-lspconfig',
+        "neovim/nvim-lspconfig",
         dependencies = {
-            { 'williamboman/mason.nvim',           config = true },
+            { "williamboman/mason.nvim", config = true },
             { "williamboman/mason-lspconfig.nvim", config = true },
             {
-                'WhoIsSethDaniel/mason-tool-installer.nvim',
+                "WhoIsSethDaniel/mason-tool-installer.nvim",
                 opts = {
                     ensure_installed = {
-                        'lua-language-server',
-                        'stylua',
-                        'shellcheck',
-                        'basedpyright',
-                        'ruff'
-                    }
-                }
+                        "lua-language-server",
+                        "stylua",
+                        "shellcheck",
+                        "basedpyright",
+                        "ruff",
+                    },
+                },
             },
         },
         config = function()
-            require 'plugs.config.lsp'
-        end
+            require("plugs.config.lsp")
+        end,
     },
     {
-        'kosayoda/nvim-lightbulb',
+        "kosayoda/nvim-lightbulb",
         config = function()
-            vim.fn.sign_define('LightBulbSign', { text = "", texthl = "", linehl = "", numhl = "" })
+            vim.fn.sign_define("LightBulbSign", { text = "", texthl = "", linehl = "", numhl = "" })
             local augrp = vim.api.nvim_create_augroup("Projects", {})
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
                 group = augrp,
                 pattern = { "*" },
-                callback = require 'nvim-lightbulb'.update_lightbulb
+                callback = require("nvim-lightbulb").update_lightbulb,
             })
-        end
+        end,
     },
     {
-        'folke/lsp-trouble.nvim',
+        "folke/lsp-trouble.nvim",
         config = function()
-            require "trouble".setup()
+            require("trouble").setup()
             -- Load up last search in buffer into the location list and open it
-            vim.keymap.set('n', '<leader>L', ':<C-u>lvimgrep // % | Trouble loclist<CR>')
-        end
+            vim.keymap.set("n", "<leader>L", ":<C-u>lvimgrep // % | Trouble loclist<CR>")
+        end,
     },
     {
-        'mrcjkb/rustaceanvim',
-        version = '^4', -- Recommended
-        ft = { 'rust' },
+        "mrcjkb/rustaceanvim",
+        version = "^4", -- Recommended
+        ft = { "rust" },
         config = function()
             vim.g.rustaceanvim = {
                 -- Plugin configuration
-                tools = {
-                },
+                tools = {},
                 -- LSP configuration
                 server = {
-                    on_attach = require 'plugs.config.lsp'.on_attach,
+                    on_attach = require("plugs.config.lsp").on_attach,
                     -- settings = {
                     --     -- rust-analyzer language server configuration
                     --     ['rust-analyzer'] = {
@@ -79,10 +78,9 @@ return {
                     -- },
                 },
                 -- DAP configuration
-                dap = {
-                },
+                dap = {},
             }
-        end
+        end,
     },
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -90,7 +88,7 @@ return {
             require("lsp_lines").setup()
             vim.diagnostic.config({ virtual_lines = false })
             vim.keymap.set("", "<leader>lL", require("lsp_lines").toggle, { desc = "Toggle lsp_(L)ines" })
-        end
+        end,
     },
     -- TODO: Come back and try this again when more mature. Really love the idea!
     -- {
@@ -105,14 +103,39 @@ return {
             preset = "modern",
             hi = {
                 background = "#1d2939", -- Can be a highlight or a hexadecimal color (#RRGGBB)
-            }
+            },
         },
         keys = {
-            { "<leader>lv", function() require('tiny-inline-diagnostic').toggle() end, desc = "Toggle (v)irtual text diagnostics" },
+            {
+                "<leader>lv",
+                function()
+                    require("tiny-inline-diagnostic").toggle()
+                end,
+                desc = "Toggle (v)irtual text diagnostics",
+            },
         },
     },
     {
-        'stevearc/conform.nvim',
-    }
+        "stevearc/conform.nvim",
+    },
+    {
+        "mfussenegger/nvim-lint",
+        opts = {},
+        config = function()
+            local lint = require("lint")
+            lint.linters_by_ft = {
+                markdown = { "codespell" },
+            }
 
+            vim.api.nvim_create_augroup("Linters", { clear = true })
+
+            vim.api.nvim_create_autocmd("BufWritePost", {
+                group = "Linters",
+                pattern = "*.md",
+                callback = function()
+                    lint.try_lint()
+                end,
+            })
+        end,
+    },
 }
