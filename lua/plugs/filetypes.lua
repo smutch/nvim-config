@@ -18,7 +18,9 @@ return {
         },
         ft = { "markdown", "pandoc", "quarto", "markdown.pandoc", "Avante", "codecompanion" },
         opts = {
-            hybrid_modes = { "n" }
+            preview = {
+                hybrid_modes = { "n" },
+            },
         },
     },
     {
