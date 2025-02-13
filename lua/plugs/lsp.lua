@@ -125,13 +125,18 @@ return {
             local lint = require("lint")
             lint.linters_by_ft = {
                 markdown = { "codespell" },
+                typst = { "codespell" },
             }
+
+            local ignore_words = {"Mutch"}
+
+            lint.linters.codespell.args = { "--stdin-single-line", "-L", table.concat(ignore_words, ","), "-" },
 
             vim.api.nvim_create_augroup("Linters", { clear = true })
 
             vim.api.nvim_create_autocmd("BufWritePost", {
                 group = "Linters",
-                pattern = "*.md",
+                pattern = {"*.md", "*.typ"},
                 callback = function()
                     lint.try_lint()
                 end,
