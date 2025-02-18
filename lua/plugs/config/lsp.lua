@@ -136,18 +136,6 @@ require("mason-lspconfig").setup_handlers({
         })
     end,
 
-    ["julials"] = function()
-        require("lspconfig").julials.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            settings = {
-                julia = {
-                    environmentPath = "./",
-                },
-            },
-        })
-    end,
-
     ["hls"] = function()
         require("lspconfig").hls.setup({
             on_attach = on_attach,
@@ -197,6 +185,19 @@ require("mason-lspconfig").setup_handlers({
         })
     end,
 })
+
+
+-- We don't use the ancient version provided by Mason here...
+require("lspconfig").julials.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    -- settings = {
+    --     julia = {
+    --         environmentPath = "./",
+    --     },
+    -- },
+})
+
 
 local augrp = vim.api.nvim_create_augroup("LSP", {})
 vim.api.nvim_create_autocmd("FileType", {

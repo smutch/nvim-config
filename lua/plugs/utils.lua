@@ -494,6 +494,7 @@ return {
         opts = {
             bigfile = { enabled = true },
             bufdelete = { enabled = true },
+            image = { enabled = true },
             indent = {
                 enabled = true,
                 indent = {
@@ -560,13 +561,6 @@ return {
                     Snacks.terminal.toggle(nil, { win = { position = "bottom" } })
                 end,
                 desc = "Toggle Terminal (bottom)",
-            },
-            {
-                "<leader>lm",
-                function()
-                    Snacks.rename()
-                end,
-                desc = "Rename File",
             },
             {
                 "<leader>nh",
