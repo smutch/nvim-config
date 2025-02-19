@@ -128,19 +128,27 @@ return {
                 typst = { "codespell" },
             }
 
-            local ignore_words = {"Mutch"}
+            local ignore_words = { "Mutch" }
 
-            lint.linters.codespell.args = { "--stdin-single-line", "-L", table.concat(ignore_words, ","), "-" },
+            lint.linters.codespell.args = { "--stdin-single-line", "-L", table.concat(ignore_words, ","), "-" }
 
             vim.api.nvim_create_augroup("Linters", { clear = true })
 
             vim.api.nvim_create_autocmd("BufWritePost", {
                 group = "Linters",
-                pattern = {"*.md", "*.typ"},
+                pattern = { "*.md", "*.typ" },
                 callback = function()
                     lint.try_lint()
                 end,
             })
         end,
+    },
+    {
+        "bassamsdata/namu.nvim",
+        opts = {},
+        keys = {
+            { "<leader>l/", ":Namu symbols<cr>", desc = "Document symbols" },
+            { "<leader>fc", ":Namu colorscheme<cr>", desc = "Colorscheme picker" },
+        },
     },
 }
