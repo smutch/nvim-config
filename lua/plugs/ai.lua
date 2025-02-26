@@ -30,47 +30,50 @@ return {
             "nvim-telescope/telescope.nvim", -- Optional: For using slash commands
             { "stevearc/dressing.nvim", opts = {} }, -- Optional: Improves `vim.ui.select`
         },
-        config = function()
-            require("codecompanion").setup({
-                strategies = {
-                    chat = {
-                        adapter = "copilot", -- copilot defaults to claude-sonent now! 🎉
-                    },
-                    inline = {
-                        adapter = "copilot",
-                    },
-                    strategies = {
-                        inline = {
-                            keymaps = {
-                                accept_change = {
-                                    modes = { n = "ga" },
-                                    description = "Accept the suggested change",
-                                },
-                                reject_change = {
-                                    modes = { n = "gr" },
-                                    description = "Reject the suggested change",
-                                },
-                            },
+        init = function()
+            vim.cmd([[cab cc CodeCompanion]])
+        end,
+        opts = {
+            strategies = {
+                chat = {
+                    adapter = "copilot",
+                },
+                inline = {
+                    adapter = "copilot",
+                    keymaps = {
+                        accept_change = {
+                            modes = { n = "ga" },
+                            description = "Accept the suggested change",
+                        },
+                        reject_change = {
+                            modes = { n = "gr" },
+                            description = "Reject the suggested change",
                         },
                     },
                 },
-                adapters = {
-                    anthropic = function()
-                        return require("codecompanion.adapters").extend("anthropic", {
-                            env = {
-                                api_key = require("system").anthropic_api_key,
+            },
+            adapters = {
+                anthropic = function()
+                    return require("codecompanion.adapters").extend("anthropic", {
+                        env = {
+                            api_key = require("system").anthropic_api_key,
+                        },
+                    })
+                end,
+                copilot = function()
+                    return require("codecompanion.adapters").extend("copilot", {
+                        schema = {
+                            model = {
+                                default = "claude-3.5-sonnet",
                             },
-                        })
-                    end,
-                },
-            })
-            vim.cmd([[cab cc CodeCompanion]])
-        end,
+                        },
+                    })
+                end,
+            },
+        },
         keys = {
-            { "<M-c>", "<cmd>CodeCompanionActions<cr>", mode = "n" },
-            { "<M-c>", "<cmd>CodeCompanionActions<cr>", mode = "v" },
-            { "<LocalLeader>c", "<cmd>CodeCompanionChat Toggle<cr>", mode = "n" },
-            { "<LocalLeader>c", "<cmd>CodeCompanionChat Toggle<cr>", mode = "v" },
+            { "<M-c>", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" } },
+            { "<LocalLeader>c", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" } },
             { "<LocalLeader>a", "<cmd>CodeCompanionChat Add<cr>", mode = "v" },
         },
     },

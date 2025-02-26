@@ -1,19 +1,67 @@
+local cc_entry = require("lualine.component"):extend()
+
+cc_entry.processing = false
+cc_entry.spinner_index = 1
+
+local spinner_symbols = {
+    "⠋",
+    "⠙",
+    "⠹",
+    "⠸",
+    "⠼",
+    "⠴",
+    "⠦",
+    "⠧",
+    "⠇",
+    "⠏",
+}
+local spinner_symbols_len = 10
+
+-- Initializer
+function cc_entry:init(options)
+    cc_entry.super.init(self, options)
+
+    local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
+
+    vim.api.nvim_create_autocmd({ "User" }, {
+        pattern = "CodeCompanionRequest*",
+        group = group,
+        callback = function(request)
+            if request.match == "CodeCompanionRequestStarted" then
+                self.processing = true
+            elseif request.match == "CodeCompanionRequestFinished" then
+                self.processing = false
+            end
+        end,
+    })
+end
+
+-- Function that runs every time statusline is updated
+function cc_entry:update_status()
+    if self.processing then
+        self.spinner_index = (self.spinner_index % spinner_symbols_len) + 1
+        return spinner_symbols[self.spinner_index]
+    else
+        return nil
+    end
+end
+
 local function theme_colors()
     -- default colors
     local colors = {
-        blue   = '#80a0ff',
-        cyan   = '#79dac8',
-        black  = '#080808',
-        white  = '#c6c6c6',
-        red    = '#ff5189',
-        violet = '#d183e8',
-        grey   = '#303030',
-        yellow = '#dbc074',
+        blue = "#80a0ff",
+        cyan = "#79dac8",
+        black = "#080808",
+        white = "#c6c6c6",
+        red = "#ff5189",
+        violet = "#d183e8",
+        grey = "#303030",
+        yellow = "#dbc074",
     }
 
     local colorscheme = vim.api.nvim_exec("colorscheme", true)
     if string.find(colorscheme, "fox") then
-        local palette = require('nightfox.palette').load(vim.g.colors_name)
+        local palette = require("nightfox.palette").load(vim.g.colors_name)
         -- local Color = require("nightfox.lib.color")
         -- local bg = Color.from_hex(palette.bg1)
         local bg = palette.bg2
@@ -21,69 +69,68 @@ local function theme_colors()
             bg = palette.bg1
         end
         colors = {
-            blue   = palette.blue.base,
-            cyan   = palette.cyan.base,
-            black  = palette.black.base,
-            white  = palette.white.base,
-            red    = palette.red.base,
+            blue = palette.blue.base,
+            cyan = palette.cyan.base,
+            black = palette.black.base,
+            white = palette.white.base,
+            red = palette.red.base,
             violet = palette.magenta.dim,
-            green  = palette.green.base,
-            grey   = palette.bg3,
+            green = palette.green.base,
+            grey = palette.bg3,
             yellow = palette.yellow.base,
-            fg1    = palette.white.dim,
-            fg2    = palette.yellow.dim,
-            bg1    = bg,
+            fg1 = palette.white.dim,
+            fg2 = palette.yellow.dim,
+            bg1 = bg,
         }
     end
 
     return {
         normal = {
-            a = { bg = colors.bg1, fg = colors.fg1, gui = 'bold' },
+            a = { bg = colors.bg1, fg = colors.fg1, gui = "bold" },
             b = { bg = colors.bg1, fg = colors.fg1 },
             c = { bg = colors.bg1, fg = colors.fg2 },
             z = { bg = colors.bg1, fg = colors.fg1 },
         },
         insert = {
-            a = { bg = colors.blue, fg = colors.black, gui = 'bold' },
+            a = { bg = colors.blue, fg = colors.black, gui = "bold" },
             b = { bg = colors.bg1, fg = colors.fg1 },
             c = { bg = colors.bg1, fg = colors.fg2 },
             z = { bg = colors.bg1, fg = colors.fg1 },
         },
         visual = {
-            a = { bg = colors.yellow, fg = colors.black, gui = 'bold' },
+            a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
             b = { bg = colors.bg1, fg = colors.fg1 },
             c = { bg = colors.bg1, fg = colors.fg2 },
             z = { bg = colors.bg1, fg = colors.fg1 },
         },
         replace = {
-            a = { bg = colors.red, fg = colors.black, gui = 'bold' },
+            a = { bg = colors.red, fg = colors.black, gui = "bold" },
             b = { bg = colors.bg1, fg = colors.fg1 },
             c = { bg = colors.bg1, fg = colors.fg2 },
             z = { bg = colors.bg1, fg = colors.fg1 },
         },
         command = {
-            a = { bg = colors.green, fg = colors.black, gui = 'bold' },
+            a = { bg = colors.green, fg = colors.black, gui = "bold" },
             b = { bg = colors.bg1, fg = colors.fg1 },
             c = { bg = colors.bg1, fg = colors.fg2 },
             z = { bg = colors.bg1, fg = colors.fg1 },
         },
         inactive = {
-            a = { bg = colors.bg1, fg = colors.gray, gui = 'bold' },
+            a = { bg = colors.bg1, fg = colors.gray, gui = "bold" },
             b = { bg = colors.bg1, fg = colors.gray },
             c = { bg = colors.bg1, fg = colors.fg2 },
             z = { bg = colors.bg1, fg = colors.gray },
-        }
+        },
     }
 end
-
 
 -- Bubbles config for lualine
 -- Author: lokesh-krishna
 -- MIT license, see LICENSE for more details.
 
 local lsp_server = function()
-    local msg = ''
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local msg = ""
+    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
     local clients = vim.lsp.get_active_clients()
     if next(clients) == nil then
         return msg
@@ -99,58 +146,61 @@ end
 
 local harpoonline = require("harpoonline")
 harpoonline.setup({
-    on_update = function() require("lualine").refresh() end,
+    on_update = function()
+        require("lualine").refresh()
+    end,
 })
 
 local colors = theme_colors()
 
-require('lualine').setup {
+require("lualine").setup({
     options = {
         theme = (function()
             if string.find(vim.g.colors_name, "rose-") then
-                return 'rose-pine-alt'
+                return "rose-pine-alt"
             else
                 return colors
             end
         end)(),
-        component_separators = '|',
-        section_separators = { left = '', right = '' },
+        component_separators = "|",
+        section_separators = { left = "", right = "" },
     },
     sections = {
         lualine_a = {
-            { 'mode', right_padding = 2 },
+            { "mode", right_padding = 2 },
         },
         lualine_b = {
             -- 'filename',
-            'branch',
-            'diff',
+            "branch",
+            "diff",
             {
-                'diagnostics',
-                sources = { 'nvim_lsp' },
-                symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰨹 ' },
+                "diagnostics",
+                sources = { "nvim_lsp" },
+                symbols = { error = " ", warn = " ", info = " ", hint = "󰨹 " },
             },
             { harpoonline.format },
             { "overseer" },
-            { "macro_recording", "%S" }
+            { "macro_recording", "%S" },
         },
-        lualine_c = { { '%=', separator = '' }, 'filename' },
+        lualine_c = { { "%=", separator = "" }, "filename" },
         lualine_x = {},
         lualine_y = {
-            'copilot',
+            cc_entry,
+            "copilot",
             {
                 lsp_server,
-                icon = '󰿘',
+                icon = "󰿘",
             },
-            'filetype',
-            'progress',
-            'encoding',
+            "filetype",
+            "progress",
+            "encoding",
             {
-                'fileformat',
-                right_padding = 2
-            }
+                "fileformat",
+                right_padding = 2,
+            },
         },
         lualine_z = {
-            { 'location', left_padding = 2 },
+            { "location", left_padding = 2 },
         },
     },
     inactive_sections = {
@@ -173,4 +223,4 @@ require('lualine').setup {
         "quickfix",
         "trouble",
     },
-}
+})
