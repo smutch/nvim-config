@@ -1,6 +1,5 @@
 return {
     { "nvim-lua/plenary.nvim", lazy = true },
-    { "tpope/vim-unimpaired", event = "VeryLazy" },
     { "tpope/vim-eunuch", event = "VeryLazy" },
     {
         "stevearc/resession.nvim",
@@ -185,10 +184,10 @@ return {
             vim.g.slime_python_ipython = 1
         end,
         keys = {
-            { "gz", "<Plug>SlimeRegionSend", mode = 'v', desc = "Send region" },
+            { "gz", "<Plug>SlimeRegionSend", mode = "v", desc = "Send region" },
             { "gz", "<Plug>SlimeMotionSend", desc = "Send motion" },
             { "gZ", "<Plug>SlimeLineSend", desc = "Send line" },
-        }
+        },
     },
     {
         "mrjones2014/smart-splits.nvim",
@@ -494,7 +493,7 @@ return {
         opts = {
             bigfile = { enabled = true },
             bufdelete = { enabled = true },
-            image = { enabled = true },
+            image = { enabled = true, doc = { enabled = false } },
             indent = {
                 enabled = true,
                 indent = {
@@ -595,7 +594,7 @@ return {
     {
         "sphamba/smear-cursor.nvim",
         opts = {
-            filetypes_disabled = { "terminal", "qf", "snacks_terminal" }
+            filetypes_disabled = { "terminal", "qf", "snacks_terminal" },
         },
     },
 }

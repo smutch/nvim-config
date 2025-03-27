@@ -13,9 +13,11 @@ vim.diagnostic.config({
     signs = true,
     update_in_insert = false,
     severity_sort = true,
+    virtual_lines = false,
 })
 
-local function toggle_lsp_virtual_text()
+-- using rachartier/tiny-inline-diagnostic.nvim for this now
+--[[ local function toggle_lsp_virtual_text()
     local conf = vim.diagnostic.config()
     if conf.virtual_text == false then
         conf.virtual_text = { spacing = 4 }
@@ -24,6 +26,19 @@ local function toggle_lsp_virtual_text()
     end
     vim.diagnostic.config(conf)
 end
+vim.keymap.set("n", "grv", toggle_lsp_virtual_text, { noremap = true, desc = "Toggle (v)irtual text diagnostics" }) ]]
+
+local function toggle_lsp_virtual_lines()
+    local conf = vim.diagnostic.config()
+    if conf.virtual_lines == false then
+        conf.virtual_lines = true
+    else
+        conf.virtual_text = false
+    end
+    vim.diagnostic.config(conf)
+end
+
+vim.keymap.set("n", "grL", toggle_lsp_virtual_lines, { noremap = true, desc = "Toggle virtual (L)ines diagnostics" })
 
 local function toggle_lsp_inlay_hints(bufnr)
     if vim.lsp.inlay_hint.is_enabled(bufnr) then
@@ -41,33 +56,20 @@ local function toggle_lsp_inlay_hints(bufnr)
     end
 end
 
--- vim.keymap.set("n", "<leader>lv", toggle_lsp_virtual_text,
---     { noremap = true, desc = "Toggle (v)irtual text for LSP diagnostics" })
-
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
-    vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<leader>lR", "<cmd>lua vim.lsp.buf.rename()<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<leader>lr", "<cmd>Telescope lsp_references<CR>", { silent = true, buffer = 0 })
-    -- vim.keymap.set("n", "<leader>l/", "<cmd>Telescope lsp_document_symbols<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<leader>l?", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "g/", "<cmd>lua vim.diagnostic.open_float()<CR>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<leader>ld", "<cmd>Trouble document_diagnostics<cr>", { silent = true, buffer = 0 })
-    vim.keymap.set("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true, buffer = 0 })
-    if client.name ~= "rust_analyzer" then
-        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true, buffer = 0 })
-    else
+    vim.keymap.set("n", "grd", vim.lsp.buf.definition, { silent = true, buffer = 0 })
+    vim.keymap.set("n", "grD", vim.lsp.buf.declaration, { silent = true, buffer = 0 })
+    vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, { silent = true, buffer = 0 })
+    vim.keymap.set("n", "grs", vim.lsp.buf.signature_help, { silent = true, buffer = 0 })
+    vim.keymap.set("n", "gr?", "<cmd>Telescope lsp_dynamic_workspace_symbols()<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "g/", vim.diagnostic.open_float, { silent = true, buffer = 0 })
+    if client.name == "rust_analyzer" then
         vim.keymap.set("n", "K", function()
             vim.cmd.RustLsp({ "hover", "actions" })
         end, { noremap = true, silent = true, buffer = bufnr })
-        vim.keymap.set("n", "<leader>le", function()
+        vim.keymap.set("n", "gre", function()
             vim.cmd.RustLsp("explainError")
         end, { noremap = true, silent = true, buffer = bufnr })
     end
@@ -80,12 +82,8 @@ local on_attach = function(client, bufnr)
     vim.g.lsp_diagnostic_sign_priority = 100
 
     if client.server_capabilities.inlayHintProvider then
-        if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
-            vim.lsp.inlay_hint.enable(bufnr, false)
-        else
-            vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
-        end
-        vim.keymap.set("n", "<leader>lI", toggle_lsp_inlay_hints, { noremap = true, desc = "Toggle (i)nlay hints" })
+        vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+        vim.keymap.set("n", "grI", toggle_lsp_inlay_hints, { noremap = true, desc = "Toggle (i)nlay hints" })
     end
 
     if client.server_capabilities.documentSymbolProvider then
@@ -186,8 +184,22 @@ require("mason-lspconfig").setup_handlers({
     end,
 })
 
+-- local function julials_on_attach(client, bufnr)
+--     if vim.diagnostic.is_enabled() then
+--         local original_set = vim.diagnostic.set
+--         vim.diagnostic.set = function(namespace, bufnr, diagnostics, opts)
+--             local filtered = vim.tbl_filter(function(diagnostic)
+--                 if diagnostic.message:match("Missing reference") then
+--                     return false
+--                 end
+--                 return true
+--             end, diagnostics)
+--             original_set(namespace, bufnr, filtered, opts)
+--         end
+--     end
+--     on_attach(client, bufnr)
+-- end
 
--- We don't use the ancient version provided by Mason here...
 require("lspconfig").julials.setup({
     on_attach = on_attach,
     capabilities = capabilities,
@@ -197,7 +209,6 @@ require("lspconfig").julials.setup({
     --     },
     -- },
 })
-
 
 local augrp = vim.api.nvim_create_augroup("LSP", {})
 vim.api.nvim_create_autocmd("FileType", {

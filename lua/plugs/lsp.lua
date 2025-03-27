@@ -82,14 +82,6 @@ return {
             }
         end,
     },
-    {
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = function()
-            require("lsp_lines").setup()
-            vim.diagnostic.config({ virtual_lines = false })
-            vim.keymap.set("", "<leader>lL", require("lsp_lines").toggle, { desc = "Toggle lsp_(L)ines" })
-        end,
-    },
     -- TODO: Come back and try this again when more mature. Really love the idea!
     -- {
     --     "RaafatTurki/corn.nvim",
@@ -107,7 +99,7 @@ return {
         },
         keys = {
             {
-                "<leader>lv",
+                "grv",
                 function()
                     require("tiny-inline-diagnostic").toggle()
                 end,
@@ -147,7 +139,7 @@ return {
         "bassamsdata/namu.nvim",
         opts = {},
         keys = {
-            { "<leader>l/", ":Namu symbols<cr>", desc = "Document symbols" },
+            { "gr/", ":Namu symbols<cr>", desc = "Document symbols" },
             { "<leader>fc", ":Namu colorscheme<cr>", desc = "Colorscheme picker" },
         },
     },
