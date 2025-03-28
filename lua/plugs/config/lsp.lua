@@ -63,7 +63,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "grD", vim.lsp.buf.declaration, { silent = true, buffer = 0 })
     vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, { silent = true, buffer = 0 })
     vim.keymap.set("n", "grs", vim.lsp.buf.signature_help, { silent = true, buffer = 0 })
-    vim.keymap.set("n", "gr?", "<cmd>Telescope lsp_dynamic_workspace_symbols()<CR>", { silent = true, buffer = 0 })
+    vim.keymap.set("n", "gr?", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "g/", vim.diagnostic.open_float, { silent = true, buffer = 0 })
     if client.name == "rust_analyzer" then
         vim.keymap.set("n", "K", function()
