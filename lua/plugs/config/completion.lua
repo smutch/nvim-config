@@ -33,7 +33,21 @@ cmp.setup({
     },
 
     sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lazydev", "lsp", "path", "snippets", "copilot", "buffer" },
+        providers = {
+            copilot = {
+                name = "copilot",
+                module = "blink-copilot",
+                score_offset = 100,
+                async = true,
+            },
+            lazydev = {
+                name = "LazyDev",
+                module = "lazydev.integrations.blink",
+                -- make lazydev completions top priority (see `:h blink.cmp`)
+                score_offset = 100,
+            },
+        },
     },
 
     -- experimental
@@ -52,6 +66,7 @@ cmp.setup({
                 -- end,
             },
         },
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
         menu = {
             -- auto_show = function(ctx)
             --     return ctx.mode ~= "cmdline"

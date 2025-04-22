@@ -13,11 +13,28 @@ return {
                 },
                 copilot_node_command = vim.g.node_host_prog,
                 suggestion = {
-                    enabled = true,
-                    auto_trigger = true,
+                    enabled = false,
+                    -- auto_trigger = true,
                 },
-                panel = { enabled = true },
+                panel = { enabled = false },
             })
+        end,
+    },
+    {
+        "copilotlsp-nvim/copilot-lsp",
+        init = function()
+            local enable = require("system").enable_copilot
+            if enable == nil then
+                enable = false
+            end
+            vim.g.copilot_nes_debounce = 500
+            vim.lsp.enable("copilot")
+            vim.keymap.set("n", "<tab>", function()
+                require("copilot-lsp.nes").apply_pending_nes()
+            end)
+            vim.keymap.set("i", "<M-l>", function()
+                require("copilot-lsp.nes").apply_pending_nes()
+            end)
         end,
     },
     {

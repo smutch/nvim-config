@@ -112,18 +112,6 @@ return {
         end,
     },
     {
-        -- TODO: Replace with snacks
-        "folke/zen-mode.nvim",
-        cmd = "ZenMode",
-        config = function()
-            require("zen-mode").setup({
-                wezterm = {
-                    enabled = true,
-                },
-            })
-        end,
-    },
-    {
         "kevinhwang91/nvim-ufo",
         dependencies = {
             "kevinhwang91/promise-async",
@@ -564,6 +552,7 @@ return {
             scratch = {
                 ft = "markdown",
             },
+            zen = { enabled = true },
         },
         keys = {
             {
