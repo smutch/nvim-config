@@ -139,6 +139,7 @@ return {
     },
     {
         "bassamsdata/namu.nvim",
+        lazy = false,
         opts = {
 			ui_select = { enable = true }, -- vim.ui.select() wrapper
 		},

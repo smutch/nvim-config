@@ -2,39 +2,65 @@ return {
     {
         "zbirenbaum/copilot.lua",
         event = { "InsertEnter" },
+        enabled = function()
+            return require("system").enable_copilot or false and true
+        end,
         config = function()
-            local enable = require("system").enable_copilot
-            if enable == nil then
-                enable = false
-            end
             require("copilot").setup({
                 filetypes = {
-                    ["*"] = enable,
+                    ["*"] = true,
                 },
                 copilot_node_command = vim.g.node_host_prog,
                 suggestion = {
-                    enabled = false,
-                    -- auto_trigger = true,
+                    enabled = true,
+                    auto_trigger = true,
                 },
-                panel = { enabled = false },
+                panel = { enabled = true },
             })
         end,
     },
     {
         "copilotlsp-nvim/copilot-lsp",
+        enabled = function()
+            return require("system").enable_copilot or false and true
+        end,
         init = function()
-            local enable = require("system").enable_copilot
-            if enable == nil then
-                enable = false
-            end
             vim.g.copilot_nes_debounce = 500
-            vim.lsp.enable("copilot")
-            vim.keymap.set("n", "<tab>", function()
-                require("copilot-lsp.nes").apply_pending_nes()
-            end)
-            vim.keymap.set("i", "<M-l>", function()
-                require("copilot-lsp.nes").apply_pending_nes()
-            end)
+            -- c.f. https://github.com/copilotlsp-nvim/copilot-lsp/issues/8#issuecomment-2822027212
+            vim.lsp.config("copilot_ls", {
+                on_init = function(client)
+                    vim.api.nvim_set_hl(0, "NesAdd", { link = "DiffAdd", default = true })
+                    vim.api.nvim_set_hl(0, "NesDelete", { link = "DiffDelete", default = true })
+                    vim.api.nvim_set_hl(0, "NesApply", { link = "DiffText", default = true })
+
+                    local au = vim.api.nvim_create_augroup("copilot-language-server", { clear = true })
+
+                    --NOTE: didFocus
+                    vim.api.nvim_create_autocmd("BufEnter", {
+                        callback = function()
+                            local td_params = vim.lsp.util.make_text_document_params()
+                            client:notify("textDocument/didFocus", {
+                                textDocument = {
+                                    uri = td_params.uri,
+                                },
+                            })
+                        end,
+                        group = au,
+                    })
+
+                    vim.keymap.set("n", "<tab>", function()
+                        local state = vim.b[vim.api.nvim_get_current_buf()].nes_state
+                        if not state then
+                            require("copilot-lsp.nes").request_nes(client)
+                            vim.notify("Requesting Copilot LSP suggestions...")
+                        else
+                            local _ = require("copilot-lsp.nes").apply_pending_nes()
+                                and require("copilot-lsp.nes").walk_cursor_end_edit()
+                        end
+                    end)
+                end,
+            })
+            vim.lsp.enable("copilot_ls")
         end,
     },
     {
