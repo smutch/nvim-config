@@ -59,11 +59,11 @@ end
 local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
+    -- NOTE: Also see the Namu bindings
     vim.keymap.set("n", "grd", vim.lsp.buf.definition, { silent = true, buffer = 0 })
     vim.keymap.set("n", "grD", vim.lsp.buf.declaration, { silent = true, buffer = 0 })
     vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, { silent = true, buffer = 0 })
     vim.keymap.set("n", "grs", vim.lsp.buf.signature_help, { silent = true, buffer = 0 })
-    vim.keymap.set("n", "gr?", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { silent = true, buffer = 0 })
     vim.keymap.set("n", "g/", vim.diagnostic.open_float, { silent = true, buffer = 0 })
     if client.name == "rust_analyzer" then
         vim.keymap.set("n", "K", function()
@@ -109,7 +109,7 @@ require("mason-lspconfig").setup_handlers({
             on_attach = on_attach,
             capabilities = capabilities,
             settings = {
-                basedpyright = { analysis = { typeCheckingMode = "standard" } },
+                basedpyright = { analysis = { typeCheckingMode = "standard", disableOrganizeImports = true } },
                 python = { pythonPath = h.python_interpreter_path },
             },
         })
