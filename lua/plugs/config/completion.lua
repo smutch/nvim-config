@@ -48,6 +48,9 @@ cmp.setup({
                 score_offset = 100,
             },
         },
+        per_filetype = {
+            codecompanion = { "codecompanion" },
+        },
     },
 
     -- experimental
