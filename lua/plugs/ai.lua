@@ -3,7 +3,12 @@ return {
         "zbirenbaum/copilot.lua",
         event = { "InsertEnter" },
         enabled = function()
-            return require("system").enable_copilot or false and true
+            local rc, system = pcall(require, "system")
+            if rc then
+                return system.enable_copilot or false and true
+            else
+                return false
+            end
         end,
         config = function()
             require("copilot").setup({
@@ -22,7 +27,12 @@ return {
     {
         "copilotlsp-nvim/copilot-lsp",
         enabled = function()
-            return require("system").enable_copilot or false and true
+            local rc, system = pcall(require, "system")
+            if rc then
+                return system.enable_copilot or false and true
+            else
+                return false
+            end
         end,
         init = function()
             vim.g.copilot_nes_debounce = 500
