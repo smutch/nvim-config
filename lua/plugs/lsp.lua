@@ -147,7 +147,7 @@ return {
             { "gr/", ":Namu symbols<cr>", desc = "Workspace symbols" },
             { "gr?", ":Namu workspace<cr>", desc = "Workspace symbols" },
             { "gre", ":Namu diagnostics<cr>", desc = "Document diagnostics" },
-            { "grh", ":Namu call both<cr>", desc = "Call hierarchy" },
+            { "grh", ":Namu call in<cr>", desc = "Call hierarchy" },
             { "<leader>fc", ":Namu colorscheme<cr>", desc = "Colorscheme picker" },
         },
     },

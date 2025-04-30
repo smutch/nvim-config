@@ -4,7 +4,7 @@ return {
         config = function()
             local autopairs = require 'nvim-autopairs'
             autopairs.setup {
-                disable_filetype = { "TelescopePrompt", "vim", "clojure", "fennel", "racket", "janet" }
+                disable_filetype = { "vim", "clojure", "fennel", "racket", "janet" }
             }
         end
     },

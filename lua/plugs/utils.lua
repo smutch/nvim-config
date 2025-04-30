@@ -328,55 +328,55 @@ return {
     {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+        dependencies = { "nvim-lua/plenary.nvim" },
         event = "VeryLazy",
         config = function()
             local harpoon = require("harpoon")
             harpoon:setup({})
 
             -- local conf = require("telescope.config").values
-            local function toggle_telescope(harpoon_files)
-                local finder = function()
-                    local paths = {}
-                    for _, item in ipairs(harpoon_files.items) do
-                        table.insert(paths, item.value)
-                    end
+            -- local function toggle_telescope(harpoon_files)
+            --     local finder = function()
+            --         local paths = {}
+            --         for _, item in ipairs(harpoon_files.items) do
+            --             table.insert(paths, item.value)
+            --         end
 
-                    return require("telescope.finders").new_table({
-                        results = paths,
-                    })
-                end
+            --         return require("telescope.finders").new_table({
+            --             results = paths,
+            --         })
+            --     end
 
-                require("telescope.pickers")
-                    .new({}, {
-                        prompt_title = "Harpoon",
-                        finder = finder(),
-                        previewer = false,
-                        sorter = require("telescope.config").values.generic_sorter({}),
-                        layout_config = {
-                            height = 0.4,
-                            width = 0.5,
-                            prompt_position = "top",
-                            preview_cutoff = 120,
-                        },
-                        attach_mappings = function(prompt_bufnr, map)
-                            map("i", "<C-d>", function()
-                                local state = require("telescope.actions.state")
-                                local selected_entry = state.get_selected_entry()
-                                local current_picker = state.get_current_picker(prompt_bufnr)
+            --     require("telescope.pickers")
+            --         .new({}, {
+            --             prompt_title = "Harpoon",
+            --             finder = finder(),
+            --             previewer = false,
+            --             sorter = require("telescope.config").values.generic_sorter({}),
+            --             layout_config = {
+            --                 height = 0.4,
+            --                 width = 0.5,
+            --                 prompt_position = "top",
+            --                 preview_cutoff = 120,
+            --             },
+            --             attach_mappings = function(prompt_bufnr, map)
+            --                 map("i", "<C-d>", function()
+            --                     local state = require("telescope.actions.state")
+            --                     local selected_entry = state.get_selected_entry()
+            --                     local current_picker = state.get_current_picker(prompt_bufnr)
 
-                                table.remove(harpoon_files.items, selected_entry.index)
-                                current_picker:refresh(finder())
-                            end)
-                            return true
-                        end,
-                    })
-                    :find()
-            end
+            --                     table.remove(harpoon_files.items, selected_entry.index)
+            --                     current_picker:refresh(finder())
+            --                 end)
+            --                 return true
+            --             end,
+            --         })
+            --         :find()
+            -- end
 
-            vim.keymap.set("n", "<leader>hl", function()
-                toggle_telescope(harpoon:list())
-            end, { noremap = true, desc = "Harpoon - Toggle Quick Menu" })
+            -- vim.keymap.set("n", "<leader>hl", function()
+            --     toggle_telescope(harpoon:list())
+            -- end, { noremap = true, desc = "Harpoon - Toggle Quick Menu" })
             vim.keymap.set("n", "<leader>ha", function()
                 harpoon:list():add()
             end, { noremap = true, desc = "Harpoon - Add" })
@@ -389,7 +389,7 @@ return {
             for ii = 1, 9 do
                 vim.keymap.set("n", "<leader>h" .. ii, function()
                     require("harpoon"):list():select(ii)
-                end, { noremap = "true", desc = "Harpoon - Select " .. ii })
+                end, { noremap = true, desc = "Harpoon - Select " .. ii })
             end
         end,
     },
@@ -542,6 +542,9 @@ return {
                 enabled = true,
                 top_down = false,
             },
+            picker = {
+                enabled = true,
+            },
             quickfile = { enabled = true },
             statuscolumn = { enabled = true },
             styles = {
@@ -571,14 +574,14 @@ return {
                 desc = "Lazygit",
             },
             {
-                [[<M-\>]],
+                [[<M-|>]],
                 function()
                     Snacks.terminal.toggle(nil, { win = { position = "left" } })
                 end,
                 desc = "Toggle Terminal (left)",
             },
             {
-                [[<M-|>]],
+                [[<M-\>]],
                 function()
                     Snacks.terminal.toggle(nil, { win = { position = "bottom" } })
                 end,
@@ -611,6 +614,154 @@ return {
                     Snacks.scratch.select()
                 end,
                 desc = "Select Scratch Buffer",
+            },
+            {
+                "<leader>f<leader>",
+                function()
+                    Snacks.picker.smart()
+                end,
+                desc = "Smart Find Files",
+            },
+            {
+                "<leader>fb",
+                function()
+                    Snacks.picker.buffers()
+                end,
+                desc = "Buffers",
+            },
+            {
+                "<leader>fc",
+                function()
+                    Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+                end,
+                desc = "Find Config File",
+            },
+            {
+                "<leader>ff",
+                function()
+                    Snacks.picker.files()
+                end,
+                desc = "Find Files",
+            },
+            {
+                "<leader>fg",
+                function()
+                    Snacks.picker.git_files()
+                end,
+                desc = "Find Git Files",
+            },
+            {
+                "<leader>fp",
+                function()
+                    Snacks.picker.projects()
+                end,
+                desc = "Projects",
+            },
+            {
+                "<leader>fr",
+                function()
+                    Snacks.picker.recent()
+                end,
+                desc = "Recent",
+            },
+            {
+                "<leader>f/",
+                function()
+                    Snacks.picker.grep()
+                end,
+                desc = "Grep",
+            },
+            {
+                "<leader>f*",
+                function()
+                    Snacks.picker.grep_word()
+                end,
+                desc = "Visual selection or word",
+                mode = { "n", "x" },
+            },
+            {
+                '<leader>f"',
+                function()
+                    Snacks.picker.registers()
+                end,
+                desc = "Registers",
+            },
+            {
+                "<leader>f:",
+                function()
+                    Snacks.picker.commands()
+                end,
+                desc = "Commands",
+            },
+            {
+                "<leader>fh",
+                function()
+                    Snacks.picker.help()
+                end,
+                desc = "Help Pages",
+            },
+            {
+                "<leader>fH",
+                function()
+                    Snacks.picker.highlights()
+                end,
+                desc = "Highlights",
+            },
+            {
+                "<leader>fs",
+                function()
+                    Snacks.picker.icons()
+                end,
+                desc = "Icons",
+            },
+            {
+                "<leader>fj",
+                function()
+                    Snacks.picker.jumps()
+                end,
+                desc = "Jumps",
+            },
+            {
+                "<leader>fk",
+                function()
+                    Snacks.picker.keymaps()
+                end,
+                desc = "Keymaps",
+            },
+            {
+                "<leader>fl",
+                function()
+                    Snacks.picker.loclist()
+                end,
+                desc = "Location List",
+            },
+            {
+                "<leader>f,",
+                function()
+                    Snacks.picker.marks()
+                end,
+                desc = "Marks",
+            },
+            {
+                "<leader>fP",
+                function()
+                    Snacks.picker.lazy()
+                end,
+                desc = "Search for Plugin Spec",
+            },
+            {
+                "<leader>fR",
+                function()
+                    Snacks.picker.resume()
+                end,
+                desc = "Resume",
+            },
+            {
+                "<leader>fu",
+                function()
+                    Snacks.picker.undo()
+                end,
+                desc = "Undo History",
             },
         },
     },
