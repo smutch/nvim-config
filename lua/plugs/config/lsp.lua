@@ -117,6 +117,13 @@ require("mason-lspconfig").setup_handlers({
 
     ["ruff"] = function()
         require("lspconfig").ruff.setup({
+            init_options = {
+                settings = {
+                    lint = {
+                        enable = false,  -- use basedpyright for linting
+                    },
+                },
+            },
             on_attach = function(client, bufnr)
                 client.server_capabilities.hoverProvider = false
                 on_attach(client, bufnr)
