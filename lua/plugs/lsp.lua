@@ -17,19 +17,14 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             { "williamboman/mason.nvim", config = true },
-            { "williamboman/mason-lspconfig.nvim", config = true },
-            {
-                "WhoIsSethDaniel/mason-tool-installer.nvim",
-                opts = {
-                    ensure_installed = {
+            { "williamboman/mason-lspconfig.nvim", opts = {
                         "lua-language-server",
                         "stylua",
                         "shellcheck",
                         "basedpyright",
                         "ruff",
                         "copilot-language-server"
-                    },
-                },
+                }
             },
         },
         config = function()
