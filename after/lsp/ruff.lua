@@ -1,4 +1,4 @@
-local on_attach = require("plugs.config.lsp").on_attach
+local on_attach = require("plugins.config.lsp").on_attach
 
 return {
     init_options = {

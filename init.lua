@@ -19,7 +19,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugs",
+require("lazy").setup("plugins",
     vim.tbl_extend(
         "error",
         {
@@ -34,4 +34,4 @@ require("lazy").setup("plugs",
 )
 
 vim.api.nvim_create_user_command("Erc", function() vim.cmd("edit ~/.config/nvim/init.lua") end, {})
-vim.api.nvim_create_user_command("Eplug", function() vim.cmd("edit ~/.config/nvim/lua/plugs") end, {})
+vim.api.nvim_create_user_command("Eplug", function() vim.cmd("edit ~/.config/nvim/lua/plugins") end, {})

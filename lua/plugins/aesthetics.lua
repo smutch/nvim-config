@@ -71,11 +71,11 @@ return {
         dependencies = { "abeldekat/harpoonline", "AndreM222/copilot-lualine", "yavorski/lualine-macro-recording.nvim" },
         lazy = false,
         config = function()
-            require("plugs.config.statusline")
+            require("plugins.config.statusline")
             local augroup = vim.api.nvim_create_augroup("lualine_colors", {})
             vim.api.nvim_create_autocmd("ColorScheme", {
                 callback = function()
-                    require("plugs.config.statusline")
+                    require("plugins.config.statusline")
                 end,
                 group = augroup,
             })

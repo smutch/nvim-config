@@ -30,7 +30,7 @@ return {
             },
         },
         config = function()
-            require("plugs.config.lsp")
+            require("plugins.config.lsp")
         end,
     },
     {
@@ -59,7 +59,7 @@ return {
                 tools = {},
                 -- LSP configuration
                 server = {
-                    on_attach = require("plugs.config.lsp").on_attach,
+                    on_attach = require("plugins.config.lsp").on_attach,
                     -- settings = {
                     --     -- rust-analyzer language server configuration
                     --     ['rust-analyzer'] = {
