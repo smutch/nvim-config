@@ -18,7 +18,7 @@ return {
         opts = {
             preview = {
                 -- hybrid_modes = { "n" },
-                hybrid_modes = { "n" },
+                hybrid_modes = { },
                 ignore_buftypes = {},
                 filetypes = { "markdown", "pandoc", "quarto", "markdown.pandoc", "Avante", "codecompanion" },
             },
