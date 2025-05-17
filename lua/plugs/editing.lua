@@ -1,13 +1,5 @@
 return {
-    {
-        'windwp/nvim-autopairs',
-        config = function()
-            local autopairs = require 'nvim-autopairs'
-            autopairs.setup {
-                disable_filetype = { "vim", "clojure", "fennel", "racket", "janet" }
-            }
-        end
-    },
+    { 'echasnovski/mini.nvim', version = '*' },
     { 'tpope/vim-rsi' },
     {
         "folke/flash.nvim",
@@ -101,7 +93,7 @@ return {
         'Wansmer/treesj',
         dependencies = { 'nvim-treesitter/nvim-treesitter' },
         opts = { use_default_keymaps = false, },
-        keys = { { '<leader>j', function() require('treesj').toggle() end, desc = "toggle join/merge" } },
+        keys = { { 'gj', function() require('treesj').toggle() end, desc = "toggle join/merge" } },
     },
     {
         "jake-stewart/multicursor.nvim",

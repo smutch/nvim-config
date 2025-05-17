@@ -9,7 +9,6 @@ return {
         },
     },
     on_attach = function(client, bufnr)
-        vim.notify("Ruff LSP attached")
         client.server_capabilities.hoverProvider = false
         on_attach(client, bufnr)
     end,

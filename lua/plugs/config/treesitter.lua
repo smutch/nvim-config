@@ -1,9 +1,15 @@
 ---@diagnostic disable: missing-fields
 
-require 'nvim-treesitter.install'.compilers = { 'gcc' }
-require 'nvim-treesitter.configs'.setup {
+require("nvim-treesitter.install").compilers = { "gcc" }
+require("nvim-treesitter.configs").setup({
     highlight = {
-        enable = (function() if vim.g.vscode then return false else return true end end)(), -- false will disable the whole extension
+        enable = (function()
+            if vim.g.vscode then
+                return false
+            else
+                return true
+            end
+        end)(), -- false will disable the whole extension
         -- disable = { "c", "rust" },  -- list of language that will be disabled
         -- custom_captures = { ["variable"] = "Normal" },
     },
@@ -31,14 +37,9 @@ require 'nvim-treesitter.configs'.setup {
         "markdown_inline",
         "regex",
         "sql",
-        "typst"
+        "typst",
     },
     incremental_selection = { enable = false },
-    refactor = {
-        highlight_definitions = { enable = true },
-        highlight_current_scope = { enable = true },
-        smart_rename = { enable = true, keymaps = { smart_rename = "gR" } }
-    },
     textobjects = {
         select = {
             enable = true,
@@ -48,15 +49,15 @@ require 'nvim-treesitter.configs'.setup {
 
             keymaps = {
                 -- You can use the capture groups defined in textobjects.scm
-                ["=F"] = "@function.outer",
-                ["=f"] = "@function.inner",
-                ["=C"] = "@class.outer",
-                ["=c"] = "@class.inner",
-                ["=P"] = "@parameter.outer",
-                ["=p"] = "@parameter.inner",
-                ["=#"] = "@comment.outer",
-                ["=B"] = "@block.outer",
-                ["=b"] = "@block.inner"
+                ["aF"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["aC"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                ["aP"] = "@parameter.outer",
+                ["ip"] = "@parameter.inner",
+                ["a#"] = "@comment.outer",
+                ["aB"] = "@block.outer",
+                ["ib"] = "@block.inner",
 
                 -- -- Or you can define your own textobjects like this
                 -- ["iF"] = {
@@ -65,16 +66,16 @@ require 'nvim-treesitter.configs'.setup {
                 --     c = "(function_definition) @function",
                 --     java = "(method_declaration) @function",
                 -- },
-            }
+            },
         },
         swap = {
             enable = true,
             swap_next = { ["gs"] = "@parameter.inner" },
-            swap_previous = { ["gS"] = "@parameter.inner" }
+            swap_previous = { ["gS"] = "@parameter.inner" },
         },
         lsp_interop = {
             enable = true,
-            peek_definition_code = { ["grp"] = "@function.outer", ["grP"] = "@class.outer" }
+            peek_definition_code = { ["grp"] = "@function.outer", ["grP"] = "@class.outer" },
         },
         move = {
             enable = true,
@@ -102,6 +103,6 @@ require 'nvim-treesitter.configs'.setup {
         -- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
         -- [options]
     },
-}
+})
 vim.treesitter.language.register("astro", "tsx")
 vim.treesitter.language.register("markdown", "mdx")

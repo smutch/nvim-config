@@ -1,5 +1,4 @@
 return {
-    { "adamclaxon/taskpaper.vim", ft = { "taskpaper", "tp" } },
     {
         "lervag/vimtex",
         ft = { "tex" },
@@ -18,6 +17,7 @@ return {
         },
         opts = {
             preview = {
+                -- hybrid_modes = { "n" },
                 hybrid_modes = { "n" },
                 ignore_buftypes = {},
                 filetypes = { "markdown", "pandoc", "quarto", "markdown.pandoc", "Avante", "codecompanion" },
@@ -44,17 +44,18 @@ return {
             },
         },
     },
-    {
-        "snakemake/snakemake",
-        ft = "snakemake",
-        config = function(plugin)
-            vim.opt.rtp:append(plugin.dir .. "/misc/vim")
-        end,
-    },
+    -- {
+    --     "snakemake/snakemake",
+    --     ft = "snakemake",
+    --     config = function(plugin)
+    --         vim.opt.rtp:append(plugin.dir .. "/misc/vim")
+    --     end,
+    -- },
     { -- directly open ipynb files as quarto docuements
         -- and convert back behind the scenes
         "GCBallesteros/jupytext.nvim",
         opts = {
+            style = "percent",
             custom_language_formatting = {
                 python = {
                     extension = "qmd",
@@ -155,5 +156,14 @@ return {
             "nvim-treesitter/nvim-treesitter",
         },
     },
-    { "GCBallesteros/jupytext.nvim", opts = { style = "percent" } },
+    {
+        "ryoppippi/vim-svelte-inspector",
+        dependencies = {
+            "willothy/flatten.nvim",
+            "lewis6991/fileline.nvim",
+            "nvim-lua/plenary.nvim",
+        },
+        lazy = true,
+        config = true,
+    },
 }

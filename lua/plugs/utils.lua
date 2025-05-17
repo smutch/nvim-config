@@ -38,23 +38,6 @@ return {
         end,
     },
     {
-        "bfredl/nvim-luadev",
-        config = function()
-            local augroup = vim.api.nvim_create_augroup("LuadDev", {})
-
-            vim.api.nvim_create_autocmd("BufEnter", {
-                pattern = "*nvim-lua*",
-                group = augroup,
-                callback = function()
-                    local buffer = vim.api.nvim_get_current_buf()
-                    vim.keymap.set("n", "<localleader>r", "<PLug>(Luadev-Run)", { buffer = buffer })
-                    vim.keymap.set("n", "<localleader>l", "<Plug>(Luadev-RunLine)", { buffer = buffer })
-                    vim.keymap.set("n", "<localleader>w", "<Plug>(Luadev-RunWord)", { buffer = buffer })
-                end,
-            })
-        end,
-    },
-    {
         "RRethy/vim-illuminate",
         event = "VeryLazy",
         config = function()
@@ -81,7 +64,7 @@ return {
             vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         end,
     },
-    { "uga-rosa/ccc.nvim", config = true, ft = { "astro", "html", "css", "scss", "lua", "vim" } },
+    { "uga-rosa/ccc.nvim", opts = {}, ft = { "astro", "html", "css", "scss", "lua", "vim" } },
     {
         "rcarriga/neotest",
         lazy = true,
@@ -96,64 +79,53 @@ return {
                     require("neotest-rust"),
                 },
             })
-
-            vim.keymap.set("n", "<localleader>tr", require("neotest").run.run)
-            vim.keymap.set("n", "<localleader>tR", function()
-                return require("neotest").run.run(vim.fn.expand("%"))
-            end)
-            vim.keymap.set("n", "<localleader>tc", require("neotest").run.stop)
-            vim.keymap.set("n", "<localleader>ts", require("neotest").summary.toggle)
-            vim.keymap.set("n", "[t", function()
-                return require("neotest").jump.prev({ status = "failed" })
-            end, { noremap = true, silent = true })
-            vim.keymap.set("n", "]t", function()
-                return require("neotest").jump.next({ status = "failed" })
-            end, { noremap = true, silent = true })
         end,
-    },
-    {
-        "kevinhwang91/nvim-ufo",
-        dependencies = {
-            "kevinhwang91/promise-async",
+        keys = {
+            keys = {
+                {
+                    "<localleader>tr",
+                    function()
+                        require("neotest").run.run()
+                    end,
+                    desc = "Run nearest test",
+                },
+                {
+                    "<localleader>tR",
+                    function()
+                        require("neotest").run.run(vim.fn.expand("%"))
+                    end,
+                    desc = "Run all tests in file",
+                },
+                {
+                    "<localleader>tc",
+                    function()
+                        require("neotest").run.stop()
+                    end,
+                    desc = "Stop test run",
+                },
+                {
+                    "<localleader>ts",
+                    function()
+                        require("neotest").summary.toggle()
+                    end,
+                    desc = "Toggle test summary",
+                },
+                {
+                    "[t",
+                    function()
+                        require("neotest").jump.prev({ status = "failed" })
+                    end,
+                    desc = "Jump to previous failed test",
+                },
+                {
+                    "]t",
+                    function()
+                        require("neotest").jump.next({ status = "failed" })
+                    end,
+                    desc = "Jump to next failed test",
+                },
+            },
         },
-        config = function()
-            -- TODO: Set this to '1' when when https://github.com/neovim/neovim/pull/17446 is merged
-            vim.wo.foldcolumn = "0"
-
-            vim.o.foldlevelstart = 99
-            vim.wo.foldenable = true
-            vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-
-            local handler = function(virtText, lnum, endLnum, width, truncate)
-                local newVirtText = {}
-                local suffix = (" 󰁂 %d "):format(endLnum - lnum)
-                local sufWidth = vim.fn.strdisplaywidth(suffix)
-                local targetWidth = width - sufWidth
-                local curWidth = 0
-                for _, chunk in ipairs(virtText) do
-                    local chunkText = chunk[1]
-                    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                    if targetWidth > curWidth + chunkWidth then
-                        table.insert(newVirtText, chunk)
-                    else
-                        chunkText = truncate(chunkText, targetWidth - curWidth)
-                        local hlGroup = chunk[2]
-                        table.insert(newVirtText, { chunkText, hlGroup })
-                        chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                        -- str width returned from truncate() may less than 2nd argument, need padding
-                        if curWidth + chunkWidth < targetWidth then
-                            suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-                        end
-                        break
-                    end
-                    curWidth = curWidth + chunkWidth
-                end
-                table.insert(newVirtText, { suffix, "MoreMsg" })
-                return newVirtText
-            end
-
-            require("ufo").setup({ fold_virt_text_handler = handler })
-        end,
     },
     {
         "folke/which-key.nvim",
@@ -454,13 +426,6 @@ return {
         end,
     },
     {
-        "danymat/neogen",
-        cmd = "Neogen",
-        config = function()
-            require("neogen").setup({ snippet_engine = "luasnip" })
-        end,
-    },
-    {
         "stevearc/quicker.nvim",
         event = "FileType qf",
         opts = {
@@ -497,16 +462,6 @@ return {
                 desc = "Toggle loclist",
             },
         },
-    },
-    {
-        "ryoppippi/vim-svelte-inspector",
-        dependencies = {
-            "willothy/flatten.nvim",
-            "lewis6991/fileline.nvim",
-            "nvim-lua/plenary.nvim",
-        },
-        lazy = true,
-        config = true,
     },
     {
         "folke/snacks.nvim",

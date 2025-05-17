@@ -79,6 +79,7 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
+            -- "ravitemer/mcphub.nvim",
         },
         init = function()
             vim.cmd([[cab cc CodeCompanion]])
@@ -105,6 +106,16 @@ return {
                     adapter = "copilot",
                 },
             },
+            -- extensions = {
+            --     mcphub = {
+            --         callback = "mcphub.extensions.codecompanion",
+            --         opts = {
+            --             show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
+            --             make_vars = true, -- make chat #variables from MCP server resources
+            --             make_slash_commands = true, -- make /slash_commands from MCP server prompts
+            --         },
+            --     },
+            -- },
             adapters = {
                 anthropic = function()
                     return require("codecompanion.adapters").extend("anthropic", {
@@ -130,4 +141,18 @@ return {
             { "<LocalLeader>a", "<cmd>CodeCompanionChat Add<cr>", mode = "v" },
         },
     },
+    -- {
+    --     "ravitemer/mcphub.nvim",
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
+    --     },
+    --     -- uncomment the following line to load hub lazily
+    --     -- cmd = "MCPHub",  -- lazy load
+    --     build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
+    --     -- build = "bundled_build.lua",  -- Use this and set use_bundled_binary = true in opts  (see Advanced configuration)
+    --     -- opts = {
+    --     --     use_bundled_binary = true
+    --     -- }
+    --     opts = {},
+    -- },
 }

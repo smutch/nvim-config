@@ -17,14 +17,16 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             { "williamboman/mason.nvim", config = true },
-            { "williamboman/mason-lspconfig.nvim", opts = {
-                        "lua-language-server",
-                        "stylua",
-                        "shellcheck",
-                        "basedpyright",
-                        "ruff",
-                        "copilot-language-server"
-                }
+            {
+                "williamboman/mason-lspconfig.nvim",
+                opts = {
+                    "lua-language-server",
+                    "stylua",
+                    "shellcheck",
+                    "basedpyright",
+                    "ruff",
+                    "copilot-language-server",
+                },
             },
         },
         config = function()
@@ -45,11 +47,7 @@ return {
     },
     {
         "folke/lsp-trouble.nvim",
-        config = function()
-            require("trouble").setup()
-            -- Load up last search in buffer into the location list and open it
-            vim.keymap.set("n", "<leader>L", ":<C-u>lvimgrep // % | Trouble loclist<CR>")
-        end,
+        opts = {},
     },
     {
         "mrcjkb/rustaceanvim",
@@ -106,6 +104,37 @@ return {
     },
     {
         "stevearc/conform.nvim",
+        opts = {
+            default_format_opts = {
+                lsp_format = "fallback",
+            },
+            formatters_by_ft = {
+                lua = { "stylua" },
+                -- Conform will run multiple formatters sequentially
+                python = { "ruff_format" },
+                -- You can customize some of the format options for the filetype (:help conform.format)
+                rust = { "rustfmt" },
+                -- Conform will run the first available formatter
+                javascript = { "prettierd", "prettier", stop_after_first = true },
+                html = { "prettierd", "prettier", stop_after_first = true },
+                json = { "prettierd", "prettier", stop_after_first = true },
+                yaml = { "prettierd", "prettier", stop_after_first = true },
+                markdown = { "prettierd", "prettier", stop_after_first = true },
+                bash = { "shfmt" },
+                sh = { "shfmt" },
+                quarto = { "injected" },
+            },
+        },
+        keys = {
+            {
+                "<localleader>f",
+                function()
+                    require("conform").format()
+                end,
+                desc = "Format code using conform",
+                silent = true,
+            },
+        },
     },
     {
         "mfussenegger/nvim-lint",
@@ -136,8 +165,8 @@ return {
         "bassamsdata/namu.nvim",
         lazy = false,
         opts = {
-			ui_select = { enable = true }, -- vim.ui.select() wrapper
-		},
+            ui_select = { enable = true }, -- vim.ui.select() wrapper
+        },
         keys = {
             { "gr/", ":Namu symbols<cr>", desc = "Workspace symbols" },
             { "gr?", ":Namu workspace<cr>", desc = "Workspace symbols" },

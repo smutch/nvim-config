@@ -1,7 +1,7 @@
 -- LSP
 local M = {}
 
-local h = require("helpers")
+-- local h = require("helpers")
 -- vim.lsp.set_log_level("debug")
 
 vim.cmd("hi LspDiagnosticsVirtualTextWarning guifg=#7d5500")
@@ -16,21 +16,9 @@ vim.diagnostic.config({
     virtual_lines = false,
 })
 
--- using rachartier/tiny-inline-diagnostic.nvim for this now
---[[ local function toggle_lsp_virtual_text()
-    local conf = vim.diagnostic.config()
-    if conf.virtual_text == false then
-        conf.virtual_text = { spacing = 4 }
-    else
-        conf.virtual_text = false
-    end
-    vim.diagnostic.config(conf)
-end
-vim.keymap.set("n", "grv", toggle_lsp_virtual_text, { noremap = true, desc = "Toggle (v)irtual text diagnostics" }) ]]
-
 local function toggle_lsp_virtual_lines()
     local conf = vim.diagnostic.config()
-    if conf.virtual_lines == false then
+    if conf and not conf.virtual_lines then
         conf.virtual_lines = true
     else
         conf.virtual_text = false
@@ -43,13 +31,13 @@ vim.keymap.set("n", "grL", toggle_lsp_virtual_lines, { noremap = true, desc = "T
 local function toggle_lsp_inlay_hints(bufnr)
     if vim.lsp.inlay_hint.is_enabled(bufnr) then
         if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
-            vim.lsp.inlay_hint.enable(bufnr, false)
+            vim.lsp.inlay_hint.enable(false)
         else
             vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
         end
     else
         if vim.version.lt(vim.version(), vim.version("v0.10.0-dev")) then
-            vim.lsp.inlay_hint.enable(bufnr, true)
+            vim.lsp.inlay_hint.enable(true)
         else
             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
@@ -129,29 +117,6 @@ vim.api.nvim_create_autocmd("FileType", {
         })
     end,
 })
-
-require("conform").setup({
-    default_format_opts = {
-        lsp_format = "fallback",
-    },
-    formatters_by_ft = {
-        lua = { "stylua" },
-        -- Conform will run multiple formatters sequentially
-        python = { "ruff_format" },
-        -- You can customize some of the format options for the filetype (:help conform.format)
-        rust = { "rustfmt" },
-        -- Conform will run the first available formatter
-        javascript = { "prettierd", "prettier", stop_after_first = true },
-        html = { "prettierd", "prettier", stop_after_first = true },
-        json = { "prettierd", "prettier", stop_after_first = true },
-        yaml = { "prettierd", "prettier", stop_after_first = true },
-        markdown = { "prettierd", "prettier", stop_after_first = true },
-        bash = { "shfmt" },
-        sh = { "shfmt" },
-        quarto = { "injected" },
-    },
-})
-vim.keymap.set("n", "<localleader>f", "<cmd>lua require('conform').format()<CR>", { silent = true })
 
 M.on_attach = on_attach
 return M
