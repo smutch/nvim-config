@@ -164,15 +164,16 @@ return {
     {
         "bassamsdata/namu.nvim",
         lazy = false,
-        opts = {
-            ui_select = { enable = true }, -- vim.ui.select() wrapper
-        },
+        -- opts = {
+        --     ui_select = { enable = true }, -- vim.ui.select() wrapper
+        -- },
+        opts = {},
         keys = {
-            { "gr/", ":Namu symbols<cr>", desc = "Workspace symbols" },
-            { "gr?", ":Namu workspace<cr>", desc = "Workspace symbols" },
-            { "gre", ":Namu diagnostics<cr>", desc = "Document diagnostics" },
-            { "grh", ":Namu call in<cr>", desc = "Call hierarchy" },
-            { "<leader>fc", ":Namu colorscheme<cr>", desc = "Colorscheme picker" },
+            { "<leader>ls", ":Namu symbols<cr>", desc = "Workspace (s)ymbols (Namu)" },
+            { "<leader>lw", ":Namu workspace<cr>", desc = "Workspace (s)ymbols (Namu)" },
+            { "<leader>le", ":Namu diagnostics<cr>", desc = "Document (d)iagnostics (Namu)" },
+            { "<leader>lh", ":Namu call in<cr>", desc = "Call (h)ierarchy (Namu)" },
+            { "<leader>fc", ":Namu colorscheme<cr>", desc = "(C)olorscheme picker (Namu)" },
         },
     },
 }

@@ -1,14 +1,14 @@
 return {
-    { 'echasnovski/mini.nvim', version = '*' },
-    { 'tpope/vim-rsi' },
+    { "echasnovski/mini.nvim", version = "*" },
+    { "tpope/vim-rsi" },
     {
         "folke/flash.nvim",
         event = "VeryLazy",
         ---@type Flash.Config
         opts = {
             modes = {
-                search = { enabled = false }
-            }
+                search = { enabled = false },
+            },
         },
         keys = {
             {
@@ -61,39 +61,52 @@ return {
             },
         },
     },
-    { 'tpope/vim-repeat' },
+    { "tpope/vim-repeat" },
     {
-        'numToStr/Comment.nvim',
+        "numToStr/Comment.nvim",
         config = function()
-            require('Comment').setup { ignore = '^$' }
+            require("Comment").setup({ ignore = "^$" })
 
-            vim.api.nvim_set_keymap('n', '<leader><leader>', 'gcc', { desc = 'Toggle comments linewise' })
-            vim.api.nvim_set_keymap('v', '<leader><leader>', 'gc', { desc = 'Toggle comments in selection' })
-        end
+            vim.api.nvim_set_keymap("n", "<leader><leader>", "gcc", { desc = "Toggle comments linewise" })
+            vim.api.nvim_set_keymap("v", "<leader><leader>", "gc", { desc = "Toggle comments in selection" })
+        end,
     },
     {
-        'echasnovski/mini.align',
+        "echasnovski/mini.align",
         config = function()
-            require('mini.align').setup({
+            require("mini.align").setup({
                 mappings = {
-                    start = 'gA',
-                    start_with_preview = '1gA',
+                    start = "gA",
+                    start_with_preview = "1gA",
                 },
             })
-        end
+        end,
     },
-    { 'michaeljsmith/vim-indent-object' },
-    { 'tpope/vim-surround' },
-    { 'jeffkreeftmeijer/vim-numbertoggle' },
-    { 'chrisbra/unicode.vim' },
-    { 'wellle/targets.vim' },
-    { 'NMAC427/guess-indent.nvim',        opts = {} },
-    { 'andymass/vim-matchup',             opts = {} },
+    { "michaeljsmith/vim-indent-object" },
+    { "tpope/vim-surround" },
+    { "jeffkreeftmeijer/vim-numbertoggle" },
     {
-        'Wansmer/treesj',
-        dependencies = { 'nvim-treesitter/nvim-treesitter' },
-        opts = { use_default_keymaps = false, },
-        keys = { { 'gj', function() require('treesj').toggle() end, desc = "toggle join/merge" } },
+        "chrisbra/unicode.vim",
+        init = function()
+            vim.g.Unicode_no_default_mappings = 1
+        end,
+    },
+    { "wellle/targets.vim" },
+    { "NMAC427/guess-indent.nvim", opts = {} },
+    { "andymass/vim-matchup", opts = {} },
+    {
+        "Wansmer/treesj",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        opts = { use_default_keymaps = false },
+        keys = {
+            {
+                "gj",
+                function()
+                    require("treesj").toggle()
+                end,
+                desc = "toggle join/merge",
+            },
+        },
     },
     {
         "jake-stewart/multicursor.nvim",
@@ -106,17 +119,50 @@ return {
             local set = vim.keymap.set
 
             -- Add or skip cursor above/below the main cursor.
-            set({ "n", "v" }, "g<up>", function() mc.lineAddCursor(-1) end)
-            set({ "n", "v" }, "g<down>", function() mc.lineAddCursor(1) end)
-            set({ "n", "v" }, "g<S-up>", function() mc.lineSkipCursor(-1) end)
-            set({ "n", "v" }, "g<S-down>", function() mc.lineSkipCursor(1) end)
+            set({ "n", "v" }, "g<up>", function()
+                mc.lineAddCursor(-1)
+            end, { desc = "Add cursor above" })
+            set({ "n", "v" }, "g<down>", function()
+                mc.lineAddCursor(1)
+            end, { desc = "Add cursor below" })
+            set({ "n", "v" }, "g<S-up>", function()
+                mc.lineSkipCursor(-1)
+            end, { desc = "Skip cursor above" })
+            set({ "n", "v" }, "g<S-down>", function()
+                mc.lineSkipCursor(1)
+            end, { desc = "Skip cursor below" })
 
             -- Add or skip adding a new cursor by matching word/selection
-            set({ "n", "v" }, "<M-d>", function() mc.matchAddCursor(1) end)
-            set({ "n", "v" }, "<M->>", function() mc.matchSkipCursor(1) end)
-            set({ "n", "v" }, "<M-S-d>", function() mc.matchAddCursor(-1) end)
-            set({ "n", "v" }, "<M-<>", function() mc.matchSkipCursor(-1) end)
-            set({ "n", "v" }, "<M-*>", function() mc.matchAllAddCursors() end)
+            set({ "n", "v" }, "<M-d>", function()
+                mc.matchAddCursor(1)
+            end, { desc = "Add cursor by matching forward" })
+            set({ "n", "v" }, "gl", function()
+                mc.matchAddCursor(1)
+            end, { desc = "Add cursor by matching forward" })
+            set({ "n", "v" }, "<M->>", function()
+                mc.matchSkipCursor(1)
+            end, { desc = "Skip cursor by matching forward" })
+            set({ "n", "v" }, "g>", function()
+                mc.matchSkipCursor(1)
+            end, { desc = "Skip cursor by matching forward" })
+            set({ "n", "v" }, "<M-S-d>", function()
+                mc.matchAddCursor(-1)
+            end, { desc = "Add cursor by matching backwards" })
+            set({ "n", "v" }, "gL", function()
+                mc.matchAddCursor(-1)
+            end, { desc = "Add cursor by matching backwards" })
+            set({ "n", "v" }, "<M-<>", function()
+                mc.matchSkipCursor(-1)
+            end, { desc = "Skip cursor by matching backwards" })
+            set({ "n", "v" }, "g<", function()
+                mc.matchSkipCursor(-1)
+            end, { desc = "Skip cursor by matching backwards" })
+            set({ "n", "v" }, "<M-*>", function()
+                mc.matchAllAddCursors()
+            end, { desc = "Add all cursors by matching" })
+            set({ "n", "v" }, "ga", function()
+                mc.matchAllAddCursors()
+            end, { desc = "Add all cursors by matching" })
 
             -- You can also add cursors with any motion you prefer:
             -- set("n", "<right>", function()
@@ -127,16 +173,16 @@ return {
             -- end)
 
             -- Rotate the main cursor.
-            set({ "n", "v" }, "g<left>", mc.nextCursor)
-            set({ "n", "v" }, "g<right>", mc.prevCursor)
+            set({ "n", "v" }, "g<left>", mc.nextCursor, { desc = "Rotate main cursor left" })
+            set({ "n", "v" }, "g<right>", mc.prevCursor, { desc = "Rotate main cursor right" })
 
             -- Delete the main cursor.
-            set({ "n", "v" }, "<c-x>", mc.deleteCursor)
+            set({ "n", "v" }, "<leader>mx", mc.deleteCursor, { desc = "Delete main cursor" })
 
             -- Add and remove cursors with control + left click.
             set("n", "<c-leftmouse>", mc.handleMouse)
 
-            set({ "n", "v" }, "<c-q>", function()
+            set({ "n", "v" }, "<leader>mq", function()
                 if mc.cursorsEnabled() then
                     -- Stop other cursors from moving.
                     -- This allows you to reposition the main cursor.
@@ -144,7 +190,7 @@ return {
                 else
                     mc.addCursor()
                 end
-            end)
+            end, { desc = "Cancel multi cursor" })
 
             -- -- clone every cursor and disable the originals
             -- set({"n", "v"}, "<leader><c-q>", mc.duplicateCursors)
@@ -160,7 +206,7 @@ return {
             end)
 
             -- Align cursor columns.
-            set("v", "<leader>a", mc.alignCursors)
+            set("v", "<leader>ma", mc.alignCursors, { desc = "Align cursor columns" })
 
             -- Split visual selections by regex.
             -- set("v", "S", mc.splitCursors)
@@ -170,7 +216,7 @@ return {
             set("v", "A", mc.appendVisual)
 
             -- match new cursors within visual selections by regex.
-            set("v", "<M-/>", mc.matchCursors)
+            set("v", "<leader>m/", mc.matchCursors, { desc = "Match cursors by regex" })
 
             -- -- Rotate visual selection contents.
             -- set("v", "<leader>{",
@@ -186,6 +232,6 @@ return {
             hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
             hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
             hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
-        end
-    }
+        end,
+    },
 }

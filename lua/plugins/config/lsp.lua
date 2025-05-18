@@ -48,18 +48,17 @@ local on_attach = function(client, bufnr)
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
     -- NOTE: Also see the Namu bindings
-    vim.keymap.set("n", "grd", vim.lsp.buf.definition, { silent = true, buffer = 0 })
-    vim.keymap.set("n", "grD", vim.lsp.buf.declaration, { silent = true, buffer = 0 })
-    vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, { silent = true, buffer = 0 })
-    vim.keymap.set("n", "grs", vim.lsp.buf.signature_help, { silent = true, buffer = 0 })
-    vim.keymap.set("n", "g/", vim.diagnostic.open_float, { silent = true, buffer = 0 })
+    vim.keymap.set("n", "grd", vim.lsp.buf.declaration, { silent = true, buffer = 0, desc = "Go to (d)eclaration" })
+    vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, { silent = true, buffer = 0 , desc = "Go to (t)ype definition"})
+    vim.keymap.set("n", "grs", vim.lsp.buf.signature_help, { silent = true, buffer = 0, desc = "Show (s)ignature help" })
+    vim.keymap.set("n", "<localleader>v", vim.diagnostic.open_float, { silent = true, buffer = 0, desc = "Show (v)irtual text diagnostics" })
     if client.name == "rust_analyzer" then
         vim.keymap.set("n", "K", function()
             vim.cmd.RustLsp({ "hover", "actions" })
-        end, { noremap = true, silent = true, buffer = bufnr })
-        vim.keymap.set("n", "gre", function()
+        end, { noremap = true, silent = true, buffer = bufnr, desc = "Show hover" })
+        vim.keymap.set("n", "<leader>lx", function()
             vim.cmd.RustLsp("explainError")
-        end, { noremap = true, silent = true, buffer = bufnr })
+        end, { noremap = true, silent = true, buffer = bufnr, desc = "Show e(x)plain error" })
     end
 
     vim.api.nvim_command('call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticSignError"})')
@@ -81,14 +80,16 @@ end
 
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
--- nvim-ufo
-capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
-
 vim.lsp.config("*", {
     capabilities = capabilities,
     on_attach = on_attach,
 })
 
+-- Most LSPs are automatically started by mason-lspconfig, but if they haven't been installed with Mason then we need to
+-- start them manually. Here we use the `lspconfig` module to start them.
+vim.lsp.enable("julials")
+
+-- Here there is no lsp-config for Janet, so we define and start it manually.
 local augrp = vim.api.nvim_create_augroup("LSP", {})
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "janet" },

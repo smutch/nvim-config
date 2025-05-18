@@ -9,7 +9,6 @@ return {
             vim.keymap.set('n', '<leader>gd', ':Git diff<CR>')
             vim.keymap.set('n', '<leader>gp', ':Git pull<CR>')
             vim.keymap.set('n', '<leader>gP', ':Git push<CR>')
-            vim.keymap.set('n', '<leader>g/', ':Git grep<CR>')
         end
     },
     { 'junegunn/gv.vim' },
