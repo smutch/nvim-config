@@ -3,7 +3,7 @@ return {
         "saghen/blink.cmp",
         lazy = false, -- lazy loading handled internally
         -- optional: provides snippets for the snippet source
-        dependencies = { "rafamadriz/friendly-snippets", { "L3MON4D3/LuaSnip", version = "v2.*" } },
+        dependencies = { "rafamadriz/friendly-snippets", "echasnovski/mini.icons" },
 
         -- use a release tag to download pre-built binaries
         version = "v0.*",
@@ -21,23 +21,14 @@ return {
                     "select_next",
                     "fallback",
                 },
+                ["<M-j>"] = { "snippet_forward", function(cmp) cmp.show_and_insert({ providers = { 'snippets' } }) end, "fallback" },
+                ["<M-k>"] = { "snippet_backward", "fallback" },
                 ["<CR>"] = { "accept", "fallback" },
                 ["<S-Tab>"] = { "select_prev", "fallback" },
                 ["<Up>"] = { "select_prev", "fallback" },
                 ["<Down>"] = { "select_next", "fallback" },
                 ["<C-b>"] = { "scroll_documentation_up", "fallback" },
                 ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-            },
-
-            appearance = {
-                -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-                -- Useful for when your theme doesn't support blink.cmp
-                -- will be removed in a future release
-                use_nvim_cmp_as_default = true,
-            },
-
-            snippets = {
-                preset = "luasnip",
             },
 
             sources = {
@@ -48,6 +39,11 @@ return {
                         module = "lazydev.integrations.blink",
                         -- make lazydev completions top priority (see `:h blink.cmp`)
                         score_offset = 100,
+                    },
+                    snippets = {
+                        opts = {
+                            search_paths = { vim.fn.stdpath("config") .. "/snippets" },
+                        },
                     },
                 },
                 per_filetype = {
@@ -63,24 +59,18 @@ return {
                     selection = {
                         preselect = false,
                         auto_insert = false,
-                        -- preselect = function(ctx)
-                        --     return ctx.mode ~= "cmdline"
-                        -- end,
-                        -- auto_insert = function(ctx)
-                        --     return ctx.mode ~= "cmdline"
-                        -- end,
                     },
                 },
                 documentation = { auto_show = true, auto_show_delay_ms = 500 },
                 menu = {
-                    -- auto_show = function(ctx)
-                    --     return ctx.mode ~= "cmdline"
-                    -- end,
-                    -- nvim-cmp style menu
                     draw = {
-                        columns = {
-                            { "label", "label_description", gap = 1 },
-                            { "kind_icon", "kind" },
+                        components = {
+                            kind_icon = {
+                                text = function(ctx)
+                                    local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+                                    return kind_icon
+                                end,
+                            },
                         },
                     },
                 },
