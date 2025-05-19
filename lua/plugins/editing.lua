@@ -91,7 +91,16 @@ return {
             vim.g.Unicode_no_default_mappings = 1
         end,
     },
-    { "wellle/targets.vim" },
+    {
+        "wellle/targets.vim",
+        config = function()
+            vim.cmd([[
+            autocmd User targets#mappings#user call targets#mappings#extend({
+                \ 'B': {},
+                \ })
+            ]])
+        end,
+    },
     { "NMAC427/guess-indent.nvim", opts = {} },
     { "andymass/vim-matchup", opts = {} },
     {
