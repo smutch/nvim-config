@@ -1,5 +1,5 @@
 return {
-    { "echasnovski/mini.nvim", version = "*" },
+    { 'echasnovski/mini.pairs', version = '*', opts = {} },
     { "tpope/vim-rsi" },
     {
         "folke/flash.nvim",
