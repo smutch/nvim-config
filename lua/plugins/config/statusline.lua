@@ -131,7 +131,7 @@ end
 local lsp_server = function()
     local msg = ""
     local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-    local clients = vim.lsp.get_active_clients()
+    local clients = vim.lsp.get_clients()
     if next(clients) == nil then
         return msg
     end
@@ -144,13 +144,7 @@ local lsp_server = function()
     return msg
 end
 
-local harpoonline = require("harpoonline")
-harpoonline.setup({
-    on_update = function()
-        require("lualine").refresh()
-    end,
-})
-
+local arrow = require("arrow.statusline")
 local colors = theme_colors()
 
 require("lualine").setup({
@@ -178,7 +172,12 @@ require("lualine").setup({
                 sources = { "nvim_lsp" },
                 symbols = { error = " ", warn = " ", info = " ", hint = "󰨹 " },
             },
-            { harpoonline.format },
+            {
+                function()
+                    local bufnr = vim.api.nvim_get_current_buf()
+                    return arrow.text_for_statusline_with_icons(bufnr)
+                end,
+            },
             { "overseer" },
             { "macro_recording", "%S" },
         },
