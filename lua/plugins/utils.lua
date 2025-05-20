@@ -606,7 +606,7 @@ return {
                 desc = "Highlights",
             },
             {
-                "<leader>fs",
+                "<leader>fi",
                 function()
                     Snacks.picker.icons()
                 end,
@@ -660,6 +660,27 @@ return {
                     Snacks.picker.undo()
                 end,
                 desc = "Undo History",
+            },
+            {
+                "<leader>ls",
+                function()
+                    Snacks.picker.lsp_symbols({ layout = { preset = "vscode", preview = "main" } })
+                end,
+                desc = "LSP Symbols",
+            },
+            {
+                "<leader>lw",
+                function()
+                    Snacks.picker.lsp_workspace_symbols({ layout = { preset = "vscode", preview = "main" } })
+                end,
+                desc = "LSP Workspace Symbols",
+            },
+            {
+                "<leader>lc",
+                function()
+                    Snacks.picker.lsp_config({ layout = { preset = "vscode", preview = "main" } })
+                end,
+                desc = "LSP Configs",
             },
         },
     },
