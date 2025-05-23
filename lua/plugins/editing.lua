@@ -1,10 +1,11 @@
 return {
-    { 'echasnovski/mini.pairs', version = '*', opts = {} },
+    { "echasnovski/mini.pairs", version = "*", opts = {} },
     { "tpope/vim-rsi" },
     {
         "folke/flash.nvim",
         event = "VeryLazy",
         ---@type Flash.Config
+        ---@diagnostic disable-next-line: missing-fields
         opts = {
             modes = {
                 search = { enabled = false },
@@ -65,6 +66,7 @@ return {
     {
         "numToStr/Comment.nvim",
         config = function()
+            ---@diagnostic disable-next-line: missing-fields
             require("Comment").setup({ ignore = "^$" })
 
             vim.api.nvim_set_keymap("n", "<leader><leader>", "gcc", { desc = "Toggle comments linewise" })
@@ -235,10 +237,10 @@ return {
 
             -- Customize how cursors look.
             local hl = vim.api.nvim_set_hl
-            hl(0, "MultiCursorCursor", { link = "Cursor" })
+            hl(0, "MultiCursorCursor", { reverse = true })
             hl(0, "MultiCursorVisual", { link = "Visual" })
             hl(0, "MultiCursorSign", { link = "SignColumn" })
-            hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
+            hl(0, "MultiCursorDisabledCursor", { reverse = true })
             hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
             hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
         end,
