@@ -35,15 +35,7 @@ return {
     },
     {
         "kosayoda/nvim-lightbulb",
-        config = function()
-            vim.fn.sign_define("LightBulbSign", { text = "󰌵", texthl = "", linehl = "", numhl = "" })
-            local augrp = vim.api.nvim_create_augroup("Projects", {})
-            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-                group = augrp,
-                pattern = { "*" },
-                callback = require("nvim-lightbulb").update_lightbulb,
-            })
-        end,
+        opts = { autocmd = { enabled = true } },
     },
     {
         "folke/lsp-trouble.nvim",

@@ -10,7 +10,14 @@ vim.cmd("hi! link SignColumn Normal")
 vim.diagnostic.config({
     underline = true,
     virtual_text = false,
-    signs = true,
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.INFO] = "",
+            [vim.diagnostic.severity.HINT] = ""
+        }
+    },
     update_in_insert = false,
     severity_sort = true,
     virtual_lines = false,
@@ -49,9 +56,24 @@ local on_attach = function(client, bufnr)
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
     -- NOTE: Also see the Namu bindings
     vim.keymap.set("n", "grd", vim.lsp.buf.declaration, { silent = true, buffer = 0, desc = "Go to (d)eclaration" })
-    vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, { silent = true, buffer = 0 , desc = "Go to (t)ype definition"})
-    vim.keymap.set("n", "grs", vim.lsp.buf.signature_help, { silent = true, buffer = 0, desc = "Show (s)ignature help" })
-    vim.keymap.set("n", "<localleader>v", vim.diagnostic.open_float, { silent = true, buffer = 0, desc = "Show (v)irtual text diagnostics" })
+    vim.keymap.set(
+        "n",
+        "grt",
+        vim.lsp.buf.type_definition,
+        { silent = true, buffer = 0, desc = "Go to (t)ype definition" }
+    )
+    vim.keymap.set(
+        "n",
+        "grs",
+        vim.lsp.buf.signature_help,
+        { silent = true, buffer = 0, desc = "Show (s)ignature help" }
+    )
+    vim.keymap.set(
+        "n",
+        "<localleader>v",
+        vim.diagnostic.open_float,
+        { silent = true, buffer = 0, desc = "Show (v)irtual text diagnostics" }
+    )
     if client.name == "rust_analyzer" then
         vim.keymap.set("n", "K", function()
             vim.cmd.RustLsp({ "hover", "actions" })
@@ -60,11 +82,6 @@ local on_attach = function(client, bufnr)
             vim.cmd.RustLsp("explainError")
         end, { noremap = true, silent = true, buffer = bufnr, desc = "Show e(x)plain error" })
     end
-
-    vim.api.nvim_command('call sign_define("DiagnosticSignError", {"text" : "", "texthl" : "DiagnosticSignError"})')
-    vim.api.nvim_command('call sign_define("DiagnosticSignWarn", {"text" : "", "texthl" : "DiagnosticSignWarn"})')
-    vim.api.nvim_command('call sign_define("DiagnosticSignInfo", {"text" : "", "texthl" : "DiagnosticSignInfo"})')
-    vim.api.nvim_command('call sign_define("DiagnosticSignHint", {"text" : "", "texthl" : "DiagnosticSignHint"})')
 
     vim.g.lsp_diagnostic_sign_priority = 100
 
