@@ -79,7 +79,8 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
-            -- "ravitemer/mcphub.nvim",
+            "ravitemer/codecompanion-history.nvim",
+            "ravitemer/mcphub.nvim",
         },
         init = function()
             vim.cmd([[cab cc CodeCompanion]])
@@ -106,16 +107,20 @@ return {
                     adapter = "copilot",
                 },
             },
-            -- extensions = {
-            --     mcphub = {
-            --         callback = "mcphub.extensions.codecompanion",
-            --         opts = {
-            --             show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
-            --             make_vars = true, -- make chat #variables from MCP server resources
-            --             make_slash_commands = true, -- make /slash_commands from MCP server prompts
-            --         },
-            --     },
-            -- },
+            extensions = {
+                mcphub = {
+                    callback = "mcphub.extensions.codecompanion",
+                    opts = {
+                        show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
+                        make_vars = true, -- make chat #variables from MCP server resources
+                        make_slash_commands = true, -- make /slash_commands from MCP server prompts
+                    },
+                },
+                history = {
+                    enabled = true,
+                    picker = "snacks",
+                },
+            },
             adapters = {
                 anthropic = function()
                     return require("codecompanion.adapters").extend("anthropic", {

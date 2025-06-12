@@ -12,13 +12,14 @@ return {
     },
     {
         "OXY2DEV/markview.nvim",
+        lazy = false,
         dependencies = {
             "echasnovski/mini.icons",
         },
         opts = {
             preview = {
-                -- hybrid_modes = { "n" },
-                hybrid_modes = { },
+                enable = false,
+                hybrid_modes = {},
                 ignore_buftypes = {},
                 filetypes = { "markdown", "pandoc", "quarto", "markdown.pandoc", "Avante", "codecompanion" },
             },
@@ -41,6 +42,19 @@ return {
                         end,
                     },
                 },
+                code_blocks = {
+                    enable = true,
+                    style = "simple",
+                },
+            },
+        },
+        keys = {
+            {
+                "<localleader>m",
+                function()
+                    require("markview").commands.Toggle()
+                end,
+                desc = "Toggle Markview",
             },
         },
     },

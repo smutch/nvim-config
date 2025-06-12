@@ -81,49 +81,47 @@ return {
             })
         end,
         keys = {
-            keys = {
-                {
-                    "<localleader>tr",
-                    function()
-                        require("neotest").run.run()
-                    end,
-                    desc = "Run nearest test",
-                },
-                {
-                    "<localleader>tR",
-                    function()
-                        require("neotest").run.run(vim.fn.expand("%"))
-                    end,
-                    desc = "Run all tests in file",
-                },
-                {
-                    "<localleader>tc",
-                    function()
-                        require("neotest").run.stop()
-                    end,
-                    desc = "Stop test run",
-                },
-                {
-                    "<localleader>ts",
-                    function()
-                        require("neotest").summary.toggle()
-                    end,
-                    desc = "Toggle test summary",
-                },
-                {
-                    "[t",
-                    function()
-                        require("neotest").jump.prev({ status = "failed" })
-                    end,
-                    desc = "Jump to previous failed test",
-                },
-                {
-                    "]t",
-                    function()
-                        require("neotest").jump.next({ status = "failed" })
-                    end,
-                    desc = "Jump to next failed test",
-                },
+            {
+                "<localleader>tr",
+                function()
+                    require("neotest").run.run()
+                end,
+                desc = "Run nearest test",
+            },
+            {
+                "<localleader>tR",
+                function()
+                    require("neotest").run.run(vim.fn.expand("%"))
+                end,
+                desc = "Run all tests in file",
+            },
+            {
+                "<localleader>tc",
+                function()
+                    require("neotest").run.stop()
+                end,
+                desc = "Stop test run",
+            },
+            {
+                "<localleader>ts",
+                function()
+                    require("neotest").summary.toggle()
+                end,
+                desc = "Toggle test summary",
+            },
+            {
+                "[t",
+                function()
+                    require("neotest").jump.prev({ status = "failed" })
+                end,
+                desc = "Jump to previous failed test",
+            },
+            {
+                "]t",
+                function()
+                    require("neotest").jump.next({ status = "failed" })
+                end,
+                desc = "Jump to next failed test",
             },
         },
     },
