@@ -1,5 +1,4 @@
 return {
-    { "echasnovski/mini.pairs", version = "*", opts = {} },
     { "tpope/vim-rsi" },
     {
         "folke/flash.nvim",
@@ -245,4 +244,34 @@ return {
             hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
         end,
     },
+    {
+      'saghen/blink.pairs',
+      version = '*', -- (recommended) only required with prebuilt binaries
+      dependencies = 'saghen/blink.download',
+
+      --- @module 'blink.pairs'
+      --- @type blink.pairs.Config
+      opts = {
+        mappings = {
+          -- you can call require("blink.pairs.mappings").enable() and require("blink.pairs.mappings").disable() to enable/disable mappings at runtime
+          enabled = true,
+          disabled_filetypes = {},
+          -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L12
+          pairs = {},
+        },
+        highlights = {
+          enabled = false,
+          groups = {
+            'BlinkPairsOrange',
+            'BlinkPairsPurple',
+            'BlinkPairsBlue',
+          },
+          matchparen = {
+            enabled = true,
+            group = 'MatchParen',
+          },
+        },
+        debug = false,
+      }
+  }
 }
