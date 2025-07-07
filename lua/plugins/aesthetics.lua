@@ -171,9 +171,10 @@ return {
         config = function()
             require("todo-comments").setup({
                 colors = {
-                    hint = { "Keyword", "#9d79d6" },
-                    warning = { "DiagnosticError", "#c94f6d" },
-                    error = { "DiagnosticWarn", "WarningMsg", "FBBF24" },
+                    -- info = { "@string.escape", "#3e8fb0" },
+                    -- hint = { "Keyword", "#9d79d6" },
+                    -- warning = { "DiagnosticError", "#c94f6d" },
+                    -- error = { "DiagnosticWarn", "WarningMsg", "FBBF24" },
                 },
                 gui_style = {
                     fg = "BOLD",
