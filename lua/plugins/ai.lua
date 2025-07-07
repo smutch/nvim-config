@@ -89,6 +89,21 @@ return {
             strategies = {
                 chat = {
                     adapter = "copilot",
+                    tools = {
+                        groups = {
+                            ["search_and_read"] = {
+                                description = "Access buffer, grep, and read files",
+                                tools = {
+                                    "buffer",
+                                    "grep_search",
+                                    "read_file",
+                                },
+                                opts = {
+                                    collapse_tools = true, -- When true, show as a single group reference instead of individual tools
+                                },
+                            },
+                        },
+                    },
                 },
                 inline = {
                     adapter = "copilot",
@@ -139,6 +154,14 @@ return {
                     })
                 end,
             },
+            display = {
+                chat = {
+                    window = {
+                        layout = "vertical",
+                        position = "right",
+                    },
+                },
+            },
         },
         keys = {
             { "<M-c>", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" } },
@@ -146,18 +169,13 @@ return {
             { "<LocalLeader>a", "<cmd>CodeCompanionChat Add<cr>", mode = "v" },
         },
     },
-    -- {
-    --     "ravitemer/mcphub.nvim",
-    --     dependencies = {
-    --         "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
-    --     },
-    --     -- uncomment the following line to load hub lazily
-    --     -- cmd = "MCPHub",  -- lazy load
-    --     build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
-    --     -- build = "bundled_build.lua",  -- Use this and set use_bundled_binary = true in opts  (see Advanced configuration)
-    --     -- opts = {
-    --     --     use_bundled_binary = true
-    --     -- }
-    --     opts = {},
-    -- },
+    {
+        "ravitemer/mcphub.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
+        },
+        cmd = "MCPHub", -- lazy load
+        build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
+        opts = {},
+    },
 }
