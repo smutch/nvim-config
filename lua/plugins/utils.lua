@@ -154,28 +154,28 @@ return {
         lazy = false,
         keys = {
             {
-                "<A-left>",
+                "<A-h>",
                 function()
                     require("smart-splits").resize_left()
                 end,
                 desc = "smart-splits - resize left",
             },
             {
-                "<A-down>",
+                "<A-j>",
                 function()
                     require("smart-splits").resize_down()
                 end,
                 desc = "smart-splits - resize down",
             },
             {
-                "<A-up>",
+                "<A-k>",
                 function()
                     require("smart-splits").resize_up()
                 end,
                 desc = "smart-splits - resize up",
             },
             {
-                "<A-right>",
+                "<A-l>",
                 function()
                     require("smart-splits").resize_right()
                 end,
@@ -236,13 +236,6 @@ return {
                     require("smart-splits").swap_buf_right()
                 end,
                 desc = "smart-splits - swap buffer right",
-            },
-            {
-                "<leader>R",
-                function()
-                    require("smart-splits").start_resize_mode()
-                end,
-                desc = "smart-splits - enter resize mode",
             },
         },
     },
