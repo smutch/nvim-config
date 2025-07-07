@@ -1,7 +1,10 @@
 return {
-    -- settings = {
-    --     julia = {
-    --         environmentPath = "./",
-    --     },
-    -- },
+    settings = {
+        julia = {
+            lint = {
+                missingrefs = "none",
+            },
+            --         environmentPath = "./",
+        },
+    },
 }
