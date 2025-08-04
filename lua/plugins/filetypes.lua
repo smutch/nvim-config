@@ -17,6 +17,7 @@ return {
             "echasnovski/mini.icons",
         },
         opts = {
+            experimental = { check_rtp_message = false },
             preview = {
                 enable = false,
                 hybrid_modes = {},
