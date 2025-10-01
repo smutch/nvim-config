@@ -3,7 +3,7 @@ return {
         "saghen/blink.cmp",
         lazy = false, -- lazy loading handled internally
         -- optional: provides snippets for the snippet source
-        dependencies = { "rafamadriz/friendly-snippets", "echasnovski/mini.icons" },
+        dependencies = { "rafamadriz/friendly-snippets", "echasnovski/mini.icons", "Kaiser-Yang/blink-cmp-git" },
 
         -- use a release tag to download pre-built binaries
         version = "v0.*",
@@ -21,7 +21,13 @@ return {
                     "select_next",
                     "fallback",
                 },
-                ["<M-j>"] = { "snippet_forward", function(cmp) cmp.show_and_insert({ providers = { 'snippets' } }) end, "fallback" },
+                ["<M-j>"] = {
+                    "snippet_forward",
+                    function(cmp)
+                        cmp.show_and_insert({ providers = { "snippets" } })
+                    end,
+                    "fallback",
+                },
                 ["<M-k>"] = { "snippet_backward", "fallback" },
                 ["<CR>"] = { "accept", "fallback" },
                 ["<S-Tab>"] = { "select_prev", "fallback" },
@@ -32,7 +38,7 @@ return {
             },
 
             sources = {
-                default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+                default = { "lazydev", "git", "lsp", "path", "snippets", "buffer" },
                 providers = {
                     lazydev = {
                         name = "LazyDev",
@@ -43,6 +49,13 @@ return {
                     snippets = {
                         opts = {
                             search_paths = { vim.fn.stdpath("config") .. "/snippets" },
+                        },
+                    },
+                    git = {
+                        module = "blink-cmp-git",
+                        name = "Git",
+                        opts = {
+                            -- options for the blink-cmp-git
                         },
                     },
                 },

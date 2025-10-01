@@ -56,19 +56,19 @@ return {
                         },
                     },
                 },
-                inline = {
-                    adapter = "copilot",
-                    keymaps = {
-                        accept_change = {
-                            modes = { n = "ga" },
-                            description = "Accept the suggested change",
-                        },
-                        reject_change = {
-                            modes = { n = "gr" },
-                            description = "Reject the suggested change",
-                        },
-                    },
-                },
+                -- inline = {
+                --     adapter = "copilot",
+                --     keymaps = {
+                --         accept_change = {
+                --             modes = { n = "ga" },
+                --             description = "Accept the suggested change",
+                --         },
+                --         reject_change = {
+                --             modes = { n = "gr" },
+                --             description = "Reject the suggested change",
+                --         },
+                --     },
+                -- },
                 cmd = {
                     adapter = "copilot",
                 },
@@ -88,22 +88,24 @@ return {
                 },
             },
             adapters = {
-                anthropic = function()
-                    return require("codecompanion.adapters").extend("anthropic", {
-                        env = {
-                            api_key = require("system").anthropic_api_key,
-                        },
-                    })
-                end,
-                copilot = function()
-                    return require("codecompanion.adapters").extend("copilot", {
-                        schema = {
-                            model = {
-                                default = "claude-sonnet-4",
+                http = {
+                    anthropic = function()
+                        return require("codecompanion.adapters").extend("anthropic", {
+                            env = {
+                                api_key = require("system").anthropic_api_key,
                             },
-                        },
-                    })
-                end,
+                        })
+                    end,
+                    copilot = function()
+                        return require("codecompanion.adapters").extend("copilot", {
+                            schema = {
+                                model = {
+                                    default = "claude-sonnet-4",
+                                },
+                            },
+                        })
+                    end,
+                },
             },
             display = {
                 chat = {
@@ -128,5 +130,80 @@ return {
         cmd = "MCPHub", -- lazy load
         build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
         opts = {},
+    },
+    {
+        "folke/sidekick.nvim",
+        opts = {
+            -- add any options here
+            cli = {
+                mux = {
+                    backend = "tmux",
+                    enabled = true,
+                },
+            },
+        },
+        keys = {
+            {
+                "<tab>",
+                function()
+                    -- if there is a next edit, jump to it, otherwise apply it if any
+                    if not require("sidekick").nes_jump_or_apply() then
+                        return "<Tab>" -- fallback to normal tab
+                    end
+                end,
+                expr = true,
+                desc = "Goto/Apply Next Edit Suggestion",
+            },
+            {
+                "<c-.>",
+                function()
+                    require("sidekick.cli").focus()
+                end,
+                mode = { "n", "x", "i", "t" },
+                desc = "Sidekick Switch Focus",
+            },
+            {
+                "<leader>aa",
+                function()
+                    require("sidekick.cli").toggle()
+                end,
+                desc = "Sidekick Toggle CLI",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>as",
+                function()
+                    require("sidekick.cli").select()
+                    -- Or to select only installed tools:
+                    -- require("sidekick.cli").select({ filter = { installed = true } })
+                end,
+                desc = "Sidekick Select CLI",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ac",
+                function()
+                    require("sidekick.cli").toggle({ name = "opencode", focus = true })
+                end,
+                desc = "Sidekick Claude Toggle",
+                mode = { "n", "v" },
+            },
+            -- {
+            --     "<leader>ag",
+            --     function()
+            --         require("sidekick.cli").toggle({ name = "grok", focus = true })
+            --     end,
+            --     desc = "Sidekick Grok Toggle",
+            --     mode = { "n", "v" },
+            -- },
+            {
+                "<leader>ap",
+                function()
+                    require("sidekick.cli").prompt()
+                end,
+                desc = "Sidekick Ask Prompt",
+                mode = { "n", "v" },
+            },
+        },
     },
 }

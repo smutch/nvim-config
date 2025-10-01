@@ -15,6 +15,7 @@ return {
         lazy = false,
         dependencies = {
             "echasnovski/mini.icons",
+            "nvim-treesitter/nvim-treesitter",
         },
         opts = {
             experimental = { check_rtp_message = false },

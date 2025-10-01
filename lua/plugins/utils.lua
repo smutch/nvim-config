@@ -60,9 +60,19 @@ return {
                     "size",
                     "mtime",
                 },
+                win_options = {
+                    signcolumn = "auto:2",
+                },
             })
             vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         end,
+    },
+    {
+        "refractalize/oil-git-status.nvim",
+        dependencies = {
+            "stevearc/oil.nvim",
+        },
+        config = true,
     },
     { "uga-rosa/ccc.nvim", opts = {}, ft = { "astro", "html", "css", "scss", "lua", "vim" } },
     {
@@ -528,7 +538,7 @@ return {
             {
                 "<leader>ff",
                 function()
-                    Snacks.picker.files({hidden = true, ignored = true})
+                    Snacks.picker.files({ hidden = true, ignored = true })
                 end,
                 desc = "Find Files",
             },
