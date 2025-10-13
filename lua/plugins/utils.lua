@@ -689,6 +689,7 @@ return {
         "sphamba/smear-cursor.nvim",
         opts = {
             filetypes_disabled = { "terminal", "qf", "snacks_terminal" },
+            smear_to_cmd = false
         },
     },
 }
