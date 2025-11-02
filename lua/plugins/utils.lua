@@ -414,6 +414,7 @@ return {
         opts = {
             bigfile = { enabled = true },
             bufdelete = { enabled = true },
+            gh = { enabled = true },
             image = { enabled = true, doc = { enabled = false } },
             indent = {
                 enabled = true,
@@ -435,8 +436,6 @@ return {
                 },
             },
             lazygit = { enabled = true },
-            scroll = { enabled = false },
-            terminal = { enabled = true },
             notifier = {
                 enabled = true,
                 top_down = false,
@@ -445,6 +444,10 @@ return {
                 enabled = true,
             },
             quickfile = { enabled = true },
+            scratch = {
+                ft = "markdown",
+            },
+            scroll = { enabled = false },
             statuscolumn = { enabled = true },
             styles = {
                 notification = {
@@ -452,9 +455,7 @@ return {
                     wo = { wrap = true }, -- Wrap notifications
                 },
             },
-            scratch = {
-                ft = "markdown",
-            },
+            terminal = { enabled = true },
             zen = { enabled = true },
         },
         keys = {
