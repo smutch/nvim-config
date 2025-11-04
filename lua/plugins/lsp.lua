@@ -16,16 +16,15 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            { "williamboman/mason.nvim", config = true },
+            { "mason-org/mason.nvim", config = true },
             {
-                "williamboman/mason-lspconfig.nvim",
+                "mason-org/mason-lspconfig.nvim",
                 opts = {
-                    "lua-language-server",
-                    "stylua",
-                    "shellcheck",
-                    "basedpyright",
-                    "ruff",
-                    "copilot-language-server",
+                    automatic_enable = {
+                        exclude = {
+                            "rust_analyzer", -- handled by rustaceanvim
+                        },
+                    },
                 },
             },
         },
@@ -43,8 +42,9 @@ return {
     },
     {
         "mrcjkb/rustaceanvim",
-        version = "^4", -- Recommended
+        version = "^6", -- Recommended
         ft = { "rust" },
+        lazy = false,
         config = function()
             vim.g.rustaceanvim = {
                 -- Plugin configuration

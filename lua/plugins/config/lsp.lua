@@ -74,7 +74,7 @@ local on_attach = function(client, bufnr)
         vim.diagnostic.open_float,
         { silent = true, buffer = 0, desc = "Show (v)irtual text diagnostics" }
     )
-    if client.name == "rust_analyzer" then
+    if client.name == "rust-analyzer" then
         vim.keymap.set("n", "K", function()
             vim.cmd.RustLsp({ "hover", "actions" })
         end, { noremap = true, silent = true, buffer = bufnr, desc = "Show hover" })
