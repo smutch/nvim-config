@@ -28,7 +28,7 @@ local function toggle_lsp_virtual_lines()
     if conf and not conf.virtual_lines then
         conf.virtual_lines = true
     else
-        conf.virtual_text = false
+        conf.virtual_lines = false
     end
     vim.diagnostic.config(conf)
 end

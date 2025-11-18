@@ -148,7 +148,6 @@ return {
         ft = { "clojure", "fennel", "racket", "janet" }, -- etc
         dependencies = {
             "stevearc/overseer.nvim",
-            "PaterJason/cmp-conjure",
         },
         config = function()
             require("conjure.main").main()

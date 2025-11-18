@@ -181,11 +181,11 @@ return {
                 mode = { "n", "v" },
             },
             {
-                "<leader>ac",
+                "<leader>ao",
                 function()
                     require("sidekick.cli").toggle({ name = "opencode", focus = true })
                 end,
-                desc = "Sidekick Claude Toggle",
+                desc = "Sidekick OpenCode Toggle",
                 mode = { "n", "v" },
             },
             -- {
