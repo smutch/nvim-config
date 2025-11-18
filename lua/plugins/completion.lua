@@ -3,7 +3,7 @@ return {
         "saghen/blink.cmp",
         lazy = false, -- lazy loading handled internally
         -- optional: provides snippets for the snippet source
-        dependencies = { "rafamadriz/friendly-snippets", "echasnovski/mini.icons", "Kaiser-Yang/blink-cmp-git" },
+        dependencies = { "rafamadriz/friendly-snippets", "echasnovski/mini.icons" },
 
         -- use a release tag to download pre-built binaries
         version = "v0.*",
@@ -38,7 +38,7 @@ return {
             },
 
             sources = {
-                default = { "lazydev", "git", "lsp", "path", "snippets", "buffer" },
+                default = { "lazydev", "lsp", "path", "snippets", "buffer" },
                 providers = {
                     lazydev = {
                         name = "LazyDev",
@@ -49,13 +49,6 @@ return {
                     snippets = {
                         opts = {
                             search_paths = { vim.fn.stdpath("config") .. "/snippets" },
-                        },
-                    },
-                    git = {
-                        module = "blink-cmp-git",
-                        name = "Git",
-                        opts = {
-                            -- options for the blink-cmp-git
                         },
                     },
                 },
