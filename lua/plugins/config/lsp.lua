@@ -115,10 +115,15 @@ vim.api.nvim_create_autocmd("FileType", {
         if string.sub(vim.fn.expand("%"), 1, string.len("conjure-log")) == "conjure-log" then
             return
         end
-        local path = "janet-lsp"
-        if vim.fn.has("macunix") == 1 then
-            -- path = vim.trim(vim.fn.system([[brew info janet | rg -A1 Installed | tail -n1 | cut -d' ' -f1]])) .. "/bin/janet-lsp"
-            path = "/opt/homebrew/bin/janet-lsp"
+        local path = vim.fn.exepath("janet"):gsub("janet$", "janet-lsp")
+        print(path)
+        if vim.fn.filereadable(path) == 0 then
+            if vim.fn.has("macunix") == 1 then
+        --         -- path = vim.trim(vim.fn.system([[brew info janet | rg -A1 Installed | tail -n1 | cut -d' ' -f1]])) .. "/bin/janet-lsp"
+                path = "/opt/homebrew/bin/janet-lsp"
+            elseif path:find(".pixi/bin") then
+                path = path:gsub(".pixi", ".pixi/envs/janet")
+            end
         end
         vim.lsp.start({
             name = "janet-lsp",
