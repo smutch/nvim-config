@@ -454,6 +454,9 @@ return {
                     style = "minimal",
                     wo = { wrap = true }, -- Wrap notifications
                 },
+                zen = {
+                    backdrop = { transparent = false, blend = 40 },
+                }
             },
             terminal = { enabled = true },
             zen = { enabled = true },
@@ -683,6 +686,20 @@ return {
                     Snacks.picker.lsp_config({ layout = { preset = "vscode", preview = "main" } })
                 end,
                 desc = "LSP Configs",
+            },
+            {
+                "<leader>zt",
+                function()
+                    Snacks.zen.zen()
+                end,
+                desc = "Toggle Zen Mode",
+            },
+            {
+                "<leader>zz",
+                function()
+                    Snacks.zen.zoom()
+                end,
+                desc = "Toggle Zen Mode",
             },
         },
     },

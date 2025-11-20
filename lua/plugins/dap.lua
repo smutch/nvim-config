@@ -1,7 +1,7 @@
 return {
     {
         "mfussenegger/nvim-dap",
-        event = "VeryLazy",
+        lazy = true,
         dependencies = {
             {
                 "rcarriga/nvim-dap-ui",
@@ -87,7 +87,7 @@ return {
                     -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
 
                     program = "${file}", -- This configuration will launch the current file if used.
-                    pythonPath = require("helpers").python_interpreter_path,
+                    pythonPath = function() return require("helpers").get_python_path().interpreter end,
                 },
             }
         end,

@@ -22,31 +22,46 @@ local function is_hatch_project()
     return false
 end
 
-local python_prefix = "/usr"
-if vim.g.python_prefix then
-    python_prefix = vim.g.python_prefix
-elseif vim.env.VIRTUAL_ENV then
-    python_prefix = vim.env.VIRTUAL_ENV
-elseif Path:new("./poetry.lock"):exists() then
-    python_prefix = string.sub(vim.fn.system("poetry env info --path"), 0, -2)
-elseif Path:new("./pixi.lock"):exists() then
-    python_prefix = string.sub(vim.fn.system('pixi --quiet run --locked "which python"'), 0, -13)
-elseif vim.env.CONDA_PREFIX then
-    python_prefix = vim.env.CONDA_PREFIX
-elseif is_hatch_project() then
-    python_prefix = string.sub(vim.fn.system("hatch env find"), 0, -2)
-elseif Path:new(vim.env.HOME .. "/.pyenv/shims/python"):exists() then
-    python_prefix = "/Users/smutch/.pyenv/shims/python"
+M.get_python_path = function()
+    local prefix = "/usr"
+
+    if vim.g.python_prefix then
+        prefix = vim.g.python_prefix
+    else
+        local buf_first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] or ""
+        if buf_first_line:match("^ *# */// script") then
+            prefix = vim.system({ "uv", "python", "find", "--script", vim.api.nvim_buf_get_name(0) })
+                :wait().stdout
+                :gsub("\n", "")
+            prefix = Path:new(prefix):parent():parent().filename
+        elseif vim.env.VIRTUAL_ENV then
+            prefix = vim.env.VIRTUAL_ENV
+        elseif Path:new("./poetry.lock"):exists() then
+            prefix = string.sub(vim.fn.system("poetry env info --path"), 0, -2)
+        elseif Path:new("./pixi.lock"):exists() then
+            prefix = string.sub(vim.fn.system('pixi --quiet run --locked "which python"'), 0, -13)
+        elseif vim.env.CONDA_PREFIX then
+            prefix = vim.env.CONDA_PREFIX
+        elseif is_hatch_project() then
+            prefix = string.sub(vim.fn.system("hatch env find"), 0, -2)
+        elseif Path:new(vim.env.HOME .. "/.pyenv/shims/python"):exists() then
+            prefix = "/Users/smutch/.pyenv/shims/python"
+        end
+    end
+
+    local interpreter = prefix .. "/bin/python"
+    if prefix:sub(-#"python") == "python" then
+        interpreter = prefix
+    end
+
+    vim.notify("Python interpreter: " .. interpreter, vim.log.levels.INFO)
+
+    return { interpreter = interpreter, prefix = prefix }
 end
 
-local python_interpreter_path = python_prefix .. "/bin/python"
-if python_prefix:sub(-#"python") == "python" then
-    python_interpreter_path = python_prefix
-end
-
-M.python_interpreter_path = python_interpreter_path
-M.python_prefix = python_prefix
-vim.g.python_prefix = python_prefix
+-- M.python_interpreter_path = python_interpreter_path
+-- M.python_prefix = python_prefix
+-- vim.g.python_prefix = python_prefix
 
 function M.fixssh()
     local h = io.popen("tmux show-environment")
