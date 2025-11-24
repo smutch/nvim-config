@@ -19,6 +19,10 @@ vim.o.undofile = true
 
 vim.opt.diffopt:append({ "algorithm:patience" })
 
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldmethod = "expr"
+vim.o.foldenable = false
+
 -- Include project specific options
 if vim.env.EXTRA_NVIM then
     local paths = vim.split(vim.env.EXTRA_NVIM, ":", { plain = true, trimempty = true })
