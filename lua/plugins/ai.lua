@@ -100,7 +100,7 @@ return {
                         return require("codecompanion.adapters").extend("copilot", {
                             schema = {
                                 model = {
-                                    default = "claude-sonnet-4",
+                                    default = "gpt-5-mini",
                                 },
                             },
                         })
@@ -140,6 +140,11 @@ return {
                     backend = "tmux",
                     enabled = true,
                 },
+                win = {
+                    keys = {
+                        prompt = { "<C-s>", "prompt", mode = "n" },
+                    },
+                },
             },
         },
         keys = {
@@ -157,10 +162,10 @@ return {
             {
                 "<c-.>",
                 function()
-                    require("sidekick.cli").focus()
+                    require("sidekick.cli").toggle()
                 end,
-                mode = { "n", "x", "i", "t" },
-                desc = "Sidekick Switch Focus",
+                desc = "Sidekick Toggle",
+                mode = { "n", "t", "i", "x" },
             },
             {
                 "<leader>aa",
@@ -168,17 +173,53 @@ return {
                     require("sidekick.cli").toggle()
                 end,
                 desc = "Sidekick Toggle CLI",
-                mode = { "n", "v" },
             },
             {
                 "<leader>as",
                 function()
                     require("sidekick.cli").select()
-                    -- Or to select only installed tools:
-                    -- require("sidekick.cli").select({ filter = { installed = true } })
                 end,
-                desc = "Sidekick Select CLI",
-                mode = { "n", "v" },
+                -- Or to select only installed tools:
+                -- require("sidekick.cli").select({ filter = { installed = true } })
+                desc = "Select CLI",
+            },
+            {
+                "<leader>ad",
+                function()
+                    require("sidekick.cli").close()
+                end,
+                desc = "Detach a CLI Session",
+            },
+            {
+                "<leader>at",
+                function()
+                    require("sidekick.cli").send({ msg = "{this}" })
+                end,
+                mode = { "x", "n" },
+                desc = "Send This",
+            },
+            {
+                "<leader>af",
+                function()
+                    require("sidekick.cli").send({ msg = "{file}" })
+                end,
+                desc = "Send File",
+            },
+            {
+                "<leader>av",
+                function()
+                    require("sidekick.cli").send({ msg = "{selection}" })
+                end,
+                mode = { "x" },
+                desc = "Send Visual Selection",
+            },
+            {
+                "<leader>ap",
+                function()
+                    require("sidekick.cli").prompt()
+                end,
+                mode = { "n", "x" },
+                desc = "Sidekick Select Prompt",
             },
             {
                 "<leader>ao",
@@ -186,22 +227,6 @@ return {
                     require("sidekick.cli").toggle({ name = "opencode", focus = true })
                 end,
                 desc = "Sidekick OpenCode Toggle",
-                mode = { "n", "v" },
-            },
-            -- {
-            --     "<leader>ag",
-            --     function()
-            --         require("sidekick.cli").toggle({ name = "grok", focus = true })
-            --     end,
-            --     desc = "Sidekick Grok Toggle",
-            --     mode = { "n", "v" },
-            -- },
-            {
-                "<leader>ap",
-                function()
-                    require("sidekick.cli").prompt()
-                end,
-                desc = "Sidekick Ask Prompt",
                 mode = { "n", "v" },
             },
         },
