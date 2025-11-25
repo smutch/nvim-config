@@ -40,69 +40,91 @@ require("nvim-treesitter.configs").setup({
         "typst",
     },
     incremental_selection = { enable = false },
-    textobjects = {
-        select = {
-            enable = true,
-
-            -- Automatically jump forward to textobj, similar to targets.vim
-            lookahead = true,
-
-            keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
-                ["aF"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["aC"] = "@class.outer",
-                ["ic"] = "@class.inner",
-                ["aP"] = "@parameter.outer",
-                ["ip"] = "@parameter.inner",
-                ["a#"] = "@comment.outer",
-                ["aB"] = "@block.outer",
-                ["ib"] = "@block.inner",
-
-                -- -- Or you can define your own textobjects like this
-                -- ["iF"] = {
-                --     python = "(function_definition) @function",
-                --     cpp = "(function_definition) @function",
-                --     c = "(function_definition) @function",
-                --     java = "(method_declaration) @function",
-                -- },
-            },
-        },
-        swap = {
-            enable = true,
-            swap_next = { ["gs"] = "@parameter.inner" },
-            swap_previous = { ["gS"] = "@parameter.inner" },
-        },
-        lsp_interop = {
-            enable = true,
-            peek_definition_code = { ["grp"] = "@function.outer", ["grP"] = "@class.outer" },
-        },
-        move = {
-            enable = true,
-            set_jumps = false, -- whether to set jumps in the jumplist
-            goto_next_start = {
-                ["]f"] = "@function.outer",
-                ["]]"] = "@class.outer",
-            },
-            goto_next_end = {
-                ["]F"] = "@function.outer",
-                ["]["] = "@class.outer",
-            },
-            goto_previous_start = {
-                ["[f"] = "@function.outer",
-                ["[["] = "@class.outer",
-            },
-            goto_previous_end = {
-                ["[F"] = "@function.outer",
-                ["[]"] = "@class.outer",
-            },
-        },
-    },
     matchup = {
         enable = true, -- mandatory, false will disable the whole extension
         -- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
         -- [options]
     },
 })
+
+require("nvim-treesitter-textobjects").setup({
+    move = {
+        set_jumps = true,
+    },
+})
+
+local move = require("nvim-treesitter-textobjects.move")
+local select = require("nvim-treesitter-textobjects.select")
+local swap = require("nvim-treesitter-textobjects.swap")
+local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+
+vim.keymap.set({ "x", "o" }, "af", function()
+    select.select_textobject("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "if", function()
+    select.select_textobject("@function.inner", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ac", function()
+    select.select_textobject("@class.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ic", function()
+    select.select_textobject("@class.inner", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ap", function()
+    select.select_textobject("@parameter.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ip", function()
+    select.select_textobject("@parameter.inner", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "a/", function()
+    select.select_textobject("@comment.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "i/", function()
+    select.select_textobject("@comment.inner", "textobjects")
+end)
+vim.keymap.set("n", "]p", function()
+    swap.swap_next("@parameter.inner")
+end)
+vim.keymap.set("n", "[p", function()
+    swap.swap_previous("@parameter.outer")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]m", function()
+    move.goto_next_start("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]]", function()
+    move.goto_next_start("@class.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]o", function()
+    move.goto_next_start({ "@loop.inner", "@loop.outer" }, "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]s", function()
+    move.goto_next_start("@local.scope", "locals")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]z", function()
+    move.goto_next_start("@fold", "folds")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]M", function()
+    move.goto_next_end("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "][", function()
+    move.goto_next_end("@class.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "[m", function()
+    move.goto_previous_start("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "[[", function()
+    move.goto_previous_start("@class.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "[M", function()
+    move.goto_previous_end("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "[]", function()
+    move.goto_previous_end("@class.outer", "textobjects")
+end)
+
+-- Repeat movement with ; and ,
+vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+
 vim.treesitter.language.register("astro", "tsx")
 vim.treesitter.language.register("markdown", "mdx")
