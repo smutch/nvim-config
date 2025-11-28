@@ -142,7 +142,7 @@ return {
                 },
                 win = {
                     keys = {
-                        prompt = { "<C-s>", "prompt", mode = "n" },
+                        prompt = { "<C-s>", "prompt", mode = { "n", "i" } },
                     },
                 },
             },

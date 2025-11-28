@@ -53,18 +53,12 @@ return {
         end,
     },
     {
-        "slugbyte/lackluster.nvim",
+        "atelierbram/Base2Tone-nvim",
         -- lazy = false,
         -- priority = 1000,
-        config = function()
-            ---@diagnostic disable-next-line: missing-fields
-            require("lackluster").setup({
-                tweak_syntax = {
-                    comment = "#4c4c4c",
-                },
-            })
-            -- vim.cmd.colorscheme('lackluster-mint')
-        end,
+        -- config = function()
+        --     vim.cmd.colorscheme("base2tone_evening_dark")
+        -- end,
     },
     {
         "nvim-lualine/lualine.nvim",
