@@ -63,16 +63,6 @@ return {
     },
     { "tpope/vim-repeat" },
     {
-        "numToStr/Comment.nvim",
-        config = function()
-            ---@diagnostic disable-next-line: missing-fields
-            require("Comment").setup({ ignore = "^$" })
-
-            vim.api.nvim_set_keymap("n", "<leader><leader>", "gcc", { desc = "Toggle comments linewise" })
-            vim.api.nvim_set_keymap("v", "<leader><leader>", "gc", { desc = "Toggle comments in selection" })
-        end,
-    },
-    {
         "echasnovski/mini.align",
         config = function()
             require("mini.align").setup({
