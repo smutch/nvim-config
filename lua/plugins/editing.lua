@@ -235,33 +235,45 @@ return {
         end,
     },
     {
-      'saghen/blink.pairs',
-      version = '*', -- (recommended) only required with prebuilt binaries
-      dependencies = 'saghen/blink.download',
+        "saghen/blink.pairs",
+        version = "*", -- (recommended) only required with prebuilt binaries
+        dependencies = "saghen/blink.download",
 
-      --- @module 'blink.pairs'
-      --- @type blink.pairs.Config
-      opts = {
-        mappings = {
-          -- you can call require("blink.pairs.mappings").enable() and require("blink.pairs.mappings").disable() to enable/disable mappings at runtime
-          enabled = true,
-          disabled_filetypes = {},
-          -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L12
-          pairs = {},
+        --- @module 'blink.pairs'
+        --- @type blink.pairs.Config
+        opts = {
+            mappings = {
+                -- you can call require("blink.pairs.mappings").enable() and require("blink.pairs.mappings").disable() to enable/disable mappings at runtime
+                enabled = true,
+                disabled_filetypes = {},
+                -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L12
+                pairs = {},
+            },
+            highlights = {
+                enabled = false,
+                groups = {
+                    "BlinkPairsOrange",
+                    "BlinkPairsPurple",
+                    "BlinkPairsBlue",
+                },
+                matchparen = {
+                    enabled = true,
+                    group = "MatchParen",
+                },
+            },
+            debug = false,
         },
-        highlights = {
-          enabled = false,
-          groups = {
-            'BlinkPairsOrange',
-            'BlinkPairsPurple',
-            'BlinkPairsBlue',
-          },
-          matchparen = {
-            enabled = true,
-            group = 'MatchParen',
-          },
+    },
+    {
+        "HiPhish/rainbow-delimiters.nvim",
+        keys = {
+            {
+                "<localleader>)",
+                function()
+                    require("rainbow-delimiters").toggle()
+                end,
+                desc = "Toggle Rainbow Delimiters",
+            },
         },
-        debug = false,
-      }
-  }
+    },
 }
