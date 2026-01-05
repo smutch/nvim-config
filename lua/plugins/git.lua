@@ -30,7 +30,7 @@ return {
         end,
     },
     { "f-person/git-blame.nvim", config = { enabled = false } },
-    { "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
+    { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } },
     {
         "pwntester/octo.nvim",
         cmd = "Octo",
