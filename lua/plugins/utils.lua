@@ -489,6 +489,7 @@ return {
                     Snacks.terminal.toggle(nil, { win = { position = "bottom" } })
                 end,
                 desc = "Toggle Terminal (bottom)",
+                mode = { "n", "t" },
             },
             {
                 "<leader>nh",
