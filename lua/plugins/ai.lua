@@ -145,6 +145,26 @@ return {
                         prompt = { "<C-s>", "prompt", mode = { "n", "i" } },
                     },
                 },
+                tools = {
+                    opencode_docker = {
+                        cmd = {
+                            "docker",
+                            "run",
+                            "--rm",
+                            "-it",
+                            "-v",
+                            vim.fn.getcwd() .. ":/app",
+                            "-v",
+                            vim.fn.expand("~/.local/share/opencode/auth.json") .. ":/root/.local/share/opencode/auth.json:ro",
+                            "-v",
+                            "/app/.venv",
+                            "-w",
+                            "/app",
+                            "opencode",
+                        },
+                        env = { OPENCODE_THEME = "system" },
+                    },
+                },
             },
         },
         keys = {
@@ -227,6 +247,14 @@ return {
                     require("sidekick.cli").toggle({ name = "opencode", focus = true })
                 end,
                 desc = "Sidekick OpenCode Toggle",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>aO",
+                function()
+                    require("sidekick.cli").toggle({ name = "opencode_docker", focus = true })
+                end,
+                desc = "Sidekick OpenCode (Docker) Toggle",
                 mode = { "n", "v" },
             },
         },
