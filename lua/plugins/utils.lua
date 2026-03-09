@@ -74,7 +74,15 @@ return {
         },
         config = true,
     },
-    { "uga-rosa/ccc.nvim", opts = {}, ft = { "astro", "html", "css", "scss", "lua", "vim" } },
+    {
+        "uga-rosa/ccc.nvim",
+        opts = {
+            highlighter = {
+                auto_enable = true,
+                lsp = true
+            },
+        },
+    },
     {
         "rcarriga/neotest",
         lazy = true,
@@ -147,9 +155,9 @@ return {
         "jpalardy/vim-slime",
         lazy = false,
         init = function()
-            vim.g.slime_target = "tmux"
+            vim.g.slime_target = "neovim"
             vim.g.slime_no_mappings = 1
-            vim.g.slime_bracketed_paste = 1
+            -- vim.g.slime_bracketed_paste = 1
             vim.g.slime_python_ipython = 1
         end,
         keys = {
@@ -294,7 +302,13 @@ return {
         keys = {
             { "<leader>ot", "<CMD>OverseerToggle<CR>", desc = "Overseer - toggle" },
             { "<leader>or", "<CMD>OverseerRun<CR>", desc = "Overseer - run" },
-            { "<leader>oo", function() require"overseer".list_tasks()[1]:restart(true) end, desc = "Overseer - restart" },
+            {
+                "<leader>oo",
+                function()
+                    require("overseer").list_tasks()[1]:restart(true)
+                end,
+                desc = "Overseer - restart",
+            },
             { "<leader>ob", "<CMD>OverseerLoadBundle<CR>", desc = "Overseer - load bundle" },
         },
     },
@@ -456,7 +470,7 @@ return {
                 },
                 zen = {
                     backdrop = { transparent = false, blend = 40 },
-                }
+                },
             },
             terminal = { enabled = true },
             zen = { enabled = true },
