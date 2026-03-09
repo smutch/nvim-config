@@ -87,6 +87,10 @@ return {
         },
     },
     {
+        "jmbuhr/otter.nvim",
+        opts = {}
+    },
+    {
         "quarto-dev/quarto-nvim",
         ft = "quarto",
         dependencies = {
@@ -100,14 +104,14 @@ return {
                     languages = { "r", "python", "julia", "javascript" },
                     diagnostics = {
                         enabled = true,
-                        triggers = { "BufWrite" },
+                        triggers = { "BufWritePost" },
                     },
                     completion = {
                         enabled = true,
                     },
                     codeRunner = {
                         enabled = true,
-                        default_method = "molten",
+                        default_method = "slime",
                         never_run = { "yaml" }, -- filetypes which are never sent to a code runner
                     },
                 },
@@ -136,12 +140,20 @@ return {
         end,
         cmd = { "QuartoPreview", "QuartoActivate" },
     },
+    -- {
+    --     "kaarmu/typst.vim",
+    --     ft = { "typst" },
+    --     config = function()
+    --         vim.g.typst_pdf_viewer = "Skim"
+    --     end,
+    -- },
     {
-        "kaarmu/typst.vim",
-        ft = { "typst" },
-        config = function()
-            vim.g.typst_pdf_viewer = "Skim"
-        end,
+        "chomosuke/typst-preview.nvim",
+        ft = "typst", -- or ft = 'typst'
+        version = "1.*",
+        opts = {
+            dependencies_bin = { ["tinymist"] = "tinymist" },
+        },
     },
     {
         "Olical/conjure",
