@@ -11,5 +11,7 @@ return {
         "pug",
         "typescriptreact",
         "astro",
+        "qmd",
+        "markdown"
     },
 }
