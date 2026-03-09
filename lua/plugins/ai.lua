@@ -74,14 +74,14 @@ return {
                 },
             },
             extensions = {
-                mcphub = {
-                    callback = "mcphub.extensions.codecompanion",
-                    opts = {
-                        show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
-                        make_vars = true, -- make chat #variables from MCP server resources
-                        make_slash_commands = true, -- make /slash_commands from MCP server prompts
-                    },
-                },
+                -- mcphub = {
+                --     callback = "mcphub.extensions.codecompanion",
+                --     opts = {
+                --         show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
+                --         make_vars = true, -- make chat #variables from MCP server resources
+                --         make_slash_commands = true, -- make /slash_commands from MCP server prompts
+                --     },
+                -- },
                 history = {
                     enabled = true,
                     picker = "snacks",
@@ -122,15 +122,15 @@ return {
             { "<LocalLeader>a", "<cmd>CodeCompanionChat Add<cr>", mode = "v" },
         },
     },
-    {
-        "ravitemer/mcphub.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
-        },
-        cmd = "MCPHub", -- lazy load
-        build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
-        opts = {},
-    },
+    -- {
+    --     "ravitemer/mcphub.nvim",
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
+    --     },
+    --     cmd = "MCPHub", -- lazy load
+    --     build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
+    --     opts = {},
+    -- },
     {
         "folke/sidekick.nvim",
         opts = {
