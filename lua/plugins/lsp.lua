@@ -111,10 +111,10 @@ return {
                 html = { "prettierd", "prettier", stop_after_first = true },
                 json = { "prettierd", "prettier", stop_after_first = true },
                 yaml = { "prettierd", "prettier", stop_after_first = true },
-                markdown = { "prettierd", "prettier", stop_after_first = true },
+                markdown = { "rumdl", "prettierd", "prettier", stop_after_first = true },
                 bash = { "shfmt" },
                 sh = { "shfmt" },
-                quarto = { "injected" },
+                quarto = { "rumdl", "injected" },
             },
         },
         keys = {
