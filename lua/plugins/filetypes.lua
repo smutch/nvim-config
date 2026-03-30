@@ -1,3 +1,6 @@
+---@diagnostic disable: missing-fields
+local markview_filetypes = { "markdown", "pandoc", "quarto", "markdown.pandoc", "Avante", "codecompanion" }
+
 return {
     {
         "lervag/vimtex",
@@ -17,39 +20,44 @@ return {
             "echasnovski/mini.icons",
             "nvim-treesitter/nvim-treesitter",
         },
-        opts = {
-            experimental = { check_rtp_message = false },
-            preview = {
-                enable = false,
-                hybrid_modes = {},
-                ignore_buftypes = {},
-                filetypes = { "markdown", "pandoc", "quarto", "markdown.pandoc", "Avante", "codecompanion" },
-            },
-            markdown = {
-                list_items = {
-                    shift_width = function(buffer, item)
-                        --- Reduces the `indent` by 1 level.
-                        ---
-                        ---         indent                      1
-                        --- ------------------------- = 1 ÷ --------- = new_indent
-                        --- indent * (1 / new_indent)       new_indent
-                        ---
-                        local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth)
+        config = function()
+            require("markview").setup({
+                experimental = { check_rtp_message = false },
+                preview = {
+                    enable = false,
+                    hybrid_modes = {},
+                    ignore_buftypes = {},
+                    filetypes = markview_filetypes,
+                },
+                markdown = {
+                    list_items = {
+                        shift_width = function(buffer, item)
+                            --- Reduces the `indent` by 1 level.
+                            ---
+                            ---         indent                      1
+                            --- ------------------------- = 1 ÷ --------- = new_indent
+                            --- indent * (1 / new_indent)       new_indent
+                            ---
+                            local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth)
 
-                        return item.indent * (1 / (parent_indnet * 2))
-                    end,
-                    marker_minus = {
-                        add_padding = function(_, item)
-                            return item.indent > 1
+                            return item.indent * (1 / (parent_indnet * 2))
                         end,
+                        marker_minus = {
+                            add_padding = function(_, item)
+                                return item.indent > 1
+                            end,
+                        },
+                    },
+                    code_blocks = {
+                        enable = true,
+                        style = "simple",
                     },
                 },
-                code_blocks = {
-                    enable = true,
-                    style = "simple",
-                },
-            },
-        },
+            })
+
+            require("markview.extras.checkboxes").setup()
+            require("markview.extras.editor").setup()
+        end,
         keys = {
             {
                 "<localleader>m",
@@ -57,6 +65,30 @@ return {
                     require("markview").commands.Toggle()
                 end,
                 desc = "Toggle Markview",
+            },
+            {
+                "<tab>",
+                function()
+                    vim.cmd("Checkbox toggle")
+                end,
+                desc = "Toggle checkbox",
+                ft = markview_filetypes,
+            },
+            {
+                "<localleader><tab>",
+                function()
+                    vim.cmd("Checkbox interactive")
+                end,
+                desc = "Change checkbox interactively",
+                ft = markview_filetypes,
+            },
+            {
+                "<localleader>e",
+                function()
+                    vim.cmd("Editor edit")
+                end,
+                desc = "Edit code block",
+                ft = markview_filetypes,
             },
         },
     },
@@ -88,7 +120,7 @@ return {
     },
     {
         "jmbuhr/otter.nvim",
-        opts = {}
+        opts = {},
     },
     {
         "quarto-dev/quarto-nvim",
