@@ -157,6 +157,8 @@ return {
                             "-v",
                             vim.fn.expand("~/.local/share/opencode/auth.json") .. ":/root/.local/share/opencode/auth.json:ro",
                             "-v",
+                            vim.fn.expand("~/.config/opencode") .. ":/root/.config/opencode:ro",
+                            "-v",
                             "/app/.venv",
                             "-w",
                             "/app",
