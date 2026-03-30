@@ -31,7 +31,7 @@ return {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
             "ravitemer/codecompanion-history.nvim",
-            "ravitemer/mcphub.nvim",
+            -- "ravitemer/mcphub.nvim",
         },
         init = function()
             vim.cmd([[cab cc CodeCompanion]])
