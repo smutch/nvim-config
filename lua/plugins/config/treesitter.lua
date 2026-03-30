@@ -1,7 +1,7 @@
 ---@diagnostic disable: missing-fields
 
 require("nvim-treesitter.install").compilers = { "gcc" }
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter.config").setup({
     highlight = {
         enable = (function()
             if vim.g.vscode then

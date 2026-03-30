@@ -15,8 +15,8 @@ vim.diagnostic.config({
             [vim.diagnostic.severity.ERROR] = "",
             [vim.diagnostic.severity.WARN] = "",
             [vim.diagnostic.severity.INFO] = "",
-            [vim.diagnostic.severity.HINT] = ""
-        }
+            [vim.diagnostic.severity.HINT] = "",
+        },
     },
     update_in_insert = false,
     severity_sort = true,
@@ -34,6 +34,9 @@ local function toggle_lsp_virtual_lines()
 end
 
 vim.keymap.set("n", "grL", toggle_lsp_virtual_lines, { noremap = true, desc = "Toggle virtual (L)ines diagnostics" })
+vim.keymap.set("n", "grD", function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { noremap = true, desc = "Toggle diagnostics on/off" })
 
 local function toggle_lsp_inlay_hints(bufnr)
     if vim.lsp.inlay_hint.is_enabled(bufnr) then
@@ -119,7 +122,7 @@ vim.api.nvim_create_autocmd("FileType", {
         print(path)
         if vim.fn.filereadable(path) == 0 then
             if vim.fn.has("macunix") == 1 then
-        --         -- path = vim.trim(vim.fn.system([[brew info janet | rg -A1 Installed | tail -n1 | cut -d' ' -f1]])) .. "/bin/janet-lsp"
+                --         -- path = vim.trim(vim.fn.system([[brew info janet | rg -A1 Installed | tail -n1 | cut -d' ' -f1]])) .. "/bin/janet-lsp"
                 path = "/opt/homebrew/bin/janet-lsp"
             elseif path:find(".pixi/bin") then
                 path = path:gsub(".pixi", ".pixi/envs/janet")
