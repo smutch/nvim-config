@@ -27,7 +27,7 @@ require("lazy").setup("plugins",
                 enabled = true,
                 concurrency = 16,
                 frequency = 3600 * 24 * 7,
-            }
+            },
         },
         require "init-vscode"
     )
