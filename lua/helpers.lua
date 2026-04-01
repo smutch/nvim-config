@@ -22,6 +22,8 @@ local function is_hatch_project()
     return false
 end
 
+local last_prefix = nil
+
 M.get_python_path = function()
     local default_prefix = "/usr"
     local prefix = default_prefix
@@ -55,8 +57,9 @@ M.get_python_path = function()
         interpreter = prefix
     end
 
-    if prefix ~= default_prefix then
+    if prefix ~= default_prefix and prefix ~= last_prefix then
         vim.notify("Python interpreter: " .. interpreter, vim.log.levels.INFO)
+        last_prefix = prefix
     end
 
     return { interpreter = interpreter, prefix = prefix }
