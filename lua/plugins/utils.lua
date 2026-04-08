@@ -79,7 +79,7 @@ return {
         opts = {
             highlighter = {
                 auto_enable = true,
-                lsp = true
+                lsp = true,
             },
         },
     },
