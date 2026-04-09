@@ -48,6 +48,32 @@ return {
                             end,
                         },
                     },
+                    horizontal_rules = {
+                        enable = true,
+
+                        parts = {
+                            {
+                                type = "repeating",
+                                direction = "left",
+
+                                repeat_amount = function(buffer)
+                                    local utils = require("markview.utils")
+                                    local window = utils.buf_getwin(buffer)
+
+                                    local width = vim.api.nvim_win_get_width(window)
+                                    local textoff = vim.fn.getwininfo(window)[1].textoff
+
+                                    return math.floor(width - textoff)
+                                end,
+
+                                text = "─",
+
+                                hl = {
+                                    "MarkviewGradient7",
+                                },
+                            },
+                        },
+                    },
                     code_blocks = {
                         enable = true,
                         style = "simple",
@@ -57,6 +83,7 @@ return {
 
             require("markview.extras.checkboxes").setup()
             require("markview.extras.editor").setup()
+            require("scripts.lsp_hover").setup()
         end,
         keys = {
             {
