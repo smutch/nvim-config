@@ -39,7 +39,6 @@ return {
                 },
                 ---@diagnostic disable-next-line: unused-local
                 before_highlight = function(group, highlight, palette)
-                    -- Disable all undercurls
                     -- print(group, highlight, palette)
                     if string.match(string.lower(group), "comment") then
                         highlight.italic = true
@@ -75,75 +74,75 @@ return {
             })
         end,
     },
-    {
-        "folke/noice.nvim",
-        depends = { "MunifTanjim/nui.nvim" },
-        lazy = false,
-        config = function()
-            require("noice").setup({
-                lsp = {
-                    -- override markdown rendering so that **cmp** and other plugs use **Treesitter**
-                    override = {
-                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                        ["vim.lsp.util.stylize_markdown"] = true,
-                    },
-                },
-                -- you can enable a preset for easier configuration
-                presets = {
-                    bottom_search = true, -- use a classic bottom cmdline for search
-                    command_palette = false, -- position the cmdline and popupmenu together
-                    long_message_to_split = true, -- long messages will be sent to a split
-                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = true, -- add a border to hover docs and signature help
-                },
-                messages = {
-                    view_search = false,
-                },
-                cmdline = {
-                    enabled = true,
-                },
-                routes = {
-                    -- {
-                    --     filter = { event = "msg_show", kind = "", find = "written$" },
-                    --     opts = { skip = true },
-                    -- },
-                    {
-                        filter = { event = "msg_show", kind = "shell_out" },
-                        view = "messages",
-                    },
-                    -- {
-                    --     filter = { event = "msg_show", kind = "", find = "^/" },
-                    --     opts = { skip = true },
-                    -- },
-                    {
-                        filter = { error = true, find = "E486" },
-                        view = "mini",
-                    },
-                },
-                views = {
-                    cmdline_popup = {
-                        border = {
-                            style = "none",
-                            padding = { 1, 3 },
-                        },
-                        filter_options = {},
-                        win_options = {
-                            winhighlight = {
-                                Normal = "NormalFloat",
-                                FloatBorder = "FloatBorder",
-                            },
-                        },
-                    },
-                    mini = {
-                        position = {
-                            row = 1,
-                            col = "100%",
-                        },
-                    },
-                },
-            })
-        end,
-    },
+    -- {
+    --     "folke/noice.nvim",
+    --     depends = { "MunifTanjim/nui.nvim" },
+    --     lazy = false,
+    --     config = function()
+    --         require("noice").setup({
+    --             lsp = {
+    --                 -- override markdown rendering so that **cmp** and other plugs use **Treesitter**
+    --                 override = {
+    --                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+    --                     ["vim.lsp.util.stylize_markdown"] = true,
+    --                 },
+    --             },
+    --             -- you can enable a preset for easier configuration
+    --             presets = {
+    --                 bottom_search = true, -- use a classic bottom cmdline for search
+    --                 command_palette = false, -- position the cmdline and popupmenu together
+    --                 long_message_to_split = true, -- long messages will be sent to a split
+    --                 inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    --                 lsp_doc_border = true, -- add a border to hover docs and signature help
+    --             },
+    --             messages = {
+    --                 view_search = false,
+    --             },
+    --             cmdline = {
+    --                 enabled = true,
+    --             },
+    --             routes = {
+    --                 -- {
+    --                 --     filter = { event = "msg_show", kind = "", find = "written$" },
+    --                 --     opts = { skip = true },
+    --                 -- },
+    --                 {
+    --                     filter = { event = "msg_show", kind = "shell_out" },
+    --                     view = "messages",
+    --                 },
+    --                 -- {
+    --                 --     filter = { event = "msg_show", kind = "", find = "^/" },
+    --                 --     opts = { skip = true },
+    --                 -- },
+    --                 {
+    --                     filter = { error = true, find = "E486" },
+    --                     view = "mini",
+    --                 },
+    --             },
+    --             views = {
+    --                 cmdline_popup = {
+    --                     border = {
+    --                         style = "none",
+    --                         padding = { 1, 3 },
+    --                     },
+    --                     filter_options = {},
+    --                     win_options = {
+    --                         winhighlight = {
+    --                             Normal = "NormalFloat",
+    --                             FloatBorder = "FloatBorder",
+    --                         },
+    --                     },
+    --                 },
+    --                 mini = {
+    --                     position = {
+    --                         row = 1,
+    --                         col = "100%",
+    --                     },
+    --                 },
+    --             },
+    --         })
+    --     end,
+    -- },
     {
         "echasnovski/mini.icons",
         version = "*",

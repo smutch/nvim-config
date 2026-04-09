@@ -58,6 +58,7 @@ local select = require("nvim-treesitter-textobjects.select")
 local swap = require("nvim-treesitter-textobjects.swap")
 local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
 
+-- incremental selection treesitter/lsp
 vim.keymap.set({ "x", "o" }, "af", function()
     select.select_textobject("@function.outer", "textobjects")
 end)
