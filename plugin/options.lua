@@ -1,5 +1,5 @@
 vim.o.clipboard = "unnamedplus"
-vim.o.spelllang = "en_gb"
+vim.o.spelllang = "en_au"
 vim.o.showmode = false
 vim.o.exrc = true
 vim.o.linebreak = true

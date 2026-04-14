@@ -1,37 +1,42 @@
-vim.keymap.set('i', 'kj', '<ESC>')
+local augroup = vim.api.nvim_create_augroup("user_keymaps", { clear = true })
+
+vim.keymap.set("i", "kj", "<ESC>")
 
 -- Switch back to alternate files and tabs
-vim.keymap.set('n', '<BS><BS>', '<C-S-^>')
+vim.keymap.set("n", "<BS><BS>", "<C-S-^>")
 
 -- Make Y behave like other capital
-vim.keymap.set('n', 'Y', 'y$')
+vim.keymap.set("n", "Y", "y$")
 
 -- Easy on the fingers window manipulation bindings
-vim.keymap.set('n', '<leader>w', '<C-w>')
+vim.keymap.set("n", "<leader>w", "<C-w>")
 
 -- Quick switch to directory of current file
-vim.keymap.set('n', '<leader>cd', ':lcd %:p:h<CR>:pwd<CR>')
+vim.keymap.set("n", "<leader>cd", ":lcd %:p:h<CR>:pwd<CR>")
 
 -- Quickly create a file in the directory of the current buffer
-vim.keymap.set('n', '<leader>e', ':<C-u>e <C-R>=expand("%:p:h") . "/" <CR>')
+vim.keymap.set("n", "<leader>e", ':<C-u>e <C-R>=expand("%:p:h") . "/" <CR>')
 
 -- Leave cursor at end of yank after yanking text with lowercase y in visual mode
-vim.keymap.set('v', 'y', 'y`>')
-
--- Fit window height to contents and fix
-vim.cmd([[command! SqueezeWindow execute('resize ' . line('$') . ' | set wfh')]])
+vim.keymap.set("v", "y", "y`>")
 
 -- Toggle to last active tab
 vim.g.lasttab = 1
-vim.keymap.set('n', '<BS>t', ':exe "tabn ".g:lasttab<CR>')
-vim.cmd([[au TabLeave * let g:lasttab = tabpagenr()]])
+vim.keymap.set("n", "<BS>t", ':exe "tabn ".g:lasttab<CR>')
+vim.api.nvim_create_autocmd("TabLeave", {
+    pattern = "*",
+    group = augroup,
+    callback = function()
+        vim.g.lasttab = vim.fn.tabpagenr()
+    end,
+})
 
 -- Turn off search highlighting
-vim.keymap.set('', [[|]], '<Esc>:<C-u>noh<CR>', { silent = true })
-local ns = vim.api.nvim_create_namespace('toggle_hlsearch')
+vim.keymap.set("", [[|]], "<Esc>:<C-u>noh<CR>", { silent = true })
+local ns = vim.api.nvim_create_namespace("toggle_hlsearch")
 local function toggle_hlsearch(char)
-    if vim.fn.mode() == 'n' then
-        local keys = { '<CR>', 'n', 'N', '*', '#', '?', '/' }
+    if vim.fn.mode() == "n" then
+        local keys = { "<CR>", "n", "N", "*", "#", "?", "/" }
         local new_hlsearch = vim.tbl_contains(keys, vim.fn.keytrans(char))
 
         if vim.opt.hlsearch:get() ~= new_hlsearch then
@@ -42,14 +47,20 @@ end
 vim.on_key(toggle_hlsearch, ns)
 
 -- Paste without auto indent
-vim.keymap.set('n', '<F2>', ':set invpaste paste?<CR>', {})
+vim.keymap.set("n", "<F2>", ":set invpaste paste?<CR>", {})
 
 -- Toggle auto paragraph formatting
-vim.keymap.set('n', 'yoa', [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]],
-    {})
+vim.keymap.set(
+    "n",
+    "yoa",
+    [[:set <C-R>=(&formatoptions =~# "aw") ? 'formatoptions-=aw' : 'formatoptions+=aw'<CR><CR>]],
+    {}
+)
 
 -- Allow us to move to windows by number using the leader key
-for ii = 1, 9 do vim.keymap.set('n', '<Leader>' .. ii, ':' .. ii .. 'wincmd w<CR>') end
+for ii = 1, 9 do
+    vim.keymap.set("n", "<Leader>" .. ii, ":" .. ii .. "wincmd w<CR>")
+end
 
 -- Allow `e` to be prefixed by a window number to use for the jump
 function QFOpenInWindow()
@@ -58,17 +69,29 @@ function QFOpenInWindow()
     else
         local linenumber = vim.api.nvim_win_get_cursor(0)[1]
         vim.cmd([[exec v:count . 'wincmd w']])
-        vim.cmd("exec ':' " .. linenumber .. 'cc')
+        vim.cmd("exec ':' " .. linenumber .. "cc")
     end
 end
-vim.cmd([[autocmd FileType quickfix,qf nnoremap <buffer> e <cmd>lua QFOpenInWindow()<CR>]])
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "qf", "quickfix" },
+    group = augroup,
+    callback = function()
+        vim.keymap.set("n", "e", function()
+            QFOpenInWindow()
+        end, {
+            buffer = true,
+            noremap = true,
+            desc = "Open quickfix entry in window",
+        })
+    end,
+})
 
 -- Smart dd (https://www.reddit.com/r/neovim/comments/w0jzzv/comment/igfjx5y/?utm_source=share&utm_medium=web2x&context=3)
 local function smart_dd()
     if vim.api.nvim_get_current_line():match("^%s*$") then
-        return "\"_dd"
+        return '"_dd'
     else
         return "dd"
     end
 end
-vim.keymap.set('n', 'dd', smart_dd, { noremap = true, expr = true })
+vim.keymap.set("n", "dd", smart_dd, { noremap = true, expr = true })

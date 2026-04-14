@@ -1,3 +1,8 @@
+local gh = require("load").gh
+
+local deps = { "abeldekat/harpoonline", "AndreM222/copilot-lualine", "yavorski/lualine-macro-recording.nvim" }
+vim.pack.add(gh(vim.tbl_extend("error", deps, { "nvim-lualine/lualine.nvim" })))
+
 local cc_entry = require("lualine.component"):extend()
 
 cc_entry.processing = false
@@ -222,4 +227,12 @@ require("lualine").setup({
         "quickfix",
         "trouble",
     },
+})
+
+local augroup = vim.api.nvim_create_augroup("lualine_colors", { clear = true })
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+        require("plugins.config.statusline")
+    end,
+    group = augroup,
 })
