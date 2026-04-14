@@ -1,3 +1,5 @@
+local augroup = vim.api.nvim_create_augroup('user_options', { clear = true })
+
 vim.o.clipboard = "unnamedplus"
 vim.o.spelllang = "en_au"
 vim.o.showmode = false
@@ -33,3 +35,14 @@ if vim.env.EXTRA_NVIM then
         end
     end
 end
+
+-- If we have a wide window then put the preview window on the right
+vim.api.nvim_create_autocmd('BufAdd', {
+  pattern = '*',
+  group = augroup,
+  callback = function()
+    if vim.wo.previewwindow and vim.o.columns >= 160 and vim.fn.winnr('$') == 2 then
+      vim.cmd('silent! wincmd L')
+    end
+  end,
+})
