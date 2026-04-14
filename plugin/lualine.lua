@@ -1,7 +1,7 @@
 local gh = require("load").gh
 
 local deps = { "abeldekat/harpoonline", "AndreM222/copilot-lualine", "yavorski/lualine-macro-recording.nvim" }
-vim.pack.add(gh(vim.tbl_extend("error", deps, { "nvim-lualine/lualine.nvim" })))
+vim.pack.add(gh(vim.list_extend(deps, { "nvim-lualine/lualine.nvim" })))
 
 local cc_entry = require("lualine.component"):extend()
 
@@ -149,7 +149,6 @@ local lsp_server = function()
     return msg
 end
 
-local arrow = require("arrow.statusline")
 local colors = theme_colors()
 
 require("lualine").setup({
@@ -176,12 +175,6 @@ require("lualine").setup({
                 "diagnostics",
                 sources = { "nvim_lsp" },
                 symbols = { error = " ", warn = " ", info = " ", hint = "󰨹 " },
-            },
-            {
-                function()
-                    local bufnr = vim.api.nvim_get_current_buf()
-                    return arrow.text_for_statusline_with_icons(bufnr)
-                end,
             },
             { "overseer" },
             { "macro_recording", "%S" },

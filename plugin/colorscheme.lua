@@ -1,4 +1,5 @@
-vim.pack.add({ "rose-pine/neovim" })
+local gh = require("load").gh
+vim.pack.add(gh({ "rose-pine/neovim" }))
 
 local prev_laststatus = vim.o.laststatus
 
