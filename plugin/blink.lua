@@ -1,7 +1,15 @@
 local gh = require("load").gh
 
-local deps = gh({ "rafamadriz/friendly-snippets", "echasnovski/mini.icons" })
-vim.pack.add(vim.list_extend(deps, { { src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") } }))
+local deps = gh({ "rafamadriz/friendly-snippets", "echasnovski/mini.icons", "saghen/blink.download" })
+vim.pack.add(
+    vim.list_extend(
+        deps,
+        {
+            { src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
+            { src = gh("saghen/blink.pairs"), version = vim.version.range("*") },
+        }
+    )
+)
 
 require("blink.cmp").setup({
     -- 'default' for mappings similar to built-in completion
@@ -33,14 +41,8 @@ require("blink.cmp").setup({
     },
 
     sources = {
-        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer" },
         providers = {
-            lazydev = {
-                name = "LazyDev",
-                module = "lazydev.integrations.blink",
-                -- make lazydev completions top priority (see `:h blink.cmp`)
-                score_offset = 100,
-            },
             snippets = {
                 opts = {
                     search_paths = { vim.fn.stdpath("config") .. "/snippets" },
@@ -76,4 +78,27 @@ require("blink.cmp").setup({
             },
         },
     },
+})
+
+require("blink.pairs").setup({
+    mappings = {
+        -- you can call require("blink.pairs.mappings").enable() and require("blink.pairs.mappings").disable() to enable/disable mappings at runtime
+        enabled = true,
+        disabled_filetypes = {},
+        -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L12
+        pairs = {},
+    },
+    highlights = {
+        enabled = false,
+        groups = {
+            "BlinkPairsOrange",
+            "BlinkPairsPurple",
+            "BlinkPairsBlue",
+        },
+        matchparen = {
+            enabled = true,
+            group = "MatchParen",
+        },
+    },
+    debug = false,
 })

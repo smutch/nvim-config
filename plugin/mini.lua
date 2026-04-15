@@ -6,8 +6,8 @@ local mini_icons = require("mini.icons")
 mini_icons.setup()
 mini_icons.mock_nvim_web_devicons()
 
--- hipatterns
 require("load").later(function()
+    -- hipatterns
     vim.pack.add(gh({ "nvim-mini/mini.hipatterns" }))
     local hipatterns = require("mini.hipatterns")
     hipatterns.setup({
@@ -20,6 +20,17 @@ require("load").later(function()
 
             -- Highlight hex color strings (`#rrggbb`) using that color
             hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+    })
+end)
+
+require("load").on_event("InsertEnter", function()
+    -- align
+    vim.pack.add(gh({ "nvim-mini/mini.align" }))
+    require("mini.align").setup({
+        mappings = {
+            start = "gA",
+            start_with_preview = "1gA",
         },
     })
 end)
