@@ -7,8 +7,9 @@ mini_icons.setup()
 mini_icons.mock_nvim_web_devicons()
 
 require("load").later(function()
+    vim.pack.add(gh({ "nvim-mini/mini.hipatterns", "nim-mini/mini.cursorword" }))
+
     -- hipatterns
-    vim.pack.add(gh({ "nvim-mini/mini.hipatterns" }))
     local hipatterns = require("mini.hipatterns")
     hipatterns.setup({
         highlighters = {
@@ -22,6 +23,9 @@ require("load").later(function()
             hex_color = hipatterns.gen_highlighter.hex_color(),
         },
     })
+
+    -- cursorword
+    require("cursorword").setup({})
 end)
 
 require("load").on_event("InsertEnter", function()

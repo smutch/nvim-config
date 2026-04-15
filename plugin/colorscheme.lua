@@ -21,3 +21,14 @@ vim.cmd.colorscheme("rose-pine-moon")
 
 -- for some reason rose-pine sets this and we want it back to what it was before!
 vim.o.laststatus = prev_laststatus
+
+require("load").later(function()
+    vim.pack.add(gh({ "uga-rosa/ccc.nvim" }))
+
+    require("ccc").setup({
+        highlighter = {
+            auto_enable = true,
+            lsp = true,
+        },
+    })
+end)
