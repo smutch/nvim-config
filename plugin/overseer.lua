@@ -16,15 +16,10 @@ require("load").later(function()
             },
         },
     })
-    vim.keymap.set("n", "<leader>ot", "<CMD>OverseerToggle<CR>", { nnoremap = true, desc = "Overseer - toggle" })
-    vim.keymap.set("n", "<leader>or", "<CMD>OverseerRun<CR>", { nnoremap = true, desc = "Overseer - run" })
+    vim.keymap.set("n", "<leader>ot", "<CMD>OverseerToggle<CR>", { desc = "Overseer - toggle" })
+    vim.keymap.set("n", "<leader>or", "<CMD>OverseerRun<CR>", { desc = "Overseer - run" })
     vim.keymap.set("n", "<leader>oo", function()
         require("overseer").list_tasks()[1]:restart(true)
-    end, { nnoremap = true, desc = "Overseer - restart" })
-    vim.keymap.set(
-        "n",
-        "<leader>ob",
-        "<CMD>OverseerLoadBundle<CR>",
-        { nnoremap = true, desc = "Overseer - load bundle" }
-    )
+    end, { desc = "Overseer - restart" })
+    vim.keymap.set("n", "<leader>ob", "<CMD>OverseerLoadBundle<CR>", { desc = "Overseer - load bundle" })
 end)
