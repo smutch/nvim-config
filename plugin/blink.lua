@@ -1,15 +1,10 @@
 local gh = require("load").gh
 
 local deps = gh({ "rafamadriz/friendly-snippets", "echasnovski/mini.icons", "saghen/blink.download" })
-vim.pack.add(
-    vim.list_extend(
-        deps,
-        {
-            { src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
-            { src = gh("saghen/blink.pairs"), version = vim.version.range("*") },
-        }
-    )
-)
+vim.pack.add(vim.list_extend(deps, {
+    { src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
+    { src = gh("saghen/blink.pairs"), version = vim.version.range("*") },
+}))
 
 require("blink.cmp").setup({
     -- 'default' for mappings similar to built-in completion
@@ -41,8 +36,14 @@ require("blink.cmp").setup({
     },
 
     sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
         providers = {
+            lazydev = {
+                name = "LazyDev",
+                module = "lazydev.integrations.blink",
+                -- make lazydev completions top priority (see `:h blink.cmp`)
+                score_offset = 100,
+            },
             snippets = {
                 opts = {
                     search_paths = { vim.fn.stdpath("config") .. "/snippets" },

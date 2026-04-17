@@ -1,4 +1,4 @@
-local on_attach = require("plugins.config.lsp").on_attach
+local on_attach = vim.lsp.config["*"].on_attach
 
 return {
     init_options = {
@@ -10,6 +10,8 @@ return {
     },
     on_attach = function(client, bufnr)
         client.server_capabilities.hoverProvider = false
-        on_attach(client, bufnr)
+        if on_attach then
+            on_attach(client, bufnr)
+        end
     end,
 }

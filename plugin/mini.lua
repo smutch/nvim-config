@@ -7,7 +7,15 @@ mini_icons.setup()
 mini_icons.mock_nvim_web_devicons()
 
 require("load").later(function()
-    vim.pack.add(gh({ "nvim-mini/mini.hipatterns", "nvim-mini/mini.cursorword", "nvim-mini/mini.clue", "nvim-mini/mini.splitjoin" }))
+    vim.pack.add(
+        gh({
+            "nvim-mini/mini.hipatterns",
+            "nvim-mini/mini.cursorword",
+            "nvim-mini/mini.clue",
+            "nvim-mini/mini.splitjoin",
+            "nvim-mini/mini.bracketed",
+        })
+    )
 
     -- hipatterns
     local hipatterns = require("mini.hipatterns")
@@ -73,6 +81,9 @@ require("load").later(function()
 
     -- splitjoin
     require("mini.splitjoin").setup({})
+
+    -- bracketed
+    require("mini.bracketed").setup({})
 end)
 
 require("load").on_event("InsertEnter", function()
