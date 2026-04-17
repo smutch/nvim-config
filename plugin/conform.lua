@@ -8,7 +8,7 @@ load.later(function()
             lsp_format = "fallback",
         },
         formatters_by_ft = {
-            lua = { "stylua" },
+            -- lua = { "stylua" },
             -- Conform will run multiple formatters sequentially
             python = { "ruff_organize_imports", "ruff_format" },
             -- You can customize some of the format options for the filetype (:help conform.format)

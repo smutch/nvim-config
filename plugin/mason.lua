@@ -14,5 +14,9 @@ load.later(function()
             "shellcheck",
         },
     })
-    require("mason-lspconfig").setup()
+    require("mason-lspconfig").setup({
+        exclude = {
+            "ruff", -- we want to run this with conform, not as an LSP server
+        },
+    })
 end)
