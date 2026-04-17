@@ -114,10 +114,6 @@
       "rev": "efb969a6a9583a5d48bfbe36363769351e38f967",
       "src": "https://github.com/nvim-mini/mini.bracketed"
     },
-    "mini.clue": {
-      "rev": "43bd6cf1c3ccdea46d403c32dbc4629fa6afa09d",
-      "src": "https://github.com/nvim-mini/mini.clue"
-    },
     "mini.cursorword": {
       "rev": "a7e606208197ca5d1c5288750d5163429b4c74da",
       "src": "https://github.com/nvim-mini/mini.cursorword"
@@ -261,6 +257,10 @@
     "vim-svelte-inspector": {
       "rev": "1bd5604855934973c5ec4d50ec738f9c9da31f96",
       "src": "https://github.com/ryoppippi/vim-svelte-inspector"
+    },
+    "which-key.nvim": {
+      "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
+      "src": "https://github.com/folke/which-key.nvim"
     }
   }
 }

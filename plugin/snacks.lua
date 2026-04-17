@@ -48,7 +48,6 @@ require("snacks").setup({
         },
     },
     terminal = { enabled = true },
-    words = { enabled = true },
     zen = { enabled = true },
 })
 
