@@ -23,7 +23,6 @@ end)
 require("load").later(function()
     local deps = {
         "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
         "ravitemer/codecompanion-history.nvim",
         -- "ravitemer/mcphub.nvim",
     }

@@ -3,7 +3,6 @@ local gh = require("load").gh
 
 vim.pack.add(gh({
     "mini.nvim/mini.icons",
-    "nvim-treesitter/nvim-treesitter",
     "OXY2DEV/markview.nvim",
 }))
 

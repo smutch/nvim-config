@@ -16,7 +16,12 @@ M.gh = function(repo)
     else
         local adjusted = {}
         for _, r in ipairs(repo) do
-            table.insert(adjusted, prefix .. r)
+            if type(r) == "table" and r.src then
+                r.src = prefix .. r.src
+            else
+                r = prefix .. r
+            end
+            table.insert(adjusted, r)
         end
         return adjusted
     end

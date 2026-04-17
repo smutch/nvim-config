@@ -1,6 +1,6 @@
 local gh = require("load").gh
 
-local deps = { "abeldekat/harpoonline", "AndreM222/copilot-lualine", "yavorski/lualine-macro-recording.nvim" }
+local deps = { "AndreM222/copilot-lualine", "yavorski/lualine-macro-recording.nvim" }
 vim.pack.add(gh(vim.list_extend(deps, { "nvim-lualine/lualine.nvim" })))
 
 local cc_entry = require("lualine.component"):extend()
@@ -64,7 +64,7 @@ local function theme_colors()
         yellow = "#dbc074",
     }
 
-    local colorscheme = vim.api.nvim_exec("colorscheme", true)
+    local colorscheme = vim.api.nvim_exec2("colorscheme", { output = true }).output
     if string.find(colorscheme, "fox") then
         local palette = require("nightfox.palette").load(vim.g.colors_name)
         -- local Color = require("nightfox.lib.color")
@@ -135,12 +135,13 @@ end
 
 local lsp_server = function()
     local msg = ""
-    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+    local buf_ft = vim.api.nvim_buf_get_option2("filetype", {buf = 0})
     local clients = vim.lsp.get_clients()
     if next(clients) == nil then
         return msg
     end
     for _, client in ipairs(clients) do
+        ---@diagnostic disable-next-line: undefined-field
         local filetypes = client.config.filetypes
         if filetypes and client.name ~= "null-ls" and vim.fn.index(filetypes, buf_ft) ~= -1 then
             return client.name
@@ -162,6 +163,7 @@ require("lualine").setup({
         end)(),
         component_separators = "|",
         section_separators = { left = "", right = "" },
+        globalstatus = true,
     },
     sections = {
         lualine_a = {
