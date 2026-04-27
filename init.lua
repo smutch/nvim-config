@@ -6,10 +6,10 @@ if vim.loop.fs_stat(vim.fn.stdpath("config") .. "/lua/system.lua") then
 end
 
 vim.api.nvim_create_user_command("Erc", function()
-    vim.cmd("edit ~/.config/nvim/init.lua")
+    vim.cmd("tabedit ~/.config/nvim/init.lua")
 end, {})
 vim.api.nvim_create_user_command("Eplug", function()
-    vim.cmd("edit ~/.config/nvim/plugin")
+    vim.cmd("tabedit ~/.config/nvim/plugin")
 end, {})
 
 -- new UI
