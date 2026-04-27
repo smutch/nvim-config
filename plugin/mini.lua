@@ -25,9 +25,11 @@ require("load").later(function()
             hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
             todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
             note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+            warning = { pattern = "%f[%w]()WARNING()%f[%W]", group = "@comment.error" },
 
             -- Highlight hex color strings (`#rrggbb`) using that color
-            hex_color = hipatterns.gen_highlighter.hex_color(),
+            -- NOTE: we currently use Ccc for this
+            -- hex_color = hipatterns.gen_highlighter.hex_color(),
         },
     })
 
