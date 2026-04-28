@@ -31,7 +31,7 @@
       "src": "https://github.com/ravitemer/codecompanion-history.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "bc82fbca915f28467a2e2e74e11845ce20d8017c",
+      "rev": "38a9f9e03c9ab7ccd6353788347c2e2fdf89a366",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "conform.nvim": {
@@ -43,7 +43,7 @@
       "src": "https://github.com/AndreM222/copilot-lualine"
     },
     "copilot.lua": {
-      "rev": "3b95c93d804077dd409d62a6da53a8c92ac8f415",
+      "rev": "94b22035e31e82821d015f6481ea3c17800e55b7",
       "src": "https://github.com/zbirenbaum/copilot.lua"
     },
     "diffview.nvim": {
@@ -122,6 +122,10 @@
       "rev": "efb969a6a9583a5d48bfbe36363769351e38f967",
       "src": "https://github.com/nvim-mini/mini.bracketed"
     },
+    "mini.colors": {
+      "rev": "58a827e0996a5c47158284259c4d7b3202d97f62",
+      "src": "https://github.com/nvim-mini/mini.colors"
+    },
     "mini.cursorword": {
       "rev": "a7e606208197ca5d1c5288750d5163429b4c74da",
       "src": "https://github.com/nvim-mini/mini.cursorword"
@@ -179,7 +183,7 @@
       "src": "https://github.com/yorickpeterse/nvim-jump.git"
     },
     "nvim-lspconfig": {
-      "rev": "21db1fd40cbcbf1524ae154ab8f394fdf085749a",
+      "rev": "bf5abe69c1874531f359a822d0cff4d73e26113f",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-navic": {

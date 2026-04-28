@@ -13,6 +13,7 @@ require("load").later(function()
             "nvim-mini/mini.cursorword",
             "nvim-mini/mini.splitjoin",
             "nvim-mini/mini.bracketed",
+            'nvim-mini/mini.colors'
         })
     )
 

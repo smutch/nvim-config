@@ -6,12 +6,6 @@ vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
     pattern = { [[term://*]] },
     group = term_augroup,
     callback = function()
-        local status, Color = pcall(require, "nightfox.lib.color")
-        if status then
-            local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-            local bg = Color.from_hex(string.format("%06x", normal.bg)):brighten(-3):to_hex()
-            vim.api.nvim_set_hl(0, "TermNormal", { bg = bg })
-        end
         vim.wo.winhighlight = "Normal:TermNormal"
         vim.wo.cursorline = false
         vim.wo.number = false
