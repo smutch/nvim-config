@@ -2,29 +2,38 @@
 local gh = require("load").gh
 
 require("load").on_event("InsertEnter", function()
+    ---@diagnostic disable-next-line: unused-local
     local rc, system = pcall(require, "system")
-    if rc and system.enable_copilot then
-        vim.pack.add(gh({ "zbirenbaum/copilot.lua" }))
+    vim.pack.add(gh({ "zbirenbaum/copilot.lua" }))
 
-        require("copilot").setup({
-            filetypes = {
-                ["*"] = true,
-            },
-            copilot_node_command = vim.g.node_host_prog,
-            suggestion = {
-                enabled = true,
-                auto_trigger = true,
-            },
-            panel = { enabled = true },
-        })
-    end
+    require("copilot").setup({
+        filetypes = {
+            csv = false,
+            tsv = false,
+            json = false,
+            jsonl = false,
+            ["*"] = true,
+        },
+        copilot_node_command = vim.g.node_host_prog,
+        suggestion = {
+            enabled = true,
+            auto_trigger = true,
+        },
+        panel = { enabled = true },
+        ---@diagnostic disable-next-line: unused-local
+        should_attach = function(_, bufname)
+            if system.enable_copilot then
+                return true
+            end
+            return false
+        end,
+    })
 end)
 
 require("load").later(function()
     local deps = {
         "nvim-lua/plenary.nvim",
         "ravitemer/codecompanion-history.nvim",
-        -- "ravitemer/mcphub.nvim",
     }
     vim.pack.add(gh(vim.list_extend(deps, { "olimorris/codecompanion.nvim" })))
 
@@ -48,32 +57,24 @@ require("load").later(function()
                     },
                 },
             },
-            -- inline = {
-            --     adapter = "copilot",
-            --     keymaps = {
-            --         accept_change = {
-            --             modes = { n = "ga" },
-            --             description = "Accept the suggested change",
-            --         },
-            --         reject_change = {
-            --             modes = { n = "gr" },
-            --             description = "Reject the suggested change",
-            --         },
-            --     },
-            -- },
+            inline = {
+                adapter = "copilot",
+                keymaps = {
+                    accept_change = {
+                        modes = { n = "ga" },
+                        description = "Accept the suggested change",
+                    },
+                    reject_change = {
+                        modes = { n = "gr" },
+                        description = "Reject the suggested change",
+                    },
+                },
+            },
             cmd = {
                 adapter = "copilot",
             },
         },
         extensions = {
-            -- mcphub = {
-            --     callback = "mcphub.extensions.codecompanion",
-            --     opts = {
-            --         show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
-            --         make_vars = true, -- make chat #variables from MCP server resources
-            --         make_slash_commands = true, -- make /slash_commands from MCP server prompts
-            --     },
-            -- },
             history = {
                 enabled = true,
                 picker = "snacks",
@@ -81,13 +82,6 @@ require("load").later(function()
         },
         adapters = {
             http = {
-                anthropic = function()
-                    return require("codecompanion.adapters").extend("anthropic", {
-                        env = {
-                            api_key = require("system").anthropic_api_key,
-                        },
-                    })
-                end,
                 copilot = function()
                     return require("codecompanion.adapters").extend("copilot", {
                         schema = {

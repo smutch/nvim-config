@@ -4,6 +4,10 @@
       "rev": "6cffbf419a495c84c56b918771a3d004e892e235",
       "src": "https://github.com/arborist-ts/arborist.nvim"
     },
+    "barbecue.nvim": {
+      "rev": "3e31404f0b93a2c30d151abf0648650ac811c664",
+      "src": "https://github.com/utilyre/barbecue.nvim"
+    },
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
@@ -46,6 +50,14 @@
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
       "src": "https://github.com/sindrets/diffview.nvim"
     },
+    "fileline.nvim": {
+      "rev": "c116aa8dd7aa7e1db6938f872285e598dc9ee00b",
+      "src": "https://github.com/lewis6991/fileline.nvim"
+    },
+    "flatten.nvim": {
+      "rev": "72527798e75b5e34757491947c2cb853ce21dc0e",
+      "src": "https://github.com/willothy/flatten.nvim"
+    },
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
@@ -53,6 +65,10 @@
     "gitsigns.nvim": {
       "rev": "dd3f588bacbeb041be6facf1742e42097f62165d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "harpoonline": {
+      "rev": "50b33fbeaf6bd0349f6609013c0c33bed7effcbb",
+      "src": "https://github.com/abeldekat/harpoonline"
     },
     "helpview.nvim": {
       "rev": "518789535a0cb146224a428edf93a70f98b795db",
@@ -65,6 +81,14 @@
     "jupytext.nvim": {
       "rev": "c8baf3ad344c59b3abd461ecc17fc16ec44d0f7b",
       "src": "https://github.com/GCBallesteros/jupytext.nvim"
+    },
+    "kanagawa.nvim": {
+      "rev": "8ad3b4cdcc804b332c32db8f9743667e1bb82b99",
+      "src": "https://github.com/rebelot/kanagawa.nvim"
+    },
+    "kanso.nvim": {
+      "rev": "1afbbb449aa0254823dbe1932e3cbb51886ff9fe",
+      "src": "https://github.com/webhooked/kanso.nvim"
     },
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
@@ -142,6 +166,18 @@
       "rev": "6a961effd67f6130d36df6d1c05c48c739796dd2",
       "src": "https://github.com/rose-pine/neovim"
     },
+    "nightfox.nvim": {
+      "rev": "26b61b1f856ec37cae3cb64f5690adb955f246a1",
+      "src": "https://github.com/EdenEast/nightfox.nvim"
+    },
+    "no-neck-pain.nvim": {
+      "rev": "4bc52782524fd50c5658685d584df6fa48fe49f9",
+      "src": "https://github.com/shortcuts/no-neck-pain.nvim"
+    },
+    "nvim": {
+      "rev": "4dbd9cad1f587b147150e7cf71ac517ac31e3858",
+      "src": "https://github.com/ember-theme/nvim"
+    },
     "nvim-jump": {
       "rev": "672204397c51507d7a821bc61ba9fad7dbed4303",
       "src": "https://github.com/yorickpeterse/nvim-jump.git"
@@ -150,6 +186,10 @@
       "rev": "31026a13eefb20681124706a79fc1df6bf11ab27",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
+    "nvim-navic": {
+      "rev": "f5eba192f39b453675d115351808bd51276d9de5",
+      "src": "https://github.com/SmiteshP/nvim-navic"
+    },
     "nvim-nio": {
       "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
       "src": "https://github.com/nvim-neotest/nvim-nio"
@@ -157,6 +197,10 @@
     "nvim-scissors": {
       "rev": "9cc1ba06afa8b23b0d30cadc02c40940df1d701e",
       "src": "https://github.com/chrisgrieser/nvim-scissors"
+    },
+    "nvim-treesitter-textobjects": {
+      "rev": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "oil-git-status.nvim": {
       "rev": "a3e2ccb00cb8822115e28a9a1791eda051d940c9",
@@ -173,6 +217,10 @@
     "overseer.nvim": {
       "rev": "f818eefff81f4b12fb7cf236f1b6c16768a2fcbc",
       "src": "https://github.com/stevearc/overseer.nvim"
+    },
+    "playground": {
+      "rev": "ba48c6a62a280eefb7c85725b0915e021a1a0749",
+      "src": "https://github.com/nvim-treesitter/playground"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
@@ -237,6 +285,10 @@
     "vim-surround": {
       "rev": "3d188ed2113431cf8dac77be61b842acb64433d9",
       "src": "https://github.com/tpope/vim-surround"
+    },
+    "vim-svelte-inspector": {
+      "rev": "1bd5604855934973c5ec4d50ec738f9c9da31f96",
+      "src": "https://github.com/ryoppippi/vim-svelte-inspector"
     },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
