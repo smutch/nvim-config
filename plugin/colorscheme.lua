@@ -2,7 +2,7 @@ local gh = require("load").gh
 local prev_laststatus = vim.o.laststatus
 
 local deps = {
-    "mini.nvim/mini.colors",
+    "nvim-mini/mini.colors",
 }
 vim.pack.add(gh(vim.list_extend(deps, { "rose-pine/neovim" })))
 require("rose-pine").setup({

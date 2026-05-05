@@ -1,6 +1,6 @@
 local gh = require("load").gh
 
-local deps = gh({ "rafamadriz/friendly-snippets", "echasnovski/mini.icons", "saghen/blink.download" })
+local deps = gh({ "rafamadriz/friendly-snippets", "nvim-mini/mini.icons", "saghen/blink.download" })
 vim.pack.add(vim.list_extend(deps, {
     { src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") },
     { src = gh("saghen/blink.pairs"), version = vim.version.range("*") },
