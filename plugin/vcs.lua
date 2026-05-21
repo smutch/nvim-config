@@ -1,23 +1,21 @@
 local gh = require("load").gh
 
 require("load").later(function()
-    vim.pack.add(
-        gh({
-            "tpope/vim-git",
-            "tpope/vim-fugitive",
-            "lewis6991/gitsigns.nvim",
-            "sindrets/diffview.nvim",
-            "NicolasGB/jj.nvim",
-        })
-    )
+    vim.pack.add(gh({
+        "tpope/vim-git",
+        "tpope/vim-fugitive",
+        "lewis6991/gitsigns.nvim",
+        "sindrets/diffview.nvim",
+        "NicolasGB/jj.nvim",
+    }))
 
     -- fugitive
-    vim.keymap.set("n", "<leader>g:", ":Git ")
-    vim.keymap.set("n", "<leader>gs", ":Git<CR>")
-    vim.keymap.set("n", "<leader>ga", ":Git commit -a<CR>")
-    vim.keymap.set("n", "<leader>gd", ":Git diff<CR>")
-    vim.keymap.set("n", "<leader>gp", ":Git pull<CR>")
-    vim.keymap.set("n", "<leader>gP", ":Git push<CR>")
+    vim.keymap.set("n", "<leader>g:", ":Git ", { desc = "Fugitive: start :Git command" })
+    vim.keymap.set("n", "<leader>gs", ":Git<CR>", { desc = "Fugitive: git status" })
+    vim.keymap.set("n", "<leader>ga", ":Git commit -a<CR>", { desc = "Fugitive: commit all changes" })
+    vim.keymap.set("n", "<leader>gd", ":Git diff<CR>", { desc = "Fugitive: show git diff" })
+    vim.keymap.set("n", "<leader>gp", ":Git pull<CR>", { desc = "Fugitive: pull from remote" })
+    vim.keymap.set("n", "<leader>gP", ":Git push<CR>", { desc = "Fugitive: push to remote" })
 
     -- gitsigns
     require("gitsigns").setup({
@@ -49,6 +47,13 @@ require("load").later(function()
 
     -- jj
     require("jj").setup({})
-
-
+    local jj = require("jj.cmd")
+    vim.keymap.set("n", "<leader>js", jj.squash, { desc = "JJ split" })
+    vim.keymap.set("n", "<leader>jc", jj.commit, { desc = "JJ commit" })
+    vim.keymap.set("n", "<leader>jl", jj.log, { desc = "JJ log" })
+    vim.keymap.set("n", "<leader>jd", jj.diff, { desc = "JJ diff" })
+    vim.keymap.set("n", "<leader>jt", function()
+        jj.j("tug")
+        jj.log({})
+    end, { desc = "JJ tug" })
 end)
