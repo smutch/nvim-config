@@ -22,6 +22,7 @@ load.later(function()
             bash = { "shfmt" },
             sh = { "shfmt" },
             quarto = { "rumdl", "injected" },
+            htmldjango = { "djlint" }
         },
     })
     vim.keymap.set("n", "<localleader>f", function()
