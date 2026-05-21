@@ -38,7 +38,18 @@ require("load").later(function()
     vim.pack.add(gh(vim.list_extend(deps, { "olimorris/codecompanion.nvim" })))
 
     require("codecompanion").setup({
-        strategies = {
+        interactions = {
+            -- cli = {
+            --     agent = "pi",
+            --     agents = {
+            --         pi = {
+            --             cmd = "just",
+            --             args = { "-f", "/Users/smutch/play/containers/pi/Justfile", "run" },
+            --             description = "Pi",
+            --             provider = "terminal",
+            --         },
+            --     },
+            -- },
             chat = {
                 adapter = "copilot",
                 tools = {
@@ -59,16 +70,16 @@ require("load").later(function()
             },
             inline = {
                 adapter = "copilot",
-                keymaps = {
-                    accept_change = {
-                        modes = { n = "ga" },
-                        description = "Accept the suggested change",
-                    },
-                    reject_change = {
-                        modes = { n = "gr" },
-                        description = "Reject the suggested change",
-                    },
-                },
+                -- keymaps = {
+                --     accept_change = {
+                --         modes = { n = "ga" },
+                --         description = "Accept the suggested change",
+                --     },
+                --     reject_change = {
+                --         modes = { n = "gr" },
+                --         description = "Reject the suggested change",
+                --     },
+                -- },
             },
             cmd = {
                 adapter = "copilot",
@@ -103,14 +114,25 @@ require("load").later(function()
         },
     })
 
-    vim.keymap.set({ "n", "v" }, "<M-c>", "<cmd>CodeCompanionActions<cr>", { desc = "Code Companion actions" })
-    vim.keymap.set(
-        { "n", "v" },
-        "<localleader>c",
-        "<cmd>CodeCompanionChat Toggle<cr>",
-        { desc = "Toggle Code Companion" }
-    )
-    vim.keymap.set("v", "<localleader>a", "<cmd>CodeCompanionChat Add<cr>", { desc = "Add to Code Companion chat" })
+    vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>CodeCompanionActions<cr>", { desc = "Code Companion (a)ctions" })
+    vim.keymap.set({ "n", "v" }, "<leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle Code Companion" })
+    vim.keymap.set("v", "<leader>ct", "<cmd>CodeCompanionChat Add<cr>", { desc = "Add (t)his to Code Companion chat" })
+
+    -- vim.keymap.set({ "n", "v" }, "<LocalLeader>cp", function()
+    --     return require("codecompanion").cli({ prompt = true })
+    -- end, { desc = "Prompt the CLI agent" })
+    -- vim.keymap.set({ "n", "v" }, "<LocalLeader>ca", function()
+    --     return require("codecompanion").cli("#{this}", { focus = false })
+    -- end, { desc = "Add context to the CLI agent" })
+    -- vim.keymap.set("n", "<LocalLeader>cd", function()
+    --     return require("codecompanion").cli("#{diagnostics} Can you fix these?", { focus = false, submit = true })
+    -- end, { desc = "Send diagnostics to CLI agent" })
+    -- vim.keymap.set("n", "<LocalLeader>ct", function()
+    --     return require("codecompanion").cli(
+    --         "#{terminal} Sharing the output from the terminal. Can you fix it?",
+    --         { focus = false, submit = true }
+    --     )
+    -- end, { desc = "Send terminal output to CLI agent" })
 
     vim.cmd([[cab cc CodeCompanion]])
 end)
