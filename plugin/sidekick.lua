@@ -10,25 +10,15 @@ require("sidekick").setup({
         tools = {
             pi = {
                 cmd = {
-                    "container",
+                    "just",
+                    "-f",
+                    "/Users/smutch/play/containers/pi/Justfile",
                     "run",
-                    "-v",
-                    "~/.gitconfig:/root/.gitconfig:ro",
-                    "-v",
-                    "~/.pi:/root/.pi",
-                    "-v",
-                    "~/.agents:/root/.agents",
-                    "-v",
-                    ".:/workdir",
-                    "--ssh",
-                    "--rm",
-                    "-it",
-                    "pi",
                 },
                 -- Optional: custom keymaps for this tool
                 keys = {
                     submit = {
-                        "<c-s>",
+                        "<s-enter>",
                         function(t)
                             t:send("\n")
                         end,
