@@ -39,9 +39,9 @@ require("load").later(function()
                     gs.nav_hunk("prev")
                 end
             end, { desc = "Go to previous hunk", buffer = bufnr })
-            vim.keymap.set("n", "gH", "<cmd>Gitsigns<cr>", { noremap = true, desc = "Gitsigns menu", buffer = bufnr })
-            vim.keymap.set("n", "ghs", gs.stage_hunk, { noremap = true, desc = "Stage hunk", buffer = bufnr })
-            vim.keymap.set("n", "ghr", gs.reset_hunk, { noremap = true, desc = "Reset hunk", buffer = bufnr })
+            vim.keymap.set("n", "<localleader>H", "<cmd>Gitsigns<cr>", { noremap = true, desc = "Gitsigns menu", buffer = bufnr })
+            vim.keymap.set("n", "<localleader>hs", gs.stage_hunk, { noremap = true, desc = "Stage hunk", buffer = bufnr })
+            vim.keymap.set("n", "<localleader>hr", gs.reset_hunk, { noremap = true, desc = "Reset hunk", buffer = bufnr })
         end,
     })
 
