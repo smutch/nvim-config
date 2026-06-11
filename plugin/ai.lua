@@ -102,6 +102,28 @@ require("load").later(function()
                         },
                     })
                 end,
+                opencode_go = function()
+                    return require("codecompanion.adapters").extend("openai_compatible", {
+                        name = "OpenCode Go",
+                        env = {
+                            url = "https://opencode.ai", -- Or the specific endpoint provided for Go
+                            api_key = os.getenv("OPENCODE_API_KEY"),
+                            chat_url = "/zen/go/v1/chat/completions",
+                        },
+                        schema = {
+                            model = {
+                                default = "deepseek-v4-flash", -- Change this to a specific model included in your Go subscription
+                                choices = {
+                                    "deepseek-v4-flash",
+                                    "kimi-k2.6",
+                                    "glm-5.1",
+                                    "mimo-v2.5",
+                                    -- Add any other models supported by OpenCode Go
+                                },
+                            },
+                        },
+                    })
+                end,
             },
         },
         display = {
