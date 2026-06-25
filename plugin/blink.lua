@@ -81,25 +81,30 @@ require("blink.cmp").setup({
     },
 })
 
-require("blink.pairs").setup({
-    mappings = {
-        -- you can call require("blink.pairs.mappings").enable() and require("blink.pairs.mappings").disable() to enable/disable mappings at runtime
-        enabled = true,
-        disabled_filetypes = {},
-        -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L12
-        pairs = {},
-    },
-    highlights = {
-        enabled = false,
-        groups = {
-            "BlinkPairsOrange",
-            "BlinkPairsPurple",
-            "BlinkPairsBlue",
-        },
-        matchparen = {
+require("load").later(function()
+    ---@diagnostic disable-next-line: undefined-field
+    require("blink.pairs").build():pwait(60000)
+
+    require("blink.pairs").setup({
+        mappings = {
+            -- you can call require("blink.pairs.mappings").enable() and require("blink.pairs.mappings").disable() to enable/disable mappings at runtime
             enabled = true,
-            group = "MatchParen",
+            disabled_filetypes = {},
+            -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L12
+            pairs = {},
         },
-    },
-    debug = false,
-})
+        highlights = {
+            enabled = false,
+            groups = {
+                "BlinkPairsOrange",
+                "BlinkPairsPurple",
+                "BlinkPairsBlue",
+            },
+            matchparen = {
+                enabled = true,
+                group = "MatchParen",
+            },
+        },
+        debug = false,
+    })
+end)
