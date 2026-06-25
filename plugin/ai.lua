@@ -51,7 +51,7 @@ require("load").later(function()
             --     },
             -- },
             chat = {
-                adapter = "copilot",
+                adapter = "opencode_go",
                 tools = {
                     groups = {
                         ["search_and_read"] = {
@@ -69,7 +69,7 @@ require("load").later(function()
                 },
             },
             inline = {
-                adapter = "copilot",
+                adapter = "opencode_go",
                 -- keymaps = {
                 --     accept_change = {
                 --         modes = { n = "ga" },
@@ -82,7 +82,7 @@ require("load").later(function()
                 -- },
             },
             cmd = {
-                adapter = "copilot",
+                adapter = "opencode_go",
             },
         },
         extensions = {
@@ -106,8 +106,8 @@ require("load").later(function()
                     return require("codecompanion.adapters").extend("openai_compatible", {
                         name = "OpenCode Go",
                         env = {
-                            url = "https://opencode.ai", -- Or the specific endpoint provided for Go
-                            api_key = os.getenv("OPENCODE_API_KEY"),
+                            url = "https://opencode.ai",
+                            api_key = require("system").openai_api_key or nil,
                             chat_url = "/zen/go/v1/chat/completions",
                         },
                         schema = {
@@ -116,7 +116,7 @@ require("load").later(function()
                                 choices = {
                                     "deepseek-v4-flash",
                                     "kimi-k2.6",
-                                    "glm-5.1",
+                                    "glm-5.2",
                                     "mimo-v2.5",
                                     -- Add any other models supported by OpenCode Go
                                 },
