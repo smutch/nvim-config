@@ -39,19 +39,38 @@ require("load").later(function()
                     gs.nav_hunk("prev")
                 end
             end, { desc = "Go to previous hunk", buffer = bufnr })
-            vim.keymap.set("n", "<localleader>H", "<cmd>Gitsigns<cr>", { noremap = true, desc = "Gitsigns menu", buffer = bufnr })
-            vim.keymap.set("n", "<localleader>hs", gs.stage_hunk, { noremap = true, desc = "Stage hunk", buffer = bufnr })
-            vim.keymap.set("n", "<localleader>hr", gs.reset_hunk, { noremap = true, desc = "Reset hunk", buffer = bufnr })
+            vim.keymap.set(
+                "n",
+                "<localleader>H",
+                "<cmd>Gitsigns<cr>",
+                { noremap = true, desc = "Gitsigns menu", buffer = bufnr }
+            )
+            vim.keymap.set(
+                "n",
+                "<localleader>hs",
+                gs.stage_hunk,
+                { noremap = true, desc = "Stage hunk", buffer = bufnr }
+            )
+            vim.keymap.set(
+                "n",
+                "<localleader>hr",
+                gs.reset_hunk,
+                { noremap = true, desc = "Reset hunk", buffer = bufnr }
+            )
         end,
     })
 
     -- jj
     require("jj").setup({})
     local jj = require("jj.cmd")
+    vim.keymap.set("n", "<leader>jj", jj.status, { desc = "JJ status" })
     vim.keymap.set("n", "<leader>js", jj.squash, { desc = "JJ split" })
     vim.keymap.set("n", "<leader>jc", jj.commit, { desc = "JJ commit" })
     vim.keymap.set("n", "<leader>jl", jj.log, { desc = "JJ log" })
     vim.keymap.set("n", "<leader>jd", jj.diff, { desc = "JJ diff" })
+    vim.keymap.set("n", "<leader>jT", function()
+        jj.j("throw")
+    end, { desc = "JJ throw" })
     vim.keymap.set("n", "<leader>jt", function()
         jj.j("tug")
         jj.log({})
