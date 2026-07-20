@@ -14,15 +14,11 @@ load.later(function()
             -- You can customize some of the format options for the filetype (:help conform.format)
             rust = { "rustfmt" },
             -- Conform will run the first available formatter
-            javascript = { "prettierd", "prettier", stop_after_first = true },
-            html = { "prettierd", "prettier", stop_after_first = true },
-            json = { "prettierd", "prettier", stop_after_first = true },
-            yaml = { "prettierd", "prettier", stop_after_first = true },
-            markdown = { "rumdl", "prettierd", "prettier", stop_after_first = true },
+            markdown = { "rumdl" },
             bash = { "shfmt" },
             sh = { "shfmt" },
             quarto = { "rumdl", "injected" },
-            htmldjango = { "djlint" }
+            htmldjango = { "djlint" },
         },
     })
     vim.keymap.set("n", "<localleader>f", function()
