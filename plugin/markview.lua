@@ -92,3 +92,5 @@ vim.api.nvim_create_autocmd("FileType", {
         end, { buffer = bufnr, desc = "Edit code block" })
     end,
 })
+
+vim.api.nvim_set_hl(0, "MarkviewCheckboxChecked", { link = "MarkviewGradient5" })
