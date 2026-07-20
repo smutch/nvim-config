@@ -115,7 +115,7 @@ require("load").later(function()
                                 default = "deepseek-v4-flash", -- Change this to a specific model included in your Go subscription
                                 choices = {
                                     "deepseek-v4-flash",
-                                    "kimi-k2.6",
+                                    "kimi-k2.7-code",
                                     "glm-5.2",
                                     "mimo-v2.5",
                                     -- Add any other models supported by OpenCode Go
