@@ -21,7 +21,7 @@ vim.o.undofile = true
 
 vim.opt.diffopt:append({ "algorithm:patience" })
 
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldmethod = "expr"
 vim.o.foldenable = false
 
