@@ -18,6 +18,12 @@ require("load").on_event("InsertEnter", function()
         suggestion = {
             enabled = true,
             auto_trigger = true,
+            keymap = {
+                accept = "<M-;>",
+                next = "<M-]>",
+                prev = "<M-[>",
+                dismiss = "<C-]>",
+            },
         },
         panel = { enabled = true },
         ---@diagnostic disable-next-line: unused-local
