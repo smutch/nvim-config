@@ -5,7 +5,6 @@ vim.pack.add(load.gh({
 }))
 
 local ts = require("nvim-treesitter")
-ts.setup({})
 ts.install({
     "bash",
     "c",
@@ -31,14 +30,7 @@ ts.install({
     "dockerfile",
     "typst",
 })
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "*" },
-    callback = function()
-        -- ignore errors here, we want to give it a crack for everything, but some filetypes may not have a parser installed
-        pcall(vim.treesitter.start)
-    end,
-})
+ts.setup({})
 
 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
