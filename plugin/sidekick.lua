@@ -9,11 +9,20 @@ require("sidekick").setup({
         },
         tools = {
             pi = {
+                -- cmd = {
+                --     "just",
+                --     "-f",
+                --     "/Users/smutch/play/containers/pi/Justfile",
+                --     "run",
+                -- },
                 cmd = {
-                    "just",
-                    "-f",
-                    "/Users/smutch/play/containers/pi/Justfile",
+                    "nono",
                     "run",
+                    "--profile",
+                    "pi",
+                    "--allow-cwd",
+                    "--",
+                    "${HOME}/.bun/bin/pi",
                 },
                 -- Optional: custom keymaps for this tool
                 keys = {
