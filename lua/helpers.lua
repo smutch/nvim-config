@@ -26,7 +26,10 @@ local last_prefix = nil
 
 M.get_python_path = function()
     local default_prefix = "/usr"
+    local default_kind = "VIRTUAL_ENV"
+
     local prefix = default_prefix
+    local kind = default_kind
 
     if vim.g.python_prefix then
         prefix = vim.g.python_prefix
@@ -43,8 +46,10 @@ M.get_python_path = function()
             prefix = string.sub(vim.fn.system("poetry env info --path"), 0, -2)
         elseif Path:new("./pixi.lock"):exists() then
             prefix = string.sub(vim.fn.system('pixi --quiet run --locked "which python"'), 0, -13)
+            kind = "CONDA_PREFIX"
         elseif vim.env.CONDA_PREFIX then
             prefix = vim.env.CONDA_PREFIX
+            kind = "CONDA_PREFIX"
         elseif is_hatch_project() then
             prefix = string.sub(vim.fn.system("hatch env find"), 0, -2)
         elseif Path:new(vim.env.HOME .. "/.pyenv/shims/python"):exists() then
@@ -62,7 +67,7 @@ M.get_python_path = function()
         last_prefix = prefix
     end
 
-    return { interpreter = interpreter, prefix = prefix }
+    return { interpreter = interpreter, prefix = prefix, kind = kind }
 end
 
 -- M.python_interpreter_path = python_interpreter_path
