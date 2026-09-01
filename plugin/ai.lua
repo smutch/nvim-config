@@ -118,12 +118,13 @@ require("load").later(function()
                         },
                         schema = {
                             model = {
-                                default = "deepseek-v4-flash", -- Change this to a specific model included in your Go subscription
+                                default = "mimo-v2.5", -- Change this to a specific model included in your Go subscription
                                 choices = {
-                                    "deepseek-v4-flash",
+                                    "mimo-v2.5",
+                                    "gpt-5.6-luna",
                                     "kimi-k2.7-code",
                                     "glm-5.2",
-                                    "mimo-v2.5",
+                                    "glm-5.3",
                                     -- Add any other models supported by OpenCode Go
                                 },
                             },
