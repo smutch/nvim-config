@@ -28,7 +28,7 @@ vim.diagnostic.config({
     virtual_lines = false,
     float = {
         border = "rounded",
-        source = "if_many",
+        source = true,
     },
 })
 
