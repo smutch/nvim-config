@@ -1,3 +1,5 @@
+vim.highlight.priorities.semantic_tokens = 95
+
 local load = require("load")
 vim.pack.add(load.gh({
     "nvim-treesitter/nvim-treesitter",
@@ -31,6 +33,14 @@ ts.install({
     "typst",
 })
 ts.setup({})
+
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+        if pcall(vim.treesitter.start, args.buf) then
+            vim.bo[args.buf].syntax = "off"
+        end
+    end,
+})
 
 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
