@@ -51,7 +51,7 @@ require("snacks").setup({
     zen = { enabled = true },
 })
 
-vim.keymap.set("n", "Q", function()
+vim.keymap.set("n", "<leader>bd", function()
     Snacks.bufdelete()
 end, { desc = "Delete buffer" })
 
