@@ -19,7 +19,7 @@ require("load").on_event("InsertEnter", function()
             enabled = true,
             auto_trigger = true,
             keymap = {
-                accept = "<M-;>",
+                accept = "<C-CR>",
                 next = "<M-]>",
                 prev = "<M-[>",
                 dismiss = "<C-]>",
