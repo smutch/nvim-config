@@ -1,4 +1,4 @@
-local augroup = vim.api.nvim_create_augroup('user_options', { clear = true })
+local augroup = vim.api.nvim_create_augroup("user_options", { clear = true })
 
 vim.o.clipboard = "unnamedplus"
 vim.o.spelllang = "en_au"
@@ -7,6 +7,7 @@ vim.o.exrc = true
 vim.o.linebreak = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
+vim.o.expandtab = true
 vim.o.laststatus = 3
 vim.opt.listchars = { tab = [[▸\ ]], eol = "↵", trail = "·" }
 vim.o.number = false -- Don't show line numbers
@@ -37,12 +38,12 @@ if vim.env.EXTRA_NVIM then
 end
 
 -- If we have a wide window then put the preview window on the right
-vim.api.nvim_create_autocmd('BufAdd', {
-  pattern = '*',
-  group = augroup,
-  callback = function()
-    if vim.wo.previewwindow and vim.o.columns >= 160 and vim.fn.winnr('$') == 2 then
-      vim.cmd('silent! wincmd L')
-    end
-  end,
+vim.api.nvim_create_autocmd("BufAdd", {
+    pattern = "*",
+    group = augroup,
+    callback = function()
+        if vim.wo.previewwindow and vim.o.columns >= 160 and vim.fn.winnr("$") == 2 then
+            vim.cmd("silent! wincmd L")
+        end
+    end,
 })
