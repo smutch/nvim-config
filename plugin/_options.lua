@@ -20,7 +20,7 @@ vim.o.directory = os.getenv("HOME") .. "/.nvim_backup"
 vim.o.undodir = os.getenv("HOME") .. "/.nvim_backup/undo"
 vim.o.undofile = true
 
-vim.opt.diffopt:append({ "algorithm:patience" })
+vim.opt.diffopt:append("algorithm:patience")
 
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldmethod = "expr"
