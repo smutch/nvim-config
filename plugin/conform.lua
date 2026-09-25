@@ -19,6 +19,8 @@ load.later(function()
             sh = { "shfmt" },
             quarto = { "rumdl", "injected" },
             htmldjango = { "djlint" },
+            html = { "prettier" },
+            json = { "prettier" }
         },
     })
     vim.keymap.set("n", "<localleader>f", function()
