@@ -57,7 +57,7 @@ require("load").later(function()
             --     },
             -- },
             chat = {
-                adapter = "opencode_go",
+                adapter = "claude_code",
                 tools = {
                     groups = {
                         ["search_and_read"] = {
@@ -75,7 +75,7 @@ require("load").later(function()
                 },
             },
             inline = {
-                adapter = "opencode_go",
+                adapter = "claude_code",
                 -- keymaps = {
                 --     accept_change = {
                 --         modes = { n = "ga" },
@@ -88,7 +88,7 @@ require("load").later(function()
                 -- },
             },
             cmd = {
-                adapter = "opencode_go",
+                adapter = "claude_code",
             },
         },
         extensions = {
